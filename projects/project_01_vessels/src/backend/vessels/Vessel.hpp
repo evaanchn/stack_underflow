@@ -15,9 +15,9 @@ class Vessel {
    * @brief Decrease the health value of the vessel with a valid amount of
    * damage
    * 
-   * @param damage_dealed
+   * @param damageDealT
    */
-  void takeDamage(int64_t damage_dealed);
+  void takeDamage(int64_t damageDealt);
 
   /**
    * @brief Checks the health to be above 0
