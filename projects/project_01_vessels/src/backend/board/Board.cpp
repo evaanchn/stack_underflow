@@ -35,7 +35,10 @@ Slot* Board::getSlot(std::vector<int> coordinates, int8_t playerID) {
 }
 
 Vessel* Board::getVessel(std::vector<int> coordinates, int8_t playerID) {
-  return this->getSlot(coordinates, playerID)->getVessel();
+  if (invalidSlot(coordinates, playerID)) {
+    return nullptr;
+  }
+  return this->slots[coordinates.at(0)][coordinates.at(1)].getVessel();
 }
 
 bool Board::insertVessel(std::vector<int> coordinates, int8_t vesselID
