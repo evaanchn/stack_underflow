@@ -2,6 +2,7 @@
 
 #include "Vessel.hpp"
 
+
 Vessel::Vessel(std::string nameInit, int64_t healthInit, size_t costInit
     , size_t weightInit)
 : name(nameInit)
@@ -51,7 +52,7 @@ void Vessel::fillVessel(/*std::vector<ActionLog>& logs*/) {
   for (int i = 0; i <= ELEMENT_COUNT; ++i) {
     numbers.push_back(i);
   }
-  //TODO(any): shuffle numbers
+  shuffle(numbers);
   /*
   for (ActionLog log : logs) {
     if (numbers.empty()) break;
@@ -81,4 +82,10 @@ int Vessel::calculateDamage(/*ActionLog& log*/) {
   // calculate damage
   damage = MAX_DAMAGE / deduction;
   return damage;
+}
+
+void shuffle(std::vector<int> numbers) {
+  std::default_random_engine rng(time(0));
+  std::uniform_real_distribution<double> dist(0.0, 1.0);
+  std::shuffle(numbers.begin(), numbers.end(), rng);
 }

@@ -2,11 +2,15 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <random>
 #include <string>
 #include <vector>
+
+//  #include "Algorithm.h"
 
 #define ELEMENT_COUNT 50
 #define MAX_DAMAGE (ELEMENT_COUNT * 2)
@@ -77,6 +81,9 @@ class Vessel {
    * @param damageDealT
    */
   void takeDamage(int64_t damageDealt);
+
+ protected:
+  void shuffle(std::vector<int> numbers);
 
  protected:
   /*Algorithm algorithm*/
