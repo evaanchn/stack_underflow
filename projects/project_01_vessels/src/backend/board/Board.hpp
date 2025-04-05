@@ -48,6 +48,7 @@ class Board {
   bool invalidSlot(std::vector<int> coordinates, int8_t playerID);
   static Slot** createSlotsMatrix(const int rows, const int columns);
   static void destroySlotsMatrix(Slot** matrix, int rows);
+  void deleteVessels();
   Vessel* vesselFactory(int8_t vesselID);
 
  private:

@@ -12,6 +12,7 @@ Board::Board(): slots(nullptr) {
 }
 
 Board::~Board() {
+  deleteVessels();
   destroySlotsMatrix(this->slots, BOARD_ROWS);
 }
 
@@ -68,12 +69,13 @@ bool Board::moveVessel(std::vector<int> origin, std::vector<int> destination
 bool Board::deleteVessel(std::vector<int> coordinates, int8_t playerID) {
   if (this->invalidSlot(coordinates, playerID)) return false;
   this->getSlot(coordinates, playerID)->destroyVessel();
+  return true;
 }
 
 Slot** Board::createSlotsMatrix(const int rows, const int columns) {
   Slot** matrix = (Slot**)calloc(rows, sizeof(Slot*));
   if (matrix) {
-    for (size_t row = 0; row < rows; ++row) {
+    for (int row = 0; row < rows; ++row) {
       if ((matrix[row] = (Slot*)calloc(columns, sizeof(Slot))) == NULL) {
         destroySlotsMatrix(matrix, rows);
         return NULL;
@@ -85,10 +87,18 @@ Slot** Board::createSlotsMatrix(const int rows, const int columns) {
 
 void Board::destroySlotsMatrix(Slot** matrix, int rows) {
   if (matrix) {
-    for (__uint64_t row = 0; row < rows; ++row) {
+    for (int row = 0; row < rows; ++row) {
       free(matrix[row]);
     }
     free(matrix);
+  }
+}
+
+void Board::deleteVessels() {
+  for (int row = 0; row < BOARD_ROWS; ++row) {
+    for (int column = 0; column < BOARD_COLUMNS; ++column) {
+      this->slots[row][column].~Slot();
+    }
   }
 }
 
