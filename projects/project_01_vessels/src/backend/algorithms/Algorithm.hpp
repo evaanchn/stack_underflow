@@ -16,37 +16,21 @@ class algorithm {
      @param element element to insert
      @return the number of iterations made for the insertion process
     */
-    size_t insert(int64_t element);
+    virtual size_t insert(int64_t element);
 
     /**
      @brief method assigned to search for elements
      @see insert
     */
-    size_t search(int64_t element);
+    virtual size_t search(int64_t element);
 
     /**
      @brief method assigned for removing elements
      @see insert
     */
-    size_t remove(int64_t element);
+    virtual size_t remove(int64_t element);
 
-    /// @brief gets the name of the initialized algorithm
-    std::string getAlgorithmName();
-
-    /// @brief gets the value of the element_count parameter
-    std::size_t getElementCount();
-
-    /// @brief increments the value of the element_count attribute once
-    void increaseElementCount();
-
-    /**
-     @brief assigns the name of the created algorithm to the algorithm_name 
-       attribute
-     @param _algorithmName name to assign
-    */
-    void setAlgorithmName(std::string _algorithmName);
-
- private:
+ protected:
     std::string algorithmName;
     size_t elementCount;
     std::unordered_set<int64_t> elementRecord;

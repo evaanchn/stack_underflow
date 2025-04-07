@@ -3,17 +3,17 @@
 #include "SplayTree.hpp"
 
 splayTree::splayTree() : algorithm() {
-  setAlgorithmName("Splay Tree");
+  algorithmName = "Splay Tree";
 }
 
-size_t algorithm::insert(int64_t element) {
+size_t splayTree::insert(int64_t element) {
   // TODO(Andrey): create the insert method for Splay Tree
 }
 
-size_t algorithm::search(int64_t element) {
+size_t splayTree::search(int64_t element) {
   // TODO(Andrey): create the search method for Splay Tree
 }
 
-size_t algorithm::remove(int64_t element) {
+size_t splayTree::remove(int64_t element) {
   // TODO(Andrey): create the delete method for Splay Tree
 }
