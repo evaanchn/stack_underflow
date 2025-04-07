@@ -9,12 +9,13 @@
 class Slot {
  public:
   // Constructor
-  explicit Slot();
+  Slot();
   // Disable copy and move
   Slot(const Slot& other) = delete;
   Slot(Slot&& other) = delete;
   Slot& operator=(const Slot& other) = delete;
   Slot& operator=(Slot&& other) = delete;
+
   ~Slot();
 
   /**
@@ -37,20 +38,24 @@ class Slot {
    * @brief Try to insert a vessel on its coordinates
    * 
    * @param newVessel pointer to a valid vessel
-   * @return true 
-   * @return false 
+   * @return true success
+   * @return false failure
    */
   bool insertVessel(Vessel* newVessel);
 
   /**
    * @brief Vessel is no longer on this slot
    * 
+   * @return true success
+   * @return false failure
    */
   bool removeVessel();
 
   /**
    * @brief Vessel is destroyed
    * 
+   * @return true success
+   * @return false failure
    */
   bool destroyVessel();
 

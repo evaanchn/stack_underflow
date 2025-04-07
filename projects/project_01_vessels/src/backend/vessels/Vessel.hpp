@@ -37,8 +37,8 @@ class Vessel {
    * @param log to register operation time and iterations
    * @return int iterations taken
    */
-  int insert(int value/*, ActionLog& log*/);  
-  
+  int insert(int value/*, ActionLog& log*/);
+
    /**
    * @brief Remove given key
    * 

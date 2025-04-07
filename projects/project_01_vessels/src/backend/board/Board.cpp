@@ -18,7 +18,7 @@ Board::~Board() {
 
 bool Board::invalidSlot(std::vector<int> coordinates, int playerID) {
   // check index out of bounds
-  if (coordinates.size() != 2 || 
+  if (coordinates.size() != 2 ||
       coordinates.at(0) >= BOARD_ROWS || coordinates.at(1) >= BOARD_COLUMNS) {
     std::cerr << "Index out of bounds\n";
     return true;
@@ -50,7 +50,7 @@ bool Board::insertVessel(std::vector<int> coordinates, int vesselID
   if (invalidSlot(coordinates, playerID)) return false;
   Vessel* vessel = vesselFactory(vesselID);
   if (vessel == nullptr) return false;
-  if(this->getSlot(coordinates, playerID)->insertVessel(vessel)) return true;
+  if (this->getSlot(coordinates, playerID)->insertVessel(vessel)) return true;
   // if it could not be inserted, delete memory allocated
   delete vessel;
   return false;
