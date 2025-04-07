@@ -16,42 +16,48 @@ Board::~Board() {
   destroySlotsMatrix(this->slots, BOARD_ROWS);
 }
 
-bool invalidSlot(std::vector<int> coordinates, int8_t playerID) {
+bool Board::invalidSlot(std::vector<int> coordinates, int playerID) {
   // check index out of bounds
-  if (coordinates.at(0) >= BOARD_ROWS || coordinates.at(1) >= BOARD_COLUMNS) {
-    return false;
+  if (coordinates.size() != 2 || 
+      coordinates.at(0) >= BOARD_ROWS || coordinates.at(1) >= BOARD_COLUMNS) {
+    std::cerr << "Index out of bounds\n";
+    return true;
   }
   // check valid coordinates for a player
-  if (coordinates.at(1) > LIMIT_COL && playerID == PLAYER1) return false;
-  if (coordinates.at(1) <= LIMIT_COL && playerID == PLAYER2) return false;
+  if ((playerID == PLAYER1) && coordinates.at(1) > LIMIT_COL) return true;
+  if ((playerID == PLAYER2) && coordinates.at(1) <= LIMIT_COL) return true;
   // else
-  return true;
+  return false;
 }
 
-Slot* Board::getSlot(std::vector<int> coordinates, int8_t playerID) {
+Slot* Board::getSlot(std::vector<int> coordinates, int playerID) {
   if (invalidSlot(coordinates, playerID)) {
     return nullptr;
   }
   return &this->slots[coordinates.at(0)][coordinates.at(1)];
 }
 
-Vessel* Board::getVessel(std::vector<int> coordinates, int8_t playerID) {
+Vessel* Board::getVessel(std::vector<int> coordinates, int playerID) {
   if (invalidSlot(coordinates, playerID)) {
     return nullptr;
   }
   return this->slots[coordinates.at(0)][coordinates.at(1)].getVessel();
 }
 
-bool Board::insertVessel(std::vector<int> coordinates, int8_t vesselID
-    , int8_t playerID) {
+bool Board::insertVessel(std::vector<int> coordinates, int vesselID
+    , int playerID) {
+  bool insert_success = false;
   if (invalidSlot(coordinates, playerID)) return false;
   Vessel* vessel = vesselFactory(vesselID);
   if (vessel == nullptr) return false;
-  return this->getSlot(coordinates, playerID)->insertVessel(vessel);
+  if(this->getSlot(coordinates, playerID)->insertVessel(vessel)) return true;
+  // if it could not be inserted, delete memory allocated
+  delete vessel;
+  return false;
 }
 
 bool Board::moveVessel(std::vector<int> origin, std::vector<int> destination
-    , int8_t playerID) {
+    , int playerID) {
   // valid source and destination
   if (this->invalidSlot(origin, playerID)
       || this->invalidSlot(destination, playerID)) {
@@ -66,10 +72,9 @@ bool Board::moveVessel(std::vector<int> origin, std::vector<int> destination
   return true;
 }
 
-bool Board::deleteVessel(std::vector<int> coordinates, int8_t playerID) {
+bool Board::deleteVessel(std::vector<int> coordinates, int playerID) {
   if (this->invalidSlot(coordinates, playerID)) return false;
-  this->getSlot(coordinates, playerID)->destroyVessel();
-  return true;
+  return this->getSlot(coordinates, playerID)->destroyVessel();
 }
 
 Slot** Board::createSlotsMatrix(const int rows, const int columns) {
@@ -102,8 +107,6 @@ void Board::deleteVessels() {
   }
 }
 
-// TODO(Albin): delete #if 0, when TaskBack2_Vessels is merged
-#if 0
 #include "HashsetVessel.hpp"
 #include "RedBlackTreeVessel.hpp"
 #include "BinarySearchVessel.hpp"
@@ -111,7 +114,7 @@ void Board::deleteVessels() {
 #include "SplayTreeVessel.hpp"
 #include "LinearSearchVessel.hpp"
 
-Vessel* vesselFactory(int8_t vesselID) {
+Vessel* Board::vesselFactory(int vesselID) {
   if (vesselID == HASHSET) return new HashsetVessel();
   if (vesselID == REDBLACK) return new RedBlackTreeVessel();
   if (vesselID == BINARYSEARCH) return new BinarySearchVessel();
@@ -120,4 +123,4 @@ Vessel* vesselFactory(int8_t vesselID) {
   if (vesselID == LINEARSEARCH) return new LinearSearchVessel();
   return nullptr;
 }
-#endif
+

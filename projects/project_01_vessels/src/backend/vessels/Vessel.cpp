@@ -21,6 +21,7 @@ int Vessel::search(int value/*, ActionLog& log*/) {
   log.recordEnd(iterations);
   return iterations;
   */
+  return 0;
 }
 
 int Vessel::insert(int value/*, ActionLog& log*/) {
@@ -33,6 +34,7 @@ int Vessel::insert(int value/*, ActionLog& log*/) {
   log.recordEnd(iterations);
   return iterations;
   */
+  return 1;
 }
 
 int Vessel::deletion(int value, size_t& upgrade_points/*, ActionLog& log*/) {
@@ -45,6 +47,7 @@ int Vessel::deletion(int value, size_t& upgrade_points/*, ActionLog& log*/) {
   log.recordEnd(iterations);
   return iterations;
   */
+  return 2;
 }
 
 void Vessel::fillVessel(/*std::vector<ActionLog>& logs*/) {
@@ -84,7 +87,7 @@ int Vessel::calculateDamage(/*ActionLog& log*/) {
   return damage;
 }
 
-void shuffle(std::vector<int> numbers) {
+void Vessel::shuffle(std::vector<int> numbers) {
   std::default_random_engine rng(time(0));
   std::uniform_real_distribution<double> dist(0.0, 1.0);
   std::shuffle(numbers.begin(), numbers.end(), rng);

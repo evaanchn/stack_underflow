@@ -4,15 +4,12 @@
 
 #include <vector>
 
-// TODO(Albin): discard when Vessel class is merged
-#ifndef Vessel
-typedef int Vessel;
-#endif
+#include "Vessel.hpp"
 
 class Slot {
  public:
   // Constructor
-  Slot();
+  explicit Slot();
   // Disable copy and move
   Slot(const Slot& other) = delete;
   Slot(Slot&& other) = delete;
@@ -49,13 +46,13 @@ class Slot {
    * @brief Vessel is no longer on this slot
    * 
    */
-  void removeVessel();
+  bool removeVessel();
 
   /**
    * @brief Vessel is destroyed
    * 
    */
-  void destroyVessel();
+  bool destroyVessel();
 
  private:
   std::vector<int> coordinates;

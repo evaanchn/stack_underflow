@@ -9,7 +9,7 @@ Slot::Slot()
 }
 
 Slot::~Slot() {
-  if (this->vessel != nullptr) delete(this->vessel);
+  if (this->vessel != nullptr) delete this->vessel;
 }
 
 bool Slot::isOccupied() {
@@ -17,7 +17,6 @@ bool Slot::isOccupied() {
 }
 
 Vessel* Slot::getVessel() {
-  // could be nullptr
   return this->vessel;
 }
 
@@ -28,13 +27,17 @@ bool Slot::insertVessel(Vessel* newVessel) {
   return true;
 }
 
-void Slot::removeVessel() {
+bool Slot::removeVessel() {
+  if (!this->occupied) return false;
   this->vessel = nullptr;
   this->occupied = false;
+  return true;
 }
 
-void Slot::destroyVessel() {
-  if (this->vessel != nullptr) delete(this->vessel);
+bool Slot::destroyVessel() {
+  if (!this->occupied) return false;
+  if (this->vessel != nullptr) delete this->vessel;
   this->vessel = nullptr;
   this->occupied = false;
+  return true;
 }

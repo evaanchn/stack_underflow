@@ -28,7 +28,7 @@
 class Board {
  public:
   // Constructor
-  Board();
+  explicit Board();
   // Disable copy and move
   Board(const Board& other) = delete;
   Board(Board&& other) = delete;
@@ -36,20 +36,20 @@ class Board {
   Board& operator=(Board&& other) = delete;
   ~Board();
 
-  Slot* getSlot(std::vector<int> coordinates, int8_t playerID);
-  Vessel* getVessel(std::vector<int> coordinates, int8_t playerID);
-  bool insertVessel(std::vector<int> coordinates, int8_t vesselID
-    , int8_t playerID);
+  Slot* getSlot(std::vector<int> coordinates, int playerID);
+  Vessel* getVessel(std::vector<int> coordinates, int playerID);
+  bool insertVessel(std::vector<int> coordinates, int vesselID
+    , int playerID);
   bool moveVessel(std::vector<int> origin, std::vector<int> destination
-    , int8_t playerID);
-  bool deleteVessel(std::vector<int> coordinates, int8_t playerID);
+    , int playerID);
+  bool deleteVessel(std::vector<int> coordinates, int playerID);
 
  private:
-  bool invalidSlot(std::vector<int> coordinates, int8_t playerID);
+  bool invalidSlot(std::vector<int> coordinates, int playerID);
   static Slot** createSlotsMatrix(const int rows, const int columns);
   static void destroySlotsMatrix(Slot** matrix, int rows);
   void deleteVessels();
-  Vessel* vesselFactory(int8_t vesselID);
+  Vessel* vesselFactory(int vesselID);
 
  private:
   Slot** slots;  // [BOARD_ROWS][BOARD_COLUMNS];

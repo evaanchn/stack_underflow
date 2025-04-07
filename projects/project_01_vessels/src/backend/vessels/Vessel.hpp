@@ -18,7 +18,7 @@
 class Vessel {
  public:
   // Constructor
-  Vessel(std::string nameInit, int64_t healthInit, size_t costInit
+  explicit Vessel(std::string nameInit, int64_t healthInit, size_t costInit
       , size_t weightInit);
 
   /**
@@ -47,7 +47,7 @@ class Vessel {
    * @param log to register operation time and iterations
    * @return int iterations taken
    */
-  int Vessel::deletion(int value, size_t& upgrade_points/*, ActionLog& log*/);
+  int deletion(int value, size_t& upgrade_points/*, ActionLog& log*/);
 
   /**
    * @brief Fill vessel data structure with random values
