@@ -2,6 +2,5 @@
 
 #include "Algorithm.hpp"
 
-algorithm::algorithm() {
-  elementCount = 0;
-}
+algorithm::algorithm() = default;
+algorithm::~algorithm() = default;

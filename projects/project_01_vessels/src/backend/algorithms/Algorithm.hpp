@@ -11,24 +11,27 @@ class algorithm {
     /// @brief constructor method of the algorithm class
     algorithm();
 
+    /// @brief destructor method of the algorithm class
+    ~algorithm();
+
     /**
      @brief assigned method for inserting elements
      @param element element to insert
      @return the number of iterations made for the insertion process
     */
-    virtual size_t insert(int64_t element);
+    virtual size_t insert(int64_t element) = 0;
 
     /**
      @brief method assigned to search for elements
      @see insert
     */
-    virtual size_t search(int64_t element);
+    virtual size_t search(int64_t element) = 0;
 
     /**
      @brief method assigned for removing elements
      @see insert
     */
-    virtual size_t remove(int64_t element);
+    virtual size_t remove(int64_t element) = 0;
 
  protected:
     std::string algorithmName;
