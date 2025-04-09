@@ -2,22 +2,33 @@
 
 #pragma once
 
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <FL/Fl.H>
-#include <FL/Fl_Window.H>
-#include <FL/Fl_Menu_Bar.H>
-#include <FL/Fl_Button.H>
-#include <FL/Fl_Toggle_Button.H>
-#include <FL/Fl_PNG_Image.H>
-#include <FL/Fl_Box.H>
+#include "StartScene.hpp"
 
-#include "CustomIconButton.hpp"
-
+#define MAIN_WINDOW_WIDTH 1920
+#define MAIN_WINDOW_HEIGHT 1080
+#define GAME_NAME "Vessels of Order: Battle for the Seas"
 class App {
  public:
   App();
   int run();
 
  private:
+  bool appActive;
+  bool gameActive;
+  SceneState currentState;
+
+  sf::RenderWindow mainWindow;
+
+  StartScene startScene;
+  SFMLSound startSceneMusic;
+
+ private:
+  void setMainWindow();
+  void runMainWindow();
+  void handleGlobalEvents(sf::RenderWindow& window, sf::Event& event);
+  void handleStateEvents(sf::Event& event);
+  void handleStateRendering();
+
+ private:
+  void renderStartScene();
 };
