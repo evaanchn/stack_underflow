@@ -5,8 +5,11 @@
 App::App()
   : appActive(true)
   , gameActive(false)
-  , currentState(START)
-  , startScene(), startSceneMusic(MUSIC_FOLDER + "startScene.mp3", true)
+  , currentState(GAME_OVER)
+  , startScene()
+  , gameOverScene()
+  , startSceneMusic(MUSIC_FOLDER + "startScene.mp3", LOOP)
+  , gameOverSceneMusic(MUSIC_FOLDER + "gameOverScene.wav", LOOP)
   {
   setMainWindow();
 }
@@ -17,7 +20,6 @@ void App::setMainWindow() {
         , GAME_NAME);
   }
 }
-
 
 int App::run() {
   while (this->appActive) {
@@ -54,14 +56,23 @@ void App::handleGlobalEvents(sf::RenderWindow& window, sf::Event& event) {
 void App::handleStateEvents(sf::Event& event) {
   if (currentState == START) startScene.handleEvent(mainWindow, event
       , currentState);
-  
+  else if (currentState == GAME_OVER) gameOverScene.handleEvent(mainWindow, event
+    , currentState, appActive);
 }
 
 void App::handleStateRendering() {
   if (this->currentState == START) renderStartScene();
+  else if (this->currentState == GAME_OVER) renderGameOverScene();
 }
 
 void App::renderStartScene() {
+  gameOverSceneMusic.pause();
   startSceneMusic.play();
   startScene.draw(mainWindow);
+}
+
+void App::renderGameOverScene() {
+  startSceneMusic.pause();  // TEMPORAL
+  gameOverSceneMusic.play();
+  gameOverScene.draw(mainWindow);
 }

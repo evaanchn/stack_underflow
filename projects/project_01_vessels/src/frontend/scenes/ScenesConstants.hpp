@@ -15,11 +15,16 @@ namespace Positions {
   const sf::Vector2f SCENES(0, 0);
   const sf::Vector2f BUTTON_START(1610, 735);
   const sf::Vector2f BUTTON_INFO(1610, 900);
+
+  const sf::Vector2f BUTTON_RESTART(1550, 295);
+  const sf::Vector2f BUTTON_EXIT(1655, 405);
+
 };
 
 namespace Sizes {
   const sf::Vector2f SCENES(1920, 1080);
   const sf::Vector2f REGULAR_BUTTON(200, 60);
+  const sf::Vector2f LARGE_BUTTON(350, 60);
 };
 
 #define RADIUS_REGULAR_BUTTON 35
