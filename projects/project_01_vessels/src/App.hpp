@@ -3,10 +3,15 @@
 #pragma once
 
 #include "StartScene.hpp"
+#include "GameScene.hpp"
 #include "GameOverScene.hpp"
+
+#include <iostream>
 
 #define MAIN_WINDOW_WIDTH 1920
 #define MAIN_WINDOW_HEIGHT 1080
+#define GAME_WINDOW_WIDTH 1920
+#define GAME_WINDOW_HEIGHT 1080
 #define GAME_NAME "Vessels of Order: Battle for the Seas"
 #define LOOP true
 
@@ -23,6 +28,7 @@ class App {
   sf::RenderWindow mainWindow;
 
   StartScene startScene;
+  GameScene* gameScene;
   GameOverScene gameOverScene;
 
   SFMLSound startSceneMusic;
@@ -38,4 +44,7 @@ class App {
  private:
   void renderStartScene();
   void renderGameOverScene();
+
+  int startGame();
+  void endGame();
 };

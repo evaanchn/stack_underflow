@@ -2,6 +2,10 @@
 
 #pragma once
 
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+
 #include <string>
 
 enum SceneState {
@@ -30,8 +34,11 @@ namespace Sizes {
 #define RADIUS_REGULAR_BUTTON 35
 #define CORNERS_REGULAR_BUTTON 20
 
+#define ACTIVE true
 #define EMPTY_TEXT ""
 #define FONT_PATH_PIXEL "assets/fonts/pixel.ttf"
 
 const std::string BACKGROUNDS_FOLDER = "assets/scenes_backgrounds/";
 const std::string MUSIC_FOLDER = "assets/music/";
+const std::string GAME_BUTTONS_FOLDER = "assets/sprites/buttons/";
+const std::string VESSELS_FOLDER = "assets/sprites/vessels/";

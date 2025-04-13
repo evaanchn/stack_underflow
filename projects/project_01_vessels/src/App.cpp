@@ -5,7 +5,7 @@
 App::App()
   : appActive(true)
   , gameActive(false)
-  , currentState(GAME_OVER)
+  , currentState(SceneState::START)
   , startScene()
   , gameOverScene()
   , startSceneMusic(MUSIC_FOLDER + "startScene.mp3", LOOP)
@@ -22,14 +22,18 @@ void App::setMainWindow() {
 }
 
 int App::run() {
+  int error = EXIT_SUCCESS;
   while (this->appActive) {
     if (!this->gameActive) {
-      runMainWindow();
+      this->runMainWindow();
     } else {
-      // FLTK Game menu
+      error = this->startGame();
+      if (error != EXIT_SUCCESS) return error;
+      gameScene->run();
+      this->endGame();
     }
   }
-  return EXIT_SUCCESS;
+  return error;
 }
 
 void App::runMainWindow() {
@@ -54,10 +58,10 @@ void App::handleGlobalEvents(sf::RenderWindow& window, sf::Event& event) {
 }
 
 void App::handleStateEvents(sf::Event& event) {
-  if (currentState == START) startScene.handleEvent(mainWindow, event
-      , currentState);
-  else if (currentState == GAME_OVER) gameOverScene.handleEvent(mainWindow, event
-    , currentState, appActive);
+  if (currentState == START) startScene.handleEvent(this->mainWindow, event
+      , this->currentState, this->gameActive);
+  else if (currentState == GAME_OVER) gameOverScene.handleEvent(this->mainWindow
+    , event, this->currentState, this->appActive);
 }
 
 void App::handleStateRendering() {
@@ -75,4 +79,21 @@ void App::renderGameOverScene() {
   startSceneMusic.pause();  // TEMPORAL
   gameOverSceneMusic.play();
   gameOverScene.draw(mainWindow);
+}
+
+int App::startGame() {
+  this->startSceneMusic.stop();
+  this->gameScene = new GameScene(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT
+      , GAME_NAME);
+  if (!this->gameScene) return EXIT_FAILURE;
+  this->gameActive = ACTIVE;
+  return EXIT_SUCCESS;
+}
+
+void App::endGame() {
+  this->gameActive = !ACTIVE;
+  if(this->gameScene) delete this->gameScene;
+  this->gameScene = nullptr;
+  this->setMainWindow();
+  this->currentState = SceneState::GAME_OVER;
 }
