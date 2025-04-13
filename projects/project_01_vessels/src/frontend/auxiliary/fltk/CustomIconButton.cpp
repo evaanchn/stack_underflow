@@ -3,13 +3,13 @@
 #include "CustomIconButton.hpp"
 
 CustomIconButton::CustomIconButton(int x, int y, int w, int h,
-    const char* icon_path, const char* text)
+    const std::string& icon_path, const std::string& text)
   : Fl_Button(x, y, w, h),
   icon(nullptr),
   label_text(text),
   font_size(14),
   label_color(FL_WHITE) {
-  icon = new Fl_PNG_Image(icon_path);
+  icon = new Fl_PNG_Image(icon_path.c_str());
   box(FL_NO_BOX);           // Transparent background
   down_box(FL_NO_BOX);
   color(FL_BACKGROUND_COLOR);  // Not visible anyway

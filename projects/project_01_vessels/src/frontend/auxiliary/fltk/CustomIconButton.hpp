@@ -11,8 +11,8 @@
 
 class CustomIconButton : public Fl_Button {
  public:
-  CustomIconButton(int x, int y, int w, int h, const char* icon_path, 
-      const char* text = "");
+  CustomIconButton(int x, int y, int w, int h, const std::string& icon_path, 
+      const std::string& text = "");
   ~CustomIconButton() { delete icon; }
 
   void setLabelText(const std::string& text) { label_text = text; redraw(); }
