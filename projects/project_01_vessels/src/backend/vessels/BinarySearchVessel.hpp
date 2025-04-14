@@ -10,7 +10,11 @@
 class BinarySearchVessel : public Vessel {
  public:
   BinarySearchVessel();
-  // discard
-  void fillVessel(std::vector<ActionLog>& logs) override {
-  }
+
+  /**
+   * @brief Avoid suffle from Vessel class
+   * 
+   * @param logs
+   */
+  void fillVessel(std::vector<ActionLog>& logs) override;
 };
