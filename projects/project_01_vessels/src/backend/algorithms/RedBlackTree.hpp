@@ -21,6 +21,15 @@ class redBlackTree : public algorithm {
     /// @brief constructor method of the class
     redBlackTree();
 
+    /// @brief destructor method of the class
+    ~redBlackTree();
+
+    /**
+     * @brief method that allows to eliminate every single node of the tree
+     * @param node node that will be eliminated
+     */
+    void redBlackTree::clearTree(Node* node);
+
     /**
      @brief assigned method for inserting elements
      @param element element to insert

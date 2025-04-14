@@ -2,265 +2,273 @@
 
 #include "BTree.hpp"
 
-BTreeNode::BTreeNode(bool leaf) {
+BTreeNode::BTreeNode(bool leaf, int64_t t) {
   isLeaf = leaf;
   keyCount = 0;
-  for (int64_t i = 0; i < (MAX_KEYS + 1); ++i) {
-    children[i] = nullptr;
-  }
+  keys = std::vector<int64_t>(2 * t - 1, 0);
+  children = std::vector<BTreeNode*>(2 * t, nullptr);
+}
+
+BTreeNode::~BTreeNode() {
 }
 
 bTree::bTree(int64_t t) : algorithm() {
   this->t = t;
-  root = new BTreeNode(true);
+  root = new BTreeNode(true, t);
+  elementRecord.clear();
   algorithmName = "BTree";
 }
 
+bTree::~bTree() {
+  clearTree(root);
+  elementRecord.clear();
+}
+
+void bTree::clearTree(BTreeNode* node) {
+  if (node == nullptr) return;
+  
+  if (!node->isLeaf) {
+    for (int i = 0; i <= node->keyCount; i++) {
+      clearTree(node->children[i]);
+    }
+  }
+  delete node;
+}
+
 size_t bTree::insert(int64_t element) {
-  size_t interactions = 0;
+  if (elementRecord.find(element) != elementRecord.end()) {
+    return 0;
+  }
+  size_t k = 0;
   BTreeNode* rootNode = root;
-  int64_t t = this->t;
-  interactions += 2;  // save interactions
 
   if (rootNode->keyCount == (2 * t) - 1) {
-    BTreeNode* newRoot = new BTreeNode(false);
-    root = newRoot;
+    BTreeNode* newRoot = new BTreeNode(false, t);
     newRoot->children[0] = rootNode;
-    newRoot->keyCount = 1;
-    interactions += 4;  // save interactions
+    root = newRoot;
 
-    // save interactions
-    interactions += splitChild(newRoot, 0);
-    interactions += insertNonFull(newRoot, element);
+    k += splitChild(newRoot, 0);
+    k += insertNonFull(newRoot, element);
   } else {
-    // save interactions
-    interactions += insertNonFull(rootNode, element);
-  }
-  return interactions;
-}
-
-size_t bTree::search(int64_t element) {
-  size_t interactions = 0;
-  BTreeNode* temp = nullptr;
-  temp = searchNavigation(temp, element, &interactions);
-  return interactions;
-}
-
-BTreeNode* bTree::searchNavigation(BTreeNode* temp, int64_t element,
-  size_t* interactions) {
-  if (temp == nullptr) {
-    temp = root;
-    ++(*interactions);  // save interactions
+    k += insertNonFull(rootNode, element);
   }
 
-  int i = 0;
-  while (i < temp->keyCount && element > temp->keys[i]) {
-    i++;
-    ++(*interactions);  // save interactions
-  }
-  if (i < temp->keyCount && element == temp->keys[i]) {
-    return temp;
-  } else if (temp->isLeaf) {
-    return nullptr;
-  } else {
-    return searchNavigation(temp->children[i], element, interactions);
-  }
-}
-
-size_t bTree::remove(int64_t element) {
-  return removeNavigation(root, element);
-}
-
-size_t bTree::removeNavigation(BTreeNode* temp, int64_t element) {
-  size_t interactions = 0;
-  int i = 0;
-  ++interactions;  // save interactions
-
-  while (i < temp->keyCount && element > temp->keys[i]) {
-    ++i;
-    ++interactions;  // save interactions
-  }
-
-  if (i < temp->keyCount && element == temp->keys[i]) {
-    if (temp->isLeaf) {
-      for (int j = i; j < temp->keyCount - 1; ++j) {
-        temp->keys[j] = temp->keys[j + 1];
-        ++interactions;  // save interactions
-      }
-
-      temp->keyCount--;
-      ++interactions;  // save interactions
-
-    } else {
-      // save interactions
-      interactions += deleteInternalNode(temp, element, i);
-    }
-  } else if (!temp->isLeaf) {
-    // save interactions
-    interactions += removeNavigation(temp->children[i], element);
-  }
-  return interactions;
+  elementRecord.insert(element);
+  return k + 1;
 }
 
 size_t bTree::splitChild(BTreeNode* parentNode, int64_t i) {
-  size_t interactions = 0;
-  int64_t t = this->t;
+  size_t k = 0;
   BTreeNode* fullChild = parentNode->children[i];
-  BTreeNode* newChild = new BTreeNode(fullChild->isLeaf);
-  interactions += 3;  // save interactions
+  BTreeNode* newChild = new BTreeNode(fullChild->isLeaf, t);
 
-  for (int64_t j = parentNode->keyCount; j > i; --j) {
-    parentNode->children[j + 1] = parentNode->children[j];
-    parentNode->keys[j] = parentNode->keys[j - 1];
-    interactions += 2;  // save interactions
+  // Copy right half of keys
+  for (int j = 0; j < t - 1; j++) {
+    newChild->keys[j] = fullChild->keys[j + t];
+    k++;
   }
-
-  parentNode->children[i + 1] = newChild;
-  parentNode->keys[i] = fullChild->keys[t - 1];
-  parentNode->keyCount++;
-  interactions += 3;  // save interactions
-
   newChild->keyCount = t - 1;
-  ++interactions;  // save interactions
 
-  for (int64_t j = 0; j < t - 1; ++j) {
-    newChild->keys[j] = fullChild->keys[t + j];
-    ++interactions;  // save interactions
-  }
-
-  fullChild->keyCount = t - 1;
-  ++interactions;  // save interactions
-
+  // Copy children if not leaf
   if (!fullChild->isLeaf) {
-    for (int64_t j = 0; j < t; ++j) {
-      newChild->children[j] = fullChild->children[t + j];
-      ++interactions;  // save interactions
+    for (int j = 0; j < t; j++) {
+      newChild->children[j] = fullChild->children[j + t];
+      k++;
     }
   }
-  return interactions;
+
+  // Move median key to parent
+  for (int j = parentNode->keyCount; j > i; j--) {
+    parentNode->keys[j] = parentNode->keys[j - 1];
+  }
+  parentNode->keys[i] = fullChild->keys[t - 1];
+  parentNode->keyCount++;
+
+  // Adjust parent's children
+  for (int j = parentNode->keyCount; j > i + 1; j--) {
+    parentNode->children[j] = parentNode->children[j - 1];
+  }
+  parentNode->children[i + 1] = newChild;
+
+  // Update split node
+  fullChild->keyCount = t - 1;
+  return k;
 }
 
 size_t bTree::insertNonFull(BTreeNode* node, int64_t element) {
-  size_t interactions = 0;
-  int64_t i = node->keyCount - 1;
-  ++interactions;  // save interactions
+  size_t k = 0;
+  int i = node->keyCount - 1;
 
   if (node->isLeaf) {
     while (i >= 0 && element < node->keys[i]) {
       node->keys[i + 1] = node->keys[i];
-      --i;
-      interactions += 2;  // save interactions
+      i--;
+      k++;
     }
-
     node->keys[i + 1] = element;
     node->keyCount++;
-    interactions += 2;  // save interactions
-
   } else {
     while (i >= 0 && element < node->keys[i]) {
-      --i;
-      ++interactions;  // save interactions
+      i--;
+      k++;
     }
-
-    ++i;
-    ++interactions;  // save interactions
+    i++;
 
     if (node->children[i]->keyCount == (2 * t) - 1) {
-      splitChild(node, i);
-      ++interactions;  // save interactions
-
+      k += splitChild(node, i);
       if (element > node->keys[i]) {
-        ++i;
-        ++interactions;  // save interactions
+        i++;
       }
     }
-    // save interactions
-    interactions += insertNonFull(node->children[i], element);
+    k += insertNonFull(node->children[i], element);
   }
-  return interactions;
+  return k;
+}
+
+size_t bTree::search(int64_t element) {
+  size_t k = 0;
+  BTreeNode* current = root;
+
+  while (current != nullptr) {
+    int i = 0;
+    while (i < current->keyCount && element > current->keys[i]) {
+      i++;
+      k++;
+    }
+
+    if (i < current->keyCount && current->keys[i] == element) {
+      return k + 1;
+    }
+
+    if (current->isLeaf) {
+      return k;
+    }
+
+    current = current->children[i];
+    k++;
+  }
+
+  return k;
+}
+
+size_t bTree::remove(int64_t element) {
+  if (elementRecord.find(element) == elementRecord.end()) {
+    return 0;
+  }
+  elementRecord.erase(element);
+  return removeNavigation(root, element);
+}
+
+size_t bTree::removeNavigation(BTreeNode* node, int64_t element) {
+  size_t k = 0;
+  int i = 0;
+
+  while (i < node->keyCount && element > node->keys[i]) {
+    i++;
+    k++;
+  }
+
+  if (i < node->keyCount && node->keys[i] == element) {
+    if (node->isLeaf) {
+      for (int j = i; j < node->keyCount - 1; j++) {
+        node->keys[j] = node->keys[j + 1];
+        k++;
+      }
+      node->keyCount--;
+    } else {
+      k += deleteInternalNode(node, element, i);
+    }
+    return k;
+  }
+
+  if (node->isLeaf) {
+    return k;
+  }
+
+  return k + removeNavigation(node->children[i], element);
 }
 
 size_t bTree::deleteInternalNode(BTreeNode* node, int64_t element, int64_t i) {
-  size_t interactions = 0;
-  int64_t t = this->t;
+  size_t k = 0;
+
   if (node->children[i]->keyCount >= t) {
-    // save interactions
-    node->keys[i] = deletePredecessor(node->children[i], &interactions);
+    node->keys[i] = deletePredecessor(node->children[i], &k);
   } else if (node->children[i + 1]->keyCount >= t) {
-    // save interactions
-    node->keys[i] = deleteSuccessor(node->children[i + 1], &interactions);
+    node->keys[i] = deleteSuccessor(node->children[i + 1], &k);
   } else {
-    // save interactions
-    interactions += deleteMerge(node, i);
-    interactions += deleteInternalNode(node->children[i], element, t - 1);
+    k += deleteMerge(node, i);
+    k += removeNavigation(node->children[i], element);
   }
-  return interactions;
+
+  return k;
 }
 
-int64_t bTree::deletePredecessor(BTreeNode* node, size_t* interactions) {
-  while (!node->isLeaf) {
-    node = node->children[node->keyCount - 1];
-    ++(*interactions);  // save interactions
+int64_t bTree::deletePredecessor(BTreeNode* node, size_t* k) {
+  if (node->isLeaf) {
+    int64_t pred = node->keys[node->keyCount - 1];
+    node->keyCount--;
+    (*k)++;
+    return pred;
   }
 
-  int64_t element = node->keys[node->keyCount - 1];
-  node->keyCount--;
-  (*interactions) += 2;  // save interactions
-
-  return element;
+  (*k)++;
+  return deletePredecessor(node->children[node->keyCount], k);
 }
 
-int64_t bTree::deleteSuccessor(BTreeNode* node, size_t* interactions) {
-  while (!node->isLeaf) {
-    node = node->children[0];
-    ++(*interactions);  // save interactions
+int64_t bTree::deleteSuccessor(BTreeNode* node, size_t* k) {
+  if (node->isLeaf) {
+    int64_t succ = node->keys[0];
+    for (int i = 0; i < node->keyCount - 1; i++) {
+      node->keys[i] = node->keys[i + 1];
+      (*k)++;
+    }
+    node->keyCount--;
+    return succ;
   }
 
-  int64_t element = node->keys[0];
-  ++(*interactions);  // save interactions
-
-  for (int64_t i = 0; i < node->keyCount - 1; ++i) {
-    node->keys[i] = node->keys[i + 1];
-    ++(*interactions);  // save interactions
-  }
-
-  node->keyCount--;
-  ++(*interactions);  // save interactions
-  return element;
+  (*k)++;
+  return deleteSuccessor(node->children[0], k);
 }
 
 size_t bTree::deleteMerge(BTreeNode* node, int64_t i) {
-  size_t interactions = 0;
-  BTreeNode* leftChild = node->children[i];
-  BTreeNode* rightChild = node->children[i + 1];
-  interactions += 2;  // save interactions
+  size_t k = 0;
+  BTreeNode* child = node->children[i];
+  BTreeNode* sibling = node->children[i + 1];
 
-  leftChild->keys[leftChild->keyCount] = node->keys[i];
-  leftChild->keyCount++;
-  interactions += 2;  // save interactions
+  // Merge node key and sibling into child
+  child->keys[child->keyCount] = node->keys[i];
+  child->keyCount++;
+  k++;
 
-  for (int64_t j = 0; j < rightChild->keyCount; ++j) {
-    leftChild->keys[leftChild->keyCount + j] = rightChild->keys[j];
-    leftChild->keyCount++;
-    interactions += 2;  // save interactions
+  // Copy sibling keys
+  for (int j = 0; j < sibling->keyCount; j++) {
+    child->keys[child->keyCount + j] = sibling->keys[j];
+    k++;
   }
 
-  if (!leftChild->isLeaf) {
-    for (int64_t j = 0; j < rightChild->keyCount + 1; ++j) {
-      leftChild->children[leftChild->keyCount + j] = rightChild->children[j];
-      ++interactions;  // save interactions
+  // Copy children if not leaf
+  if (!child->isLeaf) {
+    for (int j = 0; j <= sibling->keyCount; j++) {
+      child->children[child->keyCount + j] = sibling->children[j];
+      k++;
     }
   }
 
-  for (int64_t j = i; j < node->keyCount - 1; ++j) {
+  child->keyCount += sibling->keyCount;
+
+  // Remove merged key from parent
+  for (int j = i; j < node->keyCount - 1; j++) {
     node->keys[j] = node->keys[j + 1];
-    node->children[j + 1] = node->children[j + 2];
-    interactions += 2;  // save interactions
+    k++;
+  }
+
+  // Remove sibling pointer
+  for (int j = i + 1; j < node->keyCount; j++) {
+    node->children[j] = node->children[j + 1];
+    k++;
   }
 
   node->keyCount--;
-  ++interactions;  // save interactions
-
-  delete rightChild;
-  return interactions;
+  delete sibling;
+  return k;
 }
