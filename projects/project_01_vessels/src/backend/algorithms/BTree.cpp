@@ -26,7 +26,7 @@ bTree::~bTree() {
 
 void bTree::clearTree(BTreeNode* node) {
   if (node == nullptr) return;
-  
+
   if (!node->isLeaf) {
     for (int i = 0; i <= node->keyCount; i++) {
       clearTree(node->children[i]);
