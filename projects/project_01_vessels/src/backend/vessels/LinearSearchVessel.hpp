@@ -2,13 +2,10 @@
 
 #pragma once
 
-// #include "../algorithms/LinearSearch.hpp"
+#include "LinkedList.hpp"
 #include "Vessel.hpp"
 
 class LinearSearchVessel : public Vessel {
  public:
   LinearSearchVessel();
-
- private:
-  // LinearSearch linearSearch;
 };

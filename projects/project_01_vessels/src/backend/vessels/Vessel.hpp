@@ -10,34 +10,36 @@
 #include <string>
 #include <vector>
 
-//  #include "Algorithm.h"
+#include "Algorithm.hpp"
+#include "BattleLog.hpp"
 
 #define ELEMENT_COUNT 50
 #define MAX_DAMAGE (ELEMENT_COUNT * 2)
 
 class Vessel {
  public:
-  // Constructor
+  /// Constructor
   explicit Vessel(std::string nameInit, int64_t healthInit, size_t costInit
       , size_t weightInit);
+  virtual ~Vessel();
 
   /**
    * @brief Search given key
    * 
    * @param value key
    * @param log to register operation time and iterations
-   * @return int iterations taken
+   * @return size_t iterations taken
    */
-  int search(int value/*, ActionLog& log*/);
+  size_t search(int64_t element, ActionLog& log);
 
   /**
    * @brief Insert given key
    * 
    * @param value key
    * @param log to register operation time and iterations
-   * @return int iterations taken
+   * @return size_t iterations taken
    */
-  int insert(int value/*, ActionLog& log*/);
+  size_t insert(int64_t element, ActionLog& log);
 
    /**
    * @brief Remove given key
@@ -45,18 +47,17 @@ class Vessel {
    * @param value key
    * @param upgrade_points maximum iterations possible
    * @param log to register operation time and iterations
-   * @return int iterations taken
+   * @return size_t iterations taken
    */
-  int deletion(int value, size_t& upgrade_points/*, ActionLog& log*/);
+  size_t deletion(int64_t element, ActionLog& log);
 
   /**
    * @brief Fill vessel data structure with random values
    * @details to be called after a vessel is created
    * 
    * @param logs to register insetions time and iterations
-   * @return int iterations taken
    */
-  void fillVessel(/*std::vector<ActionLog>& logs*/);
+  virtual void fillVessel(std::vector<ActionLog>& logs);
 
   /**
    * @brief Checks the health to be above 0
@@ -64,7 +65,10 @@ class Vessel {
    * @return true: health <= 0
    * @return false: health > 0 
    */
-  bool isAlive();
+  const bool isAlive();
+
+  const size_t getWeight();
+  const size_t getCost();
 
   /**
    * @brief Obtain the damage value by doing a search on its data of a
@@ -72,7 +76,7 @@ class Vessel {
    * 
    * @return int damage to be dealt
    */
-  int calculateDamage();
+  int calculateDamage(ActionLog& log);
 
   /**
    * @brief Decrease the health value of the vessel with a valid amount of
@@ -82,11 +86,21 @@ class Vessel {
    */
   void takeDamage(int64_t damageDealt);
 
- protected:
-  void shuffle(std::vector<int> numbers);
+  /**
+   * @brief Try to eliminate elements from the vessel
+   * 
+   * @param upgradePoints 
+   * @return true 
+   * @return false 
+   */
+  bool upgradeVessel(size_t& upgradePoints, ActionLog& log);
 
  protected:
-  /*Algorithm algorithm*/
+  void shuffle(std::vector<int> numbers);
+  int64_t randValue(int64_t min, int64_t max);
+
+ protected:
+  algorithm* algorithm;
   std::string name;
   int64_t health = 0;
   size_t cost = 0;

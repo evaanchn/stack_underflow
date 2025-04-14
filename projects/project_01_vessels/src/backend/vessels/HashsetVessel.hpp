@@ -2,13 +2,10 @@
 
 #pragma once
 
-// #include "../algorithms/Hashset.hpp"
+#include "Hashset.hpp"
 #include "Vessel.hpp"
 
 class HashsetVessel : public Vessel {
  public:
   HashsetVessel();
-
- private:
-  // Hashset hashset;
 };

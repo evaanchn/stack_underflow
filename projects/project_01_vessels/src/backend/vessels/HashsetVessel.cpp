@@ -4,4 +4,5 @@
 
 HashsetVessel::HashsetVessel()
 : Vessel("Lightning", 50, 200, 5) {
+  this->algorithm = new Hashset();
 }

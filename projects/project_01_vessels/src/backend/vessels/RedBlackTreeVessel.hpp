@@ -2,13 +2,10 @@
 
 #pragma once
 
-// #include "../algorithms/RedBlackTree.hpp"
+#include "RedBlackTree.hpp"
 #include "Vessel.hpp"
 
 class RedBlackTreeVessel : public Vessel {
  public:
   RedBlackTreeVessel();
-
- private:
-  // RedBlackTree redBlackTree;
 };

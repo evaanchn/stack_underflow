@@ -4,4 +4,5 @@
 
 SplayTreeVessel::SplayTreeVessel()
 : Vessel("Chaos", 150, 30, 2) {
+  this->algorithm = new SplayTree();
 }

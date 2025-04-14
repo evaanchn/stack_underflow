@@ -4,4 +4,5 @@
 
 BinarySearchVessel::BinarySearchVessel()
 : Vessel("Wales", 100, 80, 2) {
+  this->algorithm = new BinarySearch();
 }

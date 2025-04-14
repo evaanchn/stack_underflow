@@ -2,13 +2,15 @@
 
 #pragma once
 
-// #include "../algorithms/BinarySearch.hpp"
+#include <vector>
+
+#include "BinarySearch.hpp"
 #include "Vessel.hpp"
 
 class BinarySearchVessel : public Vessel {
  public:
   BinarySearchVessel();
-
- private:
-  // BinarySearch bynarySearch;
+  // discard
+  void fillVessel(std::vector<ActionLog>& logs) override {
+  }
 };

@@ -4,4 +4,5 @@
 
 LinearSearchVessel::LinearSearchVessel()
 : Vessel("Caronte", 200, 10, 1) {
+  this->algorithm = new LinkedList();
 }

@@ -45,12 +45,15 @@ Vessel* Board::getVessel(std::vector<int> coordinates, int playerID) {
 }
 
 bool Board::insertVessel(std::vector<int> coordinates, int vesselID
-    , int playerID) {
+    , int playerID,  std::vector<ActionLog>& logs) {
   bool insert_success = false;
   if (invalidSlot(coordinates, playerID)) return false;
   Vessel* vessel = vesselFactory(vesselID);
   if (vessel == nullptr) return false;
-  if (this->getSlot(coordinates, playerID)->insertVessel(vessel)) return true;
+  if (this->getSlot(coordinates, playerID)->insertVessel(vessel)) {
+    this->getVessel(coordinates, playerID)->fillVessel(logs);
+    return true;
+  }
   // if it could not be inserted, delete memory allocated
   delete vessel;
   return false;
@@ -78,10 +81,10 @@ bool Board::deleteVessel(std::vector<int> coordinates, int playerID) {
 }
 
 Slot** Board::createSlotsMatrix(const int rows, const int columns) {
-  Slot** matrix = (Slot**)calloc(rows, sizeof(Slot*));
+  Slot** matrix = reinterpret_cast<Slot**>(calloc(rows, sizeof(Slot*)));
   if (matrix) {
     for (int row = 0; row < rows; ++row) {
-      if ((matrix[row] = (Slot*)calloc(columns, sizeof(Slot))) == NULL) {
+      if ((matrix[row] = reinterpret_cast<Slot*>(calloc(columns, sizeof(Slot)))) == NULL) {
         destroySlotsMatrix(matrix, rows);
         return NULL;
       }

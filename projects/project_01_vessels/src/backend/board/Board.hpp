@@ -62,7 +62,8 @@ class Board {
   * @param playerID The ID of the player performing the insertion.
   * @return true if insertion was successful, false otherwise.
   */
-  bool insertVessel(std::vector<int> coordinates, int vesselID, int playerID);
+  bool insertVessel(std::vector<int> coordinates, int vesselID, int playerID
+    , std::vector<ActionLog>& logs);
 
   /**
   * @brief Moves a Vessel from an origin Slot to a destination Slot.

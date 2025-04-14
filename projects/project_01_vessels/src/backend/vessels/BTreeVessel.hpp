@@ -2,13 +2,13 @@
 
 #pragma once
 
-// #include "../algorithms/BTree.hpp"
+#include "BTree.hpp"
 #include "Vessel.hpp"
+
+// grade of a BTree node
+#define MINIMUM_GRADE 3
 
 class BTreeVessel : public Vessel {
  public:
   BTreeVessel();
-
- private:
-  // BTree bTree;
 };

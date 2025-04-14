@@ -4,4 +4,5 @@
 
 BTreeVessel::BTreeVessel()
 : Vessel("Thunder", 120, 50, 2) {
+  this->algorithm = new bTree(MINIMUM_GRADE);
 }
