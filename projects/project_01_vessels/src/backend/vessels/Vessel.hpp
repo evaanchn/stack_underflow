@@ -65,10 +65,10 @@ class Vessel {
    * @return true: health <= 0
    * @return false: health > 0 
    */
-  const bool isAlive();
+  bool isAlive();
 
-  const size_t getWeight();
-  const size_t getCost();
+  size_t getWeight();
+  size_t getCost();
 
   /**
    * @brief Obtain the damage value by doing a search on its data of a
@@ -100,9 +100,9 @@ class Vessel {
   int64_t randValue(int64_t min, int64_t max);
 
  protected:
-  algorithm* algorithm;
+  Algorithm* algorithm;
   std::string name;
-  int64_t health = 0;
-  size_t cost = 0;
-  size_t weight = 0;
+  int64_t health;
+  size_t cost;
+  size_t weight;
 };

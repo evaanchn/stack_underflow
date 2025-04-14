@@ -5,11 +5,11 @@
 
 Vessel::Vessel(std::string nameInit, int64_t healthInit, size_t costInit
   , size_t weightInit)
-: name(nameInit)
+: algorithm(nullptr)
+, name(nameInit)
 , health(healthInit)
 , cost(costInit)
-, weight(weightInit)
-, algorithm(nullptr) {
+, weight(weightInit) {
 }
 
 Vessel::~Vessel() {
@@ -42,34 +42,35 @@ size_t Vessel::deletion(int64_t element, ActionLog& log) {
   log.setAction("delete");
   log.recordStart();
   // receives the iterations from algorithm method
-  size_t iterations = algorithm->remove(element);
+  size_t iterations = 0;
+  iterations = algorithm->remove(element);
   log.recordEnd(iterations);
   return iterations;
-  return 2;
 }
 
 void Vessel::fillVessel(std::vector<ActionLog>& logs) {
   std::vector<int> numbers;
-  for (int i = 0; i <= ELEMENT_COUNT; ++i) {
+  for (int i = 1; i <= ELEMENT_COUNT; ++i) {
     numbers.push_back(i);
   }
   shuffle(numbers);
-  for (ActionLog log : logs) {
+  logs.resize(ELEMENT_COUNT);
+  for (ActionLog& log : logs) {
     if (numbers.empty()) break;
     this->insert(numbers.back(), log);
     numbers.pop_back();
   }
 }
 
-const bool Vessel::isAlive() {
+bool Vessel::isAlive() {
   return (this->health > 0);
 }
 
-const size_t Vessel::getWeight() {
+size_t Vessel::getWeight() {
   return this->weight;
 }
 
-const size_t Vessel::getCost() {
+size_t Vessel::getCost() {
   return this->cost;
 }
 
@@ -81,7 +82,8 @@ void Vessel::takeDamage(int64_t damage_dealed) {
 
 int Vessel::calculateDamage(ActionLog& log) {
   int damage = 0;
-  int deduction = this->search(randValue(1, ELEMENT_COUNT), log);
+  int64_t randNum = this->randValue(1, ELEMENT_COUNT);
+  int deduction = this->search(randNum, log);
   // calculate damage
   damage = MAX_DAMAGE / deduction;
   return damage;
@@ -107,7 +109,7 @@ void Vessel::shuffle(std::vector<int> numbers) {
   std::shuffle(numbers.begin(), numbers.end(), rng);
 }
 
-int64_t randValue(int64_t min, int64_t max) {
+int64_t Vessel::randValue(int64_t min, int64_t max) {
   std::srand(std::time(nullptr));
-  return (int64_t)(std::rand() % 50) + 1;
+  return (int64_t)(std::rand() % max) + min;
 }
