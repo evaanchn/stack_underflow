@@ -29,6 +29,4 @@ void StartScene::handleEvent(sf::RenderWindow& window, sf::Event& event,
 
 void StartScene::draw(sf::RenderWindow& window) {
   background.draw(window);
-  startButton.draw(window);
-  infoButton.draw(window);
 }
