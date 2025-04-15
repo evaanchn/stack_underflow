@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include <stack>
 #include <string>
 #include <unordered_set>
 #include "Algorithm.hpp"
@@ -25,11 +26,8 @@ class RedBlackTree : public Algorithm {
   /// @brief destructor method of the class
   ~RedBlackTree();
 
-  /**
-   * @brief method that allows to eliminate every single node of the tree
-   * @param node node that will be eliminated
-   */
-  void clearTree(Node* node);
+  /// @brief method that allows to eliminate every single node of the tree
+  void clear();
 
   /**
    @brief assigned method for inserting elements

@@ -13,19 +13,30 @@ RedBlackTree::RedBlackTree() : Algorithm() {
 }
 
 RedBlackTree::~RedBlackTree() {
-  // clearTree(root);
+  clear();
+  delete NIL;
+  NIL = nullptr;
   elementRecord.clear();
 }
 
-// void RedBlackTree::clearTree(Node* node) {
-//   if (node->leftChild != nullptr) {
-//     clearTree(node->leftChild);
-//   }
-//   if (node->rightChild != nullptr) {
-//     clearTree(node->rightChild);
-//   }
-//   delete node;
-// }
+void RedBlackTree::clear() {
+  if (this->root == nullptr) return;
+  std::stack<Node*> nodes;
+  nodes.push(root);
+  while (!nodes.empty()) {
+    Node* current = nodes.top();
+    nodes.pop();
+
+    if (current->leftChild && current->leftChild != NIL) {
+      nodes.push(current->leftChild);
+    }
+    if (current->rightChild && current->rightChild != NIL) {
+      nodes.push(current->rightChild);
+    }
+    delete current;
+  }
+  root = nullptr;
+}
 
 size_t RedBlackTree::insert(int64_t element) {
   if (elementRecord.find(element) != elementRecord.end()) {
@@ -320,8 +331,8 @@ size_t RedBlackTree::transplant(Node* u, Node* v) {
     u->parent->leftChild = v;
   } else {
     u->parent->rightChild = v;
-    v->parent = u->parent;
   }
+  v->parent = u->parent;  // Mover fuera del else
   return 1;
 }
 
