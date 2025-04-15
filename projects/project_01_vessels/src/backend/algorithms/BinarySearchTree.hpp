@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <stack>
+
 #include "Algorithm.hpp"
 
 class BinarySearchTree {
@@ -15,8 +17,7 @@ class BinarySearchTree {
     Node* parent = nullptr;
     Node* leftChild = nullptr;
     Node* rightChild = nullptr;
-
-    ~Node();
+    // ~Node();
   };
 
   // Constructor
@@ -67,6 +68,12 @@ class BinarySearchTree {
    */
   void rightRotate(Node* node);
 
- protected:
+  /**
+   * @brief Post order deletion
+   * 
+   */
+  void clear();
+
+ public:
   Node* root = nullptr;
 };

@@ -10,18 +10,27 @@
 
 BinarySearchTree::BinarySearchTree() = default;
 
-BinarySearchTree::Node::~Node() {
-  delete this->leftChild;
-  leftChild = nullptr;
-  delete rightChild;
-  rightChild = nullptr;
+BinarySearchTree::~BinarySearchTree() {
+  this->clear();
 }
 
-BinarySearchTree::~BinarySearchTree() {
-  if (this->root) {
-    delete this->root;
-    this->root = nullptr;
+void BinarySearchTree::clear() {
+  if (this->root == nullptr) return;
+  std::stack<Node*> nodes;
+  nodes.push(root);
+  while (!nodes.empty()) {
+    Node* current = nodes.top();
+    nodes.pop();
+
+    if (current->leftChild) {
+      nodes.push(current->leftChild);
+    }
+    if (current->rightChild) {
+      nodes.push(current->rightChild);
+    }
+    delete current;
   }
+  root = nullptr;
 }
 
 BinarySearchTree::Node* BinarySearchTree::insert(int64_t element
@@ -82,38 +91,28 @@ BinarySearchTree::Node* BinarySearchTree::search(int64_t element
 
 void BinarySearchTree::leftRotate(Node* node) {
   assert(node);
-  Node* rightChild = node->rightChild;
-  node->rightChild = rightChild->leftChild;
-  if (rightChild->leftChild != nullptr) {
-    rightChild->leftChild->parent = node;
-  }
-  rightChild->parent = node->parent;
-  if (node->parent == nullptr) {
-    this->root = rightChild;
-  } else if (node == node->parent->leftChild) {
-    node->parent->leftChild = rightChild;
-  } else {
-    node->parent->rightChild = rightChild;
-  }
-  rightChild->leftChild = node;
-  node->parent = rightChild;
+  assert(node->parent);  // not to be called by root
+  Node *parent = node->parent;
+  Node *oldLeft = node->leftChild;
+  node->parent = NULL;
+  // parent down left
+  node->leftChild = parent;
+  parent->parent = node;
+  // old node->left as new node->left->right (parent left)
+  parent->rightChild = oldLeft;
+  if (oldLeft != NULL) oldLeft->parent = parent;
 }
 
 void BinarySearchTree::rightRotate(Node* node) {
   assert(node);
-  Node* leftChild = node->leftChild;
-  node->leftChild = leftChild->rightChild;
-  if (leftChild->rightChild != nullptr) {
-    leftChild->rightChild->parent = node;
-  }
-  leftChild->parent = node->parent;
-  if (node->parent == nullptr) {
-    root = leftChild;
-  } else if (node == node->parent->rightChild) {
-    node->parent->rightChild = leftChild;
-  } else {
-    node->parent->leftChild = leftChild;
-  }
-  leftChild->rightChild = node;
-  node->parent = leftChild;
+  assert(node->parent);  // not to be called by root
+  Node *parent = node->parent;
+  Node *oldRight = node->rightChild;
+  node->parent = NULL;
+  // parent down right
+  node->rightChild = parent;
+  parent->parent = node;
+  // old node->right as newRight(parent) left
+  parent->leftChild = oldRight;
+  if (oldRight != NULL) oldRight->parent = parent;
 }
