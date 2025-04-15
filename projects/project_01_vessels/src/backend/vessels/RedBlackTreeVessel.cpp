@@ -4,5 +4,5 @@
 
 RedBlackTreeVessel::RedBlackTreeVessel()
 : Vessel("Ragnalog", 80, 150, 3) {
-  this->algorithm = new BedBlackTree();
+  this->algorithm = new RedBlackTree();
 }
