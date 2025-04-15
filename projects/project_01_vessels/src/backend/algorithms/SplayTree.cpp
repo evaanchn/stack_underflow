@@ -5,7 +5,7 @@
 
 #include "SplayTree.hpp"
 
-SplayTree::SplayTree() : algorithm()
+SplayTree::SplayTree() : Algorithm()
 , BinarySearchTree() {
   algorithmName = "Splay Tree";
 }
@@ -17,48 +17,37 @@ SplayTree::~SplayTree() {
 void SplayTree::toRoot(Node* node, size_t& iterations) {
   assert(node);
   if (node == this->root)  {
-    this->root->parent = nullptr;
+    this->root->parent = nullptr;  // ensure not pointing to deleted
     return;
   }
   if (node->parent == nullptr) {
-    std::cerr << "toRoot: lost node: " << node->value << std::endl;
     return;
   }
-  Node* parent = node->parent;
-  Node* grandParent = nullptr;
-  while (node->parent->parent != nullptr) {
+  
+  while (node->parent != nullptr) {
     ++iterations;
-    parent = node->parent;
-    grandParent = parent->parent;
-    if (node == parent->leftChild) {
-      if (parent == grandParent->leftChild) {
+    Node* parent = node->parent;
+    Node* grandParent = parent->parent;
+    if (node == parent->leftChild) {  // left
+      if (grandParent == nullptr) {
+        this->rightRotate(node);
+      } else if (parent == grandParent->leftChild) {
         zigZig(node);  // left -> left
       } else {
         zigZag(node);  // left -> right
       }
-    } else {
-      if (parent == grandParent->leftChild) {
+    } else {  // right
+      if (grandParent == nullptr) {  
+        this->leftRotate(node);
+      } else if (parent == grandParent->leftChild) {
         zagZig(node);  // right -> left
       } else {
         zagZag(node);  // right -> right
       }
     }
-    // case that the trinode rotation ended in the root
-    if (node->parent == nullptr) {
-      this->root = node;
-      this->root->parent = nullptr;
-      return;
-    }
-  }
-  // zig or zag
-  if (node == node->parent->leftChild) {
-    this->rightRotate(node->parent);
-  } else {
-    this->leftRotate(node->parent);
   }
   this->root = node;
   this->root->parent = nullptr;
-  ++iterations;  // for the left or right rotation
 }
 
 size_t SplayTree::insert(int64_t element) {
@@ -66,7 +55,6 @@ size_t SplayTree::insert(int64_t element) {
   // bst insertion
   Node* inserted =  this->BinarySearchTree::insert(element, iterations);
   if (inserted == nullptr) {
-    std::cerr << "SplayTree: failled to allocate node\n";
     return iterations;
   }
   this->elementRecord.insert(element);
@@ -119,11 +107,13 @@ size_t SplayTree::remove(int64_t element) {
   }
   // search
   Node* removeNode =  this->search(element, iterations);
+  if (removeNode == nullptr) return iterations;
   if (removeNode->value == element) {
     // move up
     this->toRoot(removeNode, iterations);
     // remove
     removeRoot(iterations);
+    this->elementRecord.erase(element);
   }
   return iterations;
 }
@@ -139,19 +129,18 @@ void SplayTree::removeRoot(size_t& iterations) {
   } else if (rightChild == nullptr) {
     this->root = leftChild;
   } else {
-    this->root = maxNode(leftChild, iterations);
-    if (this->root != leftChild) {
-      this->root->parent->rightChild = this->root->leftChild;
-      this->root->leftChild->parent = this->root->parent;
-      this->root->leftChild = leftChild;
-    }
-    this->root->rightChild = rightChild;
+    // move up maxLeft
+    Node* newRoot = maxNode(leftChild, iterations);
+    this->root = leftChild;
+    toRoot(newRoot, iterations);
+    // reconect right subtree
+    rightChild->parent = newRoot;
+    newRoot->rightChild = rightChild;
   }
-  // in case that deleteNode was the last one
-  if (this->root != nullptr) this->root->parent = nullptr;
+  this->root->parent = nullptr;
   deleteNode->leftChild = deleteNode->rightChild = nullptr;
   delete deleteNode;
-  ++iterations;
+  ++iterations;  // one for the remove process + toRoot cycles
 }
 
 BinarySearchTree::Node* SplayTree::maxNode(Node* parent, size_t& iterations) {
@@ -169,9 +158,26 @@ void SplayTree::zigZig(Node* node) {
   Node* nodeGrandChild = node->parent->parent;
   // connect subtrees
   nodeGrandChild->leftChild = nodeChild->rightChild;
+  if (nodeGrandChild->leftChild !=  nullptr) {
+    nodeGrandChild->leftChild->parent = nodeGrandChild;
+  }
   nodeChild->leftChild = node->rightChild;
-  // turn into zag zag
+  if (nodeChild->leftChild !=  nullptr) {
+    nodeChild->leftChild->parent = nodeChild;
+  }
+  // turn into zag zag (reconect the 3 nodes evaluated)
+  
   node->parent = nodeGrandChild->parent;
+  if (node->parent != nullptr) {
+    if (this->root == nodeGrandChild) {
+    }
+    if (node->parent->leftChild == nodeGrandChild) {
+      node->parent->leftChild = node;
+    } else {
+      node->parent->rightChild = node;
+    }
+  }
+  // node as parent
   node->rightChild = nodeChild;
   nodeChild->parent = node;
   nodeChild->rightChild = nodeGrandChild;
@@ -184,9 +190,25 @@ void SplayTree::zigZag(Node* node) {
   Node* rightChild = node->parent;
   // connect subtrees
   leftChild->rightChild = node->leftChild;
+  if (leftChild->rightChild != nullptr) {
+    leftChild->rightChild->parent = leftChild;
+  }
   rightChild->leftChild = node->rightChild;
-  // node as parent
+  if (rightChild->leftChild != nullptr) {
+    rightChild->leftChild->parent = rightChild;
+  }
+  // inherit grandParent parent
   node->parent = leftChild->parent;
+  if (node->parent != nullptr) {
+    if (this->root == leftChild) {
+    }
+    if (node->parent->leftChild == leftChild) {
+      node->parent->leftChild = node;
+    } else {
+      node->parent->rightChild = node;
+    }
+  }
+  // node as parent
   node->leftChild = leftChild;
   leftChild->parent = node;
   node->rightChild = rightChild;
@@ -199,9 +221,24 @@ void SplayTree::zagZag(Node* node) {
   Node* nodeGrandChild = node->parent->parent;
   // connect subtrees
   nodeGrandChild->rightChild = nodeChild->leftChild;
+  if (nodeGrandChild->rightChild !=  nullptr) {
+    nodeGrandChild->rightChild->parent = nodeGrandChild;
+  }
   nodeChild->rightChild = node->leftChild;
+  if (nodeChild->rightChild !=  nullptr) {
+    nodeChild->rightChild->parent = nodeChild->rightChild;
+  }
   // turn into zig zig
+  // inherit grandParent parent
   node->parent = nodeGrandChild->parent;
+  if (node->parent != nullptr) {
+    if (node->parent->leftChild == nodeGrandChild) {
+      node->parent->leftChild = node;
+    } else {
+      node->parent->rightChild = node;
+    }
+  }
+  // node as parent
   node->leftChild = nodeChild;
   nodeChild->parent = node;
   nodeChild->leftChild = nodeGrandChild;
@@ -214,11 +251,34 @@ void SplayTree::zagZig(Node* node) {
   Node* rightChild = node->parent->parent;
   // connect subtrees
   leftChild->rightChild = node->leftChild;
+  if (leftChild->rightChild != nullptr) {
+    leftChild->rightChild->parent = leftChild;
+  }
   rightChild->leftChild = node->rightChild;
-  // node as parent
+  if (rightChild->leftChild != nullptr) {
+    rightChild->leftChild->parent = rightChild;
+  }
+  // inherit grandParent parent
   node->parent = rightChild->parent;
+  if (node->parent != nullptr) {
+    if (node->parent->leftChild == rightChild) {
+      node->parent->leftChild = node;
+    } else {
+      node->parent->rightChild = node;
+    }
+  }
+  // node as parent
   node->leftChild = leftChild;
   leftChild->parent = node;
   node->rightChild = rightChild;
   rightChild->parent = node;
+}
+
+// In-order traversal function for debug
+void SplayTree::inorderTraversal(Node* root) {
+  if (root == nullptr)
+    return;
+  inorderTraversal(root->leftChild);
+  std::cout << root->value << " ";
+  inorderTraversal(root->rightChild);
 }

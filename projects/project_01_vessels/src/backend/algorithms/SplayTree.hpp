@@ -1,11 +1,16 @@
 // Copyright 2025 stack_underflow CC-BY 4.0
 
+// external sources:
+// Copyright (c) 2015 Petar Veličković:
+// https://github.com/PetarV-/Algorithms/blob/master/Data%20Structures/Splay%20Tree.cpp#L319
+
 #pragma once
+
 
 #include "Algorithm.hpp"
 #include "BinarySearchTree.hpp"
 
-class SplayTree : public algorithm
+class SplayTree : public Algorithm
 , public BinarySearchTree {
  public:
   /// @brief constructor method of the class
@@ -44,6 +49,8 @@ class SplayTree : public algorithm
   @see insert
    */
   size_t remove(int64_t element) override;
+
+  void inorderTraversal(Node* root);
 
  private:
   /**
