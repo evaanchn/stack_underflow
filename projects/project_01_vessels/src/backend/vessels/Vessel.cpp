@@ -89,17 +89,19 @@ int Vessel::calculateDamage(ActionLog& log) {
   return damage;
 }
 
-bool Vessel::upgradeVessel(size_t& upgradePoints, ActionLog& log) {
+bool Vessel::upgradeVessel(const size_t upgradePoints
+    , std::vector<ActionLog>& logs) {
+  ActionLog logDelete = ActionLog("delete");
   int64_t element = this->randValue(1, ELEMENT_COUNT);
-  size_t iterations = this->deletion(element, log);
+  size_t iterations = this->deletion(element, logDelete);
+  logs.insert(log);
   if (iterations > upgradePoints) {
-    upgradePoints = 0;
-    ActionLog temp = ActionLog("search");
+    ActionLog reInsertion = ActionLog("search");
     // put element back
-    this->insert(element, temp);
+    this->insert(element, reInsertion);
+    logs.insert(reInsertion);
     return false;
   }
-  upgradePoints -= iterations;
   return true;
 }
 
