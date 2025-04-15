@@ -12,7 +12,7 @@ bool LinkedList::listEmpty() {
   return head == nullptr && tail == nullptr;
 }
 
-Node* LinkedList::createNode(int64_t element) {
+LinkedList::Node* LinkedList::createNode(int64_t element) {
   Node *newNode = new Node;
   newNode->value = element;
   newNode->next = nullptr;
@@ -26,7 +26,7 @@ LinkedList::~LinkedList() {
 size_t LinkedList::insert(int64_t element) {
   Node *newNode = createNode(element);
 
-  if(listEmpty()) {
+  if (listEmpty()) {
     head = tail = newNode;
   } else {
     tail -> next = newNode;
@@ -49,9 +49,10 @@ size_t LinkedList::search(int64_t element) {
       bool found = false;
       Node * current = head;
       // Start from head, move forward until finding element
-      while (current != nullptr && !found){
+      while (current != nullptr && !found) {
         if (current->value == element) found = true;
-        else current = current -> next;
+        else
+          current = current -> next;
         iterations += 1;  // Must increase in every iteration
       }
     }
@@ -79,7 +80,7 @@ size_t LinkedList::remove(int64_t eliminatingElement) {
           delete current;  // eliminate node with requested value
 
           elementRecord.erase(eliminatingElement);  // Remove from record
-          eliminated = true; // To prevent iterating until the end
+          eliminated = true;  // To prevent iterating until the end
         } else {
           prev = current;
           current = current->next;
@@ -95,11 +96,11 @@ size_t LinkedList::remove(int64_t eliminatingElement) {
 size_t LinkedList::popFront() {
   size_t repetitions = 0;
   if (!listEmpty()) {
-    Node * temp = head;    
+    Node * temp = head;
     head = head -> next;
 
-    //If there was one element in list
-    if(head == nullptr) tail = nullptr;
+    // If there was one element in list
+    if (head == nullptr) tail = nullptr;
 
     delete temp;
     ++repetitions;

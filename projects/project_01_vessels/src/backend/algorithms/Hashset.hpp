@@ -9,7 +9,7 @@
 
 #include "Algorithm.hpp"
 
-class Hashset : public algorithm {
+class Hashset : public Algorithm {
  public:
   Hashset();
   size_t insert(int64_t element) override;

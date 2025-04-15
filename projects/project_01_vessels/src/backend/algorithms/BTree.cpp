@@ -12,19 +12,19 @@ BTreeNode::BTreeNode(bool leaf, int64_t t) {
 BTreeNode::~BTreeNode() {
 }
 
-bTree::bTree(int64_t t) : algorithm() {
+BTree::BTree(int64_t t) : Algorithm() {
   this->t = t;
   root = new BTreeNode(true, t);
   elementRecord.clear();
   algorithmName = "BTree";
 }
 
-bTree::~bTree() {
+BTree::~BTree() {
   clearTree(root);
   elementRecord.clear();
 }
 
-void bTree::clearTree(BTreeNode* node) {
+void BTree::clearTree(BTreeNode* node) {
   if (node == nullptr) return;
 
   if (!node->isLeaf) {
@@ -35,7 +35,7 @@ void bTree::clearTree(BTreeNode* node) {
   delete node;
 }
 
-size_t bTree::insert(int64_t element) {
+size_t BTree::insert(int64_t element) {
   if (elementRecord.find(element) != elementRecord.end()) {
     return 0;
   }
@@ -57,7 +57,7 @@ size_t bTree::insert(int64_t element) {
   return k + 1;
 }
 
-size_t bTree::splitChild(BTreeNode* parentNode, int64_t i) {
+size_t BTree::splitChild(BTreeNode* parentNode, int64_t i) {
   size_t k = 0;
   BTreeNode* fullChild = parentNode->children[i];
   BTreeNode* newChild = new BTreeNode(fullChild->isLeaf, t);
@@ -95,7 +95,7 @@ size_t bTree::splitChild(BTreeNode* parentNode, int64_t i) {
   return k;
 }
 
-size_t bTree::insertNonFull(BTreeNode* node, int64_t element) {
+size_t BTree::insertNonFull(BTreeNode* node, int64_t element) {
   size_t k = 0;
   int i = node->keyCount - 1;
 
@@ -125,7 +125,7 @@ size_t bTree::insertNonFull(BTreeNode* node, int64_t element) {
   return k;
 }
 
-size_t bTree::search(int64_t element) {
+size_t BTree::search(int64_t element) {
   size_t k = 0;
   BTreeNode* current = root;
 
@@ -151,7 +151,7 @@ size_t bTree::search(int64_t element) {
   return k;
 }
 
-size_t bTree::remove(int64_t element) {
+size_t BTree::remove(int64_t element) {
   if (elementRecord.find(element) == elementRecord.end()) {
     return 0;
   }
@@ -159,7 +159,7 @@ size_t bTree::remove(int64_t element) {
   return removeNavigation(root, element);
 }
 
-size_t bTree::removeNavigation(BTreeNode* node, int64_t element) {
+size_t BTree::removeNavigation(BTreeNode* node, int64_t element) {
   size_t k = 0;
   int i = 0;
 
@@ -188,7 +188,7 @@ size_t bTree::removeNavigation(BTreeNode* node, int64_t element) {
   return k + removeNavigation(node->children[i], element);
 }
 
-size_t bTree::deleteInternalNode(BTreeNode* node, int64_t element, int64_t i) {
+size_t BTree::deleteInternalNode(BTreeNode* node, int64_t element, int64_t i) {
   size_t k = 0;
 
   if (node->children[i]->keyCount >= t) {
@@ -203,7 +203,7 @@ size_t bTree::deleteInternalNode(BTreeNode* node, int64_t element, int64_t i) {
   return k;
 }
 
-int64_t bTree::deletePredecessor(BTreeNode* node, size_t* k) {
+int64_t BTree::deletePredecessor(BTreeNode* node, size_t* k) {
   if (node->isLeaf) {
     int64_t pred = node->keys[node->keyCount - 1];
     node->keyCount--;
@@ -215,7 +215,7 @@ int64_t bTree::deletePredecessor(BTreeNode* node, size_t* k) {
   return deletePredecessor(node->children[node->keyCount], k);
 }
 
-int64_t bTree::deleteSuccessor(BTreeNode* node, size_t* k) {
+int64_t BTree::deleteSuccessor(BTreeNode* node, size_t* k) {
   if (node->isLeaf) {
     int64_t succ = node->keys[0];
     for (int i = 0; i < node->keyCount - 1; i++) {
@@ -230,7 +230,7 @@ int64_t bTree::deleteSuccessor(BTreeNode* node, size_t* k) {
   return deleteSuccessor(node->children[0], k);
 }
 
-size_t bTree::deleteMerge(BTreeNode* node, int64_t i) {
+size_t BTree::deleteMerge(BTreeNode* node, int64_t i) {
   size_t k = 0;
   BTreeNode* child = node->children[i];
   BTreeNode* sibling = node->children[i + 1];

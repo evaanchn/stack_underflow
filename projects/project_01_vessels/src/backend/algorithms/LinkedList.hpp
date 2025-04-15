@@ -8,13 +8,13 @@
 
 #include "Algorithm.hpp"
 
-struct Node {
-  int64_t value;
-  struct Node * next;
-};
-
-class LinkedList : public algorithm {
+class LinkedList : public Algorithm {
  public:
+  struct Node {
+    int64_t value;
+    struct Node * next;
+  };
+
   LinkedList();
   ~LinkedList();
   size_t insert(int64_t element) override;

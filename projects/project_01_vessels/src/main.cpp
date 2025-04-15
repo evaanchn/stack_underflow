@@ -5,7 +5,7 @@
 #include "backend/algorithms/RedBlackTree.hpp"
 
 int main(void) {
-  bTree* BTree = new bTree(3);
+  BTree* BTree = new BTree(3);
   for (int64_t i = 0; i < 50; ++i) {
     BTree->insert(i);
     printf("Passed\n");

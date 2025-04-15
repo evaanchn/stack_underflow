@@ -32,19 +32,19 @@ class BTreeNode {
 };
 
 /**
- * @class bTree
+ * @class BTree
  * @brief B-Tree implementation that inherits from algorithm base class
  */
-class bTree : public algorithm {
+class BTree : public Algorithm {
  public:
   /**
    * @brief constructor method of the class
    * @param t Minimum degree of the B-Tree
    */
-  explicit bTree(int64_t t);
+  explicit BTree(int64_t t);
 
   /// @brief Destructor method
-  ~bTree();
+  ~BTree();
 
   /**
    * @brief method that allows to eliminate every single node of the tree

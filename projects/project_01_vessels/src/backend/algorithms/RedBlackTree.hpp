@@ -8,27 +8,28 @@
 #include <unordered_set>
 #include "Algorithm.hpp"
 
-struct Node {
-  int64_t value;
-  Node* parent;
-  Node* leftChild;
-  Node* rightChild;
-  std::string color;
-};
+class RedBlackTree : public Algorithm {
+ public:
+  struct Node {
+    int64_t value;
+    Node* parent;
+    Node* leftChild;
+    Node* rightChild;
+    std::string color;
+  };
 
-class redBlackTree : public algorithm {
  public:
   /// @brief constructor method of the class
-  redBlackTree();
+  RedBlackTree();
 
   /// @brief destructor method of the class
-  ~redBlackTree();
+  ~RedBlackTree();
 
   /**
    * @brief method that allows to eliminate every single node of the tree
    * @param node node that will be eliminated
    */
-  void redBlackTree::clearTree(Node* node);
+  void RedBlackTree::clearTree(Node* node);
 
   /**
    @brief assigned method for inserting elements

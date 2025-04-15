@@ -2,7 +2,7 @@
 
 #include "RedBlackTree.hpp"
 
-redBlackTree::redBlackTree() : algorithm() {
+RedBlackTree::RedBlackTree() : Algorithm() {
   algorithmName = "Red Black Tree";
   NIL = new Node();
   NIL->color = "BLACK";
@@ -12,12 +12,12 @@ redBlackTree::redBlackTree() : algorithm() {
   root = NIL;
 }
 
-redBlackTree::~redBlackTree() {
+RedBlackTree::~RedBlackTree() {
   clearTree(root);
   elementRecord.clear();
 }
 
-void redBlackTree::clearTree(Node* node) {
+void RedBlackTree::clearTree(Node* node) {
   if (node->leftChild != nullptr) {
     clearTree(node->leftChild);
   }
@@ -27,7 +27,7 @@ void redBlackTree::clearTree(Node* node) {
   delete node;
 }
 
-size_t redBlackTree::insert(int64_t element) {
+size_t RedBlackTree::insert(int64_t element) {
   if (elementRecord.find(element) != elementRecord.end()) {
     return 0;
   }
@@ -66,7 +66,7 @@ size_t redBlackTree::insert(int64_t element) {
   return k;
 }
 
-size_t redBlackTree::search(int64_t element) {
+size_t RedBlackTree::search(int64_t element) {
   size_t k = 0;
   Node* node = root;
 
@@ -81,7 +81,7 @@ size_t redBlackTree::search(int64_t element) {
   return k;
 }
 
-size_t redBlackTree::remove(int64_t element) {
+size_t RedBlackTree::remove(int64_t element) {
   if (elementRecord.find(element) == elementRecord.end()) {
     return 0;
   }
@@ -138,7 +138,7 @@ size_t redBlackTree::remove(int64_t element) {
   return k;
 }
 
-size_t redBlackTree::leftRotate(Node* node) {
+size_t RedBlackTree::leftRotate(Node* node) {
   Node* rightChild = node->rightChild;
   node->rightChild = rightChild->leftChild;
 
@@ -162,7 +162,7 @@ size_t redBlackTree::leftRotate(Node* node) {
   return 1;
 }
 
-size_t redBlackTree::rightRotate(Node* node) {
+size_t RedBlackTree::rightRotate(Node* node) {
   Node* leftChild = node->leftChild;
   node->leftChild = leftChild->rightChild;
 
@@ -186,7 +186,7 @@ size_t redBlackTree::rightRotate(Node* node) {
   return 1;
 }
 
-size_t redBlackTree::insertFixup(Node* node) {
+size_t RedBlackTree::insertFixup(Node* node) {
   size_t k = 0;
   while (node->parent != nullptr && node->parent->color == "RED") {
     if (node->parent == node->parent->parent->leftChild) {
@@ -234,7 +234,7 @@ size_t redBlackTree::insertFixup(Node* node) {
   return k;
 }
 
-size_t redBlackTree::deleteFixup(Node* node) {
+size_t RedBlackTree::deleteFixup(Node* node) {
   size_t k = 0;
   while (node != root && node->color == "BLACK") {
     if (node == node->parent->leftChild) {
@@ -313,7 +313,7 @@ size_t redBlackTree::deleteFixup(Node* node) {
   return k;
 }
 
-size_t redBlackTree::transplant(Node* u, Node* v) {
+size_t RedBlackTree::transplant(Node* u, Node* v) {
   if (u->parent == nullptr) {
     root = v;
   } else if (u == u->parent->leftChild) {
@@ -325,7 +325,7 @@ size_t redBlackTree::transplant(Node* u, Node* v) {
   return 1;
 }
 
-Node* redBlackTree::minimum(Node* node, size_t* interactions) {
+RedBlackTree::Node* RedBlackTree::minimum(Node* node, size_t* interactions) {
   while (node->leftChild != NIL) {
     node = node->leftChild;
     ++(*interactions);
