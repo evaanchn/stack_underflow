@@ -94,18 +94,18 @@ bool Vessel::upgradeVessel(const size_t upgradePoints
   ActionLog logDelete = ActionLog("delete");
   int64_t element = this->randValue(1, ELEMENT_COUNT);
   size_t iterations = this->deletion(element, logDelete);
-  logs.insert(log);
+  logs.push_back(logDelete);
   if (iterations > upgradePoints) {
     ActionLog reInsertion = ActionLog("search");
     // put element back
     this->insert(element, reInsertion);
-    logs.insert(reInsertion);
+    logs.push_back(reInsertion);
     return false;
   }
   return true;
 }
 
-void Vessel::shuffle(std::vector<int> numbers) {
+void Vessel::shuffle(std::vector<int>& numbers) {
   std::default_random_engine rng(time(0));
   std::uniform_real_distribution<double> dist(0.0, 1.0);
   std::shuffle(numbers.begin(), numbers.end(), rng);

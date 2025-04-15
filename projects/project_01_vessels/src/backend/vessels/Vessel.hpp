@@ -96,7 +96,7 @@ class Vessel {
   bool upgradeVessel(const size_t upgradePoints, std::vector<ActionLog>& logs);
 
  protected:
-  void shuffle(std::vector<int> numbers);
+  void shuffle(std::vector<int>& numbers);
   int64_t randValue(int64_t min, int64_t max);
 
  protected:
