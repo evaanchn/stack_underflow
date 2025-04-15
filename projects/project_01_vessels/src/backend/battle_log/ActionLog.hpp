@@ -11,7 +11,7 @@ class ActionLog {
    * @brief Constructs an ActionLog object for one action
    * @param action, the action being recorded (insertion, elimination, search)
    */
-  explicit ActionLog(const std::string action);
+  explicit ActionLog(const std::string action = " ");
 
   /**
    * @brief Sets the name of the responsible algorithm

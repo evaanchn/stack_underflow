@@ -2,7 +2,10 @@
 
 #include "ActionLog.hpp"
 
-ActionLog::ActionLog(const std::string action) {
+ActionLog::ActionLog(const std::string action)
+: iterations(0)
+, startTime()
+, endTime() {
   setAction(action);
 }
 
