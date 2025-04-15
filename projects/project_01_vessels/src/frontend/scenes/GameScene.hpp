@@ -1,5 +1,5 @@
 // Copyright 2025 stack_underflow CC-BY 4.0
-// TODO (E): FIX GAME WINDOW CLOSE PROBLEM
+
 #pragma once
 
 #include "ScenesConstants.hpp"
@@ -15,23 +15,9 @@
 #include "CustomIconButton.hpp"
 #include "GameInfoText.hpp"
 
-#include <iostream>  // TODO delete
+#include "UIBoard.hpp"
 
-#define ACTION_BUTTON_DIM 100
-#define VESSEL_BUTTON_DIM 100
-
-#define A_BUTTONS_COUNT 4
-#define V_BUTTONS_COUNT 6
-#define GAME_LABELS_COUNT 5
-
-#define ACTION_BUTTONS_X 1750
-#define VESSELS_BUTTON_Y 820
-
-#define LABEL_BOX_W 50
-#define LABEL_BOX_H 18
-
-enum ACTIONS { UPGRADE, MOVE, ATTACK, BUY};
-enum VESSELS { LINEAR_SEARCH, SPLAY_TREE, BINARY_SEARCH, BTREE, RB_TREE, SET };
+#include <iostream>  // TODO (5n4v3) delete
 
 class GameScene {
  public:
@@ -63,11 +49,18 @@ class GameScene {
   GameInfoText* gameLabels[GAME_LABELS_COUNT] =
       { ambrosiaPoints, drachmas, actionsLabel, currentPlayerLabel
       , vesselsWeight };
+  Fl_PNG_Image* vesselImagesRight[VESSELS_COUNT] = { nullptr, nullptr, nullptr
+      , nullptr, nullptr, nullptr };
+  Fl_PNG_Image* vesselImagesLeft[VESSELS_COUNT] = { nullptr, nullptr, nullptr
+      , nullptr, nullptr, nullptr };
 
   CustomIconButton *exitButton;
 
   int selectedVessel;
   int selectedAction;
+
+  MoveState moveState;
+  Coordinates moveFrom;
 
  private:
   void setupUI();  // UI layout and element creation
@@ -75,7 +68,17 @@ class GameScene {
   void setActionButtons();
   void setVesselButtons();
   void setLabels();
+  void setVesselImages();
 
   void setActionButtonCallBack(CustomIconButton* button, int data);
   void setVesselButtonCallBack(CustomIconButton* button, int data);
+
+  void handleActionButtonsEvents();
+  void buyVessel();
+  void attackVessel();
+  void moveVessel();
+  void upgradeVessel();
+
+ private:
+  UIBoard* board = nullptr;
 };

@@ -32,6 +32,7 @@ class App {
   GameOverScene gameOverScene;
 
   SFMLSound startSceneMusic;
+  SFMLSound gameSceneMusic;
   SFMLSound gameOverSceneMusic;
 
  private:

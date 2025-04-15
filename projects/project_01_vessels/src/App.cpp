@@ -9,6 +9,7 @@ App::App()
   , startScene()
   , gameOverScene()
   , startSceneMusic(MUSIC_FOLDER + "startScene.mp3", LOOP)
+  , gameSceneMusic(MUSIC_FOLDER + "gameScene.mp3", LOOP, /*Volume*/ 60)
   , gameOverSceneMusic(MUSIC_FOLDER + "gameOverScene.wav", LOOP)
   {
   setMainWindow();
@@ -70,19 +71,19 @@ void App::handleStateRendering() {
 }
 
 void App::renderStartScene() {
-  gameOverSceneMusic.pause();
+  gameOverSceneMusic.stop();
   startSceneMusic.play();
   startScene.draw(mainWindow);
 }
 
 void App::renderGameOverScene() {
-  startSceneMusic.pause();  // TEMPORAL
   gameOverSceneMusic.play();
   gameOverScene.draw(mainWindow);
 }
 
 int App::startGame() {
   this->startSceneMusic.stop();
+  this->gameSceneMusic.play();
   this->gameScene = new GameScene(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT
       , GAME_NAME);
   if (!this->gameScene) return EXIT_FAILURE;
@@ -91,6 +92,7 @@ int App::startGame() {
 }
 
 void App::endGame() {
+  this->gameSceneMusic.stop();
   this->gameActive = !ACTIVE;
   if(this->gameScene) delete this->gameScene;
   this->gameScene = nullptr;
