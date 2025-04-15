@@ -74,6 +74,6 @@ class BinarySearchTree {
    */
   void clear();
 
- public:
+ protected:
   Node* root = nullptr;
 };
