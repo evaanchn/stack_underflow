@@ -2,5 +2,9 @@
 
 #include "Algorithm.hpp"
 
-algorithm::algorithm() = default;
-algorithm::~algorithm() = default;
+Algorithm::Algorithm() = default;
+Algorithm::~Algorithm() = default;
+
+std::string Algorithm::getName() {
+  return this->algorithmName;
+}

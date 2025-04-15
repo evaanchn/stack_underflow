@@ -6,13 +6,13 @@
 #include <string>
 #include <unordered_set>
 
-class algorithm {
+class Algorithm {
  public:
   /// @brief constructor method of the algorithm class
-  algorithm();
+  Algorithm();
 
   /// @brief destructor method of the algorithm class
-  ~algorithm();
+  virtual ~Algorithm();
 
   /**
    @brief assigned method for inserting elements
@@ -32,9 +32,15 @@ class algorithm {
    @see insert
    */
   virtual size_t remove(int64_t element) = 0;
+  /**
+   * @brief Get name attribute
+   * 
+   * @return std::string 
+   */
+  std::string getName();
 
  protected:
-  std::string algorithmName;
-  size_t elementCount;
-  std::unordered_set<int64_t> elementRecord;
+  std::string algorithmName = " ";
+  size_t elementCount = 0;
+  std::unordered_set<int64_t> elementRecord = std::unordered_set<int64_t>();
 };
