@@ -2,8 +2,9 @@
 
 #include "CustomIconButton.hpp"
 
-CustomIconButton::CustomIconButton(int x, int y, int w, int h,
-    const std::string& icon_path, const std::string& text)
+CustomIconButton::CustomIconButton(int x, int y, int w, int h
+    , const std::string& icon_path, const std::string& text
+    , Fl_Color _color)
   : Fl_Button(x, y, w, h),
   icon(nullptr),
   label_text(text),
@@ -12,12 +13,18 @@ CustomIconButton::CustomIconButton(int x, int y, int w, int h,
   icon = new Fl_PNG_Image(icon_path.c_str());
   box(FL_NO_BOX);           // Transparent background
   down_box(FL_NO_BOX);
-  color(FL_BACKGROUND_COLOR);  // Not visible anyway
+  color(_color);
   label("");               // We draw our own label
   callback(StaticCallback, this); // FLTK requires static callbacks
 }
 
 void CustomIconButton::draw() {
+  if (value()) {
+    fl_draw_box(FL_FLAT_BOX, x(), y(), w(), h(), fl_darker(this->color()));
+  } else {
+    fl_draw_box(FL_FLAT_BOX, x(), y(), w(), h(), this->color());
+  }
+
   // Draw icon centered
   if (icon) {
     int ix = x() + (w() - icon->w()) / 2;
