@@ -94,13 +94,13 @@ void BinarySearchTree::leftRotate(Node* node) {
   assert(node->parent);  // not to be called by root
   Node *parent = node->parent;
   Node *oldLeft = node->leftChild;
-  node->parent = NULL;
+  node->parent = nullptr;
   // parent down left
   node->leftChild = parent;
   parent->parent = node;
   // old node->left as new node->left->right (parent left)
   parent->rightChild = oldLeft;
-  if (oldLeft != NULL) oldLeft->parent = parent;
+  if (oldLeft != nullptr) oldLeft->parent = parent;
 }
 
 void BinarySearchTree::rightRotate(Node* node) {
@@ -108,11 +108,11 @@ void BinarySearchTree::rightRotate(Node* node) {
   assert(node->parent);  // not to be called by root
   Node *parent = node->parent;
   Node *oldRight = node->rightChild;
-  node->parent = NULL;
+  node->parent = nullptr;
   // parent down right
   node->rightChild = parent;
   parent->parent = node;
   // old node->right as newRight(parent) left
   parent->leftChild = oldRight;
-  if (oldRight != NULL) oldRight->parent = parent;
+  if (oldRight != nullptr) oldRight->parent = parent;
 }

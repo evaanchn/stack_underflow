@@ -165,7 +165,7 @@ void SplayTree::zigZig(Node* node) {
   if (nodeChild->leftChild !=  nullptr) {
     nodeChild->leftChild->parent = nodeChild;
   }
-  // turn into zag zag (reconect the 3 nodes evaluated)
+  // turn into zag zag form
 
   node->parent = nodeGrandChild->parent;
   if (node->parent != nullptr) {
@@ -222,9 +222,9 @@ void SplayTree::zagZag(Node* node) {
   }
   nodeChild->rightChild = node->leftChild;
   if (nodeChild->rightChild !=  nullptr) {
-    nodeChild->rightChild->parent = nodeChild->rightChild;
+    nodeChild->rightChild->parent = nodeChild;
   }
-  // turn into zig zig
+  // turn into zig zig form
   // inherit grandParent parent
   node->parent = nodeGrandChild->parent;
   if (node->parent != nullptr) {
