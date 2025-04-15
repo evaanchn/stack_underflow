@@ -13,19 +13,19 @@ RedBlackTree::RedBlackTree() : Algorithm() {
 }
 
 RedBlackTree::~RedBlackTree() {
-  clearTree(root);
+  // clearTree(root);
   elementRecord.clear();
 }
 
-void RedBlackTree::clearTree(Node* node) {
-  if (node->leftChild != nullptr) {
-    clearTree(node->leftChild);
-  }
-  if (node->rightChild != nullptr) {
-    clearTree(node->rightChild);
-  }
-  delete node;
-}
+// void RedBlackTree::clearTree(Node* node) {
+//   if (node->leftChild != nullptr) {
+//     clearTree(node->leftChild);
+//   }
+//   if (node->rightChild != nullptr) {
+//     clearTree(node->rightChild);
+//   }
+//   delete node;
+// }
 
 size_t RedBlackTree::insert(int64_t element) {
   if (elementRecord.find(element) != elementRecord.end()) {

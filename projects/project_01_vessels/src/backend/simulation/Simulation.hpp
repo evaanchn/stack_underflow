@@ -6,8 +6,13 @@
 #include <string>
 #include <vector>
 
-// #include "BattleLog.hpp"
-// #include "Vessel.hpp"
+#include "BattleLog.hpp"
+#include "HashsetVessel.hpp"
+#include "RedBlackTreeVessel.hpp"
+#include "BinarySearchVessel.hpp"
+#include "BTreeVessel.hpp"
+#include "SplayTreeVessel.hpp"
+#include "LinearSearchVessel.hpp"
 
 #define VESSELS_TYPES 6
 #define TESTS_AMOUNT 30
@@ -18,10 +23,10 @@ class Simulation {
   void simulate();
 
  private:
-  // BattleLog battleLog;
-  // Vessels** vessels;
+  BattleLog battleLog;
+  Vessel** vessels;
 
-  // void testInsertion(Vessel* vessel);
-  // void testSearch(Vessel* vessel);
-  // void testElimination(Vessel* vessel);
+  void testInsertion(Vessel* vessel);
+  void testSearch(Vessel* vessel);
+  void testElimination(Vessel* vessel);
 };
