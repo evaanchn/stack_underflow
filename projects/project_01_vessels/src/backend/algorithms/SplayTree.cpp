@@ -23,7 +23,7 @@ void SplayTree::toRoot(Node* node, size_t& iterations) {
   if (node->parent == nullptr) {
     return;
   }
-  
+
   while (node->parent != nullptr) {
     ++iterations;
     Node* parent = node->parent;
@@ -37,7 +37,7 @@ void SplayTree::toRoot(Node* node, size_t& iterations) {
         zigZag(node);  // left -> right
       }
     } else {  // right
-      if (grandParent == nullptr) {  
+      if (grandParent == nullptr) {
         this->leftRotate(node);
       } else if (parent == grandParent->leftChild) {
         zagZig(node);  // right -> left
@@ -166,11 +166,9 @@ void SplayTree::zigZig(Node* node) {
     nodeChild->leftChild->parent = nodeChild;
   }
   // turn into zag zag (reconect the 3 nodes evaluated)
-  
+
   node->parent = nodeGrandChild->parent;
   if (node->parent != nullptr) {
-    if (this->root == nodeGrandChild) {
-    }
     if (node->parent->leftChild == nodeGrandChild) {
       node->parent->leftChild = node;
     } else {
@@ -200,8 +198,6 @@ void SplayTree::zigZag(Node* node) {
   // inherit grandParent parent
   node->parent = leftChild->parent;
   if (node->parent != nullptr) {
-    if (this->root == leftChild) {
-    }
     if (node->parent->leftChild == leftChild) {
       node->parent->leftChild = node;
     } else {
