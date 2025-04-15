@@ -60,6 +60,16 @@ void GameScene::setGameSceneBackground() {
   backgroundImageBox->redraw();  // Marks as needs a draw()
 }
 
+void GameScene::setTurnSwitchImages() {
+  // Set turn switch images
+  switchToPlayer1Image = new Fl_PNG_Image("assets/scenes_backgrounds/switchToPlayer1.png");
+  swithToPlayer2Image = new Fl_PNG_Image("assets/scenes_backgrounds/switchToPlayer2.png");
+  turnSwitchImageBox = new Fl_Box(/*X*/ 0, /*Y*/ 0, window->w(), window->h());
+  turnSwitchImageBox->image(switchToPlayer1Image);  // Place image in box
+  turnSwitchImageBox->box(FL_NO_BOX);  // No borders
+  turnSwitchImageBox->redraw();  // Marks as needs a draw()
+}
+
 void GameScene::setActionButtons() {
   buyButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 220
       , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
@@ -138,7 +148,7 @@ void GameScene::setLabels() {
   actionsLabel = new GameInfoText(/*X*/ 1770, /*Y*/ 180, LABEL_BOX_W
       , LABEL_BOX_H, "3/3", FL_WHITE);
   drachmas = new GameInfoText(/*X*/ 1615, /*Y*/ 817, LABEL_BOX_W
-      , LABEL_BOX_H, "10", FL_BLACK);
+      , LABEL_BOX_H, "30", FL_BLACK);
   ambrosiaPoints = new GameInfoText(/*X*/ 1605, /*Y*/ 893, LABEL_BOX_W
       , LABEL_BOX_H, "0", FL_BLACK);
 }

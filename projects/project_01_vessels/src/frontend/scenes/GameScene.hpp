@@ -4,11 +4,12 @@
 
 #include "ScenesConstants.hpp"
 
-#include <FL/Fl_Window.H>
 #include <FL/Fl.H>
-#include <FL/Fl_PNG_Image.H>
-#include <FL/Fl_Box.H>
 #include <FL/fl_ask.H>
+#include <FL/Fl_Box.H>
+#include <FL/Fl_Input.H>>
+#include <FL/Fl_PNG_Image.H>
+#include <FL/Fl_Window.H>
 
 #include <vector>
 
@@ -30,8 +31,10 @@ class GameScene {
   bool gameActive;
   Fl_Window* window;
   Fl_Box* backgroundImageBox = nullptr;
-  Fl_PNG_Image* backgroundImage = nullptr; 
+  Fl_PNG_Image* backgroundImage = nullptr;
 
+  Fl_Box* turnSwitchImageBox = nullptr;
+  Fl_PNG_Image *switchToPlayer1Image = nullptr, *swithToPlayer2Image = nullptr;
 
   CustomIconButton *buyButton = nullptr, *attackButton  = nullptr
       , *upgradeButton  = nullptr, *moveButton  = nullptr;
@@ -65,6 +68,7 @@ class GameScene {
  private:
   void setupUI();  // UI layout and element creation
   void setGameSceneBackground();
+  void setTurnSwitchImages();
   void setActionButtons();
   void setVesselButtons();
   void setLabels();
