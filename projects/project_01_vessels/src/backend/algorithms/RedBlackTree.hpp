@@ -29,7 +29,7 @@ class RedBlackTree : public Algorithm {
    * @brief method that allows to eliminate every single node of the tree
    * @param node node that will be eliminated
    */
-  void RedBlackTree::clearTree(Node* node);
+  void clearTree(Node* node);
 
   /**
    @brief assigned method for inserting elements
