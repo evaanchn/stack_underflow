@@ -2,8 +2,9 @@
 
 #include "BinarySearch.hpp"
 
-BinarySearch::BinarySearch(): algorithm()
-, arraySize(DEFAULT_ARRAY_SIZE) {
+BinarySearch::BinarySearch(): Algorithm()
+, arraySize(DEFAULT_ARRAY_SIZE)
+, orderedArray(nullptr) {
   this->algorithmName = "BinarySearch";
   this->elementCount = 0;
   this->orderedArray = reinterpret_cast<int64_t*>
@@ -11,25 +12,58 @@ BinarySearch::BinarySearch(): algorithm()
   if (this->orderedArray == nullptr) {
     throw std::bad_alloc();
   }
-  // default array values
-  loadRangeValues(1, this->arraySize / 2);
 }
 
 BinarySearch::~BinarySearch() {
-  free(this->orderedArray);
+  if (this->orderedArray != nullptr) {
+    free(this->orderedArray);
+    this->orderedArray = nullptr;
+  }
 }
 
 size_t BinarySearch::insert(int64_t element) {
   size_t iterations = 0;
-  if (this->elementCount >= this->arraySize -1) {
+  // check if array is full
+  if (this->elementCount >= this->arraySize) {
     throw std::bad_alloc();
   }
-  this->orderedArray[elementCount] = element;
+  this->insertInPlace(element, iterations);
+  this->elementRecord.insert(element);
   ++this->elementCount;
-  // sort not implemented because it is not relevant for the present project
-  std::sort(this->orderedArray, this->orderedArray
-    + this->elementCount * sizeof(int64_t));
   return iterations;
+}
+
+void BinarySearch::insertInPlace(int64_t element, size_t& iterations) {
+  if (this->elementCount >= this->arraySize) {
+    throw std::bad_alloc();
+  }
+  if (this->elementCount  == 0) {
+    this->orderedArray[0] = element;
+    ++iterations;
+  // can insert at the end
+  } else if (this->orderedArray[elementCount - 1] <= element) {
+    this->orderedArray[elementCount] = element;
+    ++iterations;
+  // shift
+  } else {
+    size_t index = 0;
+    // find index to insert element
+    while (index < this->elementCount) {
+      if (this->orderedArray[index] <= element) {
+        break;
+      }
+      ++index;
+      ++iterations;
+    }
+    // shift elements after index
+    int64_t shiftElement = 0;
+    for (size_t i = index; i <= elementCount; ++i) {
+      shiftElement = this->orderedArray[i];
+      this->orderedArray[i] = element;
+      element = shiftElement;
+      ++iterations;
+    }
+  }
 }
 
 size_t BinarySearch::search(int64_t element) {
@@ -77,11 +111,12 @@ size_t BinarySearch::remove(int64_t element) {
     ++iterations;
   }
   --this->elementCount;
+  this->elementRecord.erase(element);
   return iterations;
 }
 
 void BinarySearch::loadRangeValues(int64_t min, int64_t max) {
-  size_t count = abs(max - min) + 1;
+  size_t count = std::abs(max - min) + 1;
   if (count > this->arraySize) {
     throw std::bad_array_new_length();
   }

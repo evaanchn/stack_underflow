@@ -10,7 +10,7 @@
 
 #define DEFAULT_ARRAY_SIZE 100
 
-class BinarySearch: public algorithm {
+class BinarySearch: public Algorithm {
  public:
   BinarySearch();
   // Disable copy and move
@@ -59,6 +59,8 @@ class BinarySearch: public algorithm {
    * @param max 
    */
   void loadRangeValues(int64_t min, int64_t max);
+
+  void insertInPlace(int64_t element, size_t& iterations);
 
  private:
   size_t arraySize;
