@@ -7,15 +7,22 @@ GameScene::GameScene(int width, int height, const std::string& title)
   , moveState (MOVE_IDLE) {
   this->selectedAction = NONE_SELECTED;
   this->selectedVessel = NONE_SELECTED;
-  window = new Fl_Window(width, height, title.c_str());
+  this->window = new Fl_Window(width, height, title.c_str());
   this->setupUI();
   this->board = new UIBoard();
+  this->setTurnSwitchImages();  // Set turn switch cutscenes
   this->window->end();  // Ends window's elements' grouping
   this->window->show();
 }
 
 GameScene::~GameScene() {
+  delete this->inputSwitchPlayer;
+  delete this->turnSwitchImageBox;
+  delete this->swithToPlayer2Image;
+  delete this-> switchToPlayer1Image;
+
   delete this->board;
+
   delete this->exitButton;
 
   for (int i = VESSELS_COUNT - 1; i >= 0; --i) {
@@ -62,12 +69,25 @@ void GameScene::setGameSceneBackground() {
 
 void GameScene::setTurnSwitchImages() {
   // Set turn switch images
-  switchToPlayer1Image = new Fl_PNG_Image("assets/scenes_backgrounds/switchToPlayer1.png");
-  swithToPlayer2Image = new Fl_PNG_Image("assets/scenes_backgrounds/switchToPlayer2.png");
+  switchToPlayer1Image
+      = new Fl_PNG_Image("assets/scenes_backgrounds/switchToPlayer1.png");
+  swithToPlayer2Image
+      = new Fl_PNG_Image("assets/scenes_backgrounds/switchToPlayer2.png");
   turnSwitchImageBox = new Fl_Box(/*X*/ 0, /*Y*/ 0, window->w(), window->h());
   turnSwitchImageBox->image(switchToPlayer1Image);  // Place image in box
   turnSwitchImageBox->box(FL_NO_BOX);  // No borders
+  turnSwitchImageBox->show();
   turnSwitchImageBox->redraw();  // Marks as needs a draw()
+
+  inputSwitchPlayer = new Fl_Input(/*X*/ 1780, /*Y*/ 950, /*W*/ 120, /*H*/ 30
+      , /*Label*/ "Type OK to continue:");
+  inputSwitchPlayer->when(FL_WHEN_ENTER_KEY_ALWAYS); // Respond to Enter key
+  inputSwitchPlayer->labelcolor(FL_WHITE);
+  inputSwitchPlayer->labelfont(FL_COURIER_BOLD);
+  inputSwitchPlayer->labelsize(20);
+  inputSwitchPlayer->textfont(FL_COURIER);
+  inputSwitchPlayer->textsize(20);
+  inputSwitchPlayer->callback(inputCallbackStatic, this);
 }
 
 void GameScene::setActionButtons() {
@@ -273,7 +293,6 @@ void GameScene::moveVessel() {
   }
 }
 
-
 void GameScene::upgradeVessel() {
   // this->game->validateVesselWeight();
   if (this->selectedAction == UPGRADE) {
@@ -290,4 +309,56 @@ void GameScene::upgradeVessel() {
       // this->game->upgradeVessel(row, col);
     }
   }
+}
+
+// Static callback trampoline
+void GameScene::inputCallbackStatic(Fl_Widget* w, void* userData) {
+  GameScene* self = static_cast<GameScene*>(userData);
+  self->onInputCommand(w);
+}
+
+// Actual callback handler
+void GameScene::onInputCommand(Fl_Widget* w) {
+  const char* command = this->inputSwitchPlayer->value();
+
+  if (strcmp(command, "ok") == 0 || strcmp(command, "OK") == 0) {
+    if (turnSwitchImageBox) {
+        turnSwitchImageBox->hide();
+        this->inputSwitchPlayer->hide();
+        this->activateActionButtons();
+        window->redraw();
+    }
+  }
+
+  // Clear input after handling
+  this->inputSwitchPlayer->value("");
+}
+
+void GameScene::showSwitchTurnImage() {
+  if (turnSwitchImageBox) {
+    int currentPlayer = PLAYER_1; // this->game->getCurrentPlayer();
+    if (currentPlayer == PLAYER_1) {
+      turnSwitchImageBox->image(switchToPlayer1Image);
+    } else {
+      turnSwitchImageBox->image(swithToPlayer2Image);
+    }
+    turnSwitchImageBox->show();
+    this->inputSwitchPlayer->show();
+    this->deactivateActionButtons();
+    window->redraw();
+  }
+}
+
+void GameScene::deactivateActionButtons() {
+  for (int i = 0; i < A_BUTTONS_COUNT; ++i) {
+    if (actionsButtons[i]) actionsButtons[i]->deactivate();
+  }
+  this->exitButton->deactivate();
+}
+
+void GameScene::activateActionButtons() {
+  for (int i = 0; i < A_BUTTONS_COUNT; ++i) {
+    if (actionsButtons[i]) actionsButtons[i]->activate();
+  }
+  this->exitButton->activate();
 }

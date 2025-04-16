@@ -7,7 +7,7 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 #include <FL/Fl_Box.H>
-#include <FL/Fl_Input.H>>
+#include <FL/Fl_Input.H>
 #include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_Window.H>
 
@@ -19,6 +19,9 @@
 #include "UIBoard.hpp"
 
 #include <iostream>  // TODO (5n4v3) delete
+
+const Fl_Color GAME_BACKGROUND = fl_rgb_color(5, 10, 48);
+const Fl_Color VESSELS_BACKGROUND = fl_rgb_color(143, 209, 230);
 
 class GameScene {
  public:
@@ -35,6 +38,7 @@ class GameScene {
 
   Fl_Box* turnSwitchImageBox = nullptr;
   Fl_PNG_Image *switchToPlayer1Image = nullptr, *swithToPlayer2Image = nullptr;
+  Fl_Input* inputSwitchPlayer = nullptr;
 
   CustomIconButton *buyButton = nullptr, *attackButton  = nullptr
       , *upgradeButton  = nullptr, *moveButton  = nullptr;
@@ -82,6 +86,13 @@ class GameScene {
   void attackVessel();
   void moveVessel();
   void upgradeVessel();
+
+  static void inputCallbackStatic(Fl_Widget* w, void* userData);
+  void onInputCommand(Fl_Widget* w);
+  void showSwitchTurnImage();
+  
+  void deactivateActionButtons();
+  void activateActionButtons();
 
  private:
   UIBoard* board = nullptr;

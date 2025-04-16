@@ -8,12 +8,7 @@
 
 #include <string>
 
-enum SceneState {
-    START,
-    INFORMATION,
-    GAME,
-    GAME_OVER
-};
+enum SceneState { START, INFORMATION, GAME, GAME_OVER };
 
 namespace Positions {
 const sf::Vector2f SCENES(0, 0);
@@ -51,8 +46,6 @@ const std::string GAME_BUTTONS_FOLDER = "assets/sprites/buttons/";
 #define ACTION_BUTTONS_X 1750
 #define VESSELS_BUTTON_Y 820
 
-const Fl_Color GAME_BACKGROUND = fl_rgb_color(5, 10, 48);
-const Fl_Color VESSELS_BACKGROUND = fl_rgb_color(143, 209, 230);
 #define LABEL_BOX_W 50
 #define LABEL_BOX_H 18
 
