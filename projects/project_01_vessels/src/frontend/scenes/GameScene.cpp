@@ -8,14 +8,20 @@ GameScene::GameScene(int width, int height, const std::string& title)
   this->selectedAction = NONE_SELECTED;
   this->selectedVessel = NONE_SELECTED;
   this->window = new Fl_Window(width, height, title.c_str());
+  
   this->setupUI();
   this->board = new UIBoard();
   this->setTurnSwitchImages();  // Set turn switch cutscenes
   this->window->end();  // Ends window's elements' grouping
   this->window->show();
+  
+  this->infoWindow = new GameInfoWindow();
+  this->infoWindow->hide();
 }
 
 GameScene::~GameScene() {
+  delete this->infoWindow;
+
   delete this->inputSwitchPlayer;
   delete this->turnSwitchImageBox;
   delete this->swithToPlayer2Image;
@@ -39,7 +45,6 @@ GameScene::~GameScene() {
 
   delete this->backgroundImageBox;
   delete this->backgroundImage;
-
   delete this->window;
 }
 
@@ -53,7 +58,9 @@ void GameScene::setupUI() {
       , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
       , GAME_BUTTONS_FOLDER + "exitRune.png", EMPTY_TEXT, GAME_BACKGROUND);
   this->exitButton->set_click_callback([this]() {
-    this->window->hide();
+    this->infoWindow->show();
+    this->infoWindow->solicitConfirmation("Confirm exit");
+    this->selectedAction = EXIT;
   });
 }
 
@@ -199,6 +206,7 @@ void GameScene::handleActionButtonsEvents() {
   else if (this->selectedAction == MOVE) this->moveVessel();
   else if (this->selectedAction == ATTACK) this->attackVessel();
   else if (this->selectedAction == UPGRADE) this->upgradeVessel();
+  else if (this->selectedAction == EXIT) this->handleExit();
 }
 
 void GameScene::buyVessel() {
@@ -311,6 +319,20 @@ void GameScene::upgradeVessel() {
   }
 }
 
+void GameScene::handleExit() {
+  if (this->selectedAction == EXIT) {
+    if (this->infoWindow->getConfirmationChoice() == CONFIRM) {
+      this->infoWindow->hide();
+      this->window->hide();
+    }
+    else if (this->infoWindow->getConfirmationChoice() == CANCEL) {
+      this->infoWindow->hide();
+      this->infoWindow->resetConfirmationChoice();
+      this->selectedAction = NONE_SELECTED;
+    }
+  }
+}
+
 // Static callback trampoline
 void GameScene::inputCallbackStatic(Fl_Widget* w, void* userData) {
   GameScene* self = static_cast<GameScene*>(userData);
@@ -326,6 +348,7 @@ void GameScene::onInputCommand(Fl_Widget* w) {
         turnSwitchImageBox->hide();
         this->inputSwitchPlayer->hide();
         this->activateActionButtons();
+        this->window->cursor(FL_CURSOR_HAND);
         window->redraw();
     }
   }

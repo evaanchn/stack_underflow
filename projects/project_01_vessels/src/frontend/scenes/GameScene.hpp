@@ -15,6 +15,7 @@
 
 #include "CustomIconButton.hpp"
 #include "GameInfoText.hpp"
+#include "GameInfoWindow.hpp"
 
 #include "UIBoard.hpp"
 
@@ -32,7 +33,9 @@ class GameScene {
 
  private:
   bool gameActive;
-  Fl_Window* window;
+  Fl_Window* window = nullptr;
+  GameInfoWindow* infoWindow = nullptr;
+
   Fl_Box* backgroundImageBox = nullptr;
   Fl_PNG_Image* backgroundImage = nullptr;
 
@@ -40,6 +43,7 @@ class GameScene {
   Fl_PNG_Image *switchToPlayer1Image = nullptr, *swithToPlayer2Image = nullptr;
   Fl_Input* inputSwitchPlayer = nullptr;
 
+ private:
   CustomIconButton *buyButton = nullptr, *attackButton  = nullptr
       , *upgradeButton  = nullptr, *moveButton  = nullptr;
   CustomIconButton *hashsetButton = nullptr, *redBlackButton = nullptr
@@ -86,11 +90,12 @@ class GameScene {
   void attackVessel();
   void moveVessel();
   void upgradeVessel();
+  void handleExit();
 
   static void inputCallbackStatic(Fl_Widget* w, void* userData);
   void onInputCommand(Fl_Widget* w);
   void showSwitchTurnImage();
-  
+
   void deactivateActionButtons();
   void activateActionButtons();
 
