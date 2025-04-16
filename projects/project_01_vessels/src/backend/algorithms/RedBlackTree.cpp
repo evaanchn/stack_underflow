@@ -145,6 +145,9 @@ size_t RedBlackTree::remove(int64_t element) {
   if (originalColor == "BLACK") {
     k += deleteFixup(x);  // save interactions
   }
+  if (node != nullptr) {
+    delete node;
+  }
   elementRecord.erase(element);
   return k;
 }

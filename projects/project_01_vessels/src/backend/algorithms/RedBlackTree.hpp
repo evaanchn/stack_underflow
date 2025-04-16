@@ -19,7 +19,6 @@ class RedBlackTree : public Algorithm {
     std::string color;
   };
 
- public:
   /// @brief constructor method of the class
   RedBlackTree();
 

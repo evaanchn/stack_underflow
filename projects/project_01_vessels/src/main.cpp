@@ -5,6 +5,7 @@
 #include "Board.hpp"
 #include "Simulation.hpp"
 #include "Vessel.hpp"
+#include "RedBlackTree.hpp"
 
 void vesselMenu(Board& board, int playerID);
 
