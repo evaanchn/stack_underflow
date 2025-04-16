@@ -3,9 +3,8 @@
 #include "Simulation.hpp"
 
 Simulation::Simulation() {
-  BattleLog battleLog = BattleLog();
-  battleLog.setBattleLog(RECORD_SIMULATION);
-
+  this->battleLog = new BattleLog();
+  battleLog->setBattleLog(RECORD_SIMULATION);
   vessels = new Vessel*[VESSELS_TYPES];
   vessels[0] = new HashsetVessel();
   vessels[1] =  new RedBlackTreeVessel();
@@ -22,7 +21,7 @@ void Simulation::simulate() {
     testElimination(vessels[i]);
     delete vessels[i];
   }
-  delete vessels;
+  delete [] vessels;
 }
 
 void Simulation::testInsertion(Vessel* vessel) {
@@ -32,7 +31,7 @@ void Simulation::testInsertion(Vessel* vessel) {
   std::cout << "Success" << std::endl;
   for (auto &log : actionLogs) {
     std::cout << log.toString() << std::endl;
-    // battleLog.recordAction(log);
+    battleLog->recordAction(log);
   }
 }
 
@@ -41,7 +40,7 @@ void Simulation::testSearch(Vessel* vessel) {
     ActionLog actionLog = ActionLog("Search");
     vessel->calculateDamage(actionLog);
     std::cout << actionLog.toString() << std::endl;
-    // battleLog.recordAction(actionLog);
+    battleLog->recordAction(actionLog);
   }
 }
 
@@ -51,7 +50,7 @@ void Simulation::testElimination(Vessel* vessel) {
     vessel->upgradeVessel(100, actionLogs);
     for (auto &log : actionLogs) {
       std::cout << log.toString() << std::endl;
-      // battleLog.recordAction(log);
+      battleLog->recordAction(log);
     }
   }
 }

@@ -20,10 +20,11 @@
 class Simulation {
  public:
   Simulation();
+  ~Simulation() { delete battleLog; }
   void simulate();
 
  private:
-  BattleLog battleLog;
+  BattleLog* battleLog;
   Vessel** vessels;
 
   void testInsertion(Vessel* vessel);

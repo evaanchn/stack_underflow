@@ -77,7 +77,6 @@ class BTree : public Algorithm {
   BTreeNode* root;
   int64_t t;
   std::unordered_set<int64_t> elementRecord;
-  std::string algorithmName;
 
   /**
    * @brief Splits a full child node

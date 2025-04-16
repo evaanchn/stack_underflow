@@ -85,7 +85,7 @@ int Vessel::calculateDamage(ActionLog& log) {
   int64_t randNum = this->randValue(1, ELEMENT_COUNT);
   int deduction = this->search(randNum, log);
   // calculate damage
-  damage = MAX_DAMAGE / deduction;
+  if (deduction != 0) damage = MAX_DAMAGE / deduction;
   return damage;
 }
 
@@ -112,6 +112,7 @@ void Vessel::shuffle(std::vector<int>& numbers) {
 }
 
 int64_t Vessel::randValue(int64_t min, int64_t max) {
-  std::srand(std::time(nullptr));
-  return (int64_t)(std::rand() % max) + min;
+  static thread_local std::mt19937_64 rng(std::random_device{}());
+  std::uniform_int_distribution<int64_t> dist(min, max);
+  return dist(rng);
 }
