@@ -32,6 +32,10 @@ std::string ActionLog::getDuration() {
   return std::to_string(duration) + "ms";
 }
 
+size_t ActionLog::getIterations() {
+  return this->iterations;
+}
+
 std::string ActionLog::toString() {
   std::string result = this->responsible + " - " + this->action
     + " | Iterations: " + std::to_string(this->iterations)

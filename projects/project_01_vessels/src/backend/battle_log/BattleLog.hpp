@@ -16,7 +16,7 @@ class BattleLog {
   /**
    * @brief Constructs a BattleLog object.
    */
-  BattleLog() {}
+  BattleLog() : battleLogFile(nullptr) {}
 
   /**
    * @brief Sets up the battle log file based on the record mode.

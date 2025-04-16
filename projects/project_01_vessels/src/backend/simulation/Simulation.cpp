@@ -47,7 +47,12 @@ void Simulation::testSearch(Vessel* vessel) {
 void Simulation::testElimination(Vessel* vessel) {
   for (size_t i = 0; i < TESTS_AMOUNT; ++i) {
     std::vector<ActionLog> actionLogs;
-    vessel->upgradeVessel(100, actionLogs);
+    // discard not found deletions
+    do {
+      actionLogs.clear();
+      vessel->upgradeVessel(100, actionLogs);
+    } while (actionLogs.front().getIterations() == 0);
+    // save logs
     for (auto &log : actionLogs) {
       std::cout << log.toString() << std::endl;
       battleLog->recordAction(log);

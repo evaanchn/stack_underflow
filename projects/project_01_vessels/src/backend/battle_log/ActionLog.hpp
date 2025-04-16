@@ -37,6 +37,13 @@ class ActionLog {
   void recordEnd(size_t iterations);
 
   /**
+   * @brief Get record iterations
+   * 
+   * @return size_t
+   */
+  size_t getIterations();
+
+  /**
    * @brief Converts the logged action details to a string representation.
    * @return A formatted string containing the action details.
    */

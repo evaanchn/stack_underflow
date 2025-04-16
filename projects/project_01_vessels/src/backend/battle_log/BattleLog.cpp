@@ -15,7 +15,7 @@ void BattleLog::recordAction(ActionLog &action) {
 }
 
 BattleLog::~BattleLog() {
-  if(battleLogFile) fclose(this->battleLogFile);
+  if (battleLogFile) fclose(this->battleLogFile);
 }
 
 int BattleLog::setBattleLogName(const char &recordMode) {
