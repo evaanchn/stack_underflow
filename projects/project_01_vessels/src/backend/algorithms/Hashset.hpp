@@ -16,6 +16,8 @@ class Hashset : public Algorithm {
   size_t search(int64_t element) override;
   size_t remove(int64_t element) override;
 
+  size_t getElementCount() override;
+
  private:
   std::unordered_set<int64_t> hashset;
 };

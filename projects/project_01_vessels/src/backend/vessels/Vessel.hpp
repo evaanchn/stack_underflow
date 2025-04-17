@@ -67,6 +67,15 @@ class Vessel {
    */
   bool isAlive();
 
+  /**
+   * @brief Indicates if the vessel can be upgraded
+   * @details maxedOut == only one element inside
+   * 
+   * @return true 
+   * @return false 
+   */
+  bool maxedOut();
+
   size_t getWeight();
   size_t getCost();
 
@@ -92,7 +101,8 @@ class Vessel {
    * @param upgradePoints maximum number of iterations
    * @return iterations made during upgrade
    */
-  size_t upgradeVessel(const size_t upgradePoints, std::vector<ActionLog>& logs);
+  size_t upgradeVessel(const size_t upgradePoints,
+    std::vector<ActionLog>& logs);
 
  protected:
   void shuffle(std::vector<int>& numbers);

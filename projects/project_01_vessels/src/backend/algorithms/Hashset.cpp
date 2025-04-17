@@ -21,3 +21,8 @@ size_t Hashset::remove(int64_t element) {
   if (hashset.find(element) != hashset.end()) hashset.erase(element);
   return 1;
 }
+
+size_t Hashset::getElementCount() {
+  return this->hashset.size();
+}
+
