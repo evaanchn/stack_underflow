@@ -9,11 +9,7 @@
 
 #include "Board.hpp"
 #include "BattleLog.hpp"
-#inclide "ActionLog.hpp";
 
-// player IDs
-#define PLAYER1 1
-#define PLAYER2 2
 #define MAX_VESSEL_WEIGHT 10
 
 #define TOTAL_VESSELS 6
@@ -27,8 +23,14 @@ struct Player {
 
 class Game {
  public:
-  void attackVessel(int64_t attackerRow, int64_t attackerCol, int64_t victimRow,
-      int64_t victimCol);
+  /// @brief sends an attack to a certain slot
+  /// @param attackerRow row of the attacker
+  /// @param attackerCol col of the attacker
+  /// @param victimRow row of the victim
+  /// @param victimCol col of the victim
+  /// @return the result of the attack
+  size_t attackVessel(int attackerRow, int attackerCol, int victimRow,
+      int victimCol);
 
   /**
    * @brief pendiente
@@ -48,17 +50,35 @@ class Game {
    */
   size_t getCurrentPlayer();
 
+  /// @brief returns the winner's identifier
+  size_t getWinner();
+
   /// @brief constructor method of the class
   Game();
   /// @brief destructor method of the class
   ~Game();
 
   /**
+   * @brief checks if the game is over
+   * @return true is game is over
+   */
+  bool isGameOver();
+
+  /**
    * @brief checks out if a slot in the board is available
    * @return true or false
    */
-  bool isSlotOccupied(int64_t row, int64_t col);
+  bool isSlotOccupied(int row, int col);
 
+  /// @brief moves vessel from one slot to another
+  void moveVessel(int fromRow, int fromCol, int toRow, int toCol);
+
+  /// @brief Upgrades selected vessel
+  /// @param row selected row
+  /// @param col selected column
+  /// @return true if the vessel was upgraded, false otherwise
+  bool upgradeVessel(int row, int col);
+    
   /// @brief Sets new turn to false, indicating the new turn has been noted
   void resetNewTurn();
 
@@ -68,21 +88,25 @@ class Game {
    * @param col selected column
    * @param vesselID kind of vessel for being saved
    */
-  void setVesselAt(int64_t row, int64_t col, int64_t vesselID);
+  void setVesselAt(int row, int col, int64_t vesselID);
+
+  /// @brief checks if new turn happened
+  /// @return true if new turn happened
+  bool switchedTurns();
 
   /**
    * @brief validades if a player has the capacity to save more vessels
    * @return true or false
    */
-  bool validadeVesselWeight();
+  bool validateVesselWeight();
 
  private:
-  map<size_t, Player> players;
+  std::map<size_t, Player> players;
   bool gameOver;
-  int64_t winner;
+  size_t winner;
   size_t currentPlayer;
   bool newTurn;
-  BattleLog* battlelog;
+  BattleLog* battleLog;
   Board* board;
 
   void setPlayers();
