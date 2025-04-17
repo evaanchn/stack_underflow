@@ -18,17 +18,18 @@ void ActionLog::setAction(const std::string action) {
 }
 
 void ActionLog::recordStart() {
-  this->startTime = clock();
+  srand48(time(NULL) + clock());
+  clock_gettime(CLOCK_MONOTONIC, &startTime);
 }
 
 void ActionLog::recordEnd(size_t iterations) {
-  this->endTime = clock();
+  clock_gettime(CLOCK_MONOTONIC, &endTime);
   this->iterations = iterations;
 }
 
 std::string ActionLog::getDuration() {
-  double duration = static_cast<double> (this->endTime - this->startTime)
-    / CLOCKS_PER_SEC * 1000;  // Conversion to ms
+  double duration = (endTime.tv_sec - startTime.tv_sec) * 1e6  // s to ms
+  + (endTime.tv_nsec - startTime.tv_nsec) * 1e-3;  // nanoseconds to ms
   return std::to_string(duration) + "ms";
 }
 

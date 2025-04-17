@@ -53,8 +53,8 @@ class ActionLog {
   std::string responsible;  ///< The alogrithm responsible for the action.
   std::string action;  ///< The action being logged.
   size_t iterations;  ///< Number of iterations performed
-  clock_t startTime;  ///< The start time of the action.
-  clock_t endTime;  ///< The end time of the action.
+  timespec startTime;  ///< The start time of the action.
+  timespec endTime;  ///< The end time of the action.
 
   /**
    * @brief Computes and returns the duration of the action.
