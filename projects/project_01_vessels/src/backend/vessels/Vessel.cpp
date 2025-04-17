@@ -89,20 +89,25 @@ int Vessel::calculateDamage(ActionLog& log) {
   return damage;
 }
 
-bool Vessel::upgradeVessel(const size_t upgradePoints
+size_t Vessel::upgradeVessel(const size_t upgradePoints
     , std::vector<ActionLog>& logs) {
   ActionLog logDelete = ActionLog("delete");
-  int64_t element = this->randValue(1, ELEMENT_COUNT);
-  size_t iterations = this->deletion(element, logDelete);
+  int64_t element = 0;
+  size_t iterations = 0;
+  while (iterations == 0) {
+    // try again
+    int64_t element = this->randValue(1, ELEMENT_COUNT);
+    iterations = this->deletion(element, logDelete);
+  }
+
   logs.push_back(logDelete);
   if (iterations > upgradePoints) {
-    ActionLog reInsertion = ActionLog("search");
+    ActionLog reInsertion = ActionLog("insert");
     // put element back
     this->insert(element, reInsertion);
     logs.push_back(reInsertion);
-    return false;
   }
-  return true;
+  return iterations;
 }
 
 void Vessel::shuffle(std::vector<int>& numbers) {

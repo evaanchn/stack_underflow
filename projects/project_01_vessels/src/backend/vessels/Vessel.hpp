@@ -90,10 +90,9 @@ class Vessel {
    * @brief Try to eliminate elements from the vessel
    * 
    * @param upgradePoints maximum number of iterations
-   * @return true success
-   * @return false failure
+   * @return iterations made during upgrade
    */
-  bool upgradeVessel(const size_t upgradePoints, std::vector<ActionLog>& logs);
+  size_t upgradeVessel(const size_t upgradePoints, std::vector<ActionLog>& logs);
 
  protected:
   void shuffle(std::vector<int>& numbers);
