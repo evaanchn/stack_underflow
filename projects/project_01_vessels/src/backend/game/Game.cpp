@@ -2,32 +2,43 @@
 
 #include "Game.hpp"
 
-Game::Game() {
+Game::Game()
+  : currentPlayer(PLAYER1)
+  , winner(0)
+  , newTurn(true) {
+  setPlayers();
+  board = new Board();
+  battleLog = new BattleLog(RECORD_GAME);
+}
+
+void Game::setPlayers(){
   Player player1;
   Player player2;
   players[PLAYER1] = player1;
   players[PLAYER2] = player2;
+
+  // Set players with initial values
   for (auto player : &players) {
+    player.actions = 3;
     player.purchasePoints = 30;
-    player.totalVesselWeight = 15;
-    player.totalVesselWeight = 15;
+    player.totalVesselWeight = 0;
+    player.upgradePoints = 0;
   }
-  currentPlayer = 1;
-  winner = 0;
+}
+
+Game::~Game() {
+  delete this->battleLog();
+  delete this->board;
 }
 
 bool Game::canBuyVessel(int64_t vesselID) {
-  const size_t* weights = {5, 3, 2, 2, 2, 1};
-  const size_t* costs = {200, 150, 80, 50, 30, 1};
+  const size_t weights[TOTAL_VESSELS] = {5, 3, 2, 2, 2, 1};
+  const size_t costs[TOTAL_VESSELS] = {200, 150, 80, 50, 30, 1};
   size_t vesselWeight = players[currentPlayer].totalVesselWeight;
   size_t money = players[currentPlayer].purchasePoints;
   if (vesselWeight >= weights[vesselID] && money >= costs[vesselID]) {
-    free(weights);
-    free(costs);
     return true;
   } else {
-    free(weights);
-    free(costs);
     return false;
   }
 }
@@ -35,6 +46,7 @@ bool Game::canBuyVessel(int64_t vesselID) {
 void Game::consumeAction() {
   --players[currentPlayer].actions;
   if (players[currentPlayer].actions == 0) {
+    newTurn = true;
     players[currentPlayer] = 3;
     if (currentPlayer == PLAYER1) {
       currentPlayer = PLAYER2;

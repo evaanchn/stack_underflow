@@ -16,15 +16,20 @@
 #define PLAYER2 2
 #define MAX_VESSEL_WEIGHT 10
 
+#define TOTAL_VESSELS 6
+
 struct Player {
+  size_t actions;
   size_t purchasePoints;
   size_t upgradePoints;
   size_t totalVesselWeight;
-  size_t actions;
 };
 
 class Game {
  public:
+  void attackVessel(int64_t attackerRow, int64_t attackerCol, int64_t victimRow,
+      int64_t victimCol);
+
   /**
    * @brief pendiente
    * @return true if current player can buy specified vessel based on vessels 
@@ -45,6 +50,8 @@ class Game {
 
   /// @brief constructor method of the class
   Game();
+  /// @brief destructor method of the class
+  ~Game();
 
   /**
    * @brief checks out if a slot in the board is available
@@ -52,10 +59,13 @@ class Game {
    */
   bool isSlotOccupied(int64_t row, int64_t col);
 
+  /// @brief Sets new turn to false, indicating the new turn has been noted
+  void resetNewTurn();
+
   /**
    * @brief saves a vessels in the specified coordinates
    * @param row selected row
-   * @param row selected column
+   * @param col selected column
    * @param vesselID kind of vessel for being saved
    */
   void setVesselAt(int64_t row, int64_t col, int64_t vesselID);
@@ -71,6 +81,9 @@ class Game {
   bool gameOver;
   int64_t winner;
   size_t currentPlayer;
-  BattleLog battlelog;
-  Board board;
+  bool newTurn;
+  BattleLog* battlelog;
+  Board* board;
+
+  void setPlayers();
 };
