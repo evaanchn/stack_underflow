@@ -3,17 +3,19 @@
 #include "Game.hpp"
 
 Game::Game()
-  : currentPlayer(PLAYER1)
+  : gameOver(false) 
   , winner(0)
-  , newTurn(true)
-  , gameOver(false) {
+  , currentPlayer(PLAYER1) 
+  , newTurn(true) 
+  , battleLog(nullptr)
+  , board(nullptr) {
   setPlayers();
-  this->board = new Board();
   this->battleLog = new BattleLog();
   this->battleLog->setBattleLog(RECORD_GAME);
+  this->board = new Board();
 }
 
-void Game::setPlayers(){
+void Game::setPlayers() {
   Player player1;
   Player player2;
   players[PLAYER1] = player1;
@@ -56,8 +58,7 @@ size_t Game::attackVessel(int attackerRow, int attackerCol, int victimRow,
         }
       }
     }
-  }
-  else {
+  } else {
     // If the slot is empty, the attack is not wasted
     // but the damage is not applied
     players[currentPlayer].upgradePoints += damage / 2;
@@ -115,6 +116,7 @@ void Game::moveVessel(int fromRow, int fromCol, int toRow, int toCol) {
 bool Game::upgradeVessel(int row, int col) {
   Vessel* vessel = this->board->getVessel({row, col}, currentPlayer);
   if (vessel != nullptr) {
+    if (vessel->maxedOut()) return false;
     std::vector<ActionLog> actionLogs;  // Since upgrade could be unsuccessful
     size_t upgradeIterations = vessel->upgradeVessel(
         players[currentPlayer].upgradePoints, actionLogs);

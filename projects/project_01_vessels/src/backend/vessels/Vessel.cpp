@@ -66,6 +66,10 @@ bool Vessel::isAlive() {
   return (this->health > 0);
 }
 
+bool Vessel::maxedOut() {
+  return (this->algorithm->getElementCount() == 1);
+}
+
 size_t Vessel::getWeight() {
   return this->weight;
 }

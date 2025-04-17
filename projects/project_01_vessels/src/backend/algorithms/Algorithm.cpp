@@ -8,3 +8,7 @@ Algorithm::~Algorithm() = default;
 std::string Algorithm::getName() {
   return this->algorithmName;
 }
+
+size_t Algorithm::getElementCount() {
+  return this->elementRecord.size();
+}

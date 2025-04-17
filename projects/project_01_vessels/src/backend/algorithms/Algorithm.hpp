@@ -39,6 +39,8 @@ class Algorithm {
    */
   std::string getName();
 
+  virtual size_t getElementCount();
+
  protected:
   std::string algorithmName = " ";
   size_t elementCount = 0;

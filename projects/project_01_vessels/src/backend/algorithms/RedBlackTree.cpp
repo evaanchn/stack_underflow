@@ -49,7 +49,6 @@ size_t RedBlackTree::insert(int64_t element) {
   newNode->rightChild = NIL;
   Node* parent = nullptr;
   Node* current = root;
-  ++k;  // save interactions
 
   while (current != NIL) {
     parent = current;
@@ -58,8 +57,8 @@ size_t RedBlackTree::insert(int64_t element) {
     } else {
       current = current->rightChild;
     }
+    ++k;  // save interations
   }
-  ++k;  // save interactions
 
   newNode->parent = parent;
 
@@ -70,7 +69,6 @@ size_t RedBlackTree::insert(int64_t element) {
   } else {
     parent->rightChild = newNode;
   }
-  ++k;  // save interactions
 
   k += insertFixup(newNode);  // save interactions
   elementRecord.insert(element);
@@ -213,6 +211,7 @@ size_t RedBlackTree::insertFixup(Node* node) {
         uncle->color = "BLACK";
         node->parent->parent->color = "RED";
         node = node->parent->parent;
+        ++k;  // save interactions
       } else {
         if (node == node->parent->rightChild) {
           node = node->parent;
@@ -220,10 +219,8 @@ size_t RedBlackTree::insertFixup(Node* node) {
         }
         node->parent->color = "BLACK";
         node->parent->parent->color = "RED";
-
         k += rightRotate(node->parent->parent);  // save interactions
       }
-      ++k;  // save interactions
     } else {
       Node* uncle = node->parent->parent->leftChild;
 
@@ -232,7 +229,7 @@ size_t RedBlackTree::insertFixup(Node* node) {
         uncle->color = "BLACK";
         node->parent->parent->color = "RED";
         node = node->parent->parent;
-
+        ++k;  // save interactions
       } else {
         if (node == node->parent->leftChild) {
           node = node->parent;
@@ -246,7 +243,6 @@ size_t RedBlackTree::insertFixup(Node* node) {
     }
   }
   root->color = "BLACK";
-  ++k;  // save interactions
   return k;
 }
 

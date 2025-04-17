@@ -78,7 +78,7 @@ class Game {
   /// @param col selected column
   /// @return true if the vessel was upgraded, false otherwise
   bool upgradeVessel(int row, int col);
-    
+
   /// @brief Sets new turn to false, indicating the new turn has been noted
   void resetNewTurn();
 
