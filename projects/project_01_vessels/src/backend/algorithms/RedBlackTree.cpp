@@ -81,13 +81,15 @@ size_t RedBlackTree::search(int64_t element) {
   size_t k = 0;
   Node* node = root;
 
-  while (node != NIL && element != node->value) {
-    if (element < node->value) {
+  while (node != NIL) {
+    ++k;  // save interations (before possible break)
+    if (element == node->value) {
+      break;
+    } else if (element < node->value) {
       node = node->leftChild;
     } else {
       node = node->rightChild;
     }
-    ++k;  // save interactions
   }
   return k;
 }
