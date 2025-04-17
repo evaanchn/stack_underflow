@@ -3,14 +3,16 @@
 #include "Game.hpp"
 
 Game::Game()
-  : currentPlayer(PLAYER1)
+  : gameOver(false) 
   , winner(0)
-  , newTurn(true)
-  , gameOver(false) {
+  , currentPlayer(PLAYER1) 
+  , newTurn(true) 
+  , battleLog(nullptr)
+  , board(nullptr) {
   setPlayers();
-  this->board = new Board();
   this->battleLog = new BattleLog();
   this->battleLog->setBattleLog(RECORD_GAME);
+  this->board = new Board();
 }
 
 void Game::setPlayers() {
