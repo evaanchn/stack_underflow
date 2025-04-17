@@ -66,6 +66,14 @@ class Board {
     , std::vector<ActionLog>& logs);
 
   /**
+  * @brief Checks if a slot is occupied by a Vessel.
+  * 
+  * @param coordinates A vector containing the row and column indices.
+  * @return true if occupied, false if free
+  */
+  bool isSlotOccupied(std::vector<int> coordinates);
+
+  /**
   * @brief Moves a Vessel from an origin Slot to a destination Slot.
   * 
   * @param origin A vector containing the origin row and column indices.

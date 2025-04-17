@@ -58,6 +58,11 @@ bool Board::insertVessel(std::vector<int> coordinates, int vesselID
   return false;
 }
 
+bool Board::isSlotOccupied(std::vector<int> coordinates) {
+  return this->slots[coordinates.at(0)][coordinates.at(1)].isOccupied();
+}
+
+
 bool Board::moveVessel(std::vector<int> origin, std::vector<int> destination
     , int playerID) {
   // valid source and destination
