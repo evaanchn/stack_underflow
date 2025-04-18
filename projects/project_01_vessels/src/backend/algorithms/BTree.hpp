@@ -14,22 +14,14 @@
  * @brief Node structure for B-Tree implementation
  */
 class BTreeNode {
- public:
-  std::vector<int64_t> keys;
-  std::vector<BTreeNode*> children;
-  bool isLeaf;
-  int64_t keyCount;
-
-  /**
-   * @brief constructor method of the class
-   * @param leaf Boolean indicating if the node is a leaf
-   * @param t Minimum degree of the B-Tree
-   */
-  explicit BTreeNode(bool leaf, int64_t t);
-
-  /// @brief Destructor method of the class
-  ~BTreeNode();
-};
+  public:
+      std::vector<int> keys;
+      std::vector<BTreeNode*> children;
+      bool leaf;
+  
+      BTreeNode(bool isLeaf);
+      ~BTreeNode();
+  };
 
 /**
  * @class BTree
@@ -75,8 +67,13 @@ class BTree : public Algorithm {
 
  protected:
   BTreeNode* root;
-  int64_t t;
+  size_t t;
   std::unordered_set<int64_t> elementRecord;
+
+  /**
+   * @brief pendiente
+   */
+  size_t borrowFromSibling(BTreeNode* node, int i, int siblingIndex);
 
   /**
    * @brief Splits a full child node
@@ -119,7 +116,7 @@ class BTree : public Algorithm {
    * @param i Index of the element
    * @return Number of operations performed
    */
-  size_t deleteInternalNode(BTreeNode* node, int64_t element, int64_t i);
+  size_t deleteInternalNode(BTreeNode* node, int64_t element, size_t i);
 
   /**
    * @brief Finds and removes the predecessor of a key
