@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <string>
 #include <vector>
 #include "UISlot.hpp"
 
@@ -15,6 +16,20 @@
 
 #define X_OFFSET 85
 #define Y_OFFSET 130
+
+#define SLOT_MASKS_TYPES 3
+
+const std::string SLOT_MASK_FOLDER = "assets/sprites/slotMasks/";
+const std::string LIGHT_MASKS_PATH = "light/";
+const std::string DARK_MASKS_PATH = "dark/";
+const std::string SLOT_MASKS[SLOT_MASKS_TYPES] = {"unaccessed.png", "hit.png"
+    , "flagged.png"};
+
+enum SlotState {
+  UNACCESSED,
+  HIT,
+  FLAGGED,
+};
 
 struct Coordinates {
   int row;
@@ -33,14 +48,22 @@ class UIBoard {
   void resetSelection(int player);
   Coordinates* getCoordinates(int player);
 
+  void setHitMaskAt(int row, int col);
+  void setFlaggedMaskAt(int row, int col);
+  void resetMaskAt(int row, int col);
+  void maskOpponentSlots(int player);
+
  private:
-  UISlot*** grid;
+  UISlot*** board;
   Fl_Color light_cell;
   Fl_Color dark_cell;
   Coordinates* player1SelectedSlot = nullptr;
   Coordinates* player2SelectedSlot = nullptr;
+  Fl_PNG_Image* slotMasks[6];
 
+  void initSlotMasks();
   void setBoard(int startX, int startY);
   void setSlotCallback(int row, int col);
   bool isValid(int row, int col) const;
+  SlotState getSlotState(int row, int col, SlotState state) const;
 };

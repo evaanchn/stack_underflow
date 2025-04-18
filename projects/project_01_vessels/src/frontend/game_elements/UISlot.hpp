@@ -24,8 +24,13 @@ class UISlot {
   Fl_PNG_Image* getVessel();
   void clearVessel();
 
+  void setMask(Fl_PNG_Image* _mask);
+  void showMask();
+  void hideMask();
+
  private:
   Fl_Button* button;
   Fl_PNG_Image* vessel;  // Vessel that will be displayed in the slot
+  Fl_PNG_Image* slotMask;  // Mask for the slot
   std::function<void()> onClick;
 };

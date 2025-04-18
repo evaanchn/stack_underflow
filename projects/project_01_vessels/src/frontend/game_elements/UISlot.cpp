@@ -3,7 +3,9 @@
 #include "UISlot.hpp"
 
 // Constructor initialization
-UISlot::UISlot(int x, int y) {
+UISlot::UISlot(int x, int y) 
+  : vessel(nullptr)
+  , slotMask(nullptr) {
   button = new Fl_Button(x, y, SLOT_DIMENSION, SLOT_DIMENSION);
   button->box(FL_FLAT_BOX);
   // Tells slot's button that it will execute onClick when clicked
@@ -54,5 +56,25 @@ Fl_PNG_Image* UISlot::getVessel() {
 void UISlot::clearVessel() {
   vessel = nullptr;
   button->image(nullptr);
+  button->redraw();
+}
+
+void UISlot::setMask(Fl_PNG_Image* _mask) {
+  if (_mask) {
+    slotMask = _mask;
+  }
+}
+
+void UISlot::showMask() {
+  if (this->slotMask) {
+    button->image(slotMask);
+    button->redraw();
+  }
+}
+
+void UISlot::hideMask() {
+  if (this->vessel) {
+    button->image(this->vessel);
+  }
   button->redraw();
 }
