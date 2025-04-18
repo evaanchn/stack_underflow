@@ -17,6 +17,8 @@ class RedBlackTree : public Algorithm {
     Node* leftChild;
     Node* rightChild;
     std::string color;
+    // constructor
+    Node(Node* leaf);
   };
 
   /// @brief constructor method of the class

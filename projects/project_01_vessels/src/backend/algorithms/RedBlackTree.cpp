@@ -2,13 +2,18 @@
 
 #include "RedBlackTree.hpp"
 
+RedBlackTree::Node::Node(Node* leaf)
+: value()
+, parent(nullptr)
+, color("RED") {
+  this->leftChild = leaf;
+  this->rightChild = leaf;
+}
+
 RedBlackTree::RedBlackTree() : Algorithm() {
   algorithmName = "Red Black Tree";
-  NIL = new Node();
+  NIL = new Node(nullptr);
   NIL->color = "BLACK";
-  NIL->leftChild = nullptr;
-  NIL->rightChild = nullptr;
-  NIL->parent = nullptr;
   root = NIL;
 }
 
@@ -43,10 +48,8 @@ size_t RedBlackTree::insert(int64_t element) {
     return 0;
   }
   size_t k = 0;
-  Node* newNode = new Node();
+  Node* newNode = new Node(NIL);
   newNode->value = element;
-  newNode->leftChild = NIL;
-  newNode->rightChild = NIL;
   Node* parent = nullptr;
   Node* current = root;
   ++k; // root iteation
