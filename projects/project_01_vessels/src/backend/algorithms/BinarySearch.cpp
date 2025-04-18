@@ -99,17 +99,18 @@ int BinarySearch::search(int64_t element, size_t& iterations) {
 size_t BinarySearch::remove(int64_t element) {
   size_t iterations = 0;
   if (elementRecord.find(element) == elementRecord.end()) {
-    return iterations;
+    return 0;
   }
   int index = search(element, iterations);
   if (index == -1) {  // not found
-    return iterations;
+    return 0;
   }
   // reallocate
-  for (size_t i = index; i < this->elementCount - 2; ++i) {
+  for (size_t i = index; i < this->elementCount - 1; ++i) {
     this->orderedArray[i] = this->orderedArray[i+1];
     ++iterations;
   }
+  this->orderedArray[elementCount - 1] = 0;  // clean deallocated index
   --this->elementCount;
   this->elementRecord.erase(element);
   return iterations;
