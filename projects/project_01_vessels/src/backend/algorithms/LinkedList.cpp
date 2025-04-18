@@ -78,8 +78,6 @@ size_t LinkedList::remove(int64_t eliminatingElement) {
         if (current->value == eliminatingElement) {
           prev->next = current->next;  // Connects prev with new next
           delete current;  // eliminate node with requested value
-
-          elementRecord.erase(eliminatingElement);  // Remove from record
           eliminated = true;  // To prevent iterating until the end
         } else {
           prev = current;
@@ -88,6 +86,9 @@ size_t LinkedList::remove(int64_t eliminatingElement) {
         ++repetitions;
       }
     }
+    elementRecord.erase(eliminatingElement);  // Remove from record
+  } else {
+    return 0;
   }
   return repetitions;
 }

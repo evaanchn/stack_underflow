@@ -18,8 +18,11 @@ size_t Hashset::search(int64_t element) {
 }
 
 size_t Hashset::remove(int64_t element) {
-  if (hashset.find(element) != hashset.end()) hashset.erase(element);
-  return 1;
+  if (hashset.find(element) != hashset.end()) {
+    hashset.erase(element);
+    return 1;
+  } 
+  return 0;
 }
 
 size_t Hashset::getElementCount() {
