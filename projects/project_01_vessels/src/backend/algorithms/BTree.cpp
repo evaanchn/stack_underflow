@@ -2,7 +2,8 @@
 
 #include "BTree.hpp"
 
-BTreeNode::BTreeNode(bool isLeaf) : leaf(isLeaf){}
+BTreeNode::BTreeNode(bool isLeaf) : leaf(isLeaf) {
+}
 
 BTreeNode::~BTreeNode() {
 }
@@ -55,7 +56,7 @@ size_t BTree::borrowFromSibling(BTreeNode* node, int i, int siblingIndex) {
     sibling->keys.pop_back();
     k += 2;
     if (!sibling->leaf) {
-      child->children.insert(child->children.begin(), 
+      child->children.insert(child->children.begin(),
         sibling->children.back());
       sibling->children.pop_back();
       k += 2;
@@ -85,7 +86,7 @@ size_t BTree::splitChild(BTreeNode* parentNode, int64_t i) {
   fullChild->keys.resize(t - 1);
 
   if (!fullChild->leaf) {
-    newChild->children.assign(fullChild->children.begin() + t, 
+    newChild->children.assign(fullChild->children.begin() + t,
       fullChild->children.end());
     fullChild->children.resize(t);
   }
@@ -186,7 +187,8 @@ size_t BTree::removeNavigation(BTreeNode* node, int64_t element) {
     if (node->children[i]->keys.size() < t) {
       if (i > 0 && node->children[i-1]->keys.size() >= t) {
         k += borrowFromSibling(node, i, i-1);
-      } else if (i < node->children.size()-1 && node->children[i+1]->keys.size() >= t) {
+      } else if (i < node->children.size()-1 &&
+          node->children[i+1]->keys.size() >= t) {
         k += borrowFromSibling(node, i, i+1);
       } else {
         if (i < node->children.size()-1) {
@@ -246,7 +248,7 @@ size_t BTree::deleteMerge(BTreeNode* node, int64_t i) {
   left->keys.insert(left->keys.end(), right->keys.begin(), right->keys.end());
   k += 2;
   if (!left->leaf) {
-    left->children.insert(left->children.end(), right->children.begin(), 
+    left->children.insert(left->children.end(), right->children.begin(),
       right->children.end());
     ++k;
   }

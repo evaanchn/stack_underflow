@@ -3,10 +3,10 @@
 #include "Game.hpp"
 
 Game::Game()
-  : gameOver(false) 
+  : gameOver(false)
   , winner(0)
-  , currentPlayer(PLAYER1) 
-  , newTurn(true) 
+  , currentPlayer(PLAYER1)
+  , newTurn(true)
   , battleLog(nullptr)
   , board(nullptr) {
   setPlayers();

@@ -14,14 +14,14 @@
  * @brief Node structure for B-Tree implementation
  */
 class BTreeNode {
-  public:
-      std::vector<int> keys;
-      std::vector<BTreeNode*> children;
-      bool leaf;
-  
-      BTreeNode(bool isLeaf);
-      ~BTreeNode();
-  };
+ public:
+  std::vector<int> keys;
+  std::vector<BTreeNode*> children;
+  bool leaf;
+
+  explicit BTreeNode(bool isLeaf);
+  ~BTreeNode();
+};
 
 /**
  * @class BTree

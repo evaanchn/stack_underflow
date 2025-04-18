@@ -21,7 +21,7 @@ size_t Hashset::remove(int64_t element) {
   if (hashset.find(element) != hashset.end()) {
     hashset.erase(element);
     return 1;
-  } 
+  }
   return 0;
 }
 
