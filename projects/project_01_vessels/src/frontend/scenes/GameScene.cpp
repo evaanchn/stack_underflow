@@ -4,7 +4,15 @@
 
 GameScene::GameScene(int width, int height, const std::string& title)
   : gameActive (ACTIVE)
-  , moveState (MOVE_IDLE) {
+  , moveState (MOVE_IDLE)
+  , hitSound(SOUNDS_FOLDER + "hit.mp3", /*loop*/ false)
+  , missSound(SOUNDS_FOLDER + "miss.mp3", /*loop*/ false)
+  , boughtSound(SOUNDS_FOLDER + "boughtVessel.mp3", /*loop*/ false)
+  , movedSound(SOUNDS_FOLDER + "movedVessel.mp3", /*loop*/ false)
+  , upgradedSound(SOUNDS_FOLDER + "upgradedVessel.mp3", /*loop*/ false)
+  , actionButtonSound(SOUNDS_FOLDER + "soundActionButton.mp3", /*loop*/ false)
+  , vesselButtonSound(SOUNDS_FOLDER + "soundVesselButton.mp3", /*loop*/ false)
+  {
   this->selectedAction = NONE_SELECTED;
   this->selectedVessel = NONE_SELECTED;
   this->window = new Fl_Window(width, height, title.c_str());
@@ -14,6 +22,8 @@ GameScene::GameScene(int width, int height, const std::string& title)
   this->setTurnSwitchImages();  // Set turn switch cutscenes
   this->window->end();  // Ends window's elements' grouping
   this->window->show();
+
+  this->board->maskOpponentSlots(PLAYER_1);
   
   this->infoWindow = new GameInfoWindow();
   this->infoWindow->hide();
@@ -40,6 +50,9 @@ GameScene::~GameScene() {
       if(gameLabels[i]) delete gameLabels[i];
   for (int i = 0; i < V_BUTTONS_COUNT; ++i)
       if(vesselsButtons[i]) delete vesselsButtons[i];
+
+  delete this->unflagButton;
+  delete this->flagButton;
   for (int i = 0; i < A_BUTTONS_COUNT; ++i)
       if(actionsButtons[i]) delete actionsButtons[i];
 
@@ -60,6 +73,7 @@ void GameScene::setupUI() {
   this->exitButton->set_click_callback([this]() {
     this->infoWindow->show();
     this->infoWindow->solicitConfirmation("Confirm exit");
+    this->actionButtonSound.play();
     this->selectedAction = EXIT;
   });
 }
@@ -117,6 +131,16 @@ void GameScene::setActionButtons() {
       , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
       , GAME_BUTTONS_FOLDER + "upgradeRune.png", EMPTY_TEXT, GAME_BACKGROUND);
   setActionButtonCallBack(upgradeButton, UPGRADE);
+
+  flagButton = new CustomIconButton(/*X*/ 20, /*Y*/ 555
+      , 50, 50
+      , GAME_BUTTONS_FOLDER + "flag.png", "Flag", GAME_BACKGROUND);
+  setActionButtonCallBack(flagButton, FLAG);
+
+  unflagButton = new CustomIconButton(/*X*/ 20, /*Y*/ 645
+      , 50, 50
+      , GAME_BUTTONS_FOLDER + "unflag.png", "Unflag", GAME_BACKGROUND);
+  setActionButtonCallBack(unflagButton, UNFLAG);
 }
 
 void GameScene::setActionButtonCallBack(CustomIconButton* button, int actionID) {
@@ -127,6 +151,7 @@ void GameScene::setActionButtonCallBack(CustomIconButton* button, int actionID) 
       this->selectedVessel = NONE_SELECTED;
       this->board->resetSelection(PLAYER_1);
       this->board->resetSelection(PLAYER_2);
+      this->actionButtonSound.play();
     }
   });
 }
@@ -164,7 +189,10 @@ void GameScene::setVesselButtons() {
 }
 
 void GameScene::setVesselButtonCallBack(CustomIconButton* button, int data) {
-  button->set_click_callback([this, data]() { this->selectedVessel = data; });
+  button->set_click_callback([this, data]() {
+    this->selectedVessel = data;
+    this->vesselButtonSound.play();
+  });
 }
 
 // TODO (e): Add function to update labels
@@ -209,6 +237,8 @@ void GameScene::handleActionButtonsEvents() {
   else if (this->selectedAction == MOVE) this->moveVessel();
   else if (this->selectedAction == ATTACK) this->attackVessel();
   else if (this->selectedAction == UPGRADE) this->upgradeVessel();
+  else if (this->selectedAction == FLAG) this->flagSlot();
+  else if (this->selectedAction == UNFLAG) this->unflagSlot();
   else if (this->selectedAction == EXIT) this->handleExit();
 }
 
@@ -318,6 +348,38 @@ void GameScene::upgradeVessel() {
       // CHECK IF COORDINATE IN BACKEND HAS SOMETHING. MUST HAVE A VESSEL
       // this->game->isSlotOccupied(row, col);
       // this->game->upgradeVessel(row, col);
+    }
+  }
+}
+
+void GameScene::flagSlot() {
+  if (this->selectedAction == FLAG) {
+    // GET CURRENT PLAYER ID FROM GAME
+    int opponent = PLAYER_2; // this->game->getCurrentPlayer();
+
+    Coordinates* flaggingCoordinates
+        = this->board->getCoordinates(opponent);
+    int row = flaggingCoordinates->row;
+    int col = flaggingCoordinates->col;
+    if (row != NO_COORDINATES && col != NO_COORDINATES) {
+      this->board->setFlaggedMaskAt(row, col);
+      this->selectedAction = NONE_SELECTED;
+    }
+  }
+}
+
+void GameScene::unflagSlot () {
+  if (this->selectedAction == UNFLAG) {
+    // GET CURRENT PLAYER ID FROM GAME
+    int opponent = PLAYER_2; // this->game->getCurrentPlayer();
+
+    Coordinates* unflaggingCoordinates
+        = this->board->getCoordinates(opponent);
+    int row = unflaggingCoordinates->row;
+    int col = unflaggingCoordinates->col;
+    if (row != NO_COORDINATES && col != NO_COORDINATES) {
+      this->board->resetMaskAt(row, col);
+      this->selectedAction = NONE_SELECTED;
     }
   }
 }

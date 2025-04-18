@@ -51,7 +51,7 @@ const std::string GAME_BUTTONS_FOLDER = "assets/sprites/buttons/";
 
 #define NONE_SELECTED -1
 
-enum Actions { UPGRADE, MOVE, ATTACK, BUY, EXIT};
+enum Actions { UPGRADE, MOVE, ATTACK, BUY, EXIT, FLAG, UNFLAG };
 enum Vessels { NO_VESSEL = -1, SET, RB_TREE, BTREE, BINARY_SEARCH
     , SPLAY_TREE, LINEAR_SEARCH };
 enum MoveState { MOVE_IDLE, MOVE_SELECT_VESSEL, MOVE_SELECT_DESTINATION };
@@ -67,3 +67,5 @@ const std::vector<std::string> VESSEL_SPRITES = {
     "SplayTree.png",
     "LinearSearch.png"
 };
+
+const std::string SOUNDS_FOLDER = "assets/sounds/";

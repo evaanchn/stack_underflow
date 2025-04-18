@@ -4,6 +4,8 @@
 
 #include "ScenesConstants.hpp"
 
+#include "SFMLSound.hpp"
+
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 #include <FL/Fl_Box.H>
@@ -36,6 +38,7 @@ class GameScene {
   Fl_Window* window = nullptr;
   GameInfoWindow* infoWindow = nullptr;
 
+ private:
   Fl_Box* backgroundImageBox = nullptr;
   Fl_PNG_Image* backgroundImage = nullptr;
 
@@ -49,6 +52,7 @@ class GameScene {
   CustomIconButton *hashsetButton = nullptr, *redBlackButton = nullptr
       , *bTreeButton = nullptr, *splayButton = nullptr
       , *binarySearchButton = nullptr, *linearSearchButton = nullptr;
+  CustomIconButton *flagButton = nullptr, *unflagButton = nullptr;
   GameInfoText *vesselsWeight = nullptr, *currentPlayerLabel = nullptr
       , *actionsLabel = nullptr, *drachmas = nullptr, *ambrosiaPoints = nullptr;
 
@@ -74,6 +78,10 @@ class GameScene {
   Coordinates moveFrom;
 
  private:
+  SFMLSound hitSound, missSound, boughtSound, movedSound
+      , upgradedSound, actionButtonSound, vesselButtonSound;
+
+ private:
   void setupUI();  // UI layout and element creation
   void setGameSceneBackground();
   void setTurnSwitchImages();
@@ -92,7 +100,10 @@ class GameScene {
   void attackVessel();
   void moveVessel();
   void upgradeVessel();
+  void flagSlot();
+  void unflagSlot();
   void handleExit();
+  
 
   void updateLabels();
 

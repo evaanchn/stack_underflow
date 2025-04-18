@@ -62,19 +62,19 @@ void UISlot::clearVessel() {
 void UISlot::setMask(Fl_PNG_Image* _mask) {
   if (_mask) {
     slotMask = _mask;
+    button->image(slotMask);
   }
+  button->redraw();
 }
 
 void UISlot::showMask() {
   if (this->slotMask) {
     button->image(slotMask);
-    button->redraw();
   }
+  button->redraw();
 }
 
 void UISlot::hideMask() {
-  if (this->vessel) {
-    button->image(this->vessel);
-  }
+  button->image(this->vessel);
   button->redraw();
 }

@@ -1,0 +1,1320 @@
+Hashset - insert | Iterations: 1 Duration: 1.454000ms
+Hashset - insert | Iterations: 1 Duration: 0.083000ms
+Hashset - insert | Iterations: 1 Duration: 0.080000ms
+Hashset - insert | Iterations: 1 Duration: 0.034000ms
+Hashset - insert | Iterations: 1 Duration: 0.062000ms
+Hashset - insert | Iterations: 1 Duration: 0.046000ms
+Hashset - insert | Iterations: 1 Duration: 0.031000ms
+Hashset - insert | Iterations: 1 Duration: 0.033000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - insert | Iterations: 1 Duration: 0.073000ms
+Hashset - insert | Iterations: 1 Duration: 0.069000ms
+Hashset - insert | Iterations: 1 Duration: 0.042000ms
+Hashset - insert | Iterations: 1 Duration: 0.069000ms
+Hashset - insert | Iterations: 1 Duration: 0.575000ms
+Hashset - insert | Iterations: 1 Duration: 0.046000ms
+Hashset - insert | Iterations: 1 Duration: 0.055000ms
+Hashset - insert | Iterations: 1 Duration: 0.041000ms
+Hashset - insert | Iterations: 1 Duration: 0.031000ms
+Hashset - insert | Iterations: 1 Duration: 0.031000ms
+Hashset - insert | Iterations: 1 Duration: 0.046000ms
+Hashset - insert | Iterations: 1 Duration: 0.031000ms
+Hashset - insert | Iterations: 1 Duration: 0.031000ms
+Hashset - insert | Iterations: 1 Duration: 0.111000ms
+Hashset - insert | Iterations: 1 Duration: 0.115000ms
+Hashset - insert | Iterations: 1 Duration: 0.070000ms
+Hashset - insert | Iterations: 1 Duration: 0.058000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - insert | Iterations: 1 Duration: 0.031000ms
+Hashset - insert | Iterations: 1 Duration: 0.031000ms
+Hashset - insert | Iterations: 1 Duration: 0.240000ms
+Hashset - insert | Iterations: 1 Duration: 0.040000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - insert | Iterations: 1 Duration: 0.031000ms
+Hashset - insert | Iterations: 1 Duration: 0.033000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - insert | Iterations: 1 Duration: 0.030000ms
+Hashset - insert | Iterations: 1 Duration: 0.030000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - insert | Iterations: 1 Duration: 0.115000ms
+Hashset - insert | Iterations: 1 Duration: 0.036000ms
+Hashset - insert | Iterations: 1 Duration: 0.033000ms
+Hashset - insert | Iterations: 1 Duration: 0.033000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - insert | Iterations: 1 Duration: 0.033000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - insert | Iterations: 1 Duration: 0.032000ms
+Hashset - search | Iterations: 1 Duration: 0.192000ms
+Hashset - search | Iterations: 1 Duration: 0.017000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.017000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.028000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.017000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.015000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.017000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - search | Iterations: 1 Duration: 0.017000ms
+Hashset - search | Iterations: 1 Duration: 0.016000ms
+Hashset - delete | Iterations: 1 Duration: 0.104000ms
+Hashset - delete | Iterations: 1 Duration: 0.040000ms
+Hashset - delete | Iterations: 1 Duration: 0.034000ms
+Hashset - delete | Iterations: 1 Duration: 0.037000ms
+Hashset - delete | Iterations: 1 Duration: 0.034000ms
+Hashset - delete | Iterations: 1 Duration: 0.034000ms
+Hashset - delete | Iterations: 1 Duration: 0.035000ms
+Hashset - delete | Iterations: 1 Duration: 0.043000ms
+Hashset - delete | Iterations: 1 Duration: 0.064000ms
+Hashset - delete | Iterations: 1 Duration: 0.076000ms
+Hashset - delete | Iterations: 1 Duration: 0.066000ms
+Hashset - delete | Iterations: 1 Duration: 0.036000ms
+Hashset - delete | Iterations: 1 Duration: 0.037000ms
+Hashset - delete | Iterations: 1 Duration: 0.033000ms
+Hashset - delete | Iterations: 1 Duration: 0.037000ms
+Hashset - delete | Iterations: 1 Duration: 0.030000ms
+Hashset - delete | Iterations: 1 Duration: 0.037000ms
+Hashset - delete | Iterations: 1 Duration: 0.033000ms
+Hashset - delete | Iterations: 1 Duration: 0.032000ms
+Hashset - delete | Iterations: 1 Duration: 0.031000ms
+Hashset - delete | Iterations: 1 Duration: 0.037000ms
+Hashset - delete | Iterations: 1 Duration: 0.029000ms
+Hashset - delete | Iterations: 1 Duration: 0.030000ms
+Hashset - delete | Iterations: 1 Duration: 0.044000ms
+Hashset - delete | Iterations: 1 Duration: 0.034000ms
+Hashset - delete | Iterations: 1 Duration: 0.029000ms
+Hashset - delete | Iterations: 1 Duration: 0.033000ms
+Hashset - delete | Iterations: 1 Duration: 0.036000ms
+Hashset - delete | Iterations: 1 Duration: 0.035000ms
+Hashset - delete | Iterations: 1 Duration: 0.033000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.517000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.141000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.177000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.116000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.199000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.120000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.132000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.191000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.091000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.191000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.169000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.169000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.143000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.217000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.199000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.161000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.153000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.128000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.127000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.159000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.101000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.073000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.072000ms
+Red Black Tree - insert | Iterations: 4 Duration: 1.858000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.087000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.138000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.091000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.088000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.067000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.229000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.091000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.071000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.071000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.088000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.069000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.074000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.077000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.069000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.078000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.083000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.071000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.067000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.082000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.080000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.082000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.075000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.073000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.090000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.067000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.085000ms
+Red Black Tree - search | Iterations: 3 Duration: 0.083000ms
+Red Black Tree - search | Iterations: 5 Duration: 0.065000ms
+Red Black Tree - search | Iterations: 5 Duration: 0.056000ms
+Red Black Tree - search | Iterations: 4 Duration: 0.053000ms
+Red Black Tree - search | Iterations: 3 Duration: 0.051000ms
+Red Black Tree - search | Iterations: 7 Duration: 0.064000ms
+Red Black Tree - search | Iterations: 10 Duration: 0.079000ms
+Red Black Tree - search | Iterations: 9 Duration: 0.058000ms
+Red Black Tree - search | Iterations: 10 Duration: 0.086000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.042000ms
+Red Black Tree - search | Iterations: 4 Duration: 0.030000ms
+Red Black Tree - search | Iterations: 7 Duration: 0.034000ms
+Red Black Tree - search | Iterations: 6 Duration: 0.068000ms
+Red Black Tree - search | Iterations: 6 Duration: 0.056000ms
+Red Black Tree - search | Iterations: 1 Duration: 0.034000ms
+Red Black Tree - search | Iterations: 6 Duration: 0.034000ms
+Red Black Tree - search | Iterations: 5 Duration: 0.057000ms
+Red Black Tree - search | Iterations: 1 Duration: 0.028000ms
+Red Black Tree - search | Iterations: 10 Duration: 0.042000ms
+Red Black Tree - search | Iterations: 7 Duration: 0.049000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.038000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.044000ms
+Red Black Tree - search | Iterations: 3 Duration: 0.028000ms
+Red Black Tree - search | Iterations: 5 Duration: 0.055000ms
+Red Black Tree - search | Iterations: 10 Duration: 0.050000ms
+Red Black Tree - search | Iterations: 1 Duration: 0.026000ms
+Red Black Tree - search | Iterations: 9 Duration: 0.042000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.056000ms
+Red Black Tree - search | Iterations: 5 Duration: 0.048000ms
+Red Black Tree - search | Iterations: 4 Duration: 0.037000ms
+Red Black Tree - delete | Iterations: 7 Duration: 0.332000ms
+Red Black Tree - delete | Iterations: 3 Duration: 0.127000ms
+Red Black Tree - delete | Iterations: 11 Duration: 0.154000ms
+Red Black Tree - delete | Iterations: 3 Duration: 0.081000ms
+Red Black Tree - delete | Iterations: 10 Duration: 0.143000ms
+Red Black Tree - delete | Iterations: 10 Duration: 0.151000ms
+Red Black Tree - delete | Iterations: 9 Duration: 0.146000ms
+Red Black Tree - delete | Iterations: 4 Duration: 0.152000ms
+Red Black Tree - delete | Iterations: 7 Duration: 0.151000ms
+Red Black Tree - delete | Iterations: 11 Duration: 0.163000ms
+Red Black Tree - delete | Iterations: 7 Duration: 0.096000ms
+Red Black Tree - delete | Iterations: 9 Duration: 0.075000ms
+Red Black Tree - delete | Iterations: 8 Duration: 0.081000ms
+Red Black Tree - delete | Iterations: 8 Duration: 0.092000ms
+Red Black Tree - delete | Iterations: 10 Duration: 0.077000ms
+Red Black Tree - delete | Iterations: 3 Duration: 0.064000ms
+Red Black Tree - delete | Iterations: 7 Duration: 0.086000ms
+Red Black Tree - delete | Iterations: 3 Duration: 0.078000ms
+Red Black Tree - delete | Iterations: 5 Duration: 0.630000ms
+Red Black Tree - delete | Iterations: 5 Duration: 0.104000ms
+Red Black Tree - delete | Iterations: 11 Duration: 0.145000ms
+Red Black Tree - delete | Iterations: 10 Duration: 0.078000ms
+Red Black Tree - delete | Iterations: 7 Duration: 0.126000ms
+Red Black Tree - delete | Iterations: 9 Duration: 0.310000ms
+Red Black Tree - delete | Iterations: 9 Duration: 0.092000ms
+Red Black Tree - delete | Iterations: 8 Duration: 0.141000ms
+Red Black Tree - delete | Iterations: 6 Duration: 0.072000ms
+Red Black Tree - delete | Iterations: 7 Duration: 0.103000ms
+Red Black Tree - delete | Iterations: 9 Duration: 0.089000ms
+Red Black Tree - delete | Iterations: 5 Duration: 0.095000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.597000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.098000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.041000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.106000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.031000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.029000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.027000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.057000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.064000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.101000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.060000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.085000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.055000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.398000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.050000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.062000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.043000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.059000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.058000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.056000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.047000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.064000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.047000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.065000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.052000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.070000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.048000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.043000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.048000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.220000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.064000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.047000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.032000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.049000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.058000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.051000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.046000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.040000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.057000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.042000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.066000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.045000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.033000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.033000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.032000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.032000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.056000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.042000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.061000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.045000ms
+BinarySearch - search | Iterations: 5 Duration: 0.088000ms
+BinarySearch - search | Iterations: 5 Duration: 0.061000ms
+BinarySearch - search | Iterations: 6 Duration: 0.050000ms
+BinarySearch - search | Iterations: 5 Duration: 0.048000ms
+BinarySearch - search | Iterations: 3 Duration: 0.029000ms
+BinarySearch - search | Iterations: 4 Duration: 0.039000ms
+BinarySearch - search | Iterations: 6 Duration: 0.053000ms
+BinarySearch - search | Iterations: 2 Duration: 0.042000ms
+BinarySearch - search | Iterations: 2 Duration: 0.036000ms
+BinarySearch - search | Iterations: 5 Duration: 0.066000ms
+BinarySearch - search | Iterations: 6 Duration: 0.034000ms
+BinarySearch - search | Iterations: 5 Duration: 0.063000ms
+BinarySearch - search | Iterations: 5 Duration: 0.046000ms
+BinarySearch - search | Iterations: 6 Duration: 0.041000ms
+BinarySearch - search | Iterations: 5 Duration: 0.046000ms
+BinarySearch - search | Iterations: 1 Duration: 0.028000ms
+BinarySearch - search | Iterations: 5 Duration: 0.047000ms
+BinarySearch - search | Iterations: 6 Duration: 0.080000ms
+BinarySearch - search | Iterations: 3 Duration: 0.047000ms
+BinarySearch - search | Iterations: 6 Duration: 0.049000ms
+BinarySearch - search | Iterations: 2 Duration: 0.037000ms
+BinarySearch - search | Iterations: 1 Duration: 0.033000ms
+BinarySearch - search | Iterations: 6 Duration: 0.033000ms
+BinarySearch - search | Iterations: 5 Duration: 0.049000ms
+BinarySearch - search | Iterations: 3 Duration: 0.044000ms
+BinarySearch - search | Iterations: 6 Duration: 0.040000ms
+BinarySearch - search | Iterations: 5 Duration: 0.061000ms
+BinarySearch - search | Iterations: 4 Duration: 0.040000ms
+BinarySearch - search | Iterations: 6 Duration: 0.076000ms
+BinarySearch - search | Iterations: 5 Duration: 0.055000ms
+BinarySearch - delete | Iterations: 50 Duration: 0.205000ms
+BinarySearch - delete | Iterations: 24 Duration: 0.091000ms
+BinarySearch - delete | Iterations: 45 Duration: 0.103000ms
+BinarySearch - delete | Iterations: 11 Duration: 0.086000ms
+BinarySearch - delete | Iterations: 17 Duration: 0.071000ms
+BinarySearch - delete | Iterations: 23 Duration: 0.083000ms
+BinarySearch - delete | Iterations: 34 Duration: 0.101000ms
+BinarySearch - delete | Iterations: 33 Duration: 0.069000ms
+BinarySearch - delete | Iterations: 40 Duration: 0.116000ms
+BinarySearch - delete | Iterations: 21 Duration: 0.106000ms
+BinarySearch - delete | Iterations: 16 Duration: 0.118000ms
+BinarySearch - delete | Iterations: 20 Duration: 0.094000ms
+BinarySearch - delete | Iterations: 30 Duration: 0.106000ms
+BinarySearch - delete | Iterations: 15 Duration: 0.070000ms
+BinarySearch - delete | Iterations: 10 Duration: 0.077000ms
+BinarySearch - delete | Iterations: 23 Duration: 0.077000ms
+BinarySearch - delete | Iterations: 14 Duration: 0.075000ms
+BinarySearch - delete | Iterations: 30 Duration: 0.074000ms
+BinarySearch - delete | Iterations: 35 Duration: 0.089000ms
+BinarySearch - delete | Iterations: 24 Duration: 0.077000ms
+BinarySearch - delete | Iterations: 5 Duration: 0.054000ms
+BinarySearch - delete | Iterations: 32 Duration: 0.159000ms
+BinarySearch - delete | Iterations: 10 Duration: 0.080000ms
+BinarySearch - delete | Iterations: 14 Duration: 0.061000ms
+BinarySearch - delete | Iterations: 5 Duration: 0.079000ms
+BinarySearch - delete | Iterations: 11 Duration: 0.062000ms
+BinarySearch - delete | Iterations: 24 Duration: 0.067000ms
+BinarySearch - delete | Iterations: 11 Duration: 0.075000ms
+BinarySearch - delete | Iterations: 6 Duration: 0.052000ms
+BinarySearch - delete | Iterations: 19 Duration: 0.083000ms
+BTree - insert | Iterations: 1 Duration: 0.654000ms
+BTree - insert | Iterations: 2 Duration: 0.139000ms
+BTree - insert | Iterations: 3 Duration: 0.084000ms
+BTree - insert | Iterations: 3 Duration: 0.052000ms
+BTree - insert | Iterations: 4 Duration: 0.121000ms
+BTree - insert | Iterations: 4 Duration: 0.437000ms
+BTree - insert | Iterations: 2 Duration: 0.085000ms
+BTree - insert | Iterations: 4 Duration: 0.138000ms
+BTree - insert | Iterations: 1 Duration: 0.050000ms
+BTree - insert | Iterations: 4 Duration: 0.132000ms
+BTree - insert | Iterations: 4 Duration: 0.242000ms
+BTree - insert | Iterations: 2 Duration: 0.070000ms
+BTree - insert | Iterations: 2 Duration: 0.135000ms
+BTree - insert | Iterations: 3 Duration: 0.298000ms
+BTree - insert | Iterations: 4 Duration: 0.127000ms
+BTree - insert | Iterations: 1 Duration: 0.131000ms
+BTree - insert | Iterations: 2 Duration: 0.109000ms
+BTree - insert | Iterations: 6 Duration: 0.106000ms
+BTree - insert | Iterations: 4 Duration: 0.176000ms
+BTree - insert | Iterations: 7 Duration: 0.720000ms
+BTree - insert | Iterations: 9 Duration: 0.329000ms
+BTree - insert | Iterations: 6 Duration: 0.075000ms
+BTree - insert | Iterations: 6 Duration: 0.080000ms
+BTree - insert | Iterations: 5 Duration: 0.072000ms
+BTree - insert | Iterations: 5 Duration: 0.087000ms
+BTree - insert | Iterations: 5 Duration: 0.282000ms
+BTree - insert | Iterations: 3 Duration: 0.083000ms
+BTree - insert | Iterations: 3 Duration: 0.068000ms
+BTree - insert | Iterations: 4 Duration: 0.062000ms
+BTree - insert | Iterations: 5 Duration: 0.222000ms
+BTree - insert | Iterations: 5 Duration: 0.080000ms
+BTree - insert | Iterations: 7 Duration: 0.073000ms
+BTree - insert | Iterations: 4 Duration: 0.063000ms
+BTree - insert | Iterations: 6 Duration: 0.225000ms
+BTree - insert | Iterations: 7 Duration: 0.106000ms
+BTree - insert | Iterations: 1 Duration: 0.063000ms
+BTree - insert | Iterations: 6 Duration: 0.070000ms
+BTree - insert | Iterations: 2 Duration: 0.064000ms
+BTree - insert | Iterations: 5 Duration: 0.072000ms
+BTree - insert | Iterations: 4 Duration: 0.123000ms
+BTree - insert | Iterations: 3 Duration: 0.095000ms
+BTree - insert | Iterations: 4 Duration: 0.142000ms
+BTree - insert | Iterations: 3 Duration: 0.063000ms
+BTree - insert | Iterations: 4 Duration: 0.052000ms
+BTree - insert | Iterations: 3 Duration: 0.101000ms
+BTree - insert | Iterations: 8 Duration: 0.140000ms
+BTree - insert | Iterations: 6 Duration: 0.083000ms
+BTree - insert | Iterations: 9 Duration: 0.103000ms
+BTree - insert | Iterations: 5 Duration: 0.073000ms
+BTree - insert | Iterations: 8 Duration: 0.080000ms
+BTree - search | Iterations: 8 Duration: 0.195000ms
+BTree - search | Iterations: 6 Duration: 0.058000ms
+BTree - search | Iterations: 6 Duration: 0.077000ms
+BTree - search | Iterations: 2 Duration: 0.028000ms
+BTree - search | Iterations: 8 Duration: 0.051000ms
+BTree - search | Iterations: 6 Duration: 0.091000ms
+BTree - search | Iterations: 9 Duration: 0.083000ms
+BTree - search | Iterations: 6 Duration: 0.049000ms
+BTree - search | Iterations: 7 Duration: 0.044000ms
+BTree - search | Iterations: 6 Duration: 0.041000ms
+BTree - search | Iterations: 5 Duration: 0.075000ms
+BTree - search | Iterations: 7 Duration: 0.086000ms
+BTree - search | Iterations: 7 Duration: 0.052000ms
+BTree - search | Iterations: 7 Duration: 0.054000ms
+BTree - search | Iterations: 3 Duration: 0.056000ms
+BTree - search | Iterations: 7 Duration: 0.080000ms
+BTree - search | Iterations: 9 Duration: 0.057000ms
+BTree - search | Iterations: 8 Duration: 0.059000ms
+BTree - search | Iterations: 7 Duration: 0.038000ms
+BTree - search | Iterations: 3 Duration: 0.067000ms
+BTree - search | Iterations: 6 Duration: 0.052000ms
+BTree - search | Iterations: 2 Duration: 0.035000ms
+BTree - search | Iterations: 6 Duration: 0.051000ms
+BTree - search | Iterations: 4 Duration: 0.066000ms
+BTree - search | Iterations: 6 Duration: 0.060000ms
+BTree - search | Iterations: 8 Duration: 0.084000ms
+BTree - search | Iterations: 3 Duration: 0.038000ms
+BTree - search | Iterations: 3 Duration: 0.042000ms
+BTree - search | Iterations: 7 Duration: 0.057000ms
+BTree - search | Iterations: 4 Duration: 0.058000ms
+BTree - delete | Iterations: 4 Duration: 0.294000ms
+BTree - delete | Iterations: 8 Duration: 0.161000ms
+BTree - delete | Iterations: 6 Duration: 0.096000ms
+BTree - delete | Iterations: 5 Duration: 0.076000ms
+BTree - delete | Iterations: 4 Duration: 0.088000ms
+BTree - delete | Iterations: 6 Duration: 0.058000ms
+BTree - delete | Iterations: 3 Duration: 0.086000ms
+BTree - delete | Iterations: 2 Duration: 0.112000ms
+BTree - delete | Iterations: 4 Duration: 0.094000ms
+BTree - delete | Iterations: 6 Duration: 0.093000ms
+BTree - delete | Iterations: 3 Duration: 0.077000ms
+BTree - delete | Iterations: 7 Duration: 0.096000ms
+BTree - delete | Iterations: 2 Duration: 0.066000ms
+BTree - delete | Iterations: 7 Duration: 0.066000ms
+BTree - delete | Iterations: 5 Duration: 0.078000ms
+BTree - delete | Iterations: 3 Duration: 0.088000ms
+BTree - delete | Iterations: 5 Duration: 0.069000ms
+BTree - delete | Iterations: 10 Duration: 0.210000ms
+BTree - delete | Iterations: 2 Duration: 0.085000ms
+BTree - delete | Iterations: 6 Duration: 0.068000ms
+BTree - delete | Iterations: 3 Duration: 0.098000ms
+BTree - delete | Iterations: 4 Duration: 0.090000ms
+BTree - delete | Iterations: 1 Duration: 0.075000ms
+BTree - delete | Iterations: 7 Duration: 0.175000ms
+BTree - delete | Iterations: 5 Duration: 0.131000ms
+BTree - delete | Iterations: 7 Duration: 0.250000ms
+BTree - delete | Iterations: 2 Duration: 0.080000ms
+BTree - delete | Iterations: 10 Duration: 0.164000ms
+BTree - delete | Iterations: 6 Duration: 0.113000ms
+BTree - delete | Iterations: 2 Duration: 0.069000ms
+Splay Tree - insert | Iterations: 1 Duration: 0.304000ms
+Splay Tree - insert | Iterations: 2 Duration: 0.256000ms
+Splay Tree - insert | Iterations: 2 Duration: 0.054000ms
+Splay Tree - insert | Iterations: 3 Duration: 0.101000ms
+Splay Tree - insert | Iterations: 3 Duration: 0.122000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.111000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.134000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.237000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.182000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.212000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.194000ms
+Splay Tree - insert | Iterations: 3 Duration: 0.106000ms
+Splay Tree - insert | Iterations: 3 Duration: 0.151000ms
+Splay Tree - insert | Iterations: 3 Duration: 0.241000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.135000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.104000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.177000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.176000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.194000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.108000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.140000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.102000ms
+Splay Tree - insert | Iterations: 18 Duration: 0.281000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.141000ms
+Splay Tree - insert | Iterations: 9 Duration: 0.189000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.210000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.132000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.172000ms
+Splay Tree - insert | Iterations: 17 Duration: 0.217000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.327000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.067000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.140000ms
+Splay Tree - insert | Iterations: 17 Duration: 0.279000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.114000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.089000ms
+Splay Tree - insert | Iterations: 9 Duration: 0.633000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.084000ms
+Splay Tree - insert | Iterations: 14 Duration: 0.200000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.145000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.115000ms
+Splay Tree - insert | Iterations: 17 Duration: 0.229000ms
+Splay Tree - insert | Iterations: 12 Duration: 0.333000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.121000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.117000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.105000ms
+Splay Tree - insert | Iterations: 11 Duration: 0.170000ms
+Splay Tree - insert | Iterations: 14 Duration: 0.203000ms
+Splay Tree - insert | Iterations: 12 Duration: 0.160000ms
+Splay Tree - insert | Iterations: 15 Duration: 0.186000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.115000ms
+Splay Tree - search | Iterations: 13 Duration: 0.274000ms
+Splay Tree - search | Iterations: 7 Duration: 0.106000ms
+Splay Tree - search | Iterations: 10 Duration: 0.148000ms
+Splay Tree - search | Iterations: 6 Duration: 0.092000ms
+Splay Tree - search | Iterations: 15 Duration: 0.193000ms
+Splay Tree - search | Iterations: 9 Duration: 0.107000ms
+Splay Tree - search | Iterations: 9 Duration: 0.115000ms
+Splay Tree - search | Iterations: 6 Duration: 0.088000ms
+Splay Tree - search | Iterations: 6 Duration: 0.071000ms
+Splay Tree - search | Iterations: 15 Duration: 0.205000ms
+Splay Tree - search | Iterations: 13 Duration: 0.164000ms
+Splay Tree - search | Iterations: 10 Duration: 0.113000ms
+Splay Tree - search | Iterations: 3 Duration: 0.041000ms
+Splay Tree - search | Iterations: 7 Duration: 0.113000ms
+Splay Tree - search | Iterations: 9 Duration: 0.102000ms
+Splay Tree - search | Iterations: 1 Duration: 0.040000ms
+Splay Tree - search | Iterations: 7 Duration: 0.128000ms
+Splay Tree - search | Iterations: 10 Duration: 0.130000ms
+Splay Tree - search | Iterations: 15 Duration: 0.132000ms
+Splay Tree - search | Iterations: 7 Duration: 0.096000ms
+Splay Tree - search | Iterations: 10 Duration: 0.119000ms
+Splay Tree - search | Iterations: 6 Duration: 0.082000ms
+Splay Tree - search | Iterations: 7 Duration: 0.090000ms
+Splay Tree - search | Iterations: 10 Duration: 0.116000ms
+Splay Tree - search | Iterations: 12 Duration: 0.130000ms
+Splay Tree - search | Iterations: 18 Duration: 0.204000ms
+Splay Tree - search | Iterations: 12 Duration: 0.176000ms
+Splay Tree - search | Iterations: 7 Duration: 0.094000ms
+Splay Tree - search | Iterations: 9 Duration: 0.089000ms
+Splay Tree - search | Iterations: 12 Duration: 0.164000ms
+Splay Tree - delete | Iterations: 12 Duration: 0.298000ms
+Splay Tree - delete | Iterations: 16 Duration: 0.247000ms
+Splay Tree - delete | Iterations: 12 Duration: 0.166000ms
+Splay Tree - delete | Iterations: 8 Duration: 0.137000ms
+Splay Tree - delete | Iterations: 16 Duration: 0.209000ms
+Splay Tree - delete | Iterations: 21 Duration: 0.237000ms
+Splay Tree - delete | Iterations: 14 Duration: 0.191000ms
+Splay Tree - delete | Iterations: 14 Duration: 0.210000ms
+Splay Tree - delete | Iterations: 19 Duration: 0.283000ms
+Splay Tree - delete | Iterations: 4 Duration: 0.123000ms
+Splay Tree - delete | Iterations: 9 Duration: 0.133000ms
+Splay Tree - delete | Iterations: 15 Duration: 0.204000ms
+Splay Tree - delete | Iterations: 12 Duration: 0.162000ms
+Splay Tree - delete | Iterations: 14 Duration: 0.182000ms
+Splay Tree - delete | Iterations: 10 Duration: 0.142000ms
+Splay Tree - delete | Iterations: 10 Duration: 0.162000ms
+Splay Tree - delete | Iterations: 18 Duration: 0.235000ms
+Splay Tree - delete | Iterations: 22 Duration: 0.280000ms
+Splay Tree - delete | Iterations: 15 Duration: 0.195000ms
+Splay Tree - delete | Iterations: 9 Duration: 0.123000ms
+Splay Tree - delete | Iterations: 6 Duration: 0.108000ms
+Splay Tree - delete | Iterations: 7 Duration: 0.110000ms
+Splay Tree - delete | Iterations: 6 Duration: 0.106000ms
+Splay Tree - delete | Iterations: 11 Duration: 0.161000ms
+Splay Tree - delete | Iterations: 10 Duration: 0.153000ms
+Splay Tree - delete | Iterations: 10 Duration: 0.191000ms
+Splay Tree - delete | Iterations: 7 Duration: 0.112000ms
+Splay Tree - delete | Iterations: 18 Duration: 0.197000ms
+Splay Tree - delete | Iterations: 10 Duration: 0.168000ms
+Splay Tree - delete | Iterations: 9 Duration: 0.116000ms
+Linear Search - insert | Iterations: 1 Duration: 0.300000ms
+Linear Search - insert | Iterations: 1 Duration: 0.058000ms
+Linear Search - insert | Iterations: 1 Duration: 0.043000ms
+Linear Search - insert | Iterations: 1 Duration: 0.184000ms
+Linear Search - insert | Iterations: 1 Duration: 0.058000ms
+Linear Search - insert | Iterations: 1 Duration: 0.139000ms
+Linear Search - insert | Iterations: 1 Duration: 0.086000ms
+Linear Search - insert | Iterations: 1 Duration: 0.096000ms
+Linear Search - insert | Iterations: 1 Duration: 0.084000ms
+Linear Search - insert | Iterations: 1 Duration: 0.117000ms
+Linear Search - insert | Iterations: 1 Duration: 0.108000ms
+Linear Search - insert | Iterations: 1 Duration: 0.094000ms
+Linear Search - insert | Iterations: 1 Duration: 0.080000ms
+Linear Search - insert | Iterations: 1 Duration: 0.189000ms
+Linear Search - insert | Iterations: 1 Duration: 0.084000ms
+Linear Search - insert | Iterations: 1 Duration: 0.088000ms
+Linear Search - insert | Iterations: 1 Duration: 0.112000ms
+Linear Search - insert | Iterations: 1 Duration: 0.067000ms
+Linear Search - insert | Iterations: 1 Duration: 0.081000ms
+Linear Search - insert | Iterations: 1 Duration: 0.094000ms
+Linear Search - insert | Iterations: 1 Duration: 0.072000ms
+Linear Search - insert | Iterations: 1 Duration: 0.105000ms
+Linear Search - insert | Iterations: 1 Duration: 0.056000ms
+Linear Search - insert | Iterations: 1 Duration: 0.057000ms
+Linear Search - insert | Iterations: 1 Duration: 0.101000ms
+Linear Search - insert | Iterations: 1 Duration: 0.070000ms
+Linear Search - insert | Iterations: 1 Duration: 0.059000ms
+Linear Search - insert | Iterations: 1 Duration: 0.082000ms
+Linear Search - insert | Iterations: 1 Duration: 0.049000ms
+Linear Search - insert | Iterations: 1 Duration: 0.192000ms
+Linear Search - insert | Iterations: 1 Duration: 0.079000ms
+Linear Search - insert | Iterations: 1 Duration: 0.040000ms
+Linear Search - insert | Iterations: 1 Duration: 0.039000ms
+Linear Search - insert | Iterations: 1 Duration: 0.109000ms
+Linear Search - insert | Iterations: 1 Duration: 0.039000ms
+Linear Search - insert | Iterations: 1 Duration: 0.039000ms
+Linear Search - insert | Iterations: 1 Duration: 0.038000ms
+Linear Search - insert | Iterations: 1 Duration: 0.065000ms
+Linear Search - insert | Iterations: 1 Duration: 0.099000ms
+Linear Search - insert | Iterations: 1 Duration: 0.038000ms
+Linear Search - insert | Iterations: 1 Duration: 0.038000ms
+Linear Search - insert | Iterations: 1 Duration: 0.038000ms
+Linear Search - insert | Iterations: 1 Duration: 0.039000ms
+Linear Search - insert | Iterations: 1 Duration: 0.038000ms
+Linear Search - insert | Iterations: 1 Duration: 0.051000ms
+Linear Search - insert | Iterations: 1 Duration: 0.110000ms
+Linear Search - insert | Iterations: 1 Duration: 0.039000ms
+Linear Search - insert | Iterations: 1 Duration: 0.039000ms
+Linear Search - insert | Iterations: 1 Duration: 0.037000ms
+Linear Search - insert | Iterations: 1 Duration: 0.038000ms
+Linear Search - search | Iterations: 30 Duration: 0.258000ms
+Linear Search - search | Iterations: 6 Duration: 0.051000ms
+Linear Search - search | Iterations: 2 Duration: 0.037000ms
+Linear Search - search | Iterations: 8 Duration: 0.056000ms
+Linear Search - search | Iterations: 19 Duration: 0.068000ms
+Linear Search - search | Iterations: 26 Duration: 0.074000ms
+Linear Search - search | Iterations: 19 Duration: 0.057000ms
+Linear Search - search | Iterations: 23 Duration: 0.067000ms
+Linear Search - search | Iterations: 30 Duration: 0.077000ms
+Linear Search - search | Iterations: 11 Duration: 0.044000ms
+Linear Search - search | Iterations: 46 Duration: 0.139000ms
+Linear Search - search | Iterations: 36 Duration: 0.087000ms
+Linear Search - search | Iterations: 12 Duration: 0.048000ms
+Linear Search - search | Iterations: 26 Duration: 0.073000ms
+Linear Search - search | Iterations: 9 Duration: 0.042000ms
+Linear Search - search | Iterations: 13 Duration: 0.056000ms
+Linear Search - search | Iterations: 21 Duration: 0.068000ms
+Linear Search - search | Iterations: 4 Duration: 0.034000ms
+Linear Search - search | Iterations: 17 Duration: 0.063000ms
+Linear Search - search | Iterations: 40 Duration: 0.112000ms
+Linear Search - search | Iterations: 36 Duration: 0.079000ms
+Linear Search - search | Iterations: 20 Duration: 0.061000ms
+Linear Search - search | Iterations: 24 Duration: 0.068000ms
+Linear Search - search | Iterations: 29 Duration: 0.076000ms
+Linear Search - search | Iterations: 37 Duration: 0.094000ms
+Linear Search - search | Iterations: 39 Duration: 0.097000ms
+Linear Search - search | Iterations: 4 Duration: 0.035000ms
+Linear Search - search | Iterations: 35 Duration: 0.077000ms
+Linear Search - search | Iterations: 13 Duration: 0.050000ms
+Linear Search - search | Iterations: 32 Duration: 0.076000ms
+Linear Search - delete | Iterations: 49 Duration: 0.257000ms
+Linear Search - delete | Iterations: 12 Duration: 0.089000ms
+Linear Search - delete | Iterations: 6 Duration: 0.097000ms
+Linear Search - delete | Iterations: 10 Duration: 0.073000ms
+Linear Search - delete | Iterations: 26 Duration: 0.117000ms
+Linear Search - delete | Iterations: 29 Duration: 0.114000ms
+Linear Search - delete | Iterations: 7 Duration: 0.088000ms
+Linear Search - delete | Iterations: 38 Duration: 0.138000ms
+Linear Search - delete | Iterations: 1 Duration: 0.068000ms
+Linear Search - delete | Iterations: 36 Duration: 0.123000ms
+Linear Search - delete | Iterations: 26 Duration: 0.092000ms
+Linear Search - delete | Iterations: 33 Duration: 0.103000ms
+Linear Search - delete | Iterations: 28 Duration: 0.097000ms
+Linear Search - delete | Iterations: 7 Duration: 0.067000ms
+Linear Search - delete | Iterations: 35 Duration: 0.152000ms
+Linear Search - delete | Iterations: 20 Duration: 0.097000ms
+Linear Search - delete | Iterations: 32 Duration: 0.110000ms
+Linear Search - delete | Iterations: 23 Duration: 0.083000ms
+Linear Search - delete | Iterations: 6 Duration: 0.064000ms
+Linear Search - delete | Iterations: 13 Duration: 0.080000ms
+Linear Search - delete | Iterations: 25 Duration: 0.099000ms
+Linear Search - delete | Iterations: 23 Duration: 0.085000ms
+Linear Search - delete | Iterations: 23 Duration: 0.069000ms
+Linear Search - delete | Iterations: 2 Duration: 0.069000ms
+Linear Search - delete | Iterations: 10 Duration: 0.081000ms
+Linear Search - delete | Iterations: 5 Duration: 0.059000ms
+Linear Search - delete | Iterations: 22 Duration: 0.107000ms
+Linear Search - delete | Iterations: 2 Duration: 0.057000ms
+Linear Search - delete | Iterations: 4 Duration: 0.070000ms
+Linear Search - delete | Iterations: 12 Duration: 0.085000ms
+Hashset - insert | Iterations: 1 Duration: 29.454000ms
+Hashset - insert | Iterations: 1 Duration: 0.756000ms
+Hashset - insert | Iterations: 1 Duration: 0.302000ms
+Hashset - insert | Iterations: 1 Duration: 0.303000ms
+Hashset - insert | Iterations: 1 Duration: 0.291000ms
+Hashset - insert | Iterations: 1 Duration: 1.228000ms
+Hashset - insert | Iterations: 1 Duration: 0.296000ms
+Hashset - insert | Iterations: 1 Duration: 0.296000ms
+Hashset - insert | Iterations: 1 Duration: 0.616000ms
+Hashset - insert | Iterations: 1 Duration: 0.322000ms
+Hashset - insert | Iterations: 1 Duration: 0.311000ms
+Hashset - insert | Iterations: 1 Duration: 1.370000ms
+Hashset - insert | Iterations: 1 Duration: 0.336000ms
+Hashset - insert | Iterations: 1 Duration: 6.203000ms
+Hashset - insert | Iterations: 1 Duration: 0.470000ms
+Hashset - insert | Iterations: 1 Duration: 0.299000ms
+Hashset - insert | Iterations: 1 Duration: 0.318000ms
+Hashset - insert | Iterations: 1 Duration: 0.294000ms
+Hashset - insert | Iterations: 1 Duration: 0.262000ms
+Hashset - insert | Iterations: 1 Duration: 0.268000ms
+Hashset - insert | Iterations: 1 Duration: 0.328000ms
+Hashset - insert | Iterations: 1 Duration: 1.239000ms
+Hashset - insert | Iterations: 1 Duration: 0.341000ms
+Hashset - insert | Iterations: 1 Duration: 1.163000ms
+Hashset - insert | Iterations: 1 Duration: 0.358000ms
+Hashset - insert | Iterations: 1 Duration: 0.299000ms
+Hashset - insert | Iterations: 1 Duration: 0.298000ms
+Hashset - insert | Iterations: 1 Duration: 0.285000ms
+Hashset - insert | Iterations: 1 Duration: 0.315000ms
+Hashset - insert | Iterations: 1 Duration: 3.587000ms
+Hashset - insert | Iterations: 1 Duration: 2.201000ms
+Hashset - insert | Iterations: 1 Duration: 0.290000ms
+Hashset - insert | Iterations: 1 Duration: 0.306000ms
+Hashset - insert | Iterations: 1 Duration: 0.272000ms
+Hashset - insert | Iterations: 1 Duration: 0.311000ms
+Hashset - insert | Iterations: 1 Duration: 0.300000ms
+Hashset - insert | Iterations: 1 Duration: 0.273000ms
+Hashset - insert | Iterations: 1 Duration: 1.274000ms
+Hashset - insert | Iterations: 1 Duration: 0.313000ms
+Hashset - insert | Iterations: 1 Duration: 0.293000ms
+Hashset - insert | Iterations: 1 Duration: 0.328000ms
+Hashset - insert | Iterations: 1 Duration: 0.304000ms
+Hashset - insert | Iterations: 1 Duration: 0.302000ms
+Hashset - insert | Iterations: 1 Duration: 0.301000ms
+Hashset - insert | Iterations: 1 Duration: 0.282000ms
+Hashset - insert | Iterations: 1 Duration: 1.109000ms
+Hashset - insert | Iterations: 1 Duration: 0.303000ms
+Hashset - insert | Iterations: 1 Duration: 1.159000ms
+Hashset - insert | Iterations: 1 Duration: 0.283000ms
+Hashset - insert | Iterations: 1 Duration: 1.561000ms
+Hashset - search | Iterations: 1 Duration: 0.737000ms
+Hashset - search | Iterations: 1 Duration: 0.271000ms
+Hashset - search | Iterations: 1 Duration: 0.193000ms
+Hashset - search | Iterations: 1 Duration: 0.149000ms
+Hashset - search | Iterations: 1 Duration: 0.167000ms
+Hashset - search | Iterations: 1 Duration: 1.196000ms
+Hashset - search | Iterations: 1 Duration: 0.149000ms
+Hashset - search | Iterations: 1 Duration: 0.147000ms
+Hashset - search | Iterations: 1 Duration: 0.170000ms
+Hashset - search | Iterations: 1 Duration: 0.147000ms
+Hashset - search | Iterations: 1 Duration: 0.178000ms
+Hashset - search | Iterations: 1 Duration: 0.128000ms
+Hashset - search | Iterations: 1 Duration: 0.231000ms
+Hashset - search | Iterations: 1 Duration: 0.984000ms
+Hashset - search | Iterations: 1 Duration: 0.142000ms
+Hashset - search | Iterations: 1 Duration: 0.187000ms
+Hashset - search | Iterations: 1 Duration: 0.145000ms
+Hashset - search | Iterations: 1 Duration: 1.089000ms
+Hashset - search | Iterations: 1 Duration: 0.181000ms
+Hashset - search | Iterations: 1 Duration: 0.188000ms
+Hashset - search | Iterations: 1 Duration: 0.162000ms
+Hashset - search | Iterations: 1 Duration: 1.051000ms
+Hashset - search | Iterations: 1 Duration: 0.175000ms
+Hashset - search | Iterations: 1 Duration: 0.148000ms
+Hashset - search | Iterations: 1 Duration: 0.173000ms
+Hashset - search | Iterations: 1 Duration: 0.119000ms
+Hashset - search | Iterations: 1 Duration: 1.150000ms
+Hashset - search | Iterations: 1 Duration: 0.236000ms
+Hashset - search | Iterations: 1 Duration: 0.148000ms
+Hashset - search | Iterations: 1 Duration: 1.156000ms
+Hashset - delete | Iterations: 1 Duration: 5.844000ms
+Hashset - delete | Iterations: 1 Duration: 1.687000ms
+Hashset - delete | Iterations: 1 Duration: 0.424000ms
+Hashset - delete | Iterations: 1 Duration: 1.289000ms
+Hashset - delete | Iterations: 1 Duration: 0.390000ms
+Hashset - delete | Iterations: 1 Duration: 1.290000ms
+Hashset - delete | Iterations: 1 Duration: 0.404000ms
+Hashset - delete | Iterations: 1 Duration: 1.103000ms
+Hashset - delete | Iterations: 1 Duration: 0.129000ms
+Hashset - delete | Iterations: 1 Duration: 0.467000ms
+Hashset - delete | Iterations: 1 Duration: 0.431000ms
+Hashset - delete | Iterations: 1 Duration: 0.410000ms
+Hashset - delete | Iterations: 1 Duration: 0.393000ms
+Hashset - delete | Iterations: 1 Duration: 0.172000ms
+Hashset - delete | Iterations: 1 Duration: 0.388000ms
+Hashset - delete | Iterations: 1 Duration: 0.391000ms
+Hashset - delete | Iterations: 1 Duration: 0.400000ms
+Hashset - delete | Iterations: 1 Duration: 0.401000ms
+Hashset - delete | Iterations: 1 Duration: 0.389000ms
+Hashset - delete | Iterations: 1 Duration: 0.418000ms
+Hashset - delete | Iterations: 1 Duration: 0.394000ms
+Hashset - delete | Iterations: 1 Duration: 0.401000ms
+Hashset - delete | Iterations: 1 Duration: 0.441000ms
+Hashset - delete | Iterations: 1 Duration: 0.484000ms
+Hashset - delete | Iterations: 1 Duration: 0.161000ms
+Hashset - delete | Iterations: 1 Duration: 0.393000ms
+Hashset - delete | Iterations: 1 Duration: 2.224000ms
+Hashset - delete | Iterations: 1 Duration: 0.145000ms
+Hashset - delete | Iterations: 1 Duration: 0.366000ms
+Hashset - delete | Iterations: 1 Duration: 0.162000ms
+Red Black Tree - insert | Iterations: 1 Duration: 11.648000ms
+Red Black Tree - insert | Iterations: 2 Duration: 2.693000ms
+Red Black Tree - insert | Iterations: 3 Duration: 1.747000ms
+Red Black Tree - insert | Iterations: 3 Duration: 1.607000ms
+Red Black Tree - insert | Iterations: 2 Duration: 0.574000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.584000ms
+Red Black Tree - insert | Iterations: 5 Duration: 1.635000ms
+Red Black Tree - insert | Iterations: 6 Duration: 0.580000ms
+Red Black Tree - insert | Iterations: 6 Duration: 1.026000ms
+Red Black Tree - insert | Iterations: 4 Duration: 1.698000ms
+Red Black Tree - insert | Iterations: 5 Duration: 3.192000ms
+Red Black Tree - insert | Iterations: 6 Duration: 2.246000ms
+Red Black Tree - insert | Iterations: 7 Duration: 0.613000ms
+Red Black Tree - insert | Iterations: 6 Duration: 6.083000ms
+Red Black Tree - insert | Iterations: 7 Duration: 0.867000ms
+Red Black Tree - insert | Iterations: 8 Duration: 2.868000ms
+Red Black Tree - insert | Iterations: 8 Duration: 0.590000ms
+Red Black Tree - insert | Iterations: 7 Duration: 0.643000ms
+Red Black Tree - insert | Iterations: 7 Duration: 0.590000ms
+Red Black Tree - insert | Iterations: 3 Duration: 1.910000ms
+Red Black Tree - insert | Iterations: 8 Duration: 0.804000ms
+Red Black Tree - insert | Iterations: 7 Duration: 1.540000ms
+Red Black Tree - insert | Iterations: 7 Duration: 1.705000ms
+Red Black Tree - insert | Iterations: 5 Duration: 0.567000ms
+Red Black Tree - insert | Iterations: 9 Duration: 0.767000ms
+Red Black Tree - insert | Iterations: 8 Duration: 0.571000ms
+Red Black Tree - insert | Iterations: 9 Duration: 0.607000ms
+Red Black Tree - insert | Iterations: 8 Duration: 1.473000ms
+Red Black Tree - insert | Iterations: 8 Duration: 0.606000ms
+Red Black Tree - insert | Iterations: 4 Duration: 2.879000ms
+Red Black Tree - insert | Iterations: 9 Duration: 4.446000ms
+Red Black Tree - insert | Iterations: 5 Duration: 0.652000ms
+Red Black Tree - insert | Iterations: 10 Duration: 0.569000ms
+Red Black Tree - insert | Iterations: 10 Duration: 0.597000ms
+Red Black Tree - insert | Iterations: 10 Duration: 0.603000ms
+Red Black Tree - insert | Iterations: 8 Duration: 2.453000ms
+Red Black Tree - insert | Iterations: 3 Duration: 0.589000ms
+Red Black Tree - insert | Iterations: 6 Duration: 0.572000ms
+Red Black Tree - insert | Iterations: 7 Duration: 0.567000ms
+Red Black Tree - insert | Iterations: 8 Duration: 0.599000ms
+Red Black Tree - insert | Iterations: 7 Duration: 0.585000ms
+Red Black Tree - insert | Iterations: 8 Duration: 0.561000ms
+Red Black Tree - insert | Iterations: 10 Duration: 0.627000ms
+Red Black Tree - insert | Iterations: 11 Duration: 1.577000ms
+Red Black Tree - insert | Iterations: 12 Duration: 1.534000ms
+Red Black Tree - insert | Iterations: 11 Duration: 0.645000ms
+Red Black Tree - insert | Iterations: 8 Duration: 0.574000ms
+Red Black Tree - insert | Iterations: 8 Duration: 0.642000ms
+Red Black Tree - insert | Iterations: 10 Duration: 0.599000ms
+Red Black Tree - insert | Iterations: 4 Duration: 0.606000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.375000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.167000ms
+Red Black Tree - search | Iterations: 10 Duration: 0.140000ms
+Red Black Tree - search | Iterations: 6 Duration: 0.102000ms
+Red Black Tree - search | Iterations: 5 Duration: 0.070000ms
+Red Black Tree - search | Iterations: 11 Duration: 0.226000ms
+Red Black Tree - search | Iterations: 12 Duration: 0.120000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.112000ms
+Red Black Tree - search | Iterations: 7 Duration: 0.096000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.117000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.079000ms
+Red Black Tree - search | Iterations: 10 Duration: 0.094000ms
+Red Black Tree - search | Iterations: 10 Duration: 0.128000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.105000ms
+Red Black Tree - search | Iterations: 7 Duration: 0.086000ms
+Red Black Tree - search | Iterations: 3 Duration: 0.079000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.098000ms
+Red Black Tree - search | Iterations: 6 Duration: 0.081000ms
+Red Black Tree - search | Iterations: 4 Duration: 0.065000ms
+Red Black Tree - search | Iterations: 7 Duration: 0.084000ms
+Red Black Tree - search | Iterations: 1 Duration: 0.055000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.121000ms
+Red Black Tree - search | Iterations: 6 Duration: 0.098000ms
+Red Black Tree - search | Iterations: 3 Duration: 0.169000ms
+Red Black Tree - search | Iterations: 12 Duration: 0.127000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.123000ms
+Red Black Tree - search | Iterations: 3 Duration: 0.065000ms
+Red Black Tree - search | Iterations: 8 Duration: 0.118000ms
+Red Black Tree - search | Iterations: 12 Duration: 0.110000ms
+Red Black Tree - search | Iterations: 4 Duration: 0.077000ms
+Red Black Tree - delete | Iterations: 8 Duration: 7.600000ms
+Red Black Tree - delete | Iterations: 5 Duration: 1.059000ms
+Red Black Tree - delete | Iterations: 7 Duration: 1.650000ms
+Red Black Tree - delete | Iterations: 10 Duration: 0.765000ms
+Red Black Tree - delete | Iterations: 11 Duration: 0.875000ms
+Red Black Tree - delete | Iterations: 4 Duration: 1.519000ms
+Red Black Tree - delete | Iterations: 9 Duration: 1.569000ms
+Red Black Tree - delete | Iterations: 8 Duration: 0.626000ms
+Red Black Tree - delete | Iterations: 6 Duration: 0.584000ms
+Red Black Tree - delete | Iterations: 10 Duration: 0.622000ms
+Red Black Tree - delete | Iterations: 2 Duration: 0.651000ms
+Red Black Tree - delete | Iterations: 7 Duration: 0.589000ms
+Red Black Tree - delete | Iterations: 9 Duration: 0.653000ms
+Red Black Tree - delete | Iterations: 2 Duration: 0.559000ms
+Red Black Tree - delete | Iterations: 3 Duration: 0.586000ms
+Red Black Tree - delete | Iterations: 5 Duration: 0.628000ms
+Red Black Tree - delete | Iterations: 11 Duration: 0.663000ms
+Red Black Tree - delete | Iterations: 6 Duration: 0.625000ms
+Red Black Tree - delete | Iterations: 10 Duration: 0.819000ms
+Red Black Tree - delete | Iterations: 6 Duration: 0.594000ms
+Red Black Tree - delete | Iterations: 9 Duration: 0.641000ms
+Red Black Tree - delete | Iterations: 1 Duration: 6.293000ms
+Red Black Tree - delete | Iterations: 2 Duration: 0.600000ms
+Red Black Tree - delete | Iterations: 6 Duration: 0.835000ms
+Red Black Tree - delete | Iterations: 8 Duration: 0.912000ms
+Red Black Tree - delete | Iterations: 8 Duration: 1.459000ms
+Red Black Tree - delete | Iterations: 5 Duration: 0.678000ms
+Red Black Tree - delete | Iterations: 6 Duration: 0.609000ms
+Red Black Tree - delete | Iterations: 4 Duration: 1.511000ms
+Red Black Tree - delete | Iterations: 4 Duration: 0.585000ms
+BinarySearch - insert | Iterations: 1 Duration: 7.656000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.696000ms
+BinarySearch - insert | Iterations: 1 Duration: 1.731000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.373000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.379000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.379000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.373000ms
+BinarySearch - insert | Iterations: 1 Duration: 2.228000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.367000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.356000ms
+BinarySearch - insert | Iterations: 1 Duration: 1.821000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.365000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.394000ms
+BinarySearch - insert | Iterations: 1 Duration: 4.615000ms
+BinarySearch - insert | Iterations: 1 Duration: 1.827000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.380000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.355000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.374000ms
+BinarySearch - insert | Iterations: 1 Duration: 4.532000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.436000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.366000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.368000ms
+BinarySearch - insert | Iterations: 1 Duration: 1.314000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.390000ms
+BinarySearch - insert | Iterations: 1 Duration: 1.321000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.367000ms
+BinarySearch - insert | Iterations: 1 Duration: 1.678000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.371000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.351000ms
+BinarySearch - insert | Iterations: 1 Duration: 2.910000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.390000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.373000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.386000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.347000ms
+BinarySearch - insert | Iterations: 1 Duration: 1.361000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.370000ms
+BinarySearch - insert | Iterations: 1 Duration: 1.325000ms
+BinarySearch - insert | Iterations: 1 Duration: 1.216000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.385000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.331000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.334000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.365000ms
+BinarySearch - insert | Iterations: 1 Duration: 4.049000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.347000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.337000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.372000ms
+BinarySearch - insert | Iterations: 1 Duration: 5.009000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.584000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.380000ms
+BinarySearch - insert | Iterations: 1 Duration: 0.344000ms
+BinarySearch - search | Iterations: 6 Duration: 1.256000ms
+BinarySearch - search | Iterations: 5 Duration: 0.161000ms
+BinarySearch - search | Iterations: 6 Duration: 0.092000ms
+BinarySearch - search | Iterations: 5 Duration: 0.115000ms
+BinarySearch - search | Iterations: 4 Duration: 0.080000ms
+BinarySearch - search | Iterations: 6 Duration: 0.134000ms
+BinarySearch - search | Iterations: 5 Duration: 0.107000ms
+BinarySearch - search | Iterations: 5 Duration: 0.085000ms
+BinarySearch - search | Iterations: 6 Duration: 0.113000ms
+BinarySearch - search | Iterations: 6 Duration: 0.112000ms
+BinarySearch - search | Iterations: 5 Duration: 0.109000ms
+BinarySearch - search | Iterations: 2 Duration: 1.010000ms
+BinarySearch - search | Iterations: 3 Duration: 0.080000ms
+BinarySearch - search | Iterations: 1 Duration: 0.089000ms
+BinarySearch - search | Iterations: 4 Duration: 0.097000ms
+BinarySearch - search | Iterations: 4 Duration: 0.090000ms
+BinarySearch - search | Iterations: 5 Duration: 0.098000ms
+BinarySearch - search | Iterations: 6 Duration: 0.159000ms
+BinarySearch - search | Iterations: 6 Duration: 0.119000ms
+BinarySearch - search | Iterations: 6 Duration: 0.133000ms
+BinarySearch - search | Iterations: 6 Duration: 0.145000ms
+BinarySearch - search | Iterations: 6 Duration: 0.092000ms
+BinarySearch - search | Iterations: 4 Duration: 0.209000ms
+BinarySearch - search | Iterations: 4 Duration: 0.125000ms
+BinarySearch - search | Iterations: 5 Duration: 0.093000ms
+BinarySearch - search | Iterations: 3 Duration: 0.082000ms
+BinarySearch - search | Iterations: 6 Duration: 0.151000ms
+BinarySearch - search | Iterations: 5 Duration: 0.096000ms
+BinarySearch - search | Iterations: 5 Duration: 0.106000ms
+BinarySearch - search | Iterations: 4 Duration: 0.083000ms
+BinarySearch - delete | Iterations: 39 Duration: 3.796000ms
+BinarySearch - delete | Iterations: 15 Duration: 1.527000ms
+BinarySearch - delete | Iterations: 8 Duration: 0.501000ms
+BinarySearch - delete | Iterations: 20 Duration: 0.500000ms
+BinarySearch - delete | Iterations: 11 Duration: 0.504000ms
+BinarySearch - delete | Iterations: 11 Duration: 1.313000ms
+BinarySearch - delete | Iterations: 8 Duration: 0.463000ms
+BinarySearch - delete | Iterations: 8 Duration: 1.644000ms
+BinarySearch - delete | Iterations: 33 Duration: 0.620000ms
+BinarySearch - delete | Iterations: 32 Duration: 1.497000ms
+BinarySearch - delete | Iterations: 26 Duration: 0.582000ms
+BinarySearch - delete | Iterations: 27 Duration: 1.785000ms
+BinarySearch - delete | Iterations: 7 Duration: 0.445000ms
+BinarySearch - delete | Iterations: 15 Duration: 0.493000ms
+BinarySearch - delete | Iterations: 21 Duration: 0.585000ms
+BinarySearch - delete | Iterations: 16 Duration: 0.532000ms
+BinarySearch - delete | Iterations: 24 Duration: 0.560000ms
+BinarySearch - delete | Iterations: 16 Duration: 0.507000ms
+BinarySearch - delete | Iterations: 13 Duration: 0.493000ms
+BinarySearch - delete | Iterations: 28 Duration: 0.627000ms
+BinarySearch - delete | Iterations: 4 Duration: 0.491000ms
+BinarySearch - delete | Iterations: 19 Duration: 0.529000ms
+BinarySearch - delete | Iterations: 13 Duration: 0.501000ms
+BinarySearch - delete | Iterations: 22 Duration: 0.531000ms
+BinarySearch - delete | Iterations: 25 Duration: 0.532000ms
+BinarySearch - delete | Iterations: 5 Duration: 1.299000ms
+BinarySearch - delete | Iterations: 12 Duration: 0.498000ms
+BinarySearch - delete | Iterations: 19 Duration: 0.550000ms
+BinarySearch - delete | Iterations: 13 Duration: 1.441000ms
+BinarySearch - delete | Iterations: 17 Duration: 0.520000ms
+BTree - insert | Iterations: 1 Duration: 10.346000ms
+BTree - insert | Iterations: 2 Duration: 4.984000ms
+BTree - insert | Iterations: 3 Duration: 0.532000ms
+BTree - insert | Iterations: 2 Duration: 0.505000ms
+BTree - insert | Iterations: 1 Duration: 0.481000ms
+BTree - insert | Iterations: 5 Duration: 21.793000ms
+BTree - insert | Iterations: 3 Duration: 0.514000ms
+BTree - insert | Iterations: 4 Duration: 0.525000ms
+BTree - insert | Iterations: 5 Duration: 11.944000ms
+BTree - insert | Iterations: 2 Duration: 1.594000ms
+BTree - insert | Iterations: 2 Duration: 0.440000ms
+BTree - insert | Iterations: 5 Duration: 2.689000ms
+BTree - insert | Iterations: 4 Duration: 0.500000ms
+BTree - insert | Iterations: 2 Duration: 3.010000ms
+BTree - insert | Iterations: 4 Duration: 0.570000ms
+BTree - insert | Iterations: 6 Duration: 1.709000ms
+BTree - insert | Iterations: 6 Duration: 1.506000ms
+BTree - insert | Iterations: 4 Duration: 0.557000ms
+BTree - insert | Iterations: 6 Duration: 0.489000ms
+BTree - insert | Iterations: 1 Duration: 0.444000ms
+BTree - insert | Iterations: 7 Duration: 1.624000ms
+BTree - insert | Iterations: 4 Duration: 1.365000ms
+BTree - insert | Iterations: 3 Duration: 0.658000ms
+BTree - insert | Iterations: 6 Duration: 0.491000ms
+BTree - insert | Iterations: 6 Duration: 4.352000ms
+BTree - insert | Iterations: 7 Duration: 1.405000ms
+BTree - insert | Iterations: 10 Duration: 16.049000ms
+BTree - insert | Iterations: 2 Duration: 0.555000ms
+BTree - insert | Iterations: 5 Duration: 0.556000ms
+BTree - insert | Iterations: 7 Duration: 5.902000ms
+BTree - insert | Iterations: 2 Duration: 0.492000ms
+BTree - insert | Iterations: 6 Duration: 0.479000ms
+BTree - insert | Iterations: 4 Duration: 2.478000ms
+BTree - insert | Iterations: 2 Duration: 1.384000ms
+BTree - insert | Iterations: 6 Duration: 1.441000ms
+BTree - insert | Iterations: 4 Duration: 0.509000ms
+BTree - insert | Iterations: 3 Duration: 0.520000ms
+BTree - insert | Iterations: 7 Duration: 0.554000ms
+BTree - insert | Iterations: 7 Duration: 8.579000ms
+BTree - insert | Iterations: 5 Duration: 2.534000ms
+BTree - insert | Iterations: 8 Duration: 3.335000ms
+BTree - insert | Iterations: 6 Duration: 1.442000ms
+BTree - insert | Iterations: 11 Duration: 3.158000ms
+BTree - insert | Iterations: 5 Duration: 0.569000ms
+BTree - insert | Iterations: 5 Duration: 1.451000ms
+BTree - insert | Iterations: 5 Duration: 1.778000ms
+BTree - insert | Iterations: 8 Duration: 0.575000ms
+BTree - insert | Iterations: 5 Duration: 0.552000ms
+BTree - insert | Iterations: 5 Duration: 1.436000ms
+BTree - insert | Iterations: 5 Duration: 0.585000ms
+BTree - search | Iterations: 3 Duration: 0.387000ms
+BTree - search | Iterations: 6 Duration: 0.248000ms
+BTree - search | Iterations: 5 Duration: 0.187000ms
+BTree - search | Iterations: 6 Duration: 0.102000ms
+BTree - search | Iterations: 1 Duration: 0.067000ms
+BTree - search | Iterations: 11 Duration: 0.258000ms
+BTree - search | Iterations: 10 Duration: 0.113000ms
+BTree - search | Iterations: 7 Duration: 0.098000ms
+BTree - search | Iterations: 4 Duration: 0.071000ms
+BTree - search | Iterations: 4 Duration: 0.116000ms
+BTree - search | Iterations: 10 Duration: 0.116000ms
+BTree - search | Iterations: 8 Duration: 0.140000ms
+BTree - search | Iterations: 8 Duration: 0.068000ms
+BTree - search | Iterations: 4 Duration: 0.128000ms
+BTree - search | Iterations: 5 Duration: 0.111000ms
+BTree - search | Iterations: 4 Duration: 0.072000ms
+BTree - search | Iterations: 2 Duration: 0.090000ms
+BTree - search | Iterations: 5 Duration: 0.077000ms
+BTree - search | Iterations: 11 Duration: 0.124000ms
+BTree - search | Iterations: 2 Duration: 0.062000ms
+BTree - search | Iterations: 12 Duration: 0.130000ms
+BTree - search | Iterations: 8 Duration: 0.154000ms
+BTree - search | Iterations: 11 Duration: 0.109000ms
+BTree - search | Iterations: 7 Duration: 0.070000ms
+BTree - search | Iterations: 7 Duration: 0.057000ms
+BTree - search | Iterations: 9 Duration: 0.136000ms
+BTree - search | Iterations: 5 Duration: 0.202000ms
+BTree - search | Iterations: 10 Duration: 0.148000ms
+BTree - search | Iterations: 10 Duration: 0.147000ms
+BTree - search | Iterations: 6 Duration: 0.125000ms
+BTree - delete | Iterations: 4 Duration: 4.277000ms
+BTree - delete | Iterations: 2 Duration: 0.707000ms
+BTree - delete | Iterations: 3 Duration: 0.510000ms
+BTree - delete | Iterations: 2 Duration: 1.500000ms
+BTree - delete | Iterations: 8 Duration: 0.626000ms
+BTree - delete | Iterations: 5 Duration: 0.519000ms
+BTree - delete | Iterations: 10 Duration: 0.577000ms
+BTree - delete | Iterations: 4 Duration: 0.483000ms
+BTree - delete | Iterations: 4 Duration: 0.489000ms
+BTree - delete | Iterations: 1 Duration: 0.520000ms
+BTree - delete | Iterations: 3 Duration: 0.504000ms
+BTree - delete | Iterations: 3 Duration: 0.492000ms
+BTree - delete | Iterations: 9 Duration: 0.544000ms
+BTree - delete | Iterations: 4 Duration: 1.462000ms
+BTree - delete | Iterations: 6 Duration: 0.512000ms
+BTree - delete | Iterations: 14 Duration: 9.718000ms
+BTree - delete | Iterations: 7 Duration: 0.596000ms
+BTree - delete | Iterations: 1 Duration: 0.487000ms
+BTree - delete | Iterations: 7 Duration: 0.510000ms
+BTree - delete | Iterations: 2 Duration: 0.568000ms
+BTree - delete | Iterations: 4 Duration: 0.512000ms
+BTree - delete | Iterations: 3 Duration: 0.525000ms
+BTree - delete | Iterations: 6 Duration: 0.447000ms
+BTree - delete | Iterations: 5 Duration: 0.497000ms
+BTree - delete | Iterations: 5 Duration: 2.024000ms
+BTree - delete | Iterations: 1 Duration: 0.512000ms
+BTree - delete | Iterations: 10 Duration: 1.833000ms
+BTree - delete | Iterations: 8 Duration: 0.806000ms
+BTree - delete | Iterations: 4 Duration: 1.389000ms
+BTree - delete | Iterations: 9 Duration: 0.791000ms
+Splay Tree - insert | Iterations: 1 Duration: 7.811000ms
+Splay Tree - insert | Iterations: 2 Duration: 3.787000ms
+Splay Tree - insert | Iterations: 2 Duration: 1.456000ms
+Splay Tree - insert | Iterations: 5 Duration: 1.109000ms
+Splay Tree - insert | Iterations: 3 Duration: 0.860000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.999000ms
+Splay Tree - insert | Iterations: 6 Duration: 1.512000ms
+Splay Tree - insert | Iterations: 3 Duration: 0.704000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.742000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.567000ms
+Splay Tree - insert | Iterations: 3 Duration: 0.528000ms
+Splay Tree - insert | Iterations: 3 Duration: 1.647000ms
+Splay Tree - insert | Iterations: 11 Duration: 0.841000ms
+Splay Tree - insert | Iterations: 6 Duration: 5.723000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.768000ms
+Splay Tree - insert | Iterations: 5 Duration: 0.634000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.528000ms
+Splay Tree - insert | Iterations: 11 Duration: 2.133000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.699000ms
+Splay Tree - insert | Iterations: 12 Duration: 1.674000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.743000ms
+Splay Tree - insert | Iterations: 12 Duration: 0.743000ms
+Splay Tree - insert | Iterations: 9 Duration: 1.501000ms
+Splay Tree - insert | Iterations: 9 Duration: 0.642000ms
+Splay Tree - insert | Iterations: 9 Duration: 0.661000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.645000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.550000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.572000ms
+Splay Tree - insert | Iterations: 8 Duration: 2.273000ms
+Splay Tree - insert | Iterations: 14 Duration: 3.073000ms
+Splay Tree - insert | Iterations: 9 Duration: 0.604000ms
+Splay Tree - insert | Iterations: 12 Duration: 0.771000ms
+Splay Tree - insert | Iterations: 9 Duration: 0.603000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.521000ms
+Splay Tree - insert | Iterations: 12 Duration: 0.794000ms
+Splay Tree - insert | Iterations: 14 Duration: 0.800000ms
+Splay Tree - insert | Iterations: 11 Duration: 0.632000ms
+Splay Tree - insert | Iterations: 9 Duration: 0.624000ms
+Splay Tree - insert | Iterations: 12 Duration: 0.558000ms
+Splay Tree - insert | Iterations: 8 Duration: 0.632000ms
+Splay Tree - insert | Iterations: 6 Duration: 3.390000ms
+Splay Tree - insert | Iterations: 18 Duration: 0.865000ms
+Splay Tree - insert | Iterations: 11 Duration: 0.600000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.530000ms
+Splay Tree - insert | Iterations: 3 Duration: 1.656000ms
+Splay Tree - insert | Iterations: 11 Duration: 0.762000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.604000ms
+Splay Tree - insert | Iterations: 6 Duration: 0.558000ms
+Splay Tree - insert | Iterations: 14 Duration: 1.867000ms
+Splay Tree - insert | Iterations: 20 Duration: 0.789000ms
+Splay Tree - search | Iterations: 4 Duration: 0.477000ms
+Splay Tree - search | Iterations: 10 Duration: 0.315000ms
+Splay Tree - search | Iterations: 18 Duration: 0.360000ms
+Splay Tree - search | Iterations: 7 Duration: 0.235000ms
+Splay Tree - search | Iterations: 12 Duration: 0.245000ms
+Splay Tree - search | Iterations: 7 Duration: 0.218000ms
+Splay Tree - search | Iterations: 12 Duration: 0.332000ms
+Splay Tree - search | Iterations: 3 Duration: 0.124000ms
+Splay Tree - search | Iterations: 9 Duration: 0.217000ms
+Splay Tree - search | Iterations: 27 Duration: 0.545000ms
+Splay Tree - search | Iterations: 3 Duration: 0.126000ms
+Splay Tree - search | Iterations: 6 Duration: 0.161000ms
+Splay Tree - search | Iterations: 4 Duration: 0.140000ms
+Splay Tree - search | Iterations: 15 Duration: 0.329000ms
+Splay Tree - search | Iterations: 16 Duration: 0.382000ms
+Splay Tree - search | Iterations: 9 Duration: 0.207000ms
+Splay Tree - search | Iterations: 7 Duration: 0.216000ms
+Splay Tree - search | Iterations: 13 Duration: 0.278000ms
+Splay Tree - search | Iterations: 9 Duration: 0.178000ms
+Splay Tree - search | Iterations: 3 Duration: 0.093000ms
+Splay Tree - search | Iterations: 9 Duration: 0.191000ms
+Splay Tree - search | Iterations: 9 Duration: 0.214000ms
+Splay Tree - search | Iterations: 13 Duration: 0.264000ms
+Splay Tree - search | Iterations: 3 Duration: 0.094000ms
+Splay Tree - search | Iterations: 10 Duration: 0.237000ms
+Splay Tree - search | Iterations: 6 Duration: 0.117000ms
+Splay Tree - search | Iterations: 13 Duration: 0.272000ms
+Splay Tree - search | Iterations: 18 Duration: 0.398000ms
+Splay Tree - search | Iterations: 18 Duration: 0.387000ms
+Splay Tree - search | Iterations: 9 Duration: 0.274000ms
+Splay Tree - delete | Iterations: 15 Duration: 4.318000ms
+Splay Tree - delete | Iterations: 7 Duration: 0.731000ms
+Splay Tree - delete | Iterations: 10 Duration: 0.687000ms
+Splay Tree - delete | Iterations: 16 Duration: 0.848000ms
+Splay Tree - delete | Iterations: 10 Duration: 0.683000ms
+Splay Tree - delete | Iterations: 10 Duration: 0.713000ms
+Splay Tree - delete | Iterations: 17 Duration: 0.798000ms
+Splay Tree - delete | Iterations: 13 Duration: 0.778000ms
+Splay Tree - delete | Iterations: 24 Duration: 0.981000ms
+Splay Tree - delete | Iterations: 10 Duration: 0.681000ms
+Splay Tree - delete | Iterations: 10 Duration: 0.598000ms
+Splay Tree - delete | Iterations: 15 Duration: 0.771000ms
+Splay Tree - delete | Iterations: 9 Duration: 0.604000ms
+Splay Tree - delete | Iterations: 8 Duration: 0.646000ms
+Splay Tree - delete | Iterations: 24 Duration: 0.893000ms
+Splay Tree - delete | Iterations: 11 Duration: 0.611000ms
+Splay Tree - delete | Iterations: 17 Duration: 0.742000ms
+Splay Tree - delete | Iterations: 11 Duration: 0.704000ms
+Splay Tree - delete | Iterations: 7 Duration: 0.615000ms
+Splay Tree - delete | Iterations: 14 Duration: 0.695000ms
+Splay Tree - delete | Iterations: 5 Duration: 0.501000ms
+Splay Tree - delete | Iterations: 8 Duration: 0.552000ms
+Splay Tree - delete | Iterations: 13 Duration: 0.741000ms
+Splay Tree - delete | Iterations: 7 Duration: 0.548000ms
+Splay Tree - delete | Iterations: 16 Duration: 0.787000ms
+Splay Tree - delete | Iterations: 18 Duration: 0.876000ms
+Splay Tree - delete | Iterations: 13 Duration: 0.718000ms
+Splay Tree - delete | Iterations: 10 Duration: 0.603000ms
+Splay Tree - delete | Iterations: 14 Duration: 0.721000ms
+Splay Tree - delete | Iterations: 8 Duration: 0.607000ms
+Linear Search - insert | Iterations: 1 Duration: 7.390000ms
+Linear Search - insert | Iterations: 1 Duration: 0.597000ms
+Linear Search - insert | Iterations: 1 Duration: 0.397000ms
+Linear Search - insert | Iterations: 1 Duration: 1.717000ms
+Linear Search - insert | Iterations: 1 Duration: 0.415000ms
+Linear Search - insert | Iterations: 1 Duration: 0.409000ms
+Linear Search - insert | Iterations: 1 Duration: 0.397000ms
+Linear Search - insert | Iterations: 1 Duration: 0.375000ms
+Linear Search - insert | Iterations: 1 Duration: 0.510000ms
+Linear Search - insert | Iterations: 1 Duration: 0.413000ms
+Linear Search - insert | Iterations: 1 Duration: 0.374000ms
+Linear Search - insert | Iterations: 1 Duration: 0.487000ms
+Linear Search - insert | Iterations: 1 Duration: 0.370000ms
+Linear Search - insert | Iterations: 1 Duration: 1.580000ms
+Linear Search - insert | Iterations: 1 Duration: 1.364000ms
+Linear Search - insert | Iterations: 1 Duration: 0.415000ms
+Linear Search - insert | Iterations: 1 Duration: 0.371000ms
+Linear Search - insert | Iterations: 1 Duration: 0.365000ms
+Linear Search - insert | Iterations: 1 Duration: 0.385000ms
+Linear Search - insert | Iterations: 1 Duration: 0.365000ms
+Linear Search - insert | Iterations: 1 Duration: 0.424000ms
+Linear Search - insert | Iterations: 1 Duration: 0.364000ms
+Linear Search - insert | Iterations: 1 Duration: 0.427000ms
+Linear Search - insert | Iterations: 1 Duration: 0.360000ms
+Linear Search - insert | Iterations: 1 Duration: 0.439000ms
+Linear Search - insert | Iterations: 1 Duration: 0.362000ms
+Linear Search - insert | Iterations: 1 Duration: 0.355000ms
+Linear Search - insert | Iterations: 1 Duration: 0.374000ms
+Linear Search - insert | Iterations: 1 Duration: 0.360000ms
+Linear Search - insert | Iterations: 1 Duration: 1.647000ms
+Linear Search - insert | Iterations: 1 Duration: 0.378000ms
+Linear Search - insert | Iterations: 1 Duration: 0.356000ms
+Linear Search - insert | Iterations: 1 Duration: 0.354000ms
+Linear Search - insert | Iterations: 1 Duration: 0.352000ms
+Linear Search - insert | Iterations: 1 Duration: 0.374000ms
+Linear Search - insert | Iterations: 1 Duration: 0.377000ms
+Linear Search - insert | Iterations: 1 Duration: 0.352000ms
+Linear Search - insert | Iterations: 1 Duration: 0.349000ms
+Linear Search - insert | Iterations: 1 Duration: 0.359000ms
+Linear Search - insert | Iterations: 1 Duration: 0.387000ms
+Linear Search - insert | Iterations: 1 Duration: 0.352000ms
+Linear Search - insert | Iterations: 1 Duration: 0.355000ms
+Linear Search - insert | Iterations: 1 Duration: 0.359000ms
+Linear Search - insert | Iterations: 1 Duration: 0.351000ms
+Linear Search - insert | Iterations: 1 Duration: 0.356000ms
+Linear Search - insert | Iterations: 1 Duration: 0.345000ms
+Linear Search - insert | Iterations: 1 Duration: 0.371000ms
+Linear Search - insert | Iterations: 1 Duration: 0.353000ms
+Linear Search - insert | Iterations: 1 Duration: 0.347000ms
+Linear Search - insert | Iterations: 1 Duration: 0.354000ms
+Linear Search - search | Iterations: 17 Duration: 0.343000ms
+Linear Search - search | Iterations: 42 Duration: 0.168000ms
+Linear Search - search | Iterations: 26 Duration: 0.110000ms
+Linear Search - search | Iterations: 49 Duration: 0.234000ms
+Linear Search - search | Iterations: 21 Duration: 0.098000ms
+Linear Search - search | Iterations: 20 Duration: 0.106000ms
+Linear Search - search | Iterations: 44 Duration: 0.130000ms
+Linear Search - search | Iterations: 8 Duration: 0.071000ms
+Linear Search - search | Iterations: 15 Duration: 0.089000ms
+Linear Search - search | Iterations: 21 Duration: 0.106000ms
+Linear Search - search | Iterations: 32 Duration: 0.172000ms
+Linear Search - search | Iterations: 14 Duration: 0.085000ms
+Linear Search - search | Iterations: 47 Duration: 0.147000ms
+Linear Search - search | Iterations: 18 Duration: 0.094000ms
+Linear Search - search | Iterations: 34 Duration: 0.135000ms
+Linear Search - search | Iterations: 45 Duration: 0.145000ms
+Linear Search - search | Iterations: 39 Duration: 0.157000ms
+Linear Search - search | Iterations: 29 Duration: 0.115000ms
+Linear Search - search | Iterations: 40 Duration: 0.142000ms
+Linear Search - search | Iterations: 49 Duration: 0.160000ms
+Linear Search - search | Iterations: 16 Duration: 0.083000ms
+Linear Search - search | Iterations: 29 Duration: 0.130000ms
+Linear Search - search | Iterations: 32 Duration: 0.119000ms
+Linear Search - search | Iterations: 41 Duration: 0.147000ms
+Linear Search - search | Iterations: 23 Duration: 0.140000ms
+Linear Search - search | Iterations: 38 Duration: 0.141000ms
+Linear Search - search | Iterations: 29 Duration: 0.118000ms
+Linear Search - search | Iterations: 36 Duration: 0.134000ms
+Linear Search - search | Iterations: 4 Duration: 0.056000ms
+Linear Search - search | Iterations: 22 Duration: 0.137000ms
+Linear Search - delete | Iterations: 13 Duration: 6.403000ms
+Linear Search - delete | Iterations: 20 Duration: 0.599000ms
+Linear Search - delete | Iterations: 13 Duration: 0.463000ms
+Linear Search - delete | Iterations: 26 Duration: 0.583000ms
+Linear Search - delete | Iterations: 10 Duration: 0.475000ms
+Linear Search - delete | Iterations: 40 Duration: 5.455000ms
+Linear Search - delete | Iterations: 33 Duration: 0.722000ms
+Linear Search - delete | Iterations: 8 Duration: 0.533000ms
+Linear Search - delete | Iterations: 32 Duration: 0.638000ms
+Linear Search - delete | Iterations: 11 Duration: 0.478000ms
+Linear Search - delete | Iterations: 23 Duration: 0.596000ms
+Linear Search - delete | Iterations: 24 Duration: 0.566000ms
+Linear Search - delete | Iterations: 30 Duration: 0.555000ms
+Linear Search - delete | Iterations: 17 Duration: 0.472000ms
+Linear Search - delete | Iterations: 34 Duration: 0.668000ms
+Linear Search - delete | Iterations: 4 Duration: 0.914000ms
+Linear Search - delete | Iterations: 9 Duration: 0.482000ms
+Linear Search - delete | Iterations: 17 Duration: 0.531000ms
+Linear Search - delete | Iterations: 7 Duration: 0.463000ms
+Linear Search - delete | Iterations: 21 Duration: 0.584000ms
+Linear Search - delete | Iterations: 14 Duration: 0.483000ms
+Linear Search - delete | Iterations: 6 Duration: 0.439000ms
+Linear Search - delete | Iterations: 18 Duration: 1.919000ms
+Linear Search - delete | Iterations: 26 Duration: 0.589000ms
+Linear Search - delete | Iterations: 25 Duration: 0.545000ms
+Linear Search - delete | Iterations: 23 Duration: 0.567000ms
+Linear Search - delete | Iterations: 11 Duration: 0.520000ms
+Linear Search - delete | Iterations: 17 Duration: 0.531000ms
+Linear Search - delete | Iterations: 1 Duration: 6.840000ms
+Linear Search - delete | Iterations: 9 Duration: 0.555000ms
