@@ -13,8 +13,8 @@ RedBlackTree::RedBlackTree() : Algorithm() {
 }
 
 RedBlackTree::~RedBlackTree() {
+  if (this->root != NIL) delete NIL;
   clear();
-  delete NIL;
   NIL = nullptr;
   elementRecord.clear();
 }
