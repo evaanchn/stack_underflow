@@ -204,7 +204,7 @@ size_t BTree::deleteInternalNode(BTreeNode* node, int64_t element, int64_t i) {
 }
 
 int64_t BTree::deletePredecessor(BTreeNode* node, size_t* k) {
-  if (node->isLeaf && node->keyCount != 0) {
+  if (node->isLeaf && node->keyCount > 0) {
     int64_t pred = node->keys[node->keyCount - 1];
     node->keyCount--;
     (*k)++;
