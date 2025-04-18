@@ -3,8 +3,7 @@
 #pragma once
 
 #include <cstdint>
-#include <unordered_set>
-#include <algorithm>
+#include <stdexcept>
 
 #include "Algorithm.hpp"
 

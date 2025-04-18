@@ -25,7 +25,7 @@ size_t BinarySearch::insert(int64_t element) {
   size_t iterations = 0;
   // check if array is full
   if (this->elementCount >= this->arraySize) {
-    throw std::bad_alloc();
+    throw std::runtime_error("BinarySearch: can not insert more elements\n");
   }
   this->insertInPlace(element, iterations);
   this->elementRecord.insert(element);
