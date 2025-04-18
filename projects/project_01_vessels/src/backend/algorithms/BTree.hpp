@@ -68,7 +68,6 @@ class BTree : public Algorithm {
  protected:
   BTreeNode* root;
   size_t t;
-  std::unordered_set<int64_t> elementRecord;
 
   /**
    * @brief pendiente

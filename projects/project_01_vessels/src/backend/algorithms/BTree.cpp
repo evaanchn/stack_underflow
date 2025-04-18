@@ -10,13 +10,11 @@ BTreeNode::~BTreeNode() {
 BTree::BTree(int64_t t) : Algorithm() {
   this->t = t;
   root = new BTreeNode(true);
-  elementRecord.clear();
   algorithmName = "BTree";
 }
 
 BTree::~BTree() {
   clearTree(root);
-  elementRecord.clear();
 }
 
 void BTree::clearTree(BTreeNode* node) {
