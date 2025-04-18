@@ -167,6 +167,7 @@ void GameScene::setVesselButtonCallBack(CustomIconButton* button, int data) {
   button->set_click_callback([this, data]() { this->selectedVessel = data; });
 }
 
+// TODO (e): Add function to update labels
 void GameScene::setLabels() {
   vesselsWeight = new GameInfoText(/*X*/ 410, /*Y*/ 73, LABEL_BOX_W
       , LABEL_BOX_H, "0/10", FL_WHITE);
@@ -190,10 +191,12 @@ void GameScene::setVesselImages() {
   }
 }
 
+// MAIN LOOP
 int GameScene::run() {
   // Game logic and redraws can go here
   while (gameActive) {
     this->handleActionButtonsEvents();
+    this->update();
     if (!this->window->visible()) { this->gameActive = !ACTIVE; }
     Fl::check();   // Process events
     Fl::wait(0.02); // Add a small delay to prevent CPU overuse
@@ -331,6 +334,16 @@ void GameScene::handleExit() {
       this->selectedAction = NONE_SELECTED;
     }
   }
+}
+
+void GameScene::update() {
+  // // if game won, no need to update
+  // if (this->game->isGameOver()) {
+  //   this->gameActive = !ACTIVE;
+  // } else if (this->game->switchedTurns()) {
+  //   this->updateLabels();
+  //   this->board->maskOpponentSlots(this->game->getCurrentPlayer());
+  //   this->showSwitchTurnImage();}
 }
 
 // Static callback trampoline

@@ -85,12 +85,16 @@ class GameScene {
   void setActionButtonCallBack(CustomIconButton* button, int data);
   void setVesselButtonCallBack(CustomIconButton* button, int data);
 
+  void update();
+
   void handleActionButtonsEvents();
   void buyVessel();
   void attackVessel();
   void moveVessel();
   void upgradeVessel();
   void handleExit();
+
+  void updateLabels();
 
   static void inputCallbackStatic(Fl_Widget* w, void* userData);
   void onInputCommand(Fl_Widget* w);
