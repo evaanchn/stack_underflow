@@ -52,8 +52,8 @@ GameInfoWindow::GameInfoWindow(int windowWidth, int windowHeight, const char* ti
 }
 
 GameInfoWindow::~GameInfoWindow() {
-  delete buffer;
   delete display;
+  delete buffer;
   delete confirmButton;
   delete cancelButton;
   delete window;
