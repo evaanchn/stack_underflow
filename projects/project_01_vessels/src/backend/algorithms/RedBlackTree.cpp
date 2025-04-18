@@ -49,7 +49,7 @@ size_t RedBlackTree::insert(int64_t element) {
   newNode->rightChild = NIL;
   Node* parent = nullptr;
   Node* current = root;
-
+  ++k; // root iteation
   while (current != NIL) {
     parent = current;
     if (newNode->value < current->value) {
