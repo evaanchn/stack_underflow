@@ -20,11 +20,21 @@
 #include "GameInfoWindow.hpp"
 
 #include "UIBoard.hpp"
+#include "Game.hpp"
 
 #include <iostream>  // TODO (5n4v3) delete
 
 const Fl_Color GAME_BACKGROUND = fl_rgb_color(5, 10, 48);
 const Fl_Color VESSELS_BACKGROUND = fl_rgb_color(143, 209, 230);
+
+const std::string VESSELS_INFO[VESSELS_COUNT] =
+    { "Lightning\nAlgorithm: Hashset\nHealth: 50\nAvg damage: 100\nWeight: 5"
+    , "Ragnalog\nAlgorithm: Red-Black Tree\nHealth: 80\nAvg damage: 25\nWeight: 3"
+    , "Wales\nAlgorithm: B-Tree\nHealth: 100\nAvg damage: 20\nWeight: 2"
+    , "Thunder\nAlgorithm: Binary Search\nHealth: 120\nAvg damage: 16\nWeight: 2"
+    , "Ratatosk\nAlgorithm: Splay Tree\nHealth: 150\nAvg damage: 10\nWeight: 2"
+    , "Harbinger\nAlgorithm: Linear Search\nHealth: 200\nAvg damage: 2\nWeight: 1"
+    };
 
 class GameScene {
  public:
@@ -104,8 +114,15 @@ class GameScene {
   void unflagSlot();
   void handleExit();
   
-
   void updateLabels();
+  void updateVesselWeightLabel();
+  void updateCurrentPlayerLabel();
+  void updateActionsLabel();
+  void updateDrachmasLabel();
+  void updateAmbrosiaPointsLabel();
+
+  void showVesselInfo(int vesselID);
+  void showSelectedVesselInfo();
 
   static void inputCallbackStatic(Fl_Widget* w, void* userData);
   void onInputCommand(Fl_Widget* w);
@@ -116,4 +133,5 @@ class GameScene {
 
  private:
   UIBoard* board = nullptr;
+  Game* game = nullptr;
 };

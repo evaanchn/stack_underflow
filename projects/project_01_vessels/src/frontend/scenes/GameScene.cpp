@@ -23,7 +23,7 @@ GameScene::GameScene(int width, int height, const std::string& title)
   this->window->end();  // Ends window's elements' grouping
   this->window->show();
 
-  this->board->maskOpponentSlots(PLAYER_1);
+  this->game = new Game();
   
   this->infoWindow = new GameInfoWindow();
   this->infoWindow->hide();
@@ -38,6 +38,7 @@ GameScene::~GameScene() {
   delete this-> switchToPlayer1Image;
 
   delete this->board;
+  delete this->game;
 
   delete this->exitButton;
 
@@ -195,18 +196,17 @@ void GameScene::setVesselButtonCallBack(CustomIconButton* button, int data) {
   });
 }
 
-// TODO (e): Add function to update labels
 void GameScene::setLabels() {
-  vesselsWeight = new GameInfoText(/*X*/ 410, /*Y*/ 73, LABEL_BOX_W
-      , LABEL_BOX_H, "0/10", FL_WHITE);
-  currentPlayerLabel = new GameInfoText(/*X*/ 1535, /*Y*/ 73, LABEL_BOX_W
-      , LABEL_BOX_H, "Player 1's turn", FL_WHITE);
-  actionsLabel = new GameInfoText(/*X*/ 1770, /*Y*/ 180, LABEL_BOX_W
-      , LABEL_BOX_H, "3/3", FL_WHITE);
-  drachmas = new GameInfoText(/*X*/ 1615, /*Y*/ 817, LABEL_BOX_W
-      , LABEL_BOX_H, "30", FL_BLACK);
-  ambrosiaPoints = new GameInfoText(/*X*/ 1605, /*Y*/ 893, LABEL_BOX_W
-      , LABEL_BOX_H, "0", FL_BLACK);
+  vesselsWeight = new GameInfoText(/*X*/ 380, /*Y*/ 47, LABEL_BOX_W
+      , LABEL_BOX_H, "", FL_WHITE);
+  currentPlayerLabel = new GameInfoText(/*X*/ 1400, /*Y*/ 47, 300
+      , LABEL_BOX_H, "", FL_WHITE);
+  actionsLabel = new GameInfoText(/*X*/ 1745, /*Y*/ 160, LABEL_BOX_W
+      , LABEL_BOX_H, "", FL_WHITE);
+  drachmas = new GameInfoText(/*X*/ 1582, /*Y*/ 790, LABEL_BOX_W
+      , LABEL_BOX_H, "", FL_BLACK);
+  ambrosiaPoints = new GameInfoText(/*X*/ 1572, /*Y*/ 867, LABEL_BOX_W
+      , LABEL_BOX_H, "", FL_BLACK);
 }
 
 void GameScene::setVesselImages() {
@@ -240,122 +240,196 @@ void GameScene::handleActionButtonsEvents() {
   else if (this->selectedAction == FLAG) this->flagSlot();
   else if (this->selectedAction == UNFLAG) this->unflagSlot();
   else if (this->selectedAction == EXIT) this->handleExit();
+  else {
+    if (this->selectedVessel != NONE_SELECTED)
+        this->showVesselInfo(this->selectedVessel);
+    else {
+      this->showSelectedVesselInfo();
+    }
+  }
 }
 
 void GameScene::buyVessel() {
-  // MUST CHECK IF VESSEL WEIGHT FOR CURRENT PLAYER IS NOT MAX
-  // this->game->validateVesselWeight();
+  if (this->game->getCurrentVesselWeight() == MAX_VESSEL_WEIGHT
+      || this->game->getCurrentPurchasePoints() == 0) {
+    this->infoWindow->log("Cannot buy more vessels");
+    this->selectedAction = NONE_SELECTED;
+    return;
+  }
+
   if (this->selectedAction == BUY) {
-    // GET CURRENT PLAYER ID FROM GAME
-    int currentPlayer = PLAYER_1; // this->game->getCurrentPlayer();
-    int buyingVessel = this->selectedVessel; // NONE_SELECTED;
-    // CHECK IF HAS ENOUGH MONEY TO BUY AND IF WEIGHT IS PERMITTED
-    // this->game->canBuyVessel(vesselType);
-    Coordinates* settingCoordinates
+    int currentPlayer = this->game->getCurrentPlayer();
+    int buyingVessel = this->selectedVessel;
+    // Inform user if the selected vessel is purchaseable
+    if (buyingVessel == NONE_SELECTED) {
+      this->infoWindow->log("Select a vessel to buy");
+      return;
+    } else {
+      std::string canBuy = this->game->canBuyVessel(buyingVessel) ?
+        "*Purchaseable*" : "*Insufficient funds*";
+      this->infoWindow->log(VESSELS_INFO[buyingVessel] + "\n" + canBuy);
+    }
+
+    // Validate drachmas and weight
+    if(this->game->canBuyVessel(buyingVessel)) {
+      Coordinates* settingCoordinates
         = this->board->getCoordinates(currentPlayer);
-    int row = settingCoordinates->row;
-    int col = settingCoordinates->col;
+      int row = settingCoordinates->row;
+      int col = settingCoordinates->col;
 
-    if (buyingVessel != NONE_SELECTED && row != NONE_SELECTED
-      && col != NONE_SELECTED) {
-      // CHECK IF COORDINATE IN BACKEND HAS SOMETHING. MUST BE FREE
-      // this->game->isSlotOccupied(row, col);
-
-      // IF NOT OCCUPIED
-      // this->game->setVesselAt(row, col, buyingVessel);
-      Fl_PNG_Image* vesselImage = currentPlayer == PLAYER_1 ?
-          vesselImagesRight[buyingVessel] : vesselImagesLeft[buyingVessel];
-      this->board->setVesselAt(settingCoordinates->row, settingCoordinates->col
-          , vesselImage);
-      this->selectedAction = NONE_SELECTED;
-      // CONSUME ACTIONS
-      // this->game->consumeAction();
+      if (buyingVessel != NONE_SELECTED && row != NONE_SELECTED
+          && col != NONE_SELECTED && !this->game->isSlotOccupied(row, col)) {
+        // Set vessel in backend
+        this->game->setVesselAt(row, col, buyingVessel);
+        this->infoWindow->log("Successfully bought!\n"
+             + this->game->getVesselInfoAt(row, col));
+        Fl_PNG_Image* vesselImage = currentPlayer == PLAYER_1 ?
+            vesselImagesRight[buyingVessel] : vesselImagesLeft[buyingVessel];
+        this->board->setVesselAt(settingCoordinates->row
+            , settingCoordinates->col, vesselImage);
+        
+        this->boughtSound.play();
+        // Aftermaths
+        this->selectedAction = NONE_SELECTED;
+        this->selectedVessel = NONE_SELECTED;
+        this->game->consumeAction();
+        this->updateDrachmasLabel();
+        this->updateVesselWeightLabel();
+        this->updateActionsLabel();
+        this->board->resetSelection(currentPlayer);
+      }
+    } else {
+      this->board->resetSelection(currentPlayer);
     }
   }
 }
 
 void GameScene::attackVessel() {
-  // this->game->validateVesselWeight();
   if (this->selectedAction == ATTACK) {
-    // GET CURRENT PLAYER ID FROM GAME
-    int currentPlayer = PLAYER_1; // this->game->getCurrentPlayer();
+    int currentPlayer = this->game->getCurrentPlayer();
 
     Coordinates* attackingVesselCoordinates
         = this->board->getCoordinates(currentPlayer);
     int attackerRow = attackingVesselCoordinates->row;
     int attackerCol = attackingVesselCoordinates->col;
+    // Validate that there was a valid row selected
     if (attackerRow != NO_COORDINATES && attackerCol != NO_COORDINATES) {
-      // CHECK IF COORDINATE IN BACKEND HAS SOMETHING. MUST HAVE A VESSEL
-      // this->game->isSlotOccupied(attackerRow, attackerCol);
-      Coordinates* attackedVesselCoordinates
-        = this->board->getCoordinates((currentPlayer + 1) % 2);
-      int victimRow = attackedVesselCoordinates->row;
-      int victimCol = attackedVesselCoordinates->col;
-      // size_t calculatedDamage = this->game->attackVessel(attackerRow, attackerCol
-      //     , victimRow, victimCol);
-      // if (this->game->isSlotOccupied(victimRow, vitctimCol))
-      //  this->board->draw
-          // this->board->removeVesselAt(victimRow, victimCol);
-      // this->game->consumeAction();
-    }
+      if (this->game->isSlotOccupied(attackerRow, attackerCol)) {
+        Coordinates* attackedVesselCoordinates
+          = this->board->getCoordinates((currentPlayer + 1) % 2);
+        int victimRow = attackedVesselCoordinates->row;
+        int victimCol = attackedVesselCoordinates->col;
+        if (victimRow == NO_COORDINATES
+            || victimCol == NO_COORDINATES) {
+          this->infoWindow->log("Select a slot to attack");
+          return;
+        }
+
+        bool victimVessel = this->game->isSlotOccupied(victimRow, victimCol);
+        size_t calculatedDamage =
+            this->game->attackVessel(attackerRow, attackerCol
+            , victimRow, victimCol);
+        if (this->game->isSlotOccupied(victimRow, victimCol)) {
+          this->hitSound.play();
+          this->infoWindow->log("Successfully attacked!\nDamage: " +
+              std::to_string(calculatedDamage));
+          this->board->setHitMaskAt(victimRow, victimCol);
+        } else if (victimVessel &&
+            !this->game->isSlotOccupied(victimRow, victimCol)) {
+          // Means there was a vessel but not anymore
+          this->hitSound.play();
+          this->infoWindow->log("Successfully defeated an enemy vessel!");
+          this->board->removeVesselAt(victimRow, victimCol);
+          this->board->resetMaskAt(victimRow, victimCol, UNFLAG);
+        } else {
+          this->missSound.play();
+          this->infoWindow->log("Missed!\nDamage: "
+              + std::to_string(calculatedDamage) + "\nAmbrosia points granted");
+        }
+        this->selectedAction = NONE_SELECTED;
+        this->game->consumeAction();
+        this->updateActionsLabel();
+        this->updateDrachmasLabel();
+        this->updateAmbrosiaPointsLabel();
+        this->board->resetSelection(currentPlayer);
+      }
+    } else this->infoWindow->log("Select vessel to calculate damage");
   }
 }
 
 void GameScene::moveVessel() {
   if (this->selectedAction == MOVE) {
-    int currentPlayer = PLAYER_1;  // this->game->getCurrentPlayer();
+    int currentPlayer = this->game->getCurrentPlayer();
     Coordinates* clicked = this->board->getCoordinates(currentPlayer);
+    // Validate that there was an actual click
     if (clicked && clicked->row != NONE_SELECTED
         && clicked->col != NONE_SELECTED) {
+      if (this->moveState == MOVE_IDLE) this->moveState = MOVE_SELECT_VESSEL;
 
-      if (moveState == MOVE_IDLE) moveState = MOVE_SELECT_VESSEL;
-
-      if (moveState == MOVE_SELECT_VESSEL) {
-        if (true /*this->game->isSlotOccupied(clicked->row, clicked->col)*/) {
+      // Selecting a vessel stage, then selecting destination stage
+      if (this->moveState == MOVE_SELECT_VESSEL) {
+        if (this->game->isSlotOccupied(clicked->row, clicked->col)) {
           moveFrom = *clicked;
-          this->board->resetSelection(1);
-          moveState = MOVE_SELECT_DESTINATION;
-          std::cout << "Now select destination.\n";
-        } else {
-          std::cout << "No vessel at this slot.\n";
+          this->board->resetSelection(currentPlayer);
+          // Remove previous flags
+          this->board->resetMaskAt(moveFrom.row, moveFrom.col, !UNFLAG);
+          this->moveState = MOVE_SELECT_DESTINATION;
+          this->infoWindow->log("Select a destination");
         }
-      } else if (moveState == MOVE_SELECT_DESTINATION) {
-        if (true /*this->game->isSlotOccupied(clicked->row, clicked->col)*/) {
+      } else if (this->moveState == MOVE_SELECT_DESTINATION) {
+        if (!this->game->isSlotOccupied(clicked->row, clicked->col)) {
+          this->game->moveVessel(moveFrom.row, moveFrom.col
+              , clicked->row, clicked->col);
           this->board->moveVessel(moveFrom.row, moveFrom.col
               , clicked->row, clicked->col);
-          std::cout << "Vessel moved.\n";
-          moveState = MOVE_IDLE;
+          // Updates
+          this->infoWindow->log("Successfully moved!");
+          this->movedSound.play(); 
+          this->moveState = MOVE_IDLE;
           this->selectedAction = NONE_SELECTED;
-        } else {
-          std::cout << "Destination occupied.\n";
+          this->game->consumeAction();
+          this->updateActionsLabel();
+          this->updateDrachmasLabel();
+          this->board->resetSelection(currentPlayer);
         }
       }
-    }
+    } else if (this->moveState == MOVE_IDLE)
+        this->infoWindow->log("Select a vessel to move");
   }
 }
 
 void GameScene::upgradeVessel() {
-  // this->game->validateVesselWeight();
   if (this->selectedAction == UPGRADE) {
-    // GET CURRENT PLAYER ID FROM GAME
-    int currentPlayer = PLAYER_1; // this->game->getCurrentPlayer();
+    int currentPlayer = this->game->getCurrentPlayer();
 
     Coordinates* upgradingVesselCoordinates
         = this->board->getCoordinates(currentPlayer);
-    int row = upgradingVesselCoordinates->row;
-    int col = upgradingVesselCoordinates->col;
+    int row = upgradingVesselCoordinates->row, 
+        col = upgradingVesselCoordinates->col;
+    // Validate that there was an actual click on a valid slot
     if (row != NO_COORDINATES && col != NO_COORDINATES) {
-      // CHECK IF COORDINATE IN BACKEND HAS SOMETHING. MUST HAVE A VESSEL
-      // this->game->isSlotOccupied(row, col);
-      // this->game->upgradeVessel(row, col);
-    }
+      if(this->game->isSlotOccupied(row, col)) {
+        if (this->game->upgradeVessel(row, col)) {
+          // Updates
+          this->infoWindow->log("Successfully upgraded!\n" +
+              this->game->getVesselInfoAt(row, col));
+          this->upgradedSound.play();
+        } else {
+          this->infoWindow->log("Could not upgrade vessel");
+        }
+        this->selectedAction = NONE_SELECTED;
+        this->game->consumeAction();
+        this->updateActionsLabel();
+        this->updateAmbrosiaPointsLabel();
+        this->board->resetSelection(currentPlayer);
+      }
+    } else this->infoWindow->log("Select a vessel to upgrade");
   }
 }
 
 void GameScene::flagSlot() {
   if (this->selectedAction == FLAG) {
-    // GET CURRENT PLAYER ID FROM GAME
-    int opponent = PLAYER_2; // this->game->getCurrentPlayer();
+    int opponent = this->game->getOpponent();
 
     Coordinates* flaggingCoordinates
         = this->board->getCoordinates(opponent);
@@ -370,15 +444,14 @@ void GameScene::flagSlot() {
 
 void GameScene::unflagSlot () {
   if (this->selectedAction == UNFLAG) {
-    // GET CURRENT PLAYER ID FROM GAME
-    int opponent = PLAYER_2; // this->game->getCurrentPlayer();
+    int opponent = this->game->getOpponent();
 
     Coordinates* unflaggingCoordinates
         = this->board->getCoordinates(opponent);
     int row = unflaggingCoordinates->row;
     int col = unflaggingCoordinates->col;
     if (row != NO_COORDINATES && col != NO_COORDINATES) {
-      this->board->resetMaskAt(row, col);
+      this->board->resetMaskAt(row, col, UNFLAG);
       this->selectedAction = NONE_SELECTED;
     }
   }
@@ -399,13 +472,84 @@ void GameScene::handleExit() {
 }
 
 void GameScene::update() {
-  // // if game won, no need to update
-  // if (this->game->isGameOver()) {
-  //   this->gameActive = !ACTIVE;
-  // } else if (this->game->switchedTurns()) {
-  //   this->updateLabels();
-  //   this->board->maskOpponentSlots(this->game->getCurrentPlayer());
-  //   this->showSwitchTurnImage();}
+  if (this->game->getCurrentVesselWeight() == 0) {
+    this->moveButton->deactivate();
+    this->attackButton->deactivate();
+    this->upgradeButton->deactivate();
+  }
+  else {
+    this->moveButton->activate();
+    this->attackButton->activate();
+    this->upgradeButton->activate();
+  }
+
+  // if game won, no need to update
+  if (this->game->isGameOver()) {
+    this->gameActive = !ACTIVE;
+  } else if (this->game->switchedTurns()) {
+    this->game->resetNewTurn();
+    int currentPlayer = this->game->getCurrentPlayer();
+    this->infoWindow->hide();  // Prevent showing opponent last move
+    this->board->resetSelection(currentPlayer);
+    this->board->maskOpponentSlots(currentPlayer);
+    this->updateLabels();
+    this->showSwitchTurnImage();
+  }
+}
+
+void GameScene::updateLabels() {
+  this->updateVesselWeightLabel();
+  this->updateCurrentPlayerLabel();
+  this->updateActionsLabel();
+  this->updateDrachmasLabel();
+  this->updateAmbrosiaPointsLabel();
+}
+
+void GameScene::updateVesselWeightLabel() {
+  std::string weightText = std::to_string(this->game->getCurrentVesselWeight())
+       + "/10";
+  this->vesselsWeight->updateText(weightText.c_str());
+}
+
+void GameScene::updateCurrentPlayerLabel() {
+  std::string currentPlayerText = this->game->getCurrentPlayer() == PLAYER_1 ?
+      "Poseidon's turn" : "Njord's turn";
+  currentPlayerLabel->updateText(currentPlayerText.c_str());
+}
+
+void GameScene::updateActionsLabel() {
+  std::string actionsText = std::to_string(this->game->getCurrentActionCount())
+      + "/3";
+  this->actionsLabel->updateText(actionsText.c_str());
+}
+
+void GameScene::updateDrachmasLabel() {
+  std::string drachmasText = 
+      std::to_string(this->game->getCurrentPurchasePoints());
+  this->drachmas->updateText(drachmasText.c_str());
+}
+
+void GameScene::updateAmbrosiaPointsLabel() {
+  std::string ambrosiaText = 
+      std::to_string(this->game->getCurrentUpgradePoints());
+  this->ambrosiaPoints->updateText(ambrosiaText.c_str());
+}
+
+void GameScene::showVesselInfo(int vesselID) {
+  this->infoWindow->log(VESSELS_INFO[vesselID]);
+}
+
+void GameScene::showSelectedVesselInfo() {
+  int currentPlayer = this->game->getCurrentPlayer();
+  Coordinates* selectedVesselCoordinates
+      = this->board->getCoordinates(currentPlayer);
+  int row = selectedVesselCoordinates->row
+      , col = selectedVesselCoordinates->col;
+  if (this->selectedAction == NONE_SELECTED
+      && row != NO_COORDINATES && col != NO_COORDINATES) {
+    if (this->game->isSlotOccupied(row, col))
+      this->infoWindow->log(this->game->getVesselInfoAt(row, col));
+  }
 }
 
 // Static callback trampoline
@@ -434,7 +578,7 @@ void GameScene::onInputCommand(Fl_Widget* w) {
 
 void GameScene::showSwitchTurnImage() {
   if (turnSwitchImageBox) {
-    int currentPlayer = PLAYER_1; // this->game->getCurrentPlayer();
+    int currentPlayer = this->game->getCurrentPlayer();
     if (currentPlayer == PLAYER_1) {
       turnSwitchImageBox->image(switchToPlayer1Image);
     } else {
