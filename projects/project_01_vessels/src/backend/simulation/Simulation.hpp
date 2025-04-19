@@ -15,7 +15,7 @@
 #include "LinearSearchVessel.hpp"
 
 #define VESSELS_TYPES 6
-#define TESTS_AMOUNT 30
+#define TESTS_AMOUNT 50
 
 class Simulation {
  public:

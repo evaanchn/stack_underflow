@@ -10,4 +10,4 @@
 
 #pragma once
 
-#define ELEMENT_COUNT 50
+#define ELEMENT_COUNT 100

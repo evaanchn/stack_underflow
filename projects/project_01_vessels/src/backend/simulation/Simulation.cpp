@@ -15,6 +15,7 @@ Simulation::Simulation() {
 }
 
 void Simulation::simulate() {
+  this->battleLog->recordStatsHeader(ELEMENT_COUNT, TESTS_AMOUNT);
   for (size_t i = 0; i < VESSELS_TYPES; ++i) {
     testInsertion(vessels[i]);
     testSearch(vessels[i]);
@@ -28,11 +29,12 @@ void Simulation::testInsertion(Vessel* vessel) {
   std::vector<ActionLog> actionLogs;
   // initialize each action
   vessel->fillVessel(actionLogs);
-  std::cout << "Success" << std::endl;
+  std::cout << "Fill success" << std::endl;
   // for (auto &log : actionLogs) {
   //   std::cout << log.toString() << std::endl;
   //   battleLog->recordAction(log);
   // }
+  battleLog->recordStats(actionLogs, "insert");
   this->printTestStats("Insertion", actionLogs);
 }
 
@@ -45,6 +47,7 @@ void Simulation::testSearch(Vessel* vessel) {
     // battleLog->recordAction(actionLog);
     actionLogs.push_back(actionLog);
   }
+  battleLog->recordStats(actionLogs, "search");
   printTestStats("Search", actionLogs);
 }
 
@@ -60,6 +63,7 @@ void Simulation::testElimination(Vessel* vessel) {
     }
     eliminationLogs.push_back(actionLogs.front());
   }
+  battleLog->recordStats(eliminationLogs, "delete");
   printTestStats("Elimination", eliminationLogs);
 }
 
