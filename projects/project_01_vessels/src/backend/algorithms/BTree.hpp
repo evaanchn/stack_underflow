@@ -1,5 +1,9 @@
 // Copyright 2025 stack_underflow CC-BY 4.0
 
+// external sources:
+// Copyright (c) 2015 Petar Veličković:
+// https://github.dev/msambol/dsa/blob/master/trees/b_tree.py#L99
+
 #pragma once
 
 #include <algorithm>
