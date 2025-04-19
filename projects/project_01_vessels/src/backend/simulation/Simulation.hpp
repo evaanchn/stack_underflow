@@ -23,26 +23,6 @@ class Simulation {
   ~Simulation() { delete battleLog; }
   void simulate();
 
-  /**
-   * @brief Calculates the aritmetic mean from the iterations of a given logs
-   * array
-   * @warning the sum of all iterations must be lower than 2^64
-   * 
-   * @param logs 
-   * @return int64_t 
-   */
-  u_int64_t iterationsMean(std::vector<ActionLog>& logs);
-
-  /**
-   * @brief Calculates the aritmetic mean from the duration of a given logs
-   * array
-   * @warning the sum of all iterations must be lower than long double max value
-   * 
-   * @param logs 
-   * @return long double 
-   */
-  long double durationMean(std::vector<ActionLog>& logs);
-
  private:
   BattleLog* battleLog;
   Vessel** vessels;

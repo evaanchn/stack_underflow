@@ -63,31 +63,10 @@ void Simulation::testElimination(Vessel* vessel) {
   printTestStats("Elimination", eliminationLogs);
 }
 
-u_int64_t Simulation::iterationsMean(std::vector<ActionLog>& logs) {
-  u_int64_t sum = 0;
-  u_int64_t mean = 0;
-  if (logs.empty()) return 0;
-  for (auto &log : logs) {
-    sum += log.getIterations();
-  }
-  mean = sum / logs.size();
-  return mean;
-}
-
-long double Simulation::durationMean(std::vector<ActionLog>& logs) {
-  long double sum = 0.0L;
-  long double mean = 0.0L;
-  if (logs.empty()) return 0.0L;
-  for (auto &log : logs) {
-    sum += log.getDurationTime();
-  }
-  mean = sum / static_cast<long double>(logs.size());
-  return mean;
-}
-
-void Simulation::printTestStats(std::string action, std::vector<ActionLog>& logs) {
-  std::cout << action << ": iterations mean = "<< this->iterationsMean(logs)
-    << std::endl;
-    std::cout << action << ": duration mean = "<< this->durationMean(logs)
+void Simulation::printTestStats(std::string action,
+    std::vector<ActionLog>& logs) {
+  std::cout << action << ": iterations mean = "
+  << ActionLog::iterationsMean(logs) << " || ";
+    std::cout << "duration mean = "<< ActionLog::durationMean(logs)
     << std::endl;
 }

@@ -41,9 +41,35 @@ double ActionLog::getDurationTime() {
   + (endTime.tv_nsec - startTime.tv_nsec) * 1e-3);  // nanoseconds to ms
 }
 
+std::string ActionLog::getResponsible() {
+  return this->responsible;
+}
+
 std::string ActionLog::toString() {
   std::string result = this->responsible + " - " + this->action
     + " | Iterations: " + std::to_string(this->iterations)
     + " Duration: " + getDuration();
   return result;
+}
+
+uint64_t ActionLog::iterationsMean(std::vector<ActionLog>& logs) {
+  uint64_t sum = 0;
+  uint64_t mean = 0;
+  if (logs.empty()) return 0;
+  for (auto &log : logs) {
+    sum += log.getIterations();
+  }
+  mean = sum / logs.size();
+  return mean;
+}
+
+long double ActionLog::durationMean(std::vector<ActionLog>& logs) {
+  long double sum = 0.0L;
+  long double mean = 0.0L;
+  if (logs.empty()) return 0.0L;
+  for (auto &log : logs) {
+    sum += log.getDurationTime();
+  }
+  mean = sum / static_cast<long double>(logs.size());
+  return mean;
 }
