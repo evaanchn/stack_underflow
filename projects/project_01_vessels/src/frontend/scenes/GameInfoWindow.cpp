@@ -73,6 +73,10 @@ void GameInfoWindow::toggle() {
 
 void GameInfoWindow::log(const std::string& message) {
   buffer->text(message.c_str());
+  confirmButton->hide();
+  cancelButton->hide();
+  window->redraw();
+  window->show();
 }
 
 void GameInfoWindow::clear() {

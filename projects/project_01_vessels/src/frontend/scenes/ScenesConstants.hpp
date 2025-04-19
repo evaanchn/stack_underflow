@@ -46,8 +46,8 @@ const std::string GAME_BUTTONS_FOLDER = "assets/sprites/buttons/";
 #define ACTION_BUTTONS_X 1750
 #define VESSELS_BUTTON_Y 820
 
-#define LABEL_BOX_W 50
-#define LABEL_BOX_H 18
+#define LABEL_BOX_W 100
+#define LABEL_BOX_H 70
 
 #define NONE_SELECTED -1
 

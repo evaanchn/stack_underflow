@@ -15,7 +15,7 @@
 #define PLAYER_2 2
 
 #define X_OFFSET 85
-#define Y_OFFSET 130
+#define Y_OFFSET 125
 
 #define SLOT_MASKS_TYPES 3
 
@@ -25,6 +25,7 @@ const std::string DARK_MASKS_PATH = "dark/";
 const std::string SLOT_MASKS[SLOT_MASKS_TYPES] = {"unaccessed.png", "hit.png"
     , "flagged.png"};
 
+#define UNFLAG true  // Indicates if the slot should be unflagged
 enum SlotState {
   UNACCESSED,
   HIT,
@@ -50,7 +51,7 @@ class UIBoard {
 
   void setHitMaskAt(int row, int col);
   void setFlaggedMaskAt(int row, int col);
-  void resetMaskAt(int row, int col);
+  void resetMaskAt(int row, int col, bool unflag);
   void maskOpponentSlots(int player);
 
  private:

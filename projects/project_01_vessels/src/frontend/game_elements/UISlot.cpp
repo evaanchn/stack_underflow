@@ -7,6 +7,7 @@ UISlot::UISlot(int x, int y)
   : vessel(nullptr)
   , slotMask(nullptr) {
   button = new Fl_Button(x, y, SLOT_DIMENSION, SLOT_DIMENSION);
+  button->clear_visible_focus();  // Removes focus rectangle
   button->box(FL_FLAT_BOX);
   // Tells slot's button that it will execute onClick when clicked
   button->callback([](Fl_Widget* widget, void* data) {
@@ -17,7 +18,7 @@ UISlot::UISlot(int x, int y)
       }
     }
   }, this);
-}
+} 
 
 // Destructor cleanup
 UISlot::~UISlot() {

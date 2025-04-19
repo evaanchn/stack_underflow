@@ -129,10 +129,11 @@ void UIBoard::setFlaggedMaskAt(int row, int col) {
   }
 }
 
-void UIBoard::resetMaskAt(int row, int col) {
+void UIBoard::resetMaskAt(int row, int col, bool unflag) {
   if (isValid(row, col)) {
     int unaccessedMask = getSlotState(row, col, UNACCESSED);
     board[row][col]->setMask(slotMasks[unaccessedMask]);
+    if (!unflag) board[row][col]->hideMask();
   }
 }
 
