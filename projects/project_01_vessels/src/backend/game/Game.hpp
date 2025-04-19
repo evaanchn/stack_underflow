@@ -16,7 +16,7 @@
 #define PURCHASE_POINTS_INC 15
 #define INITIAL_VESSEL_WEIGHT 0
 #define INITIAL_PURCHASE_POINTS 30
-#define INITIAL_UPGRADE_POINTS 100
+#define INITIAL_UPGRADE_POINTS 0
 #define MAX_ACTIONS 3
 
 #define TOTAL_VESSELS 6
@@ -96,7 +96,7 @@ class Game {
   bool upgradeVessel(int row, int col);
 
   /// @brief Sets new turn to false, indicating the new turn has been noted
-  void resetNewTurn();
+  void setNewTurn();
 
   /**
    * @brief saves a vessels in the specified coordinates

@@ -4,7 +4,6 @@
 
 GameScene::GameScene(int width, int height, const std::string& title)
   : gameActive (ACTIVE)
-  , moveState (MOVE_IDLE)
   , hitSound(SOUNDS_FOLDER + "hit.mp3", /*loop*/ false)
   , missSound(SOUNDS_FOLDER + "miss.mp3", /*loop*/ false)
   , boughtSound(SOUNDS_FOLDER + "boughtVessel.mp3", /*loop*/ false)
@@ -26,7 +25,8 @@ GameScene::GameScene(int width, int height, const std::string& title)
   this->game = new Game();
   
   this->infoWindow = new GameInfoWindow();
-  this->infoWindow->hide();
+  this->moveState = MOVE_IDLE;
+  this->latestAction = EMPTY_TEXT;
 }
 
 GameScene::~GameScene() {
@@ -68,15 +68,7 @@ void GameScene::setupUI() {
   setVesselButtons();
   setLabels();
   setVesselImages();
-  this->exitButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 855
-      , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
-      , GAME_BUTTONS_FOLDER + "exitRune.png", EMPTY_TEXT, GAME_BACKGROUND);
-  this->exitButton->set_click_callback([this]() {
-    this->infoWindow->show();
-    this->infoWindow->solicitConfirmation("Confirm exit");
-    this->actionButtonSound.play();
-    this->selectedAction = EXIT;
-  });
+  setExitButton();
 }
 
 void GameScene::setGameSceneBackground() {
@@ -98,7 +90,6 @@ void GameScene::setTurnSwitchImages() {
   turnSwitchImageBox = new Fl_Box(/*X*/ 0, /*Y*/ 0, window->w(), window->h());
   turnSwitchImageBox->image(switchToPlayer1Image);  // Place image in box
   turnSwitchImageBox->box(FL_NO_BOX);  // No borders
-  turnSwitchImageBox->show();
   turnSwitchImageBox->redraw();  // Marks as needs a draw()
 
   inputSwitchPlayer = new Fl_Input(/*X*/ 1780, /*Y*/ 950, /*W*/ 120, /*H*/ 30
@@ -110,6 +101,9 @@ void GameScene::setTurnSwitchImages() {
   inputSwitchPlayer->textfont(FL_COURIER);
   inputSwitchPlayer->textsize(20);
   inputSwitchPlayer->callback(inputCallbackStatic, this);
+  inputSwitchPlayer->hide();  // Hide input field
+  inputSwitchPlayer->deactivate();  // Deactivate input field
+  inputSwitchPlayer->redraw();  // Marks as needs a draw()
 }
 
 void GameScene::setActionButtons() {
@@ -171,7 +165,7 @@ void GameScene::setVesselButtons() {
   bTreeButton = new CustomIconButton(/*X*/ 765, VESSELS_BUTTON_Y
     , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM
     , VESSELS_RIGHT_FOLDER + "BTree.png", EMPTY_TEXT, VESSELS_BACKGROUND);
-  setVesselButtonCallBack(bTreeButton, BTREE);
+  setVesselButtonCallBack(bTreeButton, B_TREE);
 
   binarySearchButton = new CustomIconButton(/*X*/ 550, VESSELS_BUTTON_Y
     , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM
@@ -199,7 +193,7 @@ void GameScene::setVesselButtonCallBack(CustomIconButton* button, int data) {
 void GameScene::setLabels() {
   vesselsWeight = new GameInfoText(/*X*/ 380, /*Y*/ 47, LABEL_BOX_W
       , LABEL_BOX_H, "", FL_WHITE);
-  currentPlayerLabel = new GameInfoText(/*X*/ 1400, /*Y*/ 47, 300
+  currentPlayerLabel = new GameInfoText(/*X*/ 1400, /*Y*/ 47, LONG_LABEL_BOX_W
       , LABEL_BOX_H, "", FL_WHITE);
   actionsLabel = new GameInfoText(/*X*/ 1745, /*Y*/ 160, LABEL_BOX_W
       , LABEL_BOX_H, "", FL_WHITE);
@@ -219,20 +213,35 @@ void GameScene::setVesselImages() {
   }
 }
 
+void GameScene::setExitButton() {
+  this->exitButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 855
+    , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
+    , GAME_BUTTONS_FOLDER + "exitRune.png", EMPTY_TEXT, GAME_BACKGROUND);
+  this->exitButton->set_click_callback([this]() {
+    this->infoWindow->show();
+    this->infoWindow->solicitConfirmation("\n\nConfirm exit");
+    this->actionButtonSound.play();
+    this->selectedAction = EXIT;
+  });
+}
+
 // MAIN LOOP
 int GameScene::run() {
   // Game logic and redraws can go here
   while (gameActive) {
-    this->handleActionButtonsEvents();
+    this->handleEvents();
     this->update();
-    if (!this->window->visible()) { this->gameActive = !ACTIVE; }
+    if (this->game->isGameOver() || !this->window->visible()) {
+      this->window->hide();
+      this->gameActive = !ACTIVE;
+    }
     Fl::check();   // Process events
     Fl::wait(0.02); // Add a small delay to prevent CPU overuse
   }
   return Fl::run();
 }
 
-void GameScene::handleActionButtonsEvents() {
+void GameScene::handleEvents() {
   if (this->selectedAction == BUY) this->buyVessel();
   else if (this->selectedAction == MOVE) this->moveVessel();
   else if (this->selectedAction == ATTACK) this->attackVessel();
@@ -241,11 +250,10 @@ void GameScene::handleActionButtonsEvents() {
   else if (this->selectedAction == UNFLAG) this->unflagSlot();
   else if (this->selectedAction == EXIT) this->handleExit();
   else {
+    // Show vessel general info
     if (this->selectedVessel != NONE_SELECTED)
         this->showVesselInfo(this->selectedVessel);
-    else {
-      this->showSelectedVesselInfo();
-    }
+    else this->showSelectedVesselInfo();  // Show selected vessel current info
   }
 }
 
@@ -266,7 +274,7 @@ void GameScene::buyVessel() {
       return;
     } else {
       std::string canBuy = this->game->canBuyVessel(buyingVessel) ?
-        "*Purchaseable*" : "*Insufficient funds*";
+        "*PURCHASEABLE*" : "*INSUFFICIENT FUNDS*";
       this->infoWindow->log(VESSELS_INFO[buyingVessel] + "\n" + canBuy);
     }
 
@@ -281,22 +289,16 @@ void GameScene::buyVessel() {
           && col != NONE_SELECTED && !this->game->isSlotOccupied(row, col)) {
         // Set vessel in backend
         this->game->setVesselAt(row, col, buyingVessel);
-        this->infoWindow->log("Successfully bought!\n"
-             + this->game->getVesselInfoAt(row, col));
+        this->latestAction = "Successfully bought vessel!";
         Fl_PNG_Image* vesselImage = currentPlayer == PLAYER_1 ?
             vesselImagesRight[buyingVessel] : vesselImagesLeft[buyingVessel];
         this->board->setVesselAt(settingCoordinates->row
             , settingCoordinates->col, vesselImage);
         
         this->boughtSound.play();
-        // Aftermaths
-        this->selectedAction = NONE_SELECTED;
-        this->selectedVessel = NONE_SELECTED;
-        this->game->consumeAction();
-        this->updateDrachmasLabel();
+        this->concludeAction();
+
         this->updateVesselWeightLabel();
-        this->updateActionsLabel();
-        this->board->resetSelection(currentPlayer);
       }
     } else {
       this->board->resetSelection(currentPlayer);
@@ -331,29 +333,25 @@ void GameScene::attackVessel() {
             , victimRow, victimCol);
         if (this->game->isSlotOccupied(victimRow, victimCol)) {
           this->hitSound.play();
-          this->infoWindow->log("Successfully attacked!\nDamage: " +
-              std::to_string(calculatedDamage));
+          this->latestAction= "Successfully attacked!\nDamage: " +
+              std::to_string(calculatedDamage);
           this->board->setHitMaskAt(victimRow, victimCol);
         } else if (victimVessel &&
             !this->game->isSlotOccupied(victimRow, victimCol)) {
           // Means there was a vessel but not anymore
           this->hitSound.play();
-          this->infoWindow->log("Successfully defeated an enemy vessel!");
+          this->latestAction = "Successfully defeated an enemy vessel!";
           this->board->removeVesselAt(victimRow, victimCol);
-          this->board->resetMaskAt(victimRow, victimCol, UNFLAG);
+          this->board->resetMaskAt(victimRow, victimCol, SHOW_RESET);
         } else {
           this->missSound.play();
-          this->infoWindow->log("Missed!\nDamage: "
-              + std::to_string(calculatedDamage) + "\nAmbrosia points granted");
+          this->latestAction = "Missed!\nDamage: "
+              + std::to_string(calculatedDamage) + "\nAmbrosia points granted";
         }
-        this->selectedAction = NONE_SELECTED;
-        this->game->consumeAction();
-        this->updateActionsLabel();
-        this->updateDrachmasLabel();
+        this->concludeAction();
         this->updateAmbrosiaPointsLabel();
-        this->board->resetSelection(currentPlayer);
       }
-    } else this->infoWindow->log("Select vessel to calculate damage");
+    } else this->infoWindow->log("Select attacking vessel");
   }
 }
 
@@ -372,7 +370,7 @@ void GameScene::moveVessel() {
           moveFrom = *clicked;
           this->board->resetSelection(currentPlayer);
           // Remove previous flags
-          this->board->resetMaskAt(moveFrom.row, moveFrom.col, !UNFLAG);
+          this->board->resetMaskAt(moveFrom.row, moveFrom.col, !SHOW_RESET);
           this->moveState = MOVE_SELECT_DESTINATION;
           this->infoWindow->log("Select a destination");
         }
@@ -383,14 +381,10 @@ void GameScene::moveVessel() {
           this->board->moveVessel(moveFrom.row, moveFrom.col
               , clicked->row, clicked->col);
           // Updates
-          this->infoWindow->log("Successfully moved!");
+          this->latestAction = "Successfully moved vessel!";
           this->movedSound.play(); 
           this->moveState = MOVE_IDLE;
-          this->selectedAction = NONE_SELECTED;
-          this->game->consumeAction();
-          this->updateActionsLabel();
-          this->updateDrachmasLabel();
-          this->board->resetSelection(currentPlayer);
+          this->concludeAction();
         }
       }
     } else if (this->moveState == MOVE_IDLE)
@@ -411,20 +405,29 @@ void GameScene::upgradeVessel() {
       if(this->game->isSlotOccupied(row, col)) {
         if (this->game->upgradeVessel(row, col)) {
           // Updates
-          this->infoWindow->log("Successfully upgraded!\n" +
-              this->game->getVesselInfoAt(row, col));
+          this->latestAction = "Successfully upgraded!\n" +
+              this->game->getVesselInfoAt(row, col);
           this->upgradedSound.play();
         } else {
-          this->infoWindow->log("Could not upgrade vessel");
+          this->latestAction = "Could not upgrade vessel";
         }
-        this->selectedAction = NONE_SELECTED;
-        this->game->consumeAction();
-        this->updateActionsLabel();
+        this->concludeAction();
         this->updateAmbrosiaPointsLabel();
-        this->board->resetSelection(currentPlayer);
       }
     } else this->infoWindow->log("Select a vessel to upgrade");
   }
+}
+
+void GameScene::concludeAction() {
+  // Updates and resets that need to be done after every action
+  this->selectedAction = NONE_SELECTED;
+  this->selectedVessel = NONE_SELECTED;
+  this->game->consumeAction();
+  this->updateActionsLabel();
+  this->updateDrachmasLabel();
+  this->board->resetSelection(this->game->getCurrentPlayer());
+  this->infoWindow->log(this->latestAction);
+
 }
 
 void GameScene::flagSlot() {
@@ -451,7 +454,7 @@ void GameScene::unflagSlot () {
     int row = unflaggingCoordinates->row;
     int col = unflaggingCoordinates->col;
     if (row != NO_COORDINATES && col != NO_COORDINATES) {
-      this->board->resetMaskAt(row, col, UNFLAG);
+      this->board->resetMaskAt(row, col, SHOW_RESET);
       this->selectedAction = NONE_SELECTED;
     }
   }
@@ -485,15 +488,30 @@ void GameScene::update() {
 
   // if game won, no need to update
   if (this->game->isGameOver()) {
-    this->gameActive = !ACTIVE;
+    std::string winner = this->game->getWinner() == PLAYER_1 ?
+        "Poseidon" : "Njord";
+    this->infoWindow->log("\n\nGame Over!\n" + winner + " wins!");
   } else if (this->game->switchedTurns()) {
-    this->game->resetNewTurn();
-    int currentPlayer = this->game->getCurrentPlayer();
-    this->infoWindow->hide();  // Prevent showing opponent last move
-    this->board->resetSelection(currentPlayer);
-    this->board->maskOpponentSlots(currentPlayer);
-    this->updateLabels();
-    this->showSwitchTurnImage();
+    this->infoWindow->show();
+    this->infoWindow->solicitConfirmation(latestAction
+        + "\n\nConfirm to proceed");
+    if (this->infoWindow->getConfirmationChoice() == CONFIRM) {
+      this->infoWindow->hide();
+      this->infoWindow->resetConfirmationChoice();
+
+      // Only activate input when confirmed
+      this->inputSwitchPlayer->activate();
+      this->inputSwitchPlayer->show();
+
+      // Switch to a new turn
+      this->game->setNewTurn();
+      int currentPlayer = this->game->getCurrentPlayer();
+      this->infoWindow->hide();  // Prevent showing opponent last move
+      this->board->resetSelection(currentPlayer);
+      this->board->maskOpponentSlots(currentPlayer);
+      this->updateLabels();
+      this->showSwitchTurnImage();
+    }
   }
 }
 
@@ -560,15 +578,16 @@ void GameScene::inputCallbackStatic(Fl_Widget* w, void* userData) {
 
 // Actual callback handler
 void GameScene::onInputCommand(Fl_Widget* w) {
-  const char* command = this->inputSwitchPlayer->value();
-
-  if (strcmp(command, "ok") == 0 || strcmp(command, "OK") == 0) {
-    if (turnSwitchImageBox) {
-        turnSwitchImageBox->hide();
-        this->inputSwitchPlayer->hide();
-        this->activateActionButtons();
-        this->window->cursor(FL_CURSOR_HAND);
-        window->redraw();
+  if (w) {
+    const char* command = this->inputSwitchPlayer->value();
+    if (strcmp(command, "ok") == 0 || strcmp(command, "OK") == 0) {
+      if (turnSwitchImageBox) {
+          turnSwitchImageBox->hide();
+          this->inputSwitchPlayer->hide();
+          this->activateActionButtons();
+          this->window->cursor(FL_CURSOR_HAND);
+          window->redraw();
+      }
     }
   }
 

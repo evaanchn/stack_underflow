@@ -87,6 +87,7 @@ void GameInfoWindow::solicitConfirmation(const std::string& message) {
   this->buffer->text(message.c_str());
   this->confirmButton->show();
   this->cancelButton->show();
+  this->window->redraw();
   this->confirmButton->activate();
   this->cancelButton->activate();
 }

@@ -22,16 +22,14 @@
 #include "UIBoard.hpp"
 #include "Game.hpp"
 
-#include <iostream>  // TODO (5n4v3) delete
-
 const Fl_Color GAME_BACKGROUND = fl_rgb_color(5, 10, 48);
 const Fl_Color VESSELS_BACKGROUND = fl_rgb_color(143, 209, 230);
 
 const std::string VESSELS_INFO[VESSELS_COUNT] =
     { "Lightning\nAlgorithm: Hashset\nHealth: 50\nAvg damage: 100\nWeight: 5"
     , "Ragnalog\nAlgorithm: Red-Black Tree\nHealth: 80\nAvg damage: 25\nWeight: 3"
-    , "Wales\nAlgorithm: B-Tree\nHealth: 100\nAvg damage: 20\nWeight: 2"
-    , "Thunder\nAlgorithm: Binary Search\nHealth: 120\nAvg damage: 16\nWeight: 2"
+    , "Wales\nAlgorithm: Binary Search\nHealth: 100\nAvg damage: 20\nWeight: 2"
+    , "Thunder\nAlgorithm: BTree\nHealth: 120\nAvg damage: 16\nWeight: 2"
     , "Ratatosk\nAlgorithm: Splay Tree\nHealth: 150\nAvg damage: 10\nWeight: 2"
     , "Harbinger\nAlgorithm: Linear Search\nHealth: 200\nAvg damage: 2\nWeight: 1"
     };
@@ -55,6 +53,7 @@ class GameScene {
   Fl_Box* turnSwitchImageBox = nullptr;
   Fl_PNG_Image *switchToPlayer1Image = nullptr, *swithToPlayer2Image = nullptr;
   Fl_Input* inputSwitchPlayer = nullptr;
+  std::string latestAction;
 
  private:
   CustomIconButton *buyButton = nullptr, *attackButton  = nullptr
@@ -99,13 +98,12 @@ class GameScene {
   void setVesselButtons();
   void setLabels();
   void setVesselImages();
+  void setExitButton();
 
   void setActionButtonCallBack(CustomIconButton* button, int data);
   void setVesselButtonCallBack(CustomIconButton* button, int data);
 
-  void update();
-
-  void handleActionButtonsEvents();
+  void handleEvents();
   void buyVessel();
   void attackVessel();
   void moveVessel();
@@ -113,7 +111,9 @@ class GameScene {
   void flagSlot();
   void unflagSlot();
   void handleExit();
-  
+  void concludeAction();
+
+  void update();
   void updateLabels();
   void updateVesselWeightLabel();
   void updateCurrentPlayerLabel();

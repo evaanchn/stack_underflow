@@ -2,7 +2,9 @@
 
 #pragma once
 
+#include <chrono>
 #include <string>
+#include <thread>
 #include <vector>
 #include "UISlot.hpp"
 
@@ -25,7 +27,7 @@ const std::string DARK_MASKS_PATH = "dark/";
 const std::string SLOT_MASKS[SLOT_MASKS_TYPES] = {"unaccessed.png", "hit.png"
     , "flagged.png"};
 
-#define UNFLAG true  // Indicates if the slot should be unflagged
+#define SHOW_RESET true  // Indicates if the slot should be unflagged
 enum SlotState {
   UNACCESSED,
   HIT,
@@ -51,7 +53,7 @@ class UIBoard {
 
   void setHitMaskAt(int row, int col);
   void setFlaggedMaskAt(int row, int col);
-  void resetMaskAt(int row, int col, bool unflag);
+  void resetMaskAt(int row, int col, bool showReset);
   void maskOpponentSlots(int player);
 
  private:

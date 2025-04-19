@@ -48,11 +48,12 @@ const std::string GAME_BUTTONS_FOLDER = "assets/sprites/buttons/";
 
 #define LABEL_BOX_W 100
 #define LABEL_BOX_H 70
+#define LONG_LABEL_BOX_W 300
 
 #define NONE_SELECTED -1
 
 enum Actions { UPGRADE, MOVE, ATTACK, BUY, EXIT, FLAG, UNFLAG };
-enum Vessels { NO_VESSEL = -1, SET, RB_TREE, BTREE, BINARY_SEARCH
+enum Vessels { NO_VESSEL = -1, SET, RB_TREE, B_TREE, BINARY_SEARCH
     , SPLAY_TREE, LINEAR_SEARCH };
 enum MoveState { MOVE_IDLE, MOVE_SELECT_VESSEL, MOVE_SELECT_DESTINATION };
 

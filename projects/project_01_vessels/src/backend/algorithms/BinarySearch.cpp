@@ -5,7 +5,7 @@
 BinarySearch::BinarySearch(): Algorithm()
 , arraySize(DEFAULT_ARRAY_SIZE)
 , orderedArray(nullptr) {
-  this->algorithmName = "BinarySearch";
+  this->algorithmName = "Binary Search";
   this->elementCount = 0;
   this->orderedArray = reinterpret_cast<int64_t*>
     (calloc(this->arraySize, sizeof(int64_t)));

@@ -5,7 +5,7 @@
 Game::Game()
   : gameOver(false)
   , winner(0)
-  , currentPlayer(PLAYER1)
+  , currentPlayer(PLAYER2)
   , newTurn(true) {
   setPlayers();
   this->battleLog = new BattleLog();
@@ -42,7 +42,7 @@ size_t Game::attackVessel(int attackerRow, int attackerCol, int victimRow,
   this->battleLog->recordAction(log);
   // If there was an opponent vessel there, deal damage
   if (this->board->isSlotOccupied({victimRow, victimCol})) {
-    size_t opponent = (currentPlayer + 1) % 2;
+    size_t opponent = this->getOpponent();
     Vessel* victim = this->board->getVessel({victimRow, victimCol}, opponent);
     if (victim != nullptr) {
       victim->takeDamage(damage);
@@ -85,9 +85,6 @@ void Game::consumeAction() {
 
   if (players[currentPlayer].actions == 0) {
     newTurn = true;  // Flag new turn
-    players[currentPlayer].actions =  MAX_ACTIONS;
-    if (currentPlayer == PLAYER1) currentPlayer = PLAYER2;
-    else currentPlayer = PLAYER1;
   }
 }
 
@@ -142,8 +139,11 @@ bool Game::upgradeVessel(int row, int col) {
   return true;
 }
 
-void Game::resetNewTurn() {
+void Game::setNewTurn() {
   newTurn = false;
+  players[currentPlayer].actions =  MAX_ACTIONS;
+  if (currentPlayer == PLAYER1) currentPlayer = PLAYER2;
+  else currentPlayer = PLAYER1;
 }
 
 // Buying a vessel -> insertion
