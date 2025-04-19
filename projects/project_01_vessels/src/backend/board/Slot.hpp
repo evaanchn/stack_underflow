@@ -59,6 +59,10 @@ class Slot {
    */
   bool destroyVessel();
 
+  /// @brief Get current information of the contained vessel, if any
+  /// @return std::string vessel information
+  std::string getVesselInfo() const;
+
  private:
   std::vector<int> coordinates;
   bool occupied;

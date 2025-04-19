@@ -76,7 +76,12 @@ class Vessel {
    */
   bool maxedOut();
 
+  /// @brief Get vessel weight
+  /// @return vessel weight
   size_t getWeight();
+
+  /// @brief Get vessel cost
+  /// @return vessel cost
   size_t getCost();
 
   /**
@@ -103,6 +108,10 @@ class Vessel {
    */
   size_t upgradeVessel(const size_t upgradePoints,
     std::vector<ActionLog>& logs);
+  
+  /// @brief Get the relevant data of the vessel
+  /// @return vessel name, algorithm, remaining health
+  std::string toString() const;
 
  protected:
   void shuffle(std::vector<int>& numbers);

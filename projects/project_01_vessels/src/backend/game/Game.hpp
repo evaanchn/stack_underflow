@@ -100,6 +100,12 @@ class Game {
    */
   bool validateVesselWeight();
 
+  /// @brief Get the information of a Vessel at a specific position
+  /// @param row The row index of the Slot.
+  /// @param col The column index of the Slot.
+  /// @return Vessel information, or "Empty slot" if not any
+  std::string getVesselInfoAt(int row, int col) const;
+
  private:
   std::map<size_t, Player> players;
   bool gameOver;

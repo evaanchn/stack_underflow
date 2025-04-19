@@ -3,6 +3,6 @@
 #include "HashsetVessel.hpp"
 
 HashsetVessel::HashsetVessel()
-: Vessel("Lightning", 50, 200, 5) {
+: Vessel("Lightning", /* Health */ 50, /* Cost */ 200, /* Weight */ 5) {
   this->algorithm = new Hashset();
 }

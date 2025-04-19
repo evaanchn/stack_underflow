@@ -132,3 +132,6 @@ Vessel* Board::vesselFactory(int vesselID) {
   return nullptr;
 }
 
+std::string Board::getVesselInfoAt(int row, int col) const {
+  return this->slots[row][col].getVesselInfo();
+}

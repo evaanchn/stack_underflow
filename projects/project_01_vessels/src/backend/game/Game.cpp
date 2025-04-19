@@ -6,9 +6,7 @@ Game::Game()
   : gameOver(false)
   , winner(0)
   , currentPlayer(PLAYER1)
-  , newTurn(true)
-  , battleLog(nullptr)
-  , board(nullptr) {
+  , newTurn(true) {
   setPlayers();
   this->battleLog = new BattleLog();
   this->battleLog->setBattleLog(RECORD_GAME);
@@ -80,6 +78,7 @@ bool Game::canBuyVessel(int64_t vesselID) {
 
 void Game::consumeAction() {
   --players[currentPlayer].actions;
+  players[currentPlayer].purchasePoints += 15;
   if (players[currentPlayer].actions == 0) {
     newTurn = true;
     players[currentPlayer].actions = 3;
@@ -165,4 +164,11 @@ bool Game::validateVesselWeight() {
   } else {
     return true;
   }
+}
+
+std::string Game::getVesselInfoAt(int row, int col) const {
+  if (!this->board->invalidSlot({row, col}, currentPlayer)) {
+    return this->board->getVesselInfoAt(row, col);
+  }
+  return "";
 }

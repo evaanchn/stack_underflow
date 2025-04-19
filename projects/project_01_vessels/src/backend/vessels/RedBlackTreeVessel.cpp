@@ -3,6 +3,6 @@
 #include "RedBlackTreeVessel.hpp"
 
 RedBlackTreeVessel::RedBlackTreeVessel()
-: Vessel("Ragnalog", 80, 150, 3) {
+: Vessel("Ragnalog", /* Health */ 80, /* Cost */ 150, /* Weight */ 3) {
   this->algorithm = new RedBlackTree();
 }

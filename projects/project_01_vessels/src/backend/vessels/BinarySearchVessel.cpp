@@ -3,7 +3,7 @@
 #include "BinarySearchVessel.hpp"
 
 BinarySearchVessel::BinarySearchVessel()
-: Vessel("Wales", 100, 80, 2) {
+: Vessel("Wales", /* Health */ 100, /* Cost */ 80, /* Weight */ 2) {
   this->algorithm = new BinarySearch();
 }
 

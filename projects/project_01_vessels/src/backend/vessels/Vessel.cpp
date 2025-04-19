@@ -125,3 +125,10 @@ int64_t Vessel::randValue(int64_t min, int64_t max) {
   std::uniform_int_distribution<int64_t> dist(min, max);
   return dist(rng);
 }
+
+std::string Vessel::toString() const {
+  std::string vesselData = "Vessel: " + this->name
+      + "\nAlgorithm: " + this->algorithm->getName()
+      + "\nRemaining health: " + std::to_string(this->health);
+  return vesselData;
+}

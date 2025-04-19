@@ -41,3 +41,10 @@ bool Slot::destroyVessel() {
   this->occupied = false;
   return true;
 }
+
+std::string Slot::getVesselInfo() const {
+  if (this->vessel != nullptr) {
+    return this->vessel->toString();
+  }
+  return "Empty slot";
+}

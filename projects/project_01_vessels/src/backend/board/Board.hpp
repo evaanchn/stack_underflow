@@ -93,7 +93,6 @@ class Board {
   */
   bool deleteVessel(std::vector<int> coordinates, int playerID);
 
- private:
   /**
   * @brief Checks if a slot coordinates are invalid for a player or out of
   * bounds.
@@ -104,6 +103,13 @@ class Board {
   */
   bool invalidSlot(std::vector<int> coordinates, int playerID);
 
+  /// @brief Get the information of a Vessel at a specific position
+  /// @param row The row index of the Slot.
+  /// @param col The column index of the Slot.
+  /// @return Vessel information, or "Empty slot" if not any
+  std::string getVesselInfoAt(int row, int col) const;
+
+ private:
   /**
   * @brief Creates and allocates a matrix of Slots.
   * 

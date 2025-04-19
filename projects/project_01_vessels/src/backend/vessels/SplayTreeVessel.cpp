@@ -3,6 +3,6 @@
 #include "SplayTreeVessel.hpp"
 
 SplayTreeVessel::SplayTreeVessel()
-: Vessel("Chaos", 150, 30, 2) {
+: Vessel("Ratatosk", /* Health */ 150, /* Cost */ 30, /* Weight */ 2) {
   this->algorithm = new SplayTree();
 }

@@ -3,6 +3,6 @@
 #include "LinearSearchVessel.hpp"
 
 LinearSearchVessel::LinearSearchVessel()
-: Vessel("Caronte", 200, 10, 1) {
+: Vessel("Harbinger", /* Health */ 200, /* Cost */ 10, /* Weight */ 1) {
   this->algorithm = new LinkedList();
 }

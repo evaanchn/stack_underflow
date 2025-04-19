@@ -3,6 +3,6 @@
 #include "BTreeVessel.hpp"
 
 BTreeVessel::BTreeVessel()
-: Vessel("Thunder", 120, 50, 2) {
+: Vessel("Thunder", /* Health */ 120, /* Cost */ 50, /* Weight */ 2) {
   this->algorithm = new BTree(MINIMUM_GRADE);
 }
