@@ -137,7 +137,7 @@ void SplayTree::removeRoot(size_t& iterations) {
     rightChild->parent = newRoot;
     newRoot->rightChild = rightChild;
   }
-  this->root->parent = nullptr;
+  if (this->root)  this->root->parent = nullptr;
   deleteNode->leftChild = deleteNode->rightChild = nullptr;
   delete deleteNode;
   ++iterations;  // one for the remove process + toRoot cycles
