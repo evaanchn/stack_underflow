@@ -44,6 +44,13 @@ class ActionLog {
   size_t getIterations();
 
   /**
+   * @brief Get record time
+   * 
+   * @return double
+   */
+  double getDurationTime();
+
+  /**
    * @brief Converts the logged action details to a string representation.
    * @return A formatted string containing the action details.
    */

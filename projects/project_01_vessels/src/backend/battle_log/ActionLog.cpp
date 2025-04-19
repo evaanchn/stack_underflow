@@ -28,13 +28,17 @@ void ActionLog::recordEnd(size_t iterations) {
 }
 
 std::string ActionLog::getDuration() {
-  double duration = (endTime.tv_sec - startTime.tv_sec) * 1e6  // s to ms
-  + (endTime.tv_nsec - startTime.tv_nsec) * 1e-3;  // nanoseconds to ms
+  double duration = getDurationTime();
   return std::to_string(duration) + "ms";
 }
 
 size_t ActionLog::getIterations() {
   return this->iterations;
+}
+
+double ActionLog::getDurationTime() {
+  return ((endTime.tv_sec - startTime.tv_sec) * 1e6  // s to ms
+  + (endTime.tv_nsec - startTime.tv_nsec) * 1e-3);  // nanoseconds to ms
 }
 
 std::string ActionLog::toString() {
