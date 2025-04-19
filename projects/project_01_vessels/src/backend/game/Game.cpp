@@ -21,10 +21,10 @@ void Game::setPlayers() {
 
   // Set players with initial values
   for (auto &player : players) {
-    player.second.actions = 3;
-    player.second.purchasePoints = 30;
-    player.second.totalVesselWeight = 0;
-    player.second.upgradePoints = 0;
+    player.second.actions = MAX_ACTIONS;
+    player.second.purchasePoints = INITIAL_PURCHASE_POINTS;
+    player.second.totalVesselWeight = INITIAL_VESSEL_WEIGHT;
+    player.second.upgradePoints = INITIAL_UPGRADE_POINTS;
   }
 }
 
@@ -65,31 +65,39 @@ size_t Game::attackVessel(int attackerRow, int attackerCol, int victimRow,
 }
 
 bool Game::canBuyVessel(int64_t vesselID) {
-  const size_t weights[TOTAL_VESSELS] = {5, 3, 2, 2, 2, 1};
-  const size_t costs[TOTAL_VESSELS] = {200, 150, 80, 50, 30, 1};
   size_t vesselWeight = players[currentPlayer].totalVesselWeight;
   size_t money = players[currentPlayer].purchasePoints;
-  if (vesselWeight >= weights[vesselID] && money >= costs[vesselID]) {
+  // To buy a vessel, new weight must not exceed max weight, purchase points
+  // must be enough
+  if (vesselWeight + VESSELS_WEIGHTS[vesselID] <= MAX_VESSEL_WEIGHT
+      && money >= VESSELS_COSTS[vesselID]) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 void Game::consumeAction() {
-  --players[currentPlayer].actions;
-  players[currentPlayer].purchasePoints += 15;
+  --players[currentPlayer].actions;  // Consumes one action
+  players[currentPlayer].purchasePoints += PURCHASE_POINTS_INC;
+  if (players[currentPlayer].purchasePoints > MAX_PURCHASE_POINTS) {
+    players[currentPlayer].purchasePoints = MAX_PURCHASE_POINTS;
+  }
+
   if (players[currentPlayer].actions == 0) {
-    newTurn = true;
-    players[currentPlayer].actions = 3;
-    // Switch player
-    ++currentPlayer;
-    currentPlayer %= 2;
+    newTurn = true;  // Flag new turn
+    players[currentPlayer].actions =  MAX_ACTIONS;
+    if (currentPlayer == PLAYER1) currentPlayer = PLAYER2;
+    else currentPlayer = PLAYER1;
   }
 }
 
 size_t Game::getCurrentPlayer() {
   return currentPlayer;
+}
+
+size_t Game::getOpponent() {
+  if (currentPlayer == PLAYER1) return PLAYER2;
+  else return PLAYER1;
 }
 
 size_t Game::getWinner() {
@@ -143,11 +151,12 @@ void Game::setVesselAt(int row, int col, int64_t vesselID) {
   std::vector<ActionLog> logs;
   std::vector<int> coordinates = {row, col};
   if (this->board->insertVessel(coordinates, vesselID, currentPlayer, logs)) {
-    printf("Vessel inserted succesfully");
-  } else {
-    printf("Error: couldn't insert the vessel");
+    this->players[currentPlayer].totalVesselWeight +=
+        this->board->getVessel({row, col}, currentPlayer)->getWeight();
+    this->players[currentPlayer].purchasePoints -=
+        this->board->getVessel({row, col}, currentPlayer)->getCost();
   }
-
+  // Record all the insertions for the vessel
   for (auto &log : logs) {
     this->battleLog->recordAction(log);
   }
@@ -171,4 +180,20 @@ std::string Game::getVesselInfoAt(int row, int col) const {
     return this->board->getVesselInfoAt(row, col);
   }
   return "";
+}
+
+size_t Game::getCurrentVesselWeight() {
+  return players[currentPlayer].totalVesselWeight;
+}
+
+size_t Game::getCurrentActionCount() {
+  return players[currentPlayer].actions;
+}
+
+size_t Game::getCurrentPurchasePoints() {
+  return players[currentPlayer].purchasePoints;
+}
+
+size_t Game::getCurrentUpgradePoints() {
+  return players[currentPlayer].upgradePoints;
 }

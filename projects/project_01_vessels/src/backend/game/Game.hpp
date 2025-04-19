@@ -11,8 +11,17 @@
 #include "BattleLog.hpp"
 
 #define MAX_VESSEL_WEIGHT 10
+#define MAX_PURCHASE_POINTS 9999
+#define MAX_UPGRADE_POINTS 9999
+#define PURCHASE_POINTS_INC 15
+#define INITIAL_VESSEL_WEIGHT 0
+#define INITIAL_PURCHASE_POINTS 30
+#define INITIAL_UPGRADE_POINTS 100
+#define MAX_ACTIONS 3
 
 #define TOTAL_VESSELS 6
+const size_t VESSELS_WEIGHTS[TOTAL_VESSELS] = {5, 3, 2, 2, 2, 1};
+const size_t VESSELS_COSTS[TOTAL_VESSELS] = {200, 150, 80, 50, 30, 10};
 
 struct Player {
   size_t actions;
@@ -40,15 +49,22 @@ class Game {
   bool canBuyVessel(int64_t vesselID);
 
   /**
-   * @brief validades if a player has more actions in a round
+   * @brief consumes 1 action,
+   * validades if a player has more actions in a round
    */
   void consumeAction();
 
   /**
-   * @brief report who is the player that has the turn in the round
+   * @brief report who is the current player
    * @return current player
    */
   size_t getCurrentPlayer();
+
+   /**
+   * @brief gets the opponent
+   * @return opponent
+   */
+  size_t getOpponent();
 
   /// @brief returns the winner's identifier
   size_t getWinner();
@@ -105,6 +121,13 @@ class Game {
   /// @param col The column index of the Slot.
   /// @return Vessel information, or "Empty slot" if not any
   std::string getVesselInfoAt(int row, int col) const;
+
+  /// @brief getters of current player information
+  size_t getCurrentVesselWeight();
+  size_t getCurrentActionCount();
+  size_t getCurrentPurchasePoints();
+  size_t getCurrentUpgradePoints();
+
 
  private:
   std::map<size_t, Player> players;
