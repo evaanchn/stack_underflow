@@ -14,8 +14,8 @@ Game::Game()
 }
 
 void Game::setPlayers() {
-  Player player1;
-  Player player2;
+  Player player1 = Player();
+  Player player2 = Player();
   players[PLAYER1] = player1;
   players[PLAYER2] = player2;
 
