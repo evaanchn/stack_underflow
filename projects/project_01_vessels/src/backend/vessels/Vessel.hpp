@@ -12,8 +12,8 @@
 
 #include "Algorithm.hpp"
 #include "BattleLog.hpp"
+#include "common.hpp"
 
-#define ELEMENT_COUNT 50
 #define MAX_DAMAGE (ELEMENT_COUNT * 2)
 
 class Vessel {

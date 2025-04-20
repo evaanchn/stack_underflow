@@ -4,6 +4,7 @@
 
 #include <string>
 #include <ctime>
+#include <vector>
 
 class ActionLog {
  public:
@@ -44,10 +45,44 @@ class ActionLog {
   size_t getIterations();
 
   /**
+   * @brief Get record time
+   * 
+   * @return double
+   */
+  double getDurationTime();
+
+  /**
+   * @brief Get responsible name
+   * 
+   * @return std::string 
+   */
+  std::string getResponsible();
+
+  /**
    * @brief Converts the logged action details to a string representation.
    * @return A formatted string containing the action details.
    */
   std::string toString();
+
+   /**
+   * @brief Calculates the aritmetic mean from the iterations of a given logs
+   * array
+   * @warning the sum of all iterations must be lower than 2^64
+   * 
+   * @param logs 
+   * @return int64_t 
+   */
+  static uint64_t iterationsMean(std::vector<ActionLog>& logs);
+
+  /**
+   * @brief Calculates the aritmetic mean from the duration of a given logs
+   * array
+   * @warning the sum of all iterations must be lower than long double max value
+   * 
+   * @param logs 
+   * @return long double 
+   */
+  static long double durationMean(std::vector<ActionLog>& logs);
 
  private:
   std::string responsible;  ///< The alogrithm responsible for the action.

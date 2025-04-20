@@ -14,6 +14,28 @@ void BattleLog::recordAction(ActionLog &action) {
   fprintf(this->battleLogFile, "%s\n", action.toString().c_str());
 }
 
+void BattleLog::recordStatsHeader(int elementCount, int operationCount) {
+  fprintf(this->battleLogFile,
+    "<====================================>\n"
+    "Aritmetic Mean\n"
+    "- %d element insertions\n"
+    "- %d search & delete operations\n", elementCount, operationCount);
+}
+
+void BattleLog::recordStats(std::vector<ActionLog>& actions
+  , std::string actionType) {
+  // only print responsible at insert (start)
+  if (actionType == "insert") {
+    fprintf(this->battleLogFile, "%s\titerations\tduration\n",
+      actions.front().getResponsible().c_str());
+  }
+  fprintf(this->battleLogFile, "%s\t%" PRIu64
+    "\t%Lg\n",
+    actionType.c_str(),
+    ActionLog::iterationsMean(actions),
+    ActionLog::durationMean(actions));
+}
+
 BattleLog::~BattleLog() {
   if (battleLogFile) fclose(this->battleLogFile);
 }

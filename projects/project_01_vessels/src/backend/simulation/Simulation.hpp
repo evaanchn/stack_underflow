@@ -15,7 +15,7 @@
 #include "LinearSearchVessel.hpp"
 
 #define VESSELS_TYPES 6
-#define TESTS_AMOUNT 30
+#define TESTS_AMOUNT 50
 
 class Simulation {
  public:
@@ -30,4 +30,5 @@ class Simulation {
   void testInsertion(Vessel* vessel);
   void testSearch(Vessel* vessel);
   void testElimination(Vessel* vessel);
+  void printTestStats(std::string action, std::vector<ActionLog>& logs);
 };

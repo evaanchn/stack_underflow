@@ -6,8 +6,9 @@
 #include <stdexcept>
 
 #include "Algorithm.hpp"
+#include "common.hpp"
 
-#define DEFAULT_ARRAY_SIZE 100
+#define DEFAULT_ARRAY_SIZE ELEMENT_COUNT
 
 class BinarySearch: public Algorithm {
  public:

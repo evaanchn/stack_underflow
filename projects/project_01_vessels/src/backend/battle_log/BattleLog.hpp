@@ -2,8 +2,10 @@
 
 #pragma once
 
-#include <stdio.h>
+#include <cinttypes>
+#include <cstdio>
 #include <string>
+#include <vector>
 
 #include "ActionLog.hpp"
 
@@ -31,6 +33,9 @@ class BattleLog {
    * @param action, The ActionLog object containing action details.
    */
   void recordAction(ActionLog &action);
+
+  void recordStatsHeader(int elementCount, int operationCount);
+  void recordStats(std::vector<ActionLog>& actions, std::string actionType);
 
   /**
    * @brief Destructor that closes the battle log file.
