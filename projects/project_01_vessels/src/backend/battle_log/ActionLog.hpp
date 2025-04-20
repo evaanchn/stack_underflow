@@ -4,6 +4,7 @@
 
 #include <string>
 #include <ctime>
+#include <cstdint>
 #include <vector>
 
 class ActionLog {
