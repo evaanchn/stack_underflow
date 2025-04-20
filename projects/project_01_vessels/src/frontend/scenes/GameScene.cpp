@@ -405,8 +405,7 @@ void GameScene::upgradeVessel() {
       if(this->game->isSlotOccupied(row, col)) {
         if (this->game->upgradeVessel(row, col)) {
           // Updates
-          this->latestAction = "Successfully upgraded!\n" +
-              this->game->getVesselInfoAt(row, col);
+          this->latestAction = "Successfully upgraded!\n";
           this->upgradedSound.play();
         } else {
           this->latestAction = "Could not upgrade vessel";
@@ -475,6 +474,17 @@ void GameScene::handleExit() {
 }
 
 void GameScene::update() {
+  this->checkVesselWeight();
+
+  // if game won, no need to update
+  if (this->game->isGameOver()) {
+    std::string winner = this->game->getWinner() == PLAYER_1 ?
+        "Poseidon" : "Njord";
+    this->infoWindow->log("\n\nGame Over!\n" + winner + " wins!");
+  } else this->updateTurnSwitch();
+}
+
+void GameScene::checkVesselWeight() {
   if (this->game->getCurrentVesselWeight() == 0) {
     this->moveButton->deactivate();
     this->attackButton->deactivate();
@@ -485,17 +495,19 @@ void GameScene::update() {
     this->attackButton->activate();
     this->upgradeButton->activate();
   }
+}
 
-  // if game won, no need to update
-  if (this->game->isGameOver()) {
-    std::string winner = this->game->getWinner() == PLAYER_1 ?
-        "Poseidon" : "Njord";
-    this->infoWindow->log("\n\nGame Over!\n" + winner + " wins!");
-  } else if (this->game->switchedTurns()) {
+void GameScene::updateTurnSwitch() {
+  if (this->game->switchedTurns()) {
     this->infoWindow->show();
     this->infoWindow->solicitConfirmation(latestAction
         + "\n\nConfirm to proceed");
+    
     if (this->infoWindow->getConfirmationChoice() == CONFIRM) {
+      // To prevent any action while switching turns
+      this->deactivateButtons();
+      this->board->deactivateBoard();
+
       this->infoWindow->hide();
       this->infoWindow->resetConfirmationChoice();
 
@@ -506,10 +518,9 @@ void GameScene::update() {
       // Switch to a new turn
       this->game->setNewTurn();
       int currentPlayer = this->game->getCurrentPlayer();
-      this->infoWindow->hide();  // Prevent showing opponent last move
       this->board->resetSelection(currentPlayer);
       this->board->maskOpponentSlots(currentPlayer);
-      this->updateLabels();
+      this->updateLabels();  // Update to new current player's data
       this->showSwitchTurnImage();
     }
   }
@@ -584,7 +595,8 @@ void GameScene::onInputCommand(Fl_Widget* w) {
       if (turnSwitchImageBox) {
           turnSwitchImageBox->hide();
           this->inputSwitchPlayer->hide();
-          this->activateActionButtons();
+          this->activateButtons();
+          this->board->activateBoard();
           this->window->cursor(FL_CURSOR_HAND);
           window->redraw();
       }
@@ -604,22 +616,26 @@ void GameScene::showSwitchTurnImage() {
       turnSwitchImageBox->image(swithToPlayer2Image);
     }
     turnSwitchImageBox->show();
-    this->inputSwitchPlayer->show();
-    this->deactivateActionButtons();
     window->redraw();
   }
 }
 
-void GameScene::deactivateActionButtons() {
+void GameScene::deactivateButtons() {
   for (int i = 0; i < A_BUTTONS_COUNT; ++i) {
     if (actionsButtons[i]) actionsButtons[i]->deactivate();
+  }
+  for (int i = 0; i < V_BUTTONS_COUNT; ++i) {
+    if (vesselsButtons[i]) vesselsButtons[i]->deactivate();
   }
   this->exitButton->deactivate();
 }
 
-void GameScene::activateActionButtons() {
+void GameScene::activateButtons() {
   for (int i = 0; i < A_BUTTONS_COUNT; ++i) {
     if (actionsButtons[i]) actionsButtons[i]->activate();
+  }
+  for (int i = 0; i < V_BUTTONS_COUNT; ++i) {
+    if (vesselsButtons[i]) vesselsButtons[i]->activate();
   }
   this->exitButton->activate();
 }

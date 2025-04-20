@@ -30,6 +30,10 @@ void UISlot::setOnClick(std::function<void()> func) {
   this->onClick = func;
 }
 
+void UISlot::activate() {
+  button->activate();
+}
+
 // Method to deactivate the button
 void UISlot::deactivate() {
   button->deactivate();

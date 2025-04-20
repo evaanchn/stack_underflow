@@ -114,6 +114,8 @@ class GameScene {
   void concludeAction();
 
   void update();
+  void updateTurnSwitch();
+  void checkVesselWeight();
   void updateLabels();
   void updateVesselWeightLabel();
   void updateCurrentPlayerLabel();
@@ -128,8 +130,8 @@ class GameScene {
   void onInputCommand(Fl_Widget* w);
   void showSwitchTurnImage();
 
-  void deactivateActionButtons();
-  void activateActionButtons();
+  void deactivateButtons();
+  void activateButtons();
 
  private:
   UIBoard* board = nullptr;

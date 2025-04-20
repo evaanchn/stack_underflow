@@ -47,7 +47,8 @@ class UIBoard {
   void setVesselAt(int row, int col, Fl_PNG_Image* vessel);
   void removeVesselAt(int row, int col);
   void moveVessel(int fromRow, int fromCol, int toRow, int toCol);
-  void deactivateHalf(bool leftSide);
+  void activateBoard();
+  void deactivateBoard();
   void resetSelection(int player);
   Coordinates* getCoordinates(int player);
 

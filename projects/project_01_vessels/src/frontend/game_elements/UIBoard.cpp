@@ -89,11 +89,17 @@ void UIBoard::moveVessel(int fromRow, int fromCol, int toRow, int toCol) {
   }
 }
 
-void UIBoard::deactivateHalf(bool leftSide) {
-  int startCol = leftSide ? 0 : BOARD_COLS / 2;
-  int endCol = leftSide ? BOARD_COLS / 2 : BOARD_COLS;
+void UIBoard::activateBoard() {
   for (int i = 0; i < BOARD_ROWS; ++i) {
-    for (int j = startCol; j < endCol; ++j) {
+    for (int j = 0; j < BOARD_COLS; ++j) {
+      board[i][j]->activate();
+    }
+  }
+}
+
+void UIBoard::deactivateBoard() {
+  for (int i = 0; i < BOARD_ROWS; ++i) {
+    for (int j = 0; j < BOARD_COLS; ++j) {
       board[i][j]->deactivate();
     }
   }

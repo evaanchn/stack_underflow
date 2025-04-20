@@ -17,6 +17,7 @@ class UISlot {
   ~UISlot();
 
   void setOnClick(std::function<void()> func);
+  void activate();
   void deactivate();
   void setColor(Fl_Color color);
 
