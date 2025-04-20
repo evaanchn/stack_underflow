@@ -34,8 +34,10 @@ class App {
   GameOverScene gameOverScene;
 
   SFMLSound startSceneMusic;
+  SFMLSound informationSceneMusic;
   SFMLSound gameSceneMusic;
   SFMLSound gameOverSceneMusic;
+  SFMLSound buttonClickSound;
 
  private:
   void setMainWindow();

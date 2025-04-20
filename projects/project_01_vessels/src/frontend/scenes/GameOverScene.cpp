@@ -15,12 +15,14 @@ GameOverScene::GameOverScene()
     , 0, sf::Color::Transparent) {}
 
 void GameOverScene::handleEvent(sf::RenderWindow& window, sf::Event& event,
-    SceneState& currentState, bool& appActive) {
+    SceneState& currentState, bool& appActive, SFMLSound &buttonClickSound) {
   if (restartButton.isMouseOver(window) &&
       event.type == sf::Event::MouseButtonPressed) {
+    buttonClickSound.play();
     currentState = START;
   } else if (exitButton.isMouseOver(window) &&
     event.type == sf::Event::MouseButtonPressed) {
+    buttonClickSound.play();
     appActive = false;
     window.close();
   }

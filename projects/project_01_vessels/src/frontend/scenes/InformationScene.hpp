@@ -16,7 +16,7 @@ class InformationScene {
  public:
   InformationScene();
   void handleEvent(sf::RenderWindow& window, sf::Event& event,
-      SceneState& currentState, bool& appActive);
+      SceneState& currentState, bool& appActive, SFMLSound &buttonClickSound);
   void draw(sf::RenderWindow& window);
 
  private:

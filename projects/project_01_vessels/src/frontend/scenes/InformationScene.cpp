@@ -23,20 +23,24 @@ InformationScene::InformationScene()
       , sf::Color::Transparent) {}
 
 void InformationScene::handleEvent(sf::RenderWindow& window, sf::Event& event,
-    SceneState& currentState, bool& appActive) {
+    SceneState& currentState, bool& appActive, SFMLSound &buttonClickSound) {
   if (simulateButton.isMouseOver(window) &&
       event.type == sf::Event::MouseButtonPressed) {
+    buttonClickSound.play();
     Simulation* simulation = new Simulation();
     simulation->simulate();
     delete simulation;
   } else if (manualButton.isMouseOver(window) &&
       event.type == sf::Event::MouseButtonPressed) {
+    buttonClickSound.play();
     system(("xdg-open " + MANUAL_URL).c_str());
   } else if (returnButton.isMouseOver(window) &&
     event.type == sf::Event::MouseButtonPressed) {
+    buttonClickSound.play();
     currentState = START;
   } else if (exitButton.isMouseOver(window) &&
     event.type == sf::Event::MouseButtonPressed) {
+    buttonClickSound.play();
     appActive = !ACTIVE;
     window.close();
   }

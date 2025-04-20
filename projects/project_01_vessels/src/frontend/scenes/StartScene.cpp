@@ -15,15 +15,17 @@ StartScene::StartScene()
       , 0, sf::Color::Transparent) {}
 
 void StartScene::handleEvent(sf::RenderWindow& window, sf::Event& event,
-    SceneState& currentState, bool& gameActive) {
+    SceneState& currentState, bool& gameActive, SFMLSound &buttonClickSound) {
   if (startButton.isMouseOver(window) &&
       event.type == sf::Event::MouseButtonPressed) {
+    buttonClickSound.play();
     currentState = GAME;
     gameActive = ACTIVE;
     window.close();
   } else if (infoButton.isMouseOver(window) &&
       event.type == sf::Event::MouseButtonPressed) {
-     currentState = INFORMATION;
+    buttonClickSound.play();
+    currentState = INFORMATION;
   }
 }
 

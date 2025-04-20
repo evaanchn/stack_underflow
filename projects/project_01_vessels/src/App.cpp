@@ -10,8 +10,10 @@ App::App()
   , informationScene()
   , gameOverScene()
   , startSceneMusic(MUSIC_FOLDER + "startScene.wav", LOOP)
+  , informationSceneMusic(MUSIC_FOLDER + "informationScene.wav", LOOP)
   , gameSceneMusic(MUSIC_FOLDER + "gameScene.wav", LOOP, /*Volume*/ 60)
-  , gameOverSceneMusic(MUSIC_FOLDER + "gameOverScene.wav", LOOP)
+  , gameOverSceneMusic(MUSIC_FOLDER + "gameOverScene.wav", LOOP, /*Volume*/ 120)
+  , buttonClickSound(SOUNDS_FOLDER + "soundButtonClick.wav", !LOOP, /*Vol*/ 200)
   {
   setMainWindow();
 }
@@ -32,7 +34,7 @@ int App::run() {
       error = this->startGame();
       if (error != EXIT_SUCCESS) return error;
       gameScene->run();
-      this->endGame();
+      this->endGame();/*Volume*/ 
     }
   }
   return error;
@@ -61,11 +63,12 @@ void App::handleGlobalEvents(sf::RenderWindow& window, sf::Event& event) {
 
 void App::handleStateEvents(sf::Event& event) {
   if (currentState == START) startScene.handleEvent(this->mainWindow, event
-      , this->currentState, this->gameActive);
+      , this->currentState, this->gameActive, this->buttonClickSound);
   else if (currentState == INFORMATION) informationScene.handleEvent(
-      this->mainWindow, event, this->currentState, this->appActive);
+      this->mainWindow, event, this->currentState, this->appActive
+      , this->buttonClickSound);
   else if (currentState == GAME_OVER) gameOverScene.handleEvent(this->mainWindow
-      , event, this->currentState, this->appActive);
+      , event, this->currentState, this->appActive, this->buttonClickSound);
 }
 
 void App::handleStateRendering() {
@@ -75,14 +78,15 @@ void App::handleStateRendering() {
 }
 
 void App::renderStartScene() {
+  informationSceneMusic.stop();
   gameOverSceneMusic.stop();
   startSceneMusic.play();
   startScene.draw(mainWindow);
 }
 
 void App::renderInformationScene() {
-  startSceneMusic.stop();
-  // informationScene.start();
+  startSceneMusic.pause();
+  informationSceneMusic.play();
   informationScene.draw(mainWindow);
 }
 
