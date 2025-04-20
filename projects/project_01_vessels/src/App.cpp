@@ -8,8 +8,8 @@ App::App()
   , currentState(SceneState::START)
   , startScene()
   , gameOverScene()
-  , startSceneMusic(MUSIC_FOLDER + "startScene.mp3", LOOP)
-  , gameSceneMusic(MUSIC_FOLDER + "gameScene.mp3", LOOP, /*Volume*/ 60)
+  , startSceneMusic(MUSIC_FOLDER + "startScene.wav", LOOP)
+  , gameSceneMusic(MUSIC_FOLDER + "gameScene.wav", LOOP, /*Volume*/ 60)
   , gameOverSceneMusic(MUSIC_FOLDER + "gameOverScene.wav", LOOP)
   {
   setMainWindow();
