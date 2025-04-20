@@ -242,17 +242,21 @@ int GameScene::run() {
 }
 
 void GameScene::handleEvents() {
-  if (this->selectedAction == BUY) this->buyVessel();
-  else if (this->selectedAction == MOVE) this->moveVessel();
-  else if (this->selectedAction == ATTACK) this->attackVessel();
-  else if (this->selectedAction == UPGRADE) this->upgradeVessel();
-  else if (this->selectedAction == FLAG) this->flagSlot();
+  if (!this->game->switchedTurns()) {
+    if (this->selectedAction == BUY) this->buyVessel();
+    else if (this->selectedAction == MOVE) this->moveVessel();
+    else if (this->selectedAction == ATTACK) this->attackVessel();
+    else if (this->selectedAction == UPGRADE) this->upgradeVessel();
+  }
+  
+  if (this->selectedAction == FLAG) this->flagSlot();
   else if (this->selectedAction == UNFLAG) this->unflagSlot();
   else if (this->selectedAction == EXIT) this->handleExit();
   else {
     // Show vessel general info
-    if (this->selectedVessel != NONE_SELECTED)
-        this->showVesselInfo(this->selectedVessel);
+    if (this->selectedVessel != NONE_SELECTED
+        && this->selectedAction == NONE_SELECTED)
+      this->showVesselInfo(this->selectedVessel);
     else this->showSelectedVesselInfo();  // Show selected vessel current info
   }
 }
@@ -507,6 +511,7 @@ void GameScene::updateTurnSwitch() {
       // To prevent any action while switching turns
       this->deactivateButtons();
       this->board->deactivateBoard();
+      this->selectedAction = NONE_SELECTED;
 
       this->infoWindow->hide();
       this->infoWindow->resetConfirmationChoice();
@@ -593,12 +598,13 @@ void GameScene::onInputCommand(Fl_Widget* w) {
     const char* command = this->inputSwitchPlayer->value();
     if (strcmp(command, "ok") == 0 || strcmp(command, "OK") == 0) {
       if (turnSwitchImageBox) {
-          turnSwitchImageBox->hide();
-          this->inputSwitchPlayer->hide();
-          this->activateButtons();
-          this->board->activateBoard();
-          this->window->cursor(FL_CURSOR_HAND);
-          window->redraw();
+        turnSwitchImageBox->hide();
+        this->inputSwitchPlayer->hide();
+        this->activateButtons();
+        this->board->activateBoard();
+        this->selectedAction = NONE_SELECTED;
+        this->window->cursor(FL_CURSOR_HAND);
+        window->redraw();
       }
     }
   }
@@ -609,8 +615,7 @@ void GameScene::onInputCommand(Fl_Widget* w) {
 
 void GameScene::showSwitchTurnImage() {
   if (turnSwitchImageBox) {
-    int currentPlayer = this->game->getCurrentPlayer();
-    if (currentPlayer == PLAYER_1) {
+    if (this->game->getCurrentPlayer() == PLAYER_1) {
       turnSwitchImageBox->image(switchToPlayer1Image);
     } else {
       turnSwitchImageBox->image(swithToPlayer2Image);

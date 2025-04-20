@@ -114,8 +114,8 @@ class GameScene {
   void concludeAction();
 
   void update();
-  void updateTurnSwitch();
   void checkVesselWeight();
+  void updateTurnSwitch();
   void updateLabels();
   void updateVesselWeightLabel();
   void updateCurrentPlayerLabel();
