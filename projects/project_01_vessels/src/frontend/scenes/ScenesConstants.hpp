@@ -6,6 +6,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <cstdlib>
 #include <string>
 
 enum SceneState { START, INFORMATION, GAME, GAME_OVER };
@@ -15,18 +16,27 @@ const sf::Vector2f SCENES(0, 0);
 const sf::Vector2f BUTTON_START(1610, 735);
 const sf::Vector2f BUTTON_INFO(1610, 900);
 
+const sf::Vector2f BUTTON_SIMULATE(1535, 80);
+const sf::Vector2f BUTTON_MANUAL(1540, 390);
+const sf::Vector2f BUTTON_RETURN(1400, 710);
+const sf::Vector2f BUTTON_INFO_EXIT(1680, 710);
+
 const sf::Vector2f BUTTON_RESTART(1550, 295);
-const sf::Vector2f BUTTON_EXIT(1655, 405);
+const sf::Vector2f BUTTON_EXIT(1650, 405);
 };
 
 namespace Sizes {
 const sf::Vector2f SCENES(1920, 1080);
 const sf::Vector2f REGULAR_BUTTON(200, 60);
 const sf::Vector2f LARGE_BUTTON(350, 60);
+const sf::Vector2f CIRCULAR_BUTTON(160, 160);
 };
 
 #define RADIUS_REGULAR_BUTTON 35
 #define CORNERS_REGULAR_BUTTON 20
+
+#define RADIUS_CIRCULAR_BUTTON 45.0f
+#define CORNERS_CIRCULAR_BUTTON 35
 
 #define ACTIVE true
 #define EMPTY_TEXT ""

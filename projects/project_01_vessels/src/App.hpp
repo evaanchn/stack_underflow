@@ -3,6 +3,7 @@
 #pragma once
 
 #include "StartScene.hpp"
+#include "InformationScene.hpp"
 #include "GameScene.hpp"
 #include "GameOverScene.hpp"
 
@@ -28,6 +29,7 @@ class App {
   sf::RenderWindow mainWindow;
 
   StartScene startScene;
+  InformationScene informationScene;
   GameScene* gameScene;
   GameOverScene gameOverScene;
 
@@ -44,6 +46,7 @@ class App {
 
  private:
   void renderStartScene();
+  void renderInformationScene();
   void renderGameOverScene();
 
   int startGame();

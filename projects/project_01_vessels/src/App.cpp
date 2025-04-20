@@ -7,6 +7,7 @@ App::App()
   , gameActive(false)
   , currentState(SceneState::START)
   , startScene()
+  , informationScene()
   , gameOverScene()
   , startSceneMusic(MUSIC_FOLDER + "startScene.wav", LOOP)
   , gameSceneMusic(MUSIC_FOLDER + "gameScene.wav", LOOP, /*Volume*/ 60)
@@ -61,12 +62,15 @@ void App::handleGlobalEvents(sf::RenderWindow& window, sf::Event& event) {
 void App::handleStateEvents(sf::Event& event) {
   if (currentState == START) startScene.handleEvent(this->mainWindow, event
       , this->currentState, this->gameActive);
+  else if (currentState == INFORMATION) informationScene.handleEvent(
+      this->mainWindow, event, this->currentState, this->appActive);
   else if (currentState == GAME_OVER) gameOverScene.handleEvent(this->mainWindow
-    , event, this->currentState, this->appActive);
+      , event, this->currentState, this->appActive);
 }
 
 void App::handleStateRendering() {
   if (this->currentState == START) renderStartScene();
+  else if (this->currentState == INFORMATION) renderInformationScene();
   else if (this->currentState == GAME_OVER) renderGameOverScene();
 }
 
@@ -74,6 +78,12 @@ void App::renderStartScene() {
   gameOverSceneMusic.stop();
   startSceneMusic.play();
   startScene.draw(mainWindow);
+}
+
+void App::renderInformationScene() {
+  startSceneMusic.stop();
+  // informationScene.start();
+  informationScene.draw(mainWindow);
 }
 
 void App::renderGameOverScene() {
