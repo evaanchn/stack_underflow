@@ -4,13 +4,13 @@
 
 GameScene::GameScene(int width, int height, const std::string& title)
   : gameActive (ACTIVE)
-  , hitSound(SOUNDS_FOLDER + "hit.mp3", /*loop*/ false)
-  , missSound(SOUNDS_FOLDER + "miss.mp3", /*loop*/ false)
-  , boughtSound(SOUNDS_FOLDER + "boughtVessel.mp3", /*loop*/ false)
-  , movedSound(SOUNDS_FOLDER + "movedVessel.mp3", /*loop*/ false)
-  , upgradedSound(SOUNDS_FOLDER + "upgradedVessel.mp3", /*loop*/ false)
-  , actionButtonSound(SOUNDS_FOLDER + "soundActionButton.mp3", /*loop*/ false)
-  , vesselButtonSound(SOUNDS_FOLDER + "soundVesselButton.mp3", /*loop*/ false)
+  , hitSound(SOUNDS_FOLDER + "hit.wav", /*loop*/ false)
+  , missSound(SOUNDS_FOLDER + "miss.wav", /*loop*/ false)
+  , boughtSound(SOUNDS_FOLDER + "boughtVessel.wav", /*loop*/ false)
+  , movedSound(SOUNDS_FOLDER + "movedVessel.wav", /*loop*/ false)
+  , upgradedSound(SOUNDS_FOLDER + "upgradedVessel.wav", /*loop*/ false)
+  , actionButtonSound(SOUNDS_FOLDER + "soundActionButton.wav", /*loop*/ false)
+  , vesselButtonSound(SOUNDS_FOLDER + "soundVesselButton.wav", /*loop*/ false)
   {
   this->selectedAction = NONE_SELECTED;
   this->selectedVessel = NONE_SELECTED;
