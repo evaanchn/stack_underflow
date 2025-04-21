@@ -29,7 +29,7 @@ This app was designed for 1080p resulution screens or above. For any lower resol
 [[build]]
 === Build
 
-*DISCLAIMER*: This program was developed with the Linux operating system and designed to execute in this O.S, which is the reason why it is *heavily encouraged* to run the program in the same O.S.
+*DISCLAIMER*: This program was developed with the Linux operating system and designed to execute in this O.S, which is the reason why it is *heavily encouraged* to run the program in the same O.S. Moreover, the game window has 1920x1080 resolution, so it is recommended to run the program in a screen with this resolution or higher.
 
 ==== SFML Library
 Before compiling the program, make sure you have the SFML library on your device by running the following command:
@@ -63,7 +63,7 @@ Run the previous commands again to ensure the successful instalation of the libr
 
 To compile the solution, please execute the following commands:
 
-`make`  in the *Vessels/* directory
+`make`  in the *project_01_vessels/* directory
 
 [[usage]]
 === Usage
