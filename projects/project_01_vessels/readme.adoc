@@ -22,6 +22,10 @@ See the link:design/readme.adoc[design/] folder for an overall design.
 [[user_manual]]
 == User manual
 
+[[Window]]
+=== Window size
+This app was designed for 1080p resulution screens or above. For any lower resolution you may not be able to properly see the game window.
+
 [[build]]
 === Build
 
@@ -38,8 +42,24 @@ If a library version is not shown in terminal, please run the following command:
 
 `sudo dnf install SFML SFML-devel` for Fedora
 
+==== FLTK Library
+Before compiling the program, make sure you have the FLTK library on your device by running the following command:
+
+`dpkg -l | grep fltk` for Ubuntu or Debian.
+
+`rpm -qa | grep fltk` for Fedora
+
+
+If nothing is found, please run the following commands:
+
+`sudo apt install libfltk1.3-dev`
+& `sudo apt install libpng-dev`
+for Ubuntu or Debian.
+
+`sudo dnf install fltk fltk-devel` & `sudo dnf install libpng libpng-devel` for Fedora
+
 ==== Compilation
-Run the previous command again to ensure the successful instalation of the library. 
+Run the previous commands again to ensure the successful instalation of the libraries. 
 
 To compile the solution, please execute the following commands:
 

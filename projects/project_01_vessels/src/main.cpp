@@ -1,6 +1,5 @@
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#include "App.hpp"
 
-int main(void) {
-  return EXIT_SUCCESS;
+int main() {
+  return App().run();
 }
