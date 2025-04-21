@@ -34,7 +34,16 @@ class BattleLog {
    */
   void recordAction(ActionLog &action);
 
+  /**
+   * @brief Records the header for statistics in the battle log.
+   * @param elementCount, The number of elements in the data structure.
+   * @param operationCount, The number of operations performed.
+   */
   void recordStatsHeader(int elementCount, int operationCount);
+
+  /// @brief Records the statistics of the actions performed in a battle log tsv
+  /// @param actions Vector of actions of the same type to be recorded.
+  /// @param actionType Type of operation to record.
   void recordStats(std::vector<ActionLog>& actions, std::string actionType);
 
   /**

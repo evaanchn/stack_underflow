@@ -78,9 +78,9 @@ size_t Vessel::getCost() {
   return this->cost;
 }
 
-void Vessel::takeDamage(int64_t damage_dealed) {
+void Vessel::takeDamage(int64_t damage_dealt) {
   if (this->isAlive()) {
-    this->health -= damage_dealed;
+    this->health -= damage_dealt;
   }
 }
 

@@ -30,10 +30,6 @@ void Simulation::testInsertion(Vessel* vessel) {
   // initialize each action
   vessel->fillVessel(actionLogs);
   std::cout << "Fill success" << std::endl;
-  // for (auto &log : actionLogs) {
-  //   std::cout << log.toString() << std::endl;
-  //   battleLog->recordAction(log);
-  // }
   battleLog->recordStats(actionLogs, "insert");
   this->printTestStats("Insertion", actionLogs);
 }
@@ -44,7 +40,6 @@ void Simulation::testSearch(Vessel* vessel) {
     ActionLog actionLog = ActionLog("Search");
     vessel->calculateDamage(actionLog);
     std::cout << actionLog.toString() << std::endl;
-    // battleLog->recordAction(actionLog);
     actionLogs.push_back(actionLog);
   }
   battleLog->recordStats(actionLogs, "search");
@@ -59,7 +54,6 @@ void Simulation::testElimination(Vessel* vessel) {
     // save logs
     for (auto &log : actionLogs) {
       std::cout << log.toString() << std::endl;
-      // battleLog->recordAction(log);
     }
     eliminationLogs.push_back(actionLogs.front());
   }

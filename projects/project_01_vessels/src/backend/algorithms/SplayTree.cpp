@@ -15,7 +15,7 @@ SplayTree::~SplayTree() {
 }
 
 void SplayTree::toRoot(Node* node, size_t& iterations) {
-  assert(node);
+  if (node == nullptr) return;
   if (node == this->root)  {
     this->root->parent = nullptr;  // ensure not pointing to deleted
     return;
