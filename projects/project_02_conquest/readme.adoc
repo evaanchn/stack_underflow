@@ -13,19 +13,6 @@
 
 #Analysis: Describe the problem to be solved#
 
-Input example:
-
-[source]
-----
-include::tests/input001.txt[]
-----
-
-Output example:
-
-[source]
-----
-include::tests/output001.txt[]
-----
 
 [[design]]
 == Design of solution
