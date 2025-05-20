@@ -1,42 +1,104 @@
-= GalaxyOps: Algorithmic Conquest
+= Space Ops: Algorithms Conquest
 :experimental:
 :nofooter:
-:source-highlighter: pygments
+:source-highlighter: highlightjs
 :sectnums:
 :stem: latexmath
 :toc:
 :xrefstyle: short
 
 
-[[problem_statement]]
-== Problem statement
+[[general_description]]
+== General description 
 
-#Analysis: Describe the problem to be solved#
+Space war game in which you get the mission of exploring and conquering galaxies. Each galaxy has different planets to be explored until there is at least one path to get from any to every one of them. There are three stages to complete a conquest:
 
+=== Stage 1, sounding
+At the starting planet, an _Adamantium_ mine is established to use as currency in order to obtain fuel and other resources. You can establish RapidSight and DeepProbe sounding lines to discover the existence of new planets.
+
+=== Stage 2, trailing
+Now that other planets are visible, Pathfinder and StarMapper explorers can be sent to gather information of the optimal paths and the enemies' location.
+
+=== Stage 3, offensive strike
+With the information and resources gathered is time to plan and execute your uprising; never forget,
+
+"War is an art" 
+- Sun Tzu (likely)
+
+There are 4 different assault spaceships. Your objective is to eliminate all bosses from the galaxy so you will be set free to explore the universe.
+
+See <<space_ships>> for an explanation on how to use each one of them.
 
 [[design]]
-== Design of solution
+== Design
 
-#See the link:design/readme.adoc[design/] folder for an overall design of the solution.#
+See the link:design/readme.adoc[design/] folder for an overall design.
 
 
 [[user_manual]]
 == User manual
 
+[[Window]]
+=== Window size
+This app was designed for 720p resolution screens or above. For any lower resolution you may not be able to properly see the game window.
+
 [[build]]
 === Build
+Pre-requisites:
 
-#Describe how to compile your solution.#
+- SFML
+- FLTK
+- make
+
+*DISCLAIMER*: This program was developed with the Linux operating system and designed to execute in this O.S, which is the reason why it is *heavily encouraged* to run the program in the same O.S.
+
+==== SFML Library
+Before compiling the program, make sure you have the SFML library on your device by running the following command:
+
+`pkg-config --modversion sfml-all`
+
+If a library version is not shown in terminal, please run the following command:
+
+`sudo apt install libsfml-dev` for Ubuntu or Debian.
+
+`sudo dnf install SFML SFML-devel` for Fedora
+
+==== FLTK Library
+Before compiling the program, make sure you have the FLTK library on your device by running the following command:
+
+`dpkg -l | grep fltk` for Ubuntu or Debian.
+
+`rpm -qa | grep fltk` for Fedora
+
+
+If nothing is found, please run the following commands:
+
+`sudo apt install libfltk1.3-dev`
+& `sudo apt install libpng-dev`
+for Ubuntu or Debian.
+
+`sudo dnf install fltk fltk-devel` & `sudo dnf install libpng libpng-devel` for Fedora
+
+==== Compilation
+Run the previous commands again to ensure the successful installation of the libraries. 
+
+To compile the solution, please execute the following command:
+
+`make`  in the *SpaceOps/* directory
 
 [[usage]]
 === Usage
 
-#Describe how to run your solution, e.g: arguments. Provide examples.#
+To run the program, execute the command `make run`.
 
 
 [[credits]]
 == Credits
 
-#Provide your contact information.#
+Completed by _stack_underflow_, 2025.
 
-#Give credit to authors of libraries, images, sounds, or any resource you used.#
+- Andrey Bejarano <gerardo.bejaranodiaz@ucr.ac.cr>
+
+- Evan Chen <evan.chen@ucr.ac.cr>
+
+- Albin Monge <albin.monge@ucr.ac.cr>
