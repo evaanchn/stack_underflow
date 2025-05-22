@@ -6,12 +6,12 @@ const char* const usage =
   "Usage: spaceOps [galaxy.csv] [operationNumber] [outputFolder]"
   " [linkProbability]\n"
   "\n"
-  "  galax.csv: relative path from the executing folder to the required csv"
+  "  - galaxy.csv: relative path from the executing folder to the required csv"
   " file\n"
-  "  operationNumber: Number of executions to be done for each algorithm\n"
-  "  outputFolder: {optional} relative path from the executing folder to a"
-  " writeable folder to store BattleLog files\n"
-  "  linkProbability: {optional} Number betwen 0-100, modify graph"
+  "  - operationNumber: Number of executions to be done for each algorithm\n"
+  "  - outputFolder: {optional} relative path from the executing folder to a"
+  "writeable folder to store BattleLog files\n"
+  "  - linkProbability: {optional} Number betwen 0-100, modify graph"
   " conectivity level\n"
   ;
 
@@ -36,6 +36,7 @@ int main(int argc, char* argv[]) {
     if(analyzeArguments(argc, argv/*, simulation*/)) {
       // return simulation.run();
     }
+    return EXIT_FAILURE;
   }
   return EXIT_SUCCESS/*App().run();*/;
 }
@@ -76,6 +77,8 @@ bool analyzeArguments(int argc, char* argv[]/*, Simulation& simulation*/) {
         << std::endl << usage;
       return false;
     }
+  } else {
+    linkProbability = 50/*LINK_PROBABILITY*/;
   }
-  return true;
+  return (operationsNumber > 0 && linkProbability > 0);
 }
