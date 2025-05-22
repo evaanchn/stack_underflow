@@ -43,24 +43,6 @@ class Simulation {
   Vessel** vessels;
 
   /**
-   * @brief Performs the insertion test on the specified vessel.
-   * @param vessel Pointer to a Vessel object to perform the insertion test on.
-   */
-  void testInsertion(Vessel* vessel);
-
-  /**
-   * @brief Performs the search test on the specified vessel.
-   * @param vessel Pointer to a Vessel object to perform the search test on.
-   */
-  void testSearch(Vessel* vessel);
-
-  /**
-   * @brief Performs the elimination (upgrade) test on the specified vessel.
-   * @param vessel Pointer to a Vessel object to perform the elimination test on.
-   */
-  void testElimination(Vessel* vessel);
-
-  /**
    * @brief Prints the mean number of iterations and duration from a test log.
    * @param action The name of the test action (e.g., "Insertion", "Search").
    * @param logs Vector containing ActionLog entries for the test.
