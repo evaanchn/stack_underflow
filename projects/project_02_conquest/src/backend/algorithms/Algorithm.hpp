@@ -7,8 +7,11 @@
 #include <unordered_set>
 
 /**
- * @brief General class template for algorithms
+ * @brief General class template for graph traversal algorithms
+ * @tparam DataType type stored in the nodes.
+ * @tparam WeightType type used for edge weights.
  */
+template <typename DataType, typename WeightType>
 class Algorithm {
  protected:
   std::string algorithmName = " ";
