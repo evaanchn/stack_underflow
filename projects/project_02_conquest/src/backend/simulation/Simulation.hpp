@@ -7,12 +7,6 @@
 #include <vector>
 
 #include "BattleLog.hpp"
-#include "HashsetVessel.hpp"
-#include "RedBlackTreeVessel.hpp"
-#include "BinarySearchVessel.hpp"
-#include "BTreeVessel.hpp"
-#include "SplayTreeVessel.hpp"
-#include "LinearSearchVessel.hpp"
 
 #define VESSELS_TYPES 6
 #define TESTS_AMOUNT 50
@@ -40,7 +34,6 @@ class Simulation {
 
  private:
   BattleLog* battleLog;
-  Vessel** vessels;
 
   /**
    * @brief Prints the mean number of iterations and duration from a test log.
