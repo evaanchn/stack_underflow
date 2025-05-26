@@ -57,3 +57,17 @@ std::string Planet::toString() const {
       + "\nBoss - " + bossData
       + "\nMine - " + mineData;
 }
+
+double Planet::getDistanceTo(Planet* planet) {
+  // Use distance between points formula
+  // x = col, y = row
+  // Cast is necessary given size_t would have problems with negatives
+  int rowDifference = static_cast<int>(this->coordinates->row)
+      - static_cast<int>(planet->getCoordinates()->row);
+  int colDifference = static_cast<int>(this->coordinates->col)
+      - static_cast<int>(planet->getCoordinates()->col);
+
+  double distance = std::sqrt(rowDifference * rowDifference
+      + colDifference * colDifference);
+  return distance;
+}
