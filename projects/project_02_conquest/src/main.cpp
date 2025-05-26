@@ -12,8 +12,7 @@ const char* const usage =
   "  - outputFolder: {optional} relative path from the executing folder to a"
   "writeable folder to store BattleLog files\n"
   "  - linkProbability: {optional} Number betwen 0-100, modify graph"
-  " conectivity level\n"
-  ;
+  " conectivity level\n";
 
 // TODO(any): move to Simulation class
 /**
@@ -33,7 +32,7 @@ bool analyzeArguments(int argc, char* argv[]/*, Simulation& simulation*/);
 int main(int argc, char* argv[]) {
   if (argc > 1) {  // not only program name
     // Simulation simulation;
-    if(analyzeArguments(argc, argv/*, simulation*/)) {
+    if (analyzeArguments(argc, argv/*, simulation*/)) {
       // return simulation.run();
     }
     return EXIT_FAILURE;

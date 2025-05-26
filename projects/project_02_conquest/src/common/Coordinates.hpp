@@ -2,8 +2,8 @@
 
 #pragma once
 
+#include <cstdint>
 #include <functional>
-#include <stdlib.h>
 
 struct Coordinates {
   size_t row;
