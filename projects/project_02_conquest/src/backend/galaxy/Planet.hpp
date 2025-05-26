@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <math.h>
 #include <string>
 
 #include "Boss.hpp"
@@ -81,6 +82,13 @@ class Planet {
    * @return A std::string describing the planet.
    */
   std::string toString() const;
+
+  /**
+   * @brief Calculates distance to another planet based on coordinates.
+   * @param otherPlanet Other planet to calculate distance to.
+   * @return Distance in floating point.
+   */
+  double getDistanceTo(Planet* otherPlanet);
 };
 
 /**
