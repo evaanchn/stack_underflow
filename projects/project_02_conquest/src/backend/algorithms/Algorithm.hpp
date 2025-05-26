@@ -18,13 +18,15 @@ class Algorithm {
 
  public:
   /// @brief constructor method of the algorithm class
-  Algorithm();
+  Algorithm() = default;
   /// @brief destructor method of the algorithm class
-  virtual ~Algorithm();
+  virtual ~Algorithm() = default;
   /**
    * @brief Get name attribute
    * 
    * @return std::string 
    */
-  std::string getName();
+  std::string getName() {
+    return this->algorithmName;
+  }
 };
