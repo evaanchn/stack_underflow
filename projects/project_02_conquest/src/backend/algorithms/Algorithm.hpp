@@ -7,7 +7,7 @@
 #include <unordered_set>
 
 /**
- * @brief General class template for graph traversal algorithms
+ * @brief General class template for graph related algorithms
  * @tparam DataType type stored in the nodes.
  * @tparam WeightType type used for edge weights.
  */
