@@ -11,22 +11,22 @@
 #include "ActionLog.hpp"
 #include "SpaceVessel.hpp"
 
-/// @brief Probing type vessel
+/// @brief Attacking type vessel
 /// @tparam DataType planets type
 /// @tparam WeightType node edges type
 template<typename DataType, typename WeightType>
-class AssaltVessel : public SpaceVessel {
+class AttackVessel : public SpaceVessel {
  protected:
   /// vessel algorithm
   AttackAlgorithm<DataType, WeightType>* attackAlgorithm;
 
  public:
   /// Constructor
-  AssaltVessel() : SpaceVessel(PROBE_COST) {
+  AttackVessel() : SpaceVessel(PROBE_COST) {
   }
   // TODO(any): DISABLE_COPY macro
   /// Destructor
-  ~AssaltVessel() {
+  ~AttackVessel() {
     delete this->attackAlgorithm;
     this->attackAlgorithm = nullptr;
   }
