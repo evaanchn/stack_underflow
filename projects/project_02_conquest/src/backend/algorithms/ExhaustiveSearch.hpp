@@ -11,13 +11,13 @@
 #include "Node.hpp"
 
 /**
- * @brief Greedy algorithm over a graph
+ * @brief Exhaustive search algorithm over a graph
  */
 template <typename DataType, typename WeightType>
-class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
+class ExhaustiveSearch : public AttackAlgorithm<DataType, WeightType> {
  public:
   /// @brief Constructor of the class
-  GreedySearch() {
+  ExhaustiveSearch() {
     this->algorithmName = "Greedy";
   }
 

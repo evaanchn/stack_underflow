@@ -11,7 +11,7 @@
 #include "Node.hpp"
 
 /**
- * @brief Greedy search algorithm over a graph
+ * @brief Attack algorithm over a graph
  */
 template <typename DataType, typename WeightType>
 class AttackAlgorithm : public Algorithm<DataType, WeightType> {
