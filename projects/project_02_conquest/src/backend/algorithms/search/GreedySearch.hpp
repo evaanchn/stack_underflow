@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <limits>
 #include <queue>
 #include <unordered_map>
 #include <unordered_set>
@@ -11,7 +12,7 @@
 #include "Node.hpp"
 
 /**
- * @brief Greedy algorithm over a graph
+ * @brief Greedy search algorithm over a graph
  */
 template <typename DataType, typename WeightType>
 class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
