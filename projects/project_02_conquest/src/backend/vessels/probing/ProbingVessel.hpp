@@ -2,13 +2,12 @@
 
 #pragma once
 
-#define PROBE_COST 10
-
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
+#include "GameConstants.hpp"
 #include "ActionLog.hpp"
 #include "SpaceVessel.hpp"
 
@@ -48,7 +47,9 @@ class ProbingVessel : public SpaceVessel {
     // record algorithm execution
     ActionLog actionLog = ActionLog(this->traversalAlgorithm->getName());
     // whenever the graph is not fully explored
-    if (exploredElements.size() < adjacencyList.size()) {
+    if (exploredElements.size() < adjacencyList.size()
+        && exploredElements.find(startingNode->getData())
+        != exploredElements.end()) {
       // stores algorithm result
       std::unordered_set<DataType> probeExplored;
       // timed algorithm execution
