@@ -3,8 +3,8 @@
 #pragma once
 
 #include <unordered_map>
-#include <queue>
 #include <unordered_set>
+#include <queue>
 
 #include "TraversalAlgorithm.hpp"
 #include "Graph.hpp"
@@ -26,8 +26,8 @@ class BFS : public TraversalAlgorithm<DataType, WeightType> {
    * 
    * @param startingNode first element to visit
    * @param adjacencyList read only map with available edges from each node
-      * @param visitedElements container reference to store visited elements
-   * @param limit max number of elements to visit
+   * @param visitedElements container reference to store visited elements
+   * @param limit max number of nodes to visit
    * @return size_t iterations taken
    */
   size_t traverse(Node<DataType>* startingNode
