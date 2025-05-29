@@ -9,7 +9,7 @@
 
 #include <ActionLog.hpp>
 #include "GreedySearch.hpp"
-#include "AssaltVessel.hpp"
+#include "AttackVessel.hpp"
 
 /// @brief Greedy search assalt vessel
 /// @tparam DataType planets type
