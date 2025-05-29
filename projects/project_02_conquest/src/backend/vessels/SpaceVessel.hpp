@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "Algorithm.hpp"
-#include "BFS.hpp"
+#include "GreedySearch.hpp"
 
 /// Parent class for space vessels
 class SpaceVessel {
