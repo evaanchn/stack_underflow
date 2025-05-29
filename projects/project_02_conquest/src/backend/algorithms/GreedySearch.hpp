@@ -25,10 +25,11 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
    * @brief Greedy Search: always follows the locally cheapest edge
    *        until reaching a previously explored node
    *
-   * @param startNode Initial node
-   * @param adjacencyList Adjacency map with edge weights
-   * @param totalWeight Total weight accumulated until reaching a visited node
-   * @return size_t Iterations (number of edges considered)
+   * @param startNode first element to visit
+   * @param endNode Goal node
+   * @param adjacencyList read only map with available edges from each node
+   * @param totalWeight total weight of the attack
+   * @return size_t iterations taken
    */
   size_t attack(Node<DataType>* startNode, Node<DataType>* endNode
       , const std::unordered_map<Node<DataType>*
@@ -41,7 +42,7 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
     // starts with startNode
     Node<DataType>* current = startNode;
     visited.insert(current->getData());
-    while (current != goalNode) {
+    while (current != endNode) {
       // gets all the neighbors of the current node
       const auto& neighbors = adjacencyList.at(current);
       Node<DataType>* nextNode = nullptr;
@@ -57,10 +58,10 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
         }
       }
       if (nextNode == nullptr) {
-        // Dead-end reached: no unvisited neighbors
+        // stops when there is no available neighbors
         break;
       }
-      // Move along that edge
+      // move along that edge
       totalWeight += minWeight;
       current = nextNode;
       visited.insert(current->getData());

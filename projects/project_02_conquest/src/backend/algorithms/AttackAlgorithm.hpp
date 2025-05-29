@@ -11,7 +11,7 @@
 #include "Node.hpp"
 
 /**
- * @brief Breadth first search algorithm over a graph
+ * @brief Greedy search algorithm over a graph
  */
 template <typename DataType, typename WeightType>
 class AttackAlgorithm : public Algorithm<DataType, WeightType> {
@@ -22,13 +22,15 @@ class AttackAlgorithm : public Algorithm<DataType, WeightType> {
   /**
    * @brief Attack type algorithm
    * 
-   * @param startingNode first element to visit
+   * @param startNode first element to visit
+   * @param endNode Goal node
    * @param adjacencyList read only map with available edges from each node
    * @param totalWeight total weight of the attack
    * @return size_t iterations taken
    */
   virtual size_t attack(
-      Node<DataType>* startingNode, const std::unordered_map<Node<DataType>*
+      Node<DataType>* startingNode, Node<DataType>* endNode
+      , const std::unordered_map<Node<DataType>*
         , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList,
       size_t& totalWeight) = 0;
 };
