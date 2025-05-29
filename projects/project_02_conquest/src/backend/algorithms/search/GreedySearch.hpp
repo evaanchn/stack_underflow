@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <limits>
 #include <queue>
 #include <unordered_map>
 #include <unordered_set>
@@ -11,13 +12,13 @@
 #include "Node.hpp"
 
 /**
- * @brief Exhaustive search algorithm over a graph
+ * @brief Greedy search algorithm over a graph
  */
 template <typename DataType, typename WeightType>
-class ExhaustiveSearch : public AttackAlgorithm<DataType, WeightType> {
+class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
  public:
   /// @brief Constructor of the class
-  ExhaustiveSearch() {
+  GreedySearch() {
     this->algorithmName = "Greedy";
   }
 

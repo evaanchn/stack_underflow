@@ -9,12 +9,12 @@
 #include "GreedySearch.hpp"
 #include "AttackVessel.hpp"
 
-/// @brief Greedy search attack vessel
+/// @brief Exhaustive search attack vessel
 /// @tparam DataType planets type
 /// @tparam WeightType node edges type
 
 template<typename DataType, typename WeightType>
-class GreedySearchVessel : public AttackVessel<DataType, WeightType> {
+class ExhaustiveSearchVessel : public AttackVessel<DataType, WeightType> {
  public:
   /// Constructor
   AssaltVessel() {
