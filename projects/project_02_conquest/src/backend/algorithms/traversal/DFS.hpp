@@ -26,15 +26,17 @@ class DFS : public TraversalAlgorithm<DataType, WeightType> {
    * 
    * @param startingNode first element to visit
    * @param adjacencyList read only map with available edges from each node
-   * @param visitedElements container reference to store visited elements
+   * @param discoveredElements container reference to store discovered elements
    * @param limit max number of nodes to visit
    * @return size_t iterations taken
    */
   size_t traverse(Node<DataType>* startingNode
       , const std::unordered_map<Node<DataType>*
         , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
-      , std::unordered_set<DataType>& visitedElements
-      , const size_t limit = SIZE_MAX) override {
+      , std::unordered_set<DataType>& discoveredElements
+      , size_t limit = SIZE_MAX) override {
+    // container to store visited elements in actual traversal
+    std::unordered_set<DataType> visitedActual;
     // iterations taken by the algorithm
     size_t iterations = 0;
     // first-in-last-out stack
@@ -42,27 +44,31 @@ class DFS : public TraversalAlgorithm<DataType, WeightType> {
     // starting node into visiting stack
     visitingNodes.push(startingNode);
     // stating node as visited
-    visitedElements.insert(startingNode->getData());
+    visitedActual.insert(startingNode->getData());
     while ((!visitingNodes.empty())) {
       // Pop node from stack
       Node<DataType>* actual = visitingNodes.top();
       visitingNodes.pop();
 
-      // Determine if current node has been visited
-      if (visitedElements.find(actual->getData())
-            == visitedElements.end()) {
+      // Determine if current node has been discovered before
+      if (discoveredElements.find(actual->getData())
+            == discoveredElements.end()) {
+        ++iterations;  // Record to discover node as iteration
+        // one less element to discover
+        --limit;
         // set node element as visited
-        visitedElements.insert(actual->getData());
-        // stop if the visited limited has reached (size = limit + start)
-        if (visitedElements.size() > limit) return iterations;
-        ++iterations;  // Record visit to node as iteration
+        discoveredElements.insert(actual->getData());
+        // stop if the discover limit was reached
+        if (limit == 0) return iterations;
       }
 
       // Traverse adjacent nodes and pish them into the stack
       for (auto& adjacent : adjacencyList.at(actual)) {
         // avoid revisiting explored nodes
-        if ((visitedElements.find(adjacent.first->getData())
-            == visitedElements.end())) {
+        if ((visitedActual.find(adjacent.first->getData())
+            == visitedActual.end())) {
+          // set as visited in this traversal
+          visitedActual.insert(adjacent.first->getData());
           // Push node into stack for adjacents visiting
           visitingNodes.push(adjacent.first);
         }

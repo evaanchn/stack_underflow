@@ -7,9 +7,12 @@
 #include <unordered_set>
 #include <vector>
 
-#include "GameConstants.hpp"
+// #include "GameConstants.hpp"
 #include "ActionLog.hpp"
 #include "SpaceVessel.hpp"
+
+// TODO(any): Add game constants header
+#define PROBE_COST 3
 
 /// @brief Probing type vessel
 /// @tparam DataType planets type
@@ -46,21 +49,16 @@ class ProbingVessel : public SpaceVessel {
     , std::unordered_set<DataType>& exploredElements, const WeightType limit) {
     // record algorithm execution
     ActionLog actionLog = ActionLog(this->traversalAlgorithm->getName());
-    // whenever the graph is not fully explored
+    // whenever the graph is not fully explored and starting node
+    // is already explored, execute the algorithm
     if (exploredElements.size() < adjacencyList.size()
-        && exploredElements.find(startingNode->getData())
-        != exploredElements.end()) {
-      // stores algorithm result
-      std::unordered_set<DataType> probeExplored;
+      && exploredElements.find(startingNode->getData())
+      != exploredElements.end()) {
       // timed algorithm execution
       actionLog.recordStart();
       size_t iterations = traversalAlgorithm->traverse(startingNode,
-         adjacencyList, probeExplored, limit);
+         adjacencyList, exploredElements, limit);
       actionLog.recordEnd(iterations);
-      // update all new elements found by the algorithm
-      for (auto& explored : probeExplored) {
-        exploredElements.insert(explored);
-      }
     }
     return actionLog;
   }
