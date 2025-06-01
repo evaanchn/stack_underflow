@@ -26,11 +26,8 @@ class Planet {
    * @brief Constructor with attributes.
    * @param name Name of the planet.
    * @param planetHasMine Indicates whether the planet contains a mine.
-   * @param boss Pointer to a Boss object (optional).
-   * @param coordinates Pointer to a Coordinates object (optional).
    */
-  Planet(std::string name, bool planetHasMine, Boss* boss = nullptr
-      , Coordinates* coordinates = nullptr);
+  Planet(std::string name, bool planetHasMine);
 
   /// @brief Destructor for the Planet class.
   ~Planet();
@@ -41,11 +38,14 @@ class Planet {
    */
   void setCoordinates(Coordinates* coordinates);
 
+  /// @brief Sets mine in planet.
+  void setMine();
+
   /// @brief Spawns a boss on the planet.
   void spawnBoss();
 
   /// @brief Defeats the boss on the planet.
-  void defeatBoss();
+  void removeBoss();
 
   /**
    * @brief Checks whether the planet currently has a boss.

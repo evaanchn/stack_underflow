@@ -2,12 +2,11 @@
 
 #include "Planet.hpp"
 
-Planet::Planet(std::string name, bool planetHasMine, Boss* boss
-    , Coordinates* coordinates)
+Planet::Planet(std::string name, bool planetHasMine)
     : name(name)
-    , planetHasMine(planetHasMine)
-    , boss(boss)
-    , coordinates(coordinates) {}
+    , planetHasMine(planetHasMine) {
+  if (this->planetHasMine) this->spawnBoss();
+}
 
 Planet::~Planet() {
   if (this->boss) delete this->boss;
@@ -18,12 +17,16 @@ void Planet::setCoordinates(Coordinates* coordinates) {
   this->coordinates = coordinates;
 }
 
-void Planet::spawnBoss() {
-  this->boss = new Boss();
+void Planet::setMine() {
+  this->planetHasMine = HAS_MINE;
 }
 
-void Planet::defeatBoss() {
-  delete this->boss;
+void Planet::spawnBoss() {
+  if (!this->boss) this->boss = new Boss();
+}
+
+void Planet::removeBoss() {
+  if (this->boss) delete this->boss;
   this->boss = nullptr;
 }
 

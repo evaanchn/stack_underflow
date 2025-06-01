@@ -10,7 +10,6 @@
 #include "Node.hpp"
 
 #define DIRECTED true
-#define WEIGHED true
 
 /**
  * @brief Returns a default value indicating no edge between two nodes.
@@ -42,9 +41,6 @@ class Graph {
   /// Whether the graph is directed.
   bool directed = !DIRECTED;
 
-  /// Whether the graph has weighted edges.
-  bool weighed = !WEIGHED;
-
   /// The sentinel value used to represent no edge between nodes.
   WeightType noEdge = defaultNoEdge<WeightType>();
 
@@ -68,8 +64,7 @@ class Graph {
    * @param isDirected Whether the graph is directed (default: !DIRECTED macro).
    * @param isWeighed Whether the graph uses weights (default: !WEIGHED macro).
    */
-  explicit Graph(bool isDirected = !DIRECTED, bool isWeighed = !WEIGHED)
-    : directed(isDirected), weighed(isWeighed) {}
+  explicit Graph(bool isDirected = !DIRECTED) : directed(isDirected) {}
 
   /**
    * @brief Destructor: deletes all dynamically allocated nodes.
@@ -198,18 +193,18 @@ class Graph {
 
  public:
   /// @brief Getter for adjacency matrix
-  std::vector<std::vector<WeightType>> getAdjacencyMatrix() {
+  std::vector<std::vector<WeightType>>& getAdjacencyMatrix() {
     return this->adjacencyMatrix;
   }
 
   /// @brief Getter for adjacency list
   std::unordered_map<Node<DataType>*, std::unordered_map<Node<DataType>*
-      , WeightType>> getAdjacencyList() {
+      , WeightType>>& getAdjacencyList() {
     return this->adjacencyList;
   }
 
   /// @brief Getter for nodes vector
-  std::vector<Node<DataType>*> getNodes() {
+  std::vector<Node<DataType>*>& getNodes() {
     return this->nodes;
   }
 };
