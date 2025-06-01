@@ -2,10 +2,12 @@
 
 #pragma once
 
+#include <string>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
+#include "ArticulationPointsFinder.hpp"
 #include "Graph.hpp"
 #include "Planet.hpp"
 #include "Random.hpp"
@@ -15,47 +17,80 @@ enum SOL_SYS_DATA_POSITIONS {
 };
 
 #define MINE_BOSS_SPAWN_PROB 0.1
-#define LINK_PROB 0.05
+#define LINK_PROB 0.7
 #define DISTANCE_MAGNIFIER 10
+#define X_COORDS_MAGNIFIER 2
 
 class SolarSystem {
  private:
   std::string name;
   size_t planetsCount;
 
-  Graph<Planet*, size_t>* planetGraph = nullptr;
-  std::unordered_set<Planet*> exploredPlanets = std::unordered_set<Planet*>();
-  std::vector<std::vector<bool>> revealedPaths
-      = std::vector<std::vector<bool>>();
-  std::vector<Planet*> planets = std::vector<Planet*>();
-  std::unordered_map<Planet*, size_t> planetsIndexes
-      = std::unordered_map<Planet*, size_t>();
+  Graph<Planet*, size_t>* planetGraph;
+  std::vector<Planet*> planets;
+  std::unordered_map<Planet*, size_t> planetsIndexes;
+  std::unordered_set<Planet*> exploredPlanets;
+  std::vector<std::vector<bool>> revealedPaths;
 
-  Planet* entryPlanet = nullptr;
-  Planet* exitPlanet = nullptr;
+  Planet* entryPlanet;
+  Planet* exitPlanet;
 
  public:
-  SolarSystem() = default;
-  SolarSystem(std::vector<std::string>& solarSystemData);
+  /// @brief Constructs a SolarSystem from parsed data.
+  /// @param solarSystemData Vector containing system name
+  /// , entry/exit planet names, and planet names.
+  explicit SolarSystem(std::vector<std::string>& solarSystemData);
+
+  /// @brief Destructor to clean up dynamically allocated memory.
   ~SolarSystem();
-  void setPlanetsConnections();
+
  private:
+  /// @brief Initializes planets from input data.
+  /// @param solarSystemData Vector containing planet and system information.
   void initSolarSystem(std::vector<std::string>& solarSystemData);
+
+  /// @brief Sets coordinates for a given planet based on its index.
+  /// @param currentPlanet Pointer to the planet.
+  /// @param planetIndex Index of the planet in the list.
   void setPlanetCoordinates(Planet* currentPlanet, size_t planetIndex);
+
+  /// @brief Identifies and stores entry and exit planets.
+  /// @param currentPlanet Pointer to the planet being evaluated.
+  /// @param solarSystemData Input data vector.
   void setEntryAndExit(Planet* currentPlanet
       , std::vector<std::string>& solarSystemData);
 
- private:
-  
+  /// @brief Sets up interconnections between all planets.
+  void setPlanetsConnections();
+
+  /// @brief Connects all planets to each other with weighted edges.
   void connectAllPlanets();
+
+  /// @brief Adjusts the graph by probabilistically removing edges.
   void adjustPlanetsConnections();
 
  public:
+  /// @brief Gets the name of the solar system.
+  /// @return The system name.
   std::string getName() const;
+
+  /// @brief Gets the number of planets in the solar system.
+  /// @return The planet count.
+  size_t getPlanetsCount() const;
+
+  /// @brief Gets a pointer to the planet graph.
+  /// @return Pointer to the graph representing planet connections.
   Graph<Planet*, size_t>* getGraph();
+
+  /// @brief Gets the set of planets that have been explored.
+  /// @return Reference to the explored planets set.
   std::unordered_set<Planet*>& getExploredPlanets();
+
+  /// @brief Gets the matrix of revealed paths between planets.
+  /// @return Reference to the revealed paths matrix.
   std::vector<std::vector<bool>>& getRevealedPaths();
+
+  /// @brief Gets the mapping of planets to their respective indexes.
+  /// @return Reference to the map from Planet* to size_t index.
   std::unordered_map<Planet*, size_t>& getPlanetsIndexes();
-  Planet* getEntryPlanet();
-  Planet* getExitPlanet();
 };
