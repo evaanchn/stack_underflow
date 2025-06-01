@@ -11,7 +11,7 @@
 #include "Node.hpp"
 
 /**
- * @brief Breadth first search algorithm over a graph
+ * @brief Traversal type algorithm over a graph
  */
 template <typename DataType, typename WeightType>
 class TraversalAlgorithm : public Algorithm<DataType, WeightType> {
