@@ -4,9 +4,7 @@
 
 Planet::Planet(std::string name, bool planetHasMine)
     : name(name)
-    , planetHasMine(planetHasMine)
-    , coordinates(nullptr)
-    , boss(nullptr) {
+    , planetHasMine(planetHasMine) {
   if (this->planetHasMine) this->spawnBoss();
 }
 

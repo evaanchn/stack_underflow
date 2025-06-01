@@ -58,5 +58,4 @@ class SolarSystemVerifier {
   */
   bool planetExists(std::vector<std::string>& solarSystemData
       , std::string planetName);
-
 };
