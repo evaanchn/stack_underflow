@@ -2,9 +2,11 @@
 
 #pragma once
 
-#include <unordered_map>
+#include <functional>
 #include <queue>
+#include <unordered_map>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include "PathingAlgorithm.hpp"
@@ -26,18 +28,21 @@ class Dijkstra : public PathingAlgorithm<DataType, WeightType> {
    * all other explored nodes
    * 
    * @param startingNode starting pointer (pivot)
-   * @param adjacencyList read only map with available edges from each node
+   * @param graph Graph to perform Dijkstra's algorithm on
    * @param discoveredElements reachable node elements container
-   * @param nodeIndexes Map nodes to their assigned index
    * @param validEdges matrix to set shortest path edges as valid
    * @return size_t iterations taken
    */
   size_t route(Node<DataType>* startingNode
-    , const std::unordered_map<Node<DataType>*
-      , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
+    , Graph<DataType, WeightType>* graph
     , const std::unordered_set<DataType>& discoveredElements
-    , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
     , std::vector<std::vector<bool>>& validEdges)  override {
+    // Obtain adjacency list and nodes indexes from graph
+    const std::unordered_map<Node<DataType>*
+      , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
+          = graph->getAdjacencyList();
+    std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
+        = graph->getNodeIndexes();
 
     size_t iterations = 0;
     // priority queue to visit nodes in order of their distance
@@ -78,8 +83,9 @@ class Dijkstra : public PathingAlgorithm<DataType, WeightType> {
             this->updateEdgeIndex(validEdges, distances
               , nodeIndexes[adjacent.first], false);
             // update the distance for the adjacent node
-            distances[nodeIndexes[adjacent.first]] = std::pair<WeightType, size_t>
-              (newDistance, nodeIndexes[currentNode.second]);
+            distances[nodeIndexes[adjacent.first]]
+              = std::pair<WeightType, size_t>(newDistance
+              , nodeIndexes[currentNode.second]);
             // mark the edge as measured
             this->updateEdgeIndex(validEdges, distances
               , nodeIndexes[adjacent.first], true);
