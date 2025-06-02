@@ -68,7 +68,6 @@ class BFS : public TraversalAlgorithm<DataType, WeightType> {
           visitedActual.insert(adjacent.first->getData());
           // enqueue node for adjacents visiting
           visitingNodes.push(adjacent.first);
-          
         }
       }
     }

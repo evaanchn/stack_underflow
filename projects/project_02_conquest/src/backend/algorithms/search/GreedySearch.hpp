@@ -35,7 +35,7 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
   size_t attack(Node<DataType>* startNode, Node<DataType>* endNode
       , const std::unordered_map<Node<DataType>*
         , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
-      , size_t& totalWeight) override {
+      , WeightType& totalWeight) override {
     // iterations taken by the algorithm
     size_t iterations = 0;
     // set used for saving visited nodes
@@ -51,7 +51,6 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
       WeightType minWeight = std::numeric_limits<WeightType>::max();
       // Pick the cheapest edge to an unvisited neighbor
       for (const auto& [neighbor, weight] : neighbors) {
-        ++iterations;
         // Explore all the neigbors to get the cheapest one
         if (visited.count(neighbor->getData()) == 0 && weight < minWeight) {
           minWeight = weight;
@@ -66,6 +65,11 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
       totalWeight += minWeight;
       current = nextNode;
       visited.insert(current->getData());
+      ++iterations;
+    }
+    if (current != endNode) {
+      // if exit the loop without having reached the end Node, no path was found
+      totalWeight = 0;
     }
     return iterations;
   }

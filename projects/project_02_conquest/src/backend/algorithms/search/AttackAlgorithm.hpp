@@ -32,5 +32,5 @@ class AttackAlgorithm : public Algorithm<DataType, WeightType> {
       Node<DataType>* startingNode, Node<DataType>* endNode
       , const std::unordered_map<Node<DataType>*
         , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList,
-      size_t& totalWeight) = 0;
+      WeightType& totalWeight) = 0;
 };
