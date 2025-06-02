@@ -27,16 +27,16 @@ class Dijkstra : public PathingAlgorithm<DataType, WeightType> {
    * @brief Set as valid the shortest path from startingNode to
    * all other explored nodes
    * 
-   * @param startingNode starting pointer (pivot)
    * @param graph Graph to perform Dijkstra's algorithm on
    * @param discoveredElements reachable node elements container
    * @param validEdges matrix to set shortest path edges as valid
+   * @param startingNode starting pointer (pivot)
    * @return size_t iterations taken
    */
-  size_t route(Node<DataType>* startingNode
-    , Graph<DataType, WeightType>* graph
+  size_t route(Graph<DataType, WeightType>* graph
     , const std::unordered_set<DataType>& discoveredElements
-    , std::vector<std::vector<bool>>& validEdges)  override {
+    , std::vector<std::vector<bool>>& validEdges
+    , Node<DataType>* startingNode)  override {
     // Obtain adjacency list and nodes indexes from graph
     const std::unordered_map<Node<DataType>*
       , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList

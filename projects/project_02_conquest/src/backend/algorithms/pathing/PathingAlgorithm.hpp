@@ -43,14 +43,14 @@ class PathingAlgorithm : public Algorithm<DataType, WeightType> {
    /**
    * @brief Set as valid the edges of the algorithm shortest path
    * 
-   * @param startingNode starting point (pivot)
    * @param graph Graph to perform pathing algorithm upon
    * @param discoveredElements reachable node elements container
    * @param validEdges matrix to set shortest path edges as valid
+   * @param startingNode starting point (pivot)
    * @return size_t iterations taken
    */
-  virtual size_t route(Node<DataType>* startingNode
-    , Graph<DataType, WeightType>* graph
+  virtual size_t route(Graph<DataType, WeightType>* graph
     , const std::unordered_set<DataType>& discoveredElements
-    , std::vector<std::vector<bool>>& validEdges) = 0;
+    , std::vector<std::vector<bool>>& validEdges
+    , Node<DataType>* startingNode = nullptr) = 0;
 };
