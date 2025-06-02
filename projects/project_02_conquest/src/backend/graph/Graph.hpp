@@ -209,7 +209,7 @@ class Graph {
   }
 
   /// @brief Getter for nodes indexes
-  std::unordered_map<Node<DataType>*, WeightType>& getNodeIndexes() {
+  std::unordered_map<Node<DataType>*, size_t>& getNodeIndexes() {
     return this->nodeIndexes;
   }
 };
