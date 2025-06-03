@@ -18,6 +18,6 @@ class ExhaustiveSearchVessel : public AttackVessel<DataType, WeightType> {
  public:
   /// Constructor
   ExhaustiveSearchVessel() {
-    this->AttackAlgorithm = new ExhaustiveSearchVessel<DataType, WeightType>();
+    this->attackAlgorithm = new ExhaustiveSearch<DataType, WeightType>();
   }
 };
