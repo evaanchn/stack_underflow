@@ -10,42 +10,65 @@
 
 #include "AttackAlgorithm.hpp"
 #include "Graph.hpp"
+#include "GreedySearch.hpp"
 #include "Node.hpp"
 
+// TODO(any): make this a parameter
+#define LOCAL_OPTIMIZATION_LIMIT 2
+
 /**
- * @brief Greedy search algorithm over a graph
+ * @brief Loclal search algorithm over a graph
  */
 template <typename DataType, typename WeightType>
-class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
+class LocalSearch : public AttackAlgorithm<DataType, WeightType> {
  public:
   /// @brief Constructor of the class
-  GreedySearch() {
-    this->algorithmName = "Greedy";
+  LocalSearch() {
+    this->algorithmName = "Local Search";
   }
 
-  /// @brief Greedy Search: always follows the locally cheapest edge
-  /// until reaching a previously explored node
-  /// @param startNode first element to visit
-  /// @param endNode Goal node
-  /// @param adjacencyList read only map with available edges from each node
-  /// @param nodeIndexes Map nodes to their assigned index
-  /// @param validEdges matrix to check if an edge is accesible
-  /// @param totalWeight total weight of the attack
-  /// @return size_t iterations taken
+  /**
+   * @brief Local Search: 
+   *
+   * @param startNode first element to visit
+   * @param endNode Goal node
+   * @param adjacencyList read only map with available edges from each node
+   * @param nodeIndexes Map nodes to their assigned index
+   * @param validEdges matrix to check if an edge is accesible
+   * @param totalWeight total weight of the attack
+   * @return size_t iterations taken
+   */
   size_t attack(Node<DataType>* startNode, Node<DataType>* endNode
       , const std::unordered_map<Node<DataType>*
         , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
       , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
-      , std::vector<std::vector<bool>>& validEdges, WeightType& totalWeight)
-      override {
+      , std::vector<std::vector<bool>>& validEdges
+      , WeightType& totalWeight) override {
+    // iterations taken by the algorithm
+    size_t iterations = 0;
+    // save minimum total weight
+    WeightType minTotalWeight = WeightType();
     // map to save the used edges and their accumulated weight
     std::unordered_map<Node<DataType>*
       , std::unordered_map<Node<DataType>*, WeightType>> usedEdges;
-    // perform the greedy search
-    return greedy(startNode, endNode, adjacencyList, nodeIndexes, validEdges
-      , totalWeight, usedEdges);
+    // path to be optimized
+    iterations += GreedySearch<DataType, WeightType>::greedy(startNode, endNode
+      , adjacencyList, nodeIndexes, validEdges, minTotalWeight, usedEdges);
+    // perform local search on the initial path taking different paths
+    for (size_t optimization = 0; optimization < LOCAL_OPTIMIZATION_LIMIT
+        ; ++optimization) {
+      // perform local search
+      iterations += localSearch(startNode, endNode, adjacencyList, nodeIndexes
+        , validEdges, totalWeight, usedEdges);
+      // save the current total weight
+      if (totalWeight < minTotalWeight) {
+        minTotalWeight = totalWeight;
+      }
+    }
+    totalWeight = minTotalWeight;
+    return iterations;
   }
-  /// @brief Performs a greedy search saving the used edges accumulated weight
+  /// @brief Performs a search taking different paths by avoiding used edges
   /// @param startNode search begin
   /// @param endNode objective node to reach
   /// @param adjacencyList read only map with available edges from each node
@@ -54,7 +77,7 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
   /// @param totalWeight total weight of the attack
   /// @param usedEgdes map to save the used edges and their accumulated weight
   /// @return iterations taken
-  static size_t greedy(Node<DataType>* startNode, Node<DataType>* endNode,
+  static size_t localSearch(Node<DataType>* startNode, Node<DataType>* endNode,
       const std::unordered_map<Node<DataType>*
         , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
       , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
@@ -74,16 +97,21 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
       const auto& neighbors = adjacencyList.at(current);
       Node<DataType>* nextNode = nullptr;
       // Variable to keep track of the minimum weight
-      WeightType minWeight = defaultNoEdge<WeightType>();
+      WeightType minWeight = std::numeric_limits<WeightType>::max();
       // Pick the cheapest edge to an unvisited neighbor
       for (const auto& [neighbor, weight] : neighbors) {
         // Check if the edge is valid or neighbor has been visited
         if (!(validEdges[nodeIndexes[current]][nodeIndexes[neighbor]])
-          || visited.find(neighbor->getData()) != visited.end()) {
+            || visited.find(neighbor->getData()) != visited.end()) {
           continue;  // skip invalid edges
         }
-        // Explore all the neigbors to get the cheapest one
+        // Explore all neigbors to get the cheapest one
         if (weight < minWeight) {
+          // Check if the edge has been used and there is other unused edges
+          if (usedEgdes[current].count(neighbor) > 0
+              && neighbors.size() > usedEgdes[current].size()) {
+            continue;
+          }
           // if the neighbor has not been visited and the weight is lower than
           // the current minimum weight, update the next node
           minWeight = weight;

@@ -18,7 +18,7 @@ class ExhaustiveSearchPruneVessel : public AttackVessel<DataType, WeightType> {
  public:
   /// Constructor
   ExhaustiveSearchPruneVessel() {
-    this->AttackAlgorithm = new ExhaustiveSearchPruneVessel<DataType
+    this->attackAlgorithm = new ExhaustiveSearchPrune<DataType
         , WeightType>();
   }
 };

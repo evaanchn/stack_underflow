@@ -18,6 +18,6 @@ class GreedySearchVessel : public AttackVessel<DataType, WeightType> {
  public:
   /// Constructor
   GreedySearchVessel() {
-    this->AttackAlgorithm = new GreedySearch<DataType, WeightType>();
+    this->attackAlgorithm = new GreedySearch<DataType, WeightType>();
   }
 };

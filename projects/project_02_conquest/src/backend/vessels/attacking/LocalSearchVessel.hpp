@@ -6,18 +6,17 @@
 #include <vector>
 
 #include <ActionLog.hpp>
-#include "ExhaustiveSearch.hpp"
+#include "LocalSearch.hpp"
 #include "AttackVessel.hpp"
 
-/// @brief Exhaustive search attack vessel
+/// @brief Local search attack vessel
 /// @tparam DataType planets type
 /// @tparam WeightType node edges type
-
 template<typename DataType, typename WeightType>
-class ExhaustiveSearchVessel : public AttackVessel<DataType, WeightType> {
+class LocalSearchVessel : public AttackVessel<DataType, WeightType> {
  public:
   /// Constructor
-  ExhaustiveSearchVessel() {
-    this->attackAlgorithm = new ExhaustiveSearch<DataType, WeightType>();
+  LocalSearchVessel() {
+    this->attackAlgorithm = new LocalSearch<DataType, WeightType>();
   }
 };

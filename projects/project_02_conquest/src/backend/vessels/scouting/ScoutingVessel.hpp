@@ -50,6 +50,7 @@ class ScoutingVessel : public SpaceVessel {
     , Node<DataType>* startingNode = nullptr) {
     // record algorithm execution
     ActionLog actionLog = ActionLog(this->pathingAlgorithm->getName());
+    actionLog.setResponsible("ScoutingVessel");
     // whenever starting node is already explored, execute the algorithm
     if (exploredElements.find(startingNode->getData())
       != exploredElements.end()) {
