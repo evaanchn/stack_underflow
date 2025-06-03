@@ -207,4 +207,9 @@ class Graph {
   std::vector<Node<DataType>*>& getNodes() {
     return this->nodes;
   }
+
+  /// @brief Getter for nodes indexes
+  std::unordered_map<Node<DataType>*, size_t>& getNodeIndexes() {
+    return this->nodeIndexes;
+  }
 };

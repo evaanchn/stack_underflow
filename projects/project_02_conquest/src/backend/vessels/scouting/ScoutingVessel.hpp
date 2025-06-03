@@ -38,19 +38,16 @@ class ScoutingVessel : public SpaceVessel {
   /**
    * @brief Scout finding optimal routes to all reachable nodes
    * 
-   * @param startingNode starting point
-   * @param adjacencyList read only map with available edges from each node
+   * @param planetsGraph Graph to work with
    * @param exploredElements explored planets elements container
-   * @param nodeIndexes Map nodes to their assigned index
    * @param measuredEdges matrix to store edges weights obtained from the route
+   * @param startingNode starting point
    * @return ActionLog containing algorithm iteratations and time
    */
-  virtual ActionLog scout(Node<DataType>* startingNode
-    , const std::unordered_map<Node<DataType>*
-      , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
+  virtual ActionLog scout(Graph<DataType, WeightType>* planetsGraph
     , const std::unordered_set<DataType>& exploredElements
-    , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
-    , std::vector<std::vector<bool>>& measuredEdges) {
+    , std::vector<std::vector<bool>>& measuredEdges
+    , Node<DataType>* startingNode = nullptr) {
     // record algorithm execution
     ActionLog actionLog = ActionLog(this->pathingAlgorithm->getName());
     // whenever starting node is already explored, execute the algorithm
@@ -58,8 +55,8 @@ class ScoutingVessel : public SpaceVessel {
       != exploredElements.end()) {
       // timed algorithm execution
       actionLog.recordStart();
-      size_t iterations = pathingAlgorithm->route(startingNode,
-         adjacencyList, exploredElements, nodeIndexes, measuredEdges);
+      size_t iterations = pathingAlgorithm->route(planetsGraph
+          , exploredElements, measuredEdges, startingNode);
       actionLog.recordEnd(iterations);
     }
     return actionLog;

@@ -4,6 +4,7 @@
 
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 #include "Algorithm.hpp"
 #include "Graph.hpp"
@@ -18,7 +19,7 @@ class PathingAlgorithm : public Algorithm<DataType, WeightType> {
   /// Constructor
   PathingAlgorithm() = default;
 
-  /// Update index inside the validEdges matrix for the last edge set as valid 
+  /// Update index inside the validEdges matrix for the last edge set as valid
   /// for the given node.
   /// @param validEdges matrix to set shortest path edges as valid
   /// @param distances vector of pairs with distance and adyacent index
@@ -42,17 +43,14 @@ class PathingAlgorithm : public Algorithm<DataType, WeightType> {
    /**
    * @brief Set as valid the edges of the algorithm shortest path
    * 
-   * @param startingNode starting point (pivot)
-   * @param adjacencyList read only map with available edges from each node
+   * @param graph Graph to perform pathing algorithm upon
    * @param discoveredElements reachable node elements container
-   * @param nodeIndexes Map nodes to their assigned index
    * @param validEdges matrix to set shortest path edges as valid
+   * @param startingNode starting point (pivot)
    * @return size_t iterations taken
    */
-  virtual size_t route(Node<DataType>* startingNode
-    , const std::unordered_map<Node<DataType>*
-      , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
+  virtual size_t route(Graph<DataType, WeightType>* graph
     , const std::unordered_set<DataType>& discoveredElements
-    , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
-    , std::vector<std::vector<bool>>& validEdges) = 0;
+    , std::vector<std::vector<bool>>& validEdges
+    , Node<DataType>* startingNode = nullptr) = 0;
 };
