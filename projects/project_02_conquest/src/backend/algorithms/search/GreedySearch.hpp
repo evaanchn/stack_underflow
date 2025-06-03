@@ -6,6 +6,7 @@
 #include <queue>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 #include "AttackAlgorithm.hpp"
 #include "Graph.hpp"
@@ -22,22 +23,47 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
     this->algorithmName = "Greedy";
   }
 
-  /**
-   * @brief Greedy Search: always follows the locally cheapest edge
-   *        until reaching a previously explored node
-   *
-   * @param startNode first element to visit
-   * @param endNode Goal node
-   * @param adjacencyList read only map with available edges from each node
-   * @param totalWeight total weight of the attack
-   * @return size_t iterations taken
-   */
+  /// @brief Greedy Search: always follows the locally cheapest edge
+  /// until reaching a previously explored node
+  /// @param startNode first element to visit
+  /// @param endNode Goal node
+  /// @param adjacencyList read only map with available edges from each node
+  /// @param nodeIndexes Map nodes to their assigned index
+  /// @param validEdges matrix to check if an edge is accesible
+  /// @param totalWeight total weight of the attack
+  /// @return size_t iterations taken
   size_t attack(Node<DataType>* startNode, Node<DataType>* endNode
       , const std::unordered_map<Node<DataType>*
         , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
-      , WeightType& totalWeight) override {
+      , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
+      , std::vector<std::vector<bool>>& validEdges, WeightType& totalWeight)
+      override {
+    // map to save the used edges and their accumulated weight
+    std::unordered_map<Node<DataType>*
+      , std::unordered_map<Node<DataType>*, WeightType>> usedEdges;
+    // perform the greedy search
+    return greedy(startNode, endNode, adjacencyList, nodeIndexes, validEdges
+      , totalWeight, usedEdges);
+  }
+  /// @brief Performs a greedy search saving the used edges accumulated weight
+  /// @param startNode search begin
+  /// @param endNode objective node to reach
+  /// @param adjacencyList read only map with available edges from each node
+  /// @param nodeIndexes Map nodes to their assigned index
+  /// @param validEdges matrix to check if an edge is accesible
+  /// @param totalWeight total weight of the attack
+  /// @param usedEgdes map to save the used edges and their accumulated weight
+  /// @return iterations taken
+  static size_t greedy(Node<DataType>* startNode, Node<DataType>* endNode,
+      const std::unordered_map<Node<DataType>*
+        , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
+      , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
+      , std::vector<std::vector<bool>>& validEdges, WeightType& totalWeight
+      , std::unordered_map<Node<DataType>*
+        , std::unordered_map<Node<DataType>*, WeightType>>& usedEgdes) {
     // iterations taken by the algorithm
     size_t iterations = 0;
+    totalWeight = 0;  // reset total weight for the actual search
     // set used for saving visited nodes
     std::unordered_set<DataType> visited;
     // starts with startNode
@@ -48,11 +74,18 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
       const auto& neighbors = adjacencyList.at(current);
       Node<DataType>* nextNode = nullptr;
       // Variable to keep track of the minimum weight
-      WeightType minWeight = std::numeric_limits<WeightType>::max();
+      WeightType minWeight = defaultNoEdge<WeightType>();
       // Pick the cheapest edge to an unvisited neighbor
       for (const auto& [neighbor, weight] : neighbors) {
+        // Check if the edge is valid or neighbor has been visited
+        if (!(validEdges[nodeIndexes[current]][nodeIndexes[neighbor]])
+          || visited.find(neighbor->getData()) != visited.end()) {
+          continue;  // skip invalid edges
+        }
         // Explore all the neigbors to get the cheapest one
-        if (visited.count(neighbor->getData()) == 0 && weight < minWeight) {
+        if (weight < minWeight) {
+          // if the neighbor has not been visited and the weight is lower than
+          // the current minimum weight, update the next node
           minWeight = weight;
           nextNode = neighbor;
         }
@@ -61,8 +94,11 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
         // stops when there is no available neighbors
         break;
       }
-      // move along that edge
+      // add the minimum weight to the total weight
       totalWeight += minWeight;
+      // set both directions of the edge as used with the accumulated weight
+      usedEgdes[current][nextNode] = totalWeight;
+      usedEgdes[nextNode][current] = totalWeight;
       current = nextNode;
       visited.insert(current->getData());
       ++iterations;
