@@ -6,6 +6,8 @@
 #include "SFMLImage.hpp"
 #include "SFMLSound.hpp"
 
+#include "ScenesConstants.hpp"
+
 class StartScene {
  public:
   StartScene();
