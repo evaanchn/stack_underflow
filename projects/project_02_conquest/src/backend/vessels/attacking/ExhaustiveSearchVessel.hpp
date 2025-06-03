@@ -17,7 +17,7 @@ template<typename DataType, typename WeightType>
 class ExhaustiveSearchVessel : public AttackVessel<DataType, WeightType> {
  public:
   /// Constructor
-  AssaltVessel() {
+  ExhaustiveSearchVessel() {
     this->AttackAlgorithm = new ExhaustiveSearchVessel<DataType, WeightType>();
   }
 };

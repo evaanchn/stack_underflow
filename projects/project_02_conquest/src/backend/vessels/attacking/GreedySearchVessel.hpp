@@ -17,7 +17,7 @@ template<typename DataType, typename WeightType>
 class GreedySearchVessel : public AttackVessel<DataType, WeightType> {
  public:
   /// Constructor
-  AssaltVessel() {
+  GreedySearchVessel() {
     this->AttackAlgorithm = new GreedySearch<DataType, WeightType>();
   }
 };
