@@ -5,48 +5,63 @@
 App::App()
   : appActive(true)
   , gameActive(false)
-  , currentState(SceneState::START)
-  , startScene()
-  // , informationScene()
-  // , gameOverScene()
-  , startSceneMusic(MUSIC_FOLDER + "startScene.wav", LOOP)
-  , informationSceneMusic(MUSIC_FOLDER + "informationScene.wav", LOOP)
-  , gameSceneMusic(MUSIC_FOLDER + "gameScene.wav", LOOP, /*Volume*/ 60)
-  , gameOverSceneMusic(MUSIC_FOLDER + "gameOverScene.wav", LOOP, /*Volume*/ 120)
-  , buttonClickSound(SOUNDS_FOLDER + "soundButtonClick.wav", !LOOP, /*Vol*/ 200)
+  , currentState(START)
+  , startScene(), startSceneMusic(MUSIC_FOLDER + "startScene.wav", true)
   {
   setMainWindow();
 }
 
 void App::setMainWindow() {
+  if (!mainWindow.isOpen()) {
+    mainWindow.create(sf::VideoMode(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT)
+        , GAME_NAME);
+  }
 }
 
+
 int App::run() {
+  while (this->appActive) {
+    if (!this->gameActive) {
+      runMainWindow();
+    } else {
+      // FLTK Game menu
+    }
+  }
+  return EXIT_SUCCESS;
 }
 
 void App::runMainWindow() {
+  while (mainWindow.isOpen()) {
+      sf::Event event;
+      while (mainWindow.pollEvent(event)) {
+          handleGlobalEvents(mainWindow, event);
+          handleStateEvents(event);
+      }
+
+      mainWindow.clear();
+      handleStateRendering();
+      mainWindow.display();
+  }
 }
 
 void App::handleGlobalEvents(sf::RenderWindow& window, sf::Event& event) {
+  if (event.type == sf::Event::Closed) {
+      window.close();
+      appActive = false;
+  }
 }
 
 void App::handleStateEvents(sf::Event& event) {
+  if (currentState == START) startScene.handleEvent(mainWindow, event
+      , currentState);
+  
 }
 
 void App::handleStateRendering() {
+  if (this->currentState == START) renderStartScene();
 }
 
 void App::renderStartScene() {
-}
-
-void App::renderInformationScene() {
-}
-
-void App::renderGameOverScene() {
-}
-
-int App::startGame() {
-}
-
-void App::endGame() {
+  startSceneMusic.play();
+  startScene.draw(mainWindow);
 }
