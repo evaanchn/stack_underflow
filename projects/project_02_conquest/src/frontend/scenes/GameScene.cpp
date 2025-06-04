@@ -5,12 +5,19 @@
 GameScene::GameScene(int width, int height, const std::string& title) {
   this->window = new Fl_Window(width, height, title.c_str());
   this->setBackground();
+  this->setActionButtons();
   // TODO add game elements
   this->window->end();  // Ends window's elements' grouping
   this->window->show();
 }
 
 GameScene::~GameScene() {
+  for (std::vector<CustomIconButton*>& row : this->vesselButtons) {
+    for (CustomIconButton* vesselButton : row) {
+      if (vesselButton) delete vesselButton;
+    }
+  }
+  for (TextButton* actionButton : this->actionButtons) delete actionButton;
   delete this->backgroundImage;
   delete this->backgroundImageBox;
   delete this->window;
@@ -26,6 +33,51 @@ void GameScene::setBackground() {
   this->backgroundImageBox->box(FL_NO_BOX);  // No borders
   this->backgroundImageBox->redraw();  // Marks as needs a draw()
 }
+
+void GameScene::setActionButtons() {
+  this->probeButton = new TextButton(ACTION_BUTTONS_X, /*Y*/ 300
+      , ACTION_BUTTON_W, ACTION_BUTTON_H, "PROBE");
+  this->setActionButtonCallBack(this->probeButton, PROBE);
+
+  this->exploreButton  = new TextButton(ACTION_BUTTONS_X, /*Y*/ 350
+      , ACTION_BUTTON_W, ACTION_BUTTON_H, "EXPLORE");
+  this->setActionButtonCallBack(this->exploreButton, EXPLORE);
+
+  this->attackButton  = new TextButton(ACTION_BUTTONS_X, /*Y*/ 400
+      , ACTION_BUTTON_W, ACTION_BUTTON_H, "ATTACK");
+  this->setActionButtonCallBack(this->attackButton, ATTACK);
+
+  actionButtons = {probeButton, exploreButton, attackButton};
+}
+
+void GameScene::setActionButtonCallBack(TextButton* button, int actionID) {
+  button->set_click_callback([button, this, actionID]() {
+    this->switchVesselButtons(actionID);
+    this->selectedAction = actionID;
+    button->select();
+  });
+}
+
+void GameScene::switchVesselButtons(int newAction) {
+  if (!this->actionButtons[this->selectedAction]) std::cout << "NO BUTTON\n";
+  if (this->selectedAction != NO_ACTION) {
+    this->actionButtons[this->selectedAction]->deselect();
+  }
+
+  if (this->vesselButtons.size() > 0) {
+    // Deselect the other buttons, hide the other categories' vessel buttons
+    for (CustomIconButton* vesselButton
+        : this->vesselButtons[this->selectedAction]) {
+      vesselButton->hide();
+      vesselButton->deactivate();
+    }
+    for (CustomIconButton* vesselButton : this->vesselButtons[newAction]) {
+      vesselButton->activate();
+      vesselButton->show();
+    }
+  }
+}
+
 
 int GameScene::run() {
   while (this->gameActive) {
