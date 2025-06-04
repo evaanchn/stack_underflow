@@ -13,7 +13,7 @@ Galaxy::~Galaxy() {
 void Galaxy::setUpGalaxy(const char* galaxyFileDirectory) {
   // TODO (any) add try catch for galaxy instancing
   CSVReader reader = CSVReader();
-  reader.decomposeLines(galaxyFileDirectory, this->solarSystemsData);
+  reader.decomposeLines(galaxyFileDirectory, this->solarSystemsData, true);
 }
 
 void Galaxy::createCurrentSolarSystem() {
@@ -24,14 +24,23 @@ void Galaxy::createCurrentSolarSystem() {
     this->currentSolarSystem = new SolarSystem(currentSolarSystemData);
   } catch (const SolarSystemException& e) {
     std::cerr << "Solar System error with #" << this->currentSolarSystemIndex
-        << ": " << e.what() << std::endl;
-    ++this->currentSolarSystemIndex;
+      << ": " << e.what() << std::endl;
   }
+  ++this->currentSolarSystemIndex;
 }
 
 void Galaxy::destroyCurrentSolarSystem() {
   if (this->currentSolarSystem) delete this->currentSolarSystem;
   this->currentSolarSystem = nullptr;
+}
+
+bool Galaxy::passNextSolarSystem() {
+  if (this->currentSolarSystemIndex < this->solarSystemsData.size()) {
+    this->destroyCurrentSolarSystem();
+    this->createCurrentSolarSystem();
+    return true;
+  }
+  return false;
 }
 
 SolarSystem* Galaxy::getCurrentSolarSystem() {

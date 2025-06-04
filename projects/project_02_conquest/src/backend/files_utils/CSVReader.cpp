@@ -32,12 +32,16 @@ void CSVReader::skipLine() {
 
 
 void CSVReader::decomposeLines(const char* fileName,
-    std::vector<std::vector<std::string>>& csvData) {
+    std::vector<std::vector<std::string>>& csvData, bool skipHeader) {
   // If file not open, open file
   if (!this->CSVFile) this->openFile(fileName);
 
   // Buffer to temporarily store line
   char buffer[MAX_SIZE_BUFFER];
+  // Skip first line if header is to be skipped
+  if (skipHeader) {
+    this->skipLine();
+  }
   // While not reached end of file
   while (fgets(buffer, sizeof(buffer), this->CSVFile)) {
     // Vector to store words in the line

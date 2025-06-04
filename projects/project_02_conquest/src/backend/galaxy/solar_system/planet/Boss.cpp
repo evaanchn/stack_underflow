@@ -11,7 +11,7 @@ int Boss::getHealth() const {
 }
 
 bool Boss::isDead() const {
-  return this->healthPoints > 0;
+  return this->healthPoints <= 0;
 }
 
 std::string Boss::toString() const {

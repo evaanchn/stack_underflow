@@ -11,6 +11,11 @@ SolarSystem::SolarSystem(std::vector<std::string>& solarSystemData) {
   this->planetGraph = new Graph<Planet*, size_t>(!DIRECTED);
   this->initSolarSystem(solarSystemData);
   this->setPlanetsConnections();
+  // at least one boss and extra mine at initialization
+  if (this->countBossesAlive() == 0) {
+    this->exitPlanet->setMine();
+    this->exitPlanet->spawnBoss();
+  }
 }
 
 SolarSystem::~SolarSystem() {
@@ -30,6 +35,9 @@ void SolarSystem::initSolarSystem(std::vector<std::string>& solarSystemData) {
   this->name = solarSystemData[NAME_POS];
   // Calculate amount of planets to create
   this->planetsCount = solarSystemData.size() - PLANETS_START_POS;
+  // Initialize the revealed paths matrix according to the number of planets
+  this->revealedPaths.resize(this->planetsCount
+    , std::vector<bool>(this->planetsCount, false));
   // Randomizer for probability calculation
   Random<double> randDouble;
 
@@ -44,7 +52,7 @@ void SolarSystem::initSolarSystem(std::vector<std::string>& solarSystemData) {
     Planet* currentPlanet = new Planet(currentPlanetName, hasMine);
 
     // Add planet to graph
-    this->planetGraph->addNode(new Node(currentPlanet));
+    this->planetGraph->addNode(new Node<Planet*>(currentPlanet));
     // Add planet to planets vector
     this->planets.push_back(currentPlanet);
     // Add index to planet-index map
@@ -78,6 +86,7 @@ void SolarSystem::setEntryAndExit(Planet* currentPlanet
     this->entryPlanet = currentPlanet;
     this->entryPlanet->setMine();  // Entry planet has mine
     this->entryPlanet->removeBoss();  // Entry planet cannot have a boss
+    this->exploredPlanets.insert(this->entryPlanet); // explored
   } else if (currentPlanet->getName() == exitPlanetName) {
     this->exitPlanet = currentPlanet;
   }
@@ -148,6 +157,10 @@ size_t SolarSystem::getPlanetsCount() const {
   return this->planetsCount;
 }
 
+Planet* SolarSystem::getEntryPlanet() const {
+  return this->entryPlanet;
+}
+
 Graph<Planet*, size_t>* SolarSystem::getGraph() {
   return this->planetGraph;
 }
@@ -162,4 +175,35 @@ std::vector<std::vector<bool>>& SolarSystem::getRevealedPaths() {
 
 std::unordered_map<Planet*, size_t>& SolarSystem::getPlanetsIndexes() {
   return this->planetsIndexes;
+}
+
+bool SolarSystem::updateBossAlive(Planet* planet) {
+  // If the planet has a boss, check if it is alive
+  if (planet->hasBoss()) {
+    // If the boss is defeated, remove it and update the count
+    if (planet->getBoss()->isDead()) {
+      planet->removeBoss();
+      --this->bossesAlive;  // decrease the count of alive bosses
+      return false;  // Boss was defeated
+    }
+    return true;  // Boss is still alive
+  }
+  return false;  // No boss to check
+}
+
+size_t SolarSystem::countBossesAlive() {
+  this->bossesAlive = 0;
+  for (const auto& planet : this->planets) {
+    if (planet->hasBoss()) {
+      if (planet ==  entryPlanet) {
+        std::cerr << "Entry planet cannot have a boss" << std::endl;
+      }
+      ++this->bossesAlive;  // Count only planets with bosses
+    }
+  }
+  return this->bossesAlive;
+}
+
+bool SolarSystem::isComplete() const {
+  return bossesAlive == 0;
 }

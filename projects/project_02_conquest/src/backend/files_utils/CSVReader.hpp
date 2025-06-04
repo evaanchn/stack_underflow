@@ -49,13 +49,14 @@ class CSVReader {
    *
    * @param fileName Path to the CSV file.
    * @param csvData Reference to a vector where parsed data will be stored.
-   *
+   * @param skipHeader If true, the first line (header) will be skipped.
+   * 
    * @throws NullFilenameException if the filename is null.
    * @throws NotCSVException if the file does not have a .csv extension.
    * @throws OpenFileException if the file cannot be opened.
   */
   void decomposeLines(const char* fileName
-      , std::vector<std::vector<std::string>>& csvData);
+      , std::vector<std::vector<std::string>>& csvData, bool skipHeader = true);
 
   /// @brief Closes file if open.
   void closeFile();
