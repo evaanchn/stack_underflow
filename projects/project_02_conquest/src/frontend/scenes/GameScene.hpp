@@ -38,7 +38,7 @@ struct ActionCallbackData {
   int actionID;
 };
 
-#define ACTION_BUTTONS_X 50
+#define ACTION_BUTTONS_X 60
 #define ACTION_BUTTON_W 150
 #define ACTION_BUTTON_H 50
 
@@ -46,6 +46,11 @@ enum Vessels {
   NONE_SELECTED = -1, BFS, DFS, DIJKSTRA, FLOYD, GREEDY, LOCAL_SEARCH
   , EXHAUSTIVE, EXHAUSTIVE_PRUNED
 };
+
+#define LABELS_X 70
+#define LONG_LABEL_BOX_W 300
+#define LABEL_BOX_W 100
+#define LABEL_BOX_H 70
 
 class GameScene {
  private:
@@ -57,9 +62,8 @@ class GameScene {
 
  private:
   int selectedAction = NO_ACTION;
-  TextButton* probeButton = nullptr;
-  TextButton* exploreButton = nullptr;
-  TextButton* attackButton = nullptr;
+  TextButton* probeButton = nullptr, *exploreButton = nullptr
+      , * attackButton = nullptr;
   std::vector<TextButton*> actionButtons = {probeButton, exploreButton
       , attackButton};
 
@@ -67,6 +71,10 @@ class GameScene {
   Vessels selectedVessel = NONE_SELECTED;
   std::vector<std::vector<CustomIconButton*>> vesselButtons;
 
+  GameInfoText *remainingBossesLabel = nullptr, *ownedMinesLabel = nullptr
+      , *availableEtheriumLabel = nullptr, *solarSystemsLeftLabel = nullptr;
+  std::vector<GameInfoText*> labels = {remainingBossesLabel, ownedMinesLabel
+      , availableEtheriumLabel, solarSystemsLeftLabel};
   // Group solar system so it can be removed without deleting previous elements
   Fl_Group* solarSystemArea = nullptr;
 
@@ -78,6 +86,7 @@ class GameScene {
   void setBackground();
   void setActionButtons();
   void setActionButtonCallBack(TextButton* button, int actionID);
+  void setLabels();
 
   void switchVesselButtons(int newAction);
   void addSolarSystem();
@@ -90,4 +99,11 @@ class GameScene {
  private:
   void handleEvents();
   void update();
+
+ private:
+  void updateLabels();
+  void updateRemainingBossesLabel();
+  void updateOwnedMinesLabel();
+  void updateAvailableEtheriumLabel();
+  void updateSolarSystemsLeftLabel();
 };

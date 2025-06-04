@@ -5,6 +5,7 @@
 GameScene::GameScene(int width, int height, const std::string& title) {
   this->window = new Fl_Window(width, height, title.c_str());
   this->setBackground();
+  this->setLabels();
   this->setActionButtons();
   // TODO add game elements
   this->window->end();  // Ends window's elements' grouping
@@ -18,6 +19,7 @@ GameScene::~GameScene() {
     }
   }
   for (TextButton* actionButton : this->actionButtons) delete actionButton;
+  for (GameInfoText* label : this->labels) if (label) delete label;
   delete this->backgroundImage;
   delete this->backgroundImageBox;
   delete this->window;
@@ -59,7 +61,6 @@ void GameScene::setActionButtonCallBack(TextButton* button, int actionID) {
 }
 
 void GameScene::switchVesselButtons(int newAction) {
-  if (!this->actionButtons[this->selectedAction]) std::cout << "NO BUTTON\n";
   if (this->selectedAction != NO_ACTION) {
     this->actionButtons[this->selectedAction]->deselect();
   }
@@ -78,6 +79,16 @@ void GameScene::switchVesselButtons(int newAction) {
   }
 }
 
+void GameScene::setLabels() {
+  this->remainingBossesLabel = new GameInfoText(110, /*Y*/ 20, LABEL_BOX_W
+      , LABEL_BOX_H, "1 remaining", FL_WHITE);
+  this->ownedMinesLabel = new GameInfoText(90, /*Y*/ 100, LABEL_BOX_W
+      , LABEL_BOX_H, "1 owned", FL_WHITE);
+  this->availableEtheriumLabel = new GameInfoText(120, /*Y*/ 180, LABEL_BOX_W
+      , LABEL_BOX_H, "999 available", FL_WHITE);
+  this->solarSystemsLeftLabel = new GameInfoText(40, /*Y*/ 620, LONG_LABEL_BOX_W
+      , LABEL_BOX_H, "9 solar systems left", FL_WHITE);
+}
 
 int GameScene::run() {
   while (this->gameActive) {
@@ -100,4 +111,36 @@ void GameScene::handleEvents() {
 
 void GameScene::update() {
 
+}
+
+// TODO (any) uncomment once game is implemented
+void GameScene::updateLabels() {
+  this->updateRemainingBossesLabel();
+  this->updateOwnedMinesLabel();
+  this->updateAvailableEtheriumLabel();
+  this->updateSolarSystemsLeftLabel();
+}
+
+void GameScene::updateRemainingBossesLabel() {
+  // std::string bosses = std::to_string(this->game->getCurrentRemainingBosses())
+  //     + " remaining"
+  // this->remainingBossesLabel->updateText(bosses.c_str());
+}
+
+void GameScene::updateOwnedMinesLabel() {
+  // std::string minesOWned = std::to_string(this->game->getCurrentOwnedMines())
+  //     + " owned";
+  // this->ownedMinesLabel->updateText(minesOWned.c_str());
+}
+
+void GameScene::updateAvailableEtheriumLabel() {
+  // std::string etherium = std::to_string(this->game->getCurrentEtherium())
+  //     + "available";
+  // this->availableEtheriumLabel->updateText(etherium.c_str());
+}
+
+void GameScene::updateSolarSystemsLeftLabel() {
+  // std::string solarSystemsLeft = 
+  //     std::to_string(this->game->getSolarSystemsLeft());
+  // this->solarSystemLeftLabel->updateText(solarSystemsLeft.c_str());
 }
