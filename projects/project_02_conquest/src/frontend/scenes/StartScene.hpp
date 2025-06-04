@@ -16,4 +16,6 @@ class StartScene {
 
  private:
   SFMLImage background;
+  Button startButton;
+  Button infoButton;
 };

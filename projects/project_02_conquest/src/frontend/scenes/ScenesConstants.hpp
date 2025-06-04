@@ -26,6 +26,7 @@ namespace Sizes {
 #define CORNERS_REGULAR_BUTTON 20
 
 #define EMPTY_TEXT ""
+#define FONT_PATH_PIXEL "assets/fonts/pixel.ttf"
 
 const std::string BACKGROUNDS_FOLDER = "assets/scenes_backgrounds/";
 const std::string MUSIC_FOLDER = "assets/music/";
