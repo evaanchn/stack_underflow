@@ -40,7 +40,7 @@ const sf::Vector2f CIRCULAR_BUTTON(160, 160);
 
 #define ACTIVE true
 #define EMPTY_TEXT ""
-#define FONT_PATH_PIXEL  // Pendiente
+#define FONT_PATH_PIXEL "assets/fonts/pixel.ttf"
 
 const std::string BACKGROUNDS_FOLDER = "assets/scenes_backgrounds/";
 const std::string MUSIC_FOLDER = "assets/music/";
@@ -62,13 +62,10 @@ const std::string GAME_BUTTONS_FOLDER = "assets/sprites/buttons/";
 
 #define NONE_SELECTED -1
 
-enum Actions { UPGRADE, MOVE, ATTACK, BUY, EXIT, FLAG, UNFLAG };
-enum Vessels { NO_VESSEL = -1, SET, RB_TREE, B_TREE, BINARY_SEARCH
-    , SPLAY_TREE, LINEAR_SEARCH };
 enum MoveState { MOVE_IDLE, MOVE_SELECT_VESSEL, MOVE_SELECT_DESTINATION };
 
-#define VESSELS_COUNT 6
-const std::string VESSELS_RIGHT_FOLDER = "assets/sprites/SpaceVessel/";
+#define VESSELS_COUNT 8
+const std::string SPACE_VESSELS = "assets/sprites/spaceVessel/";
 const std::vector<std::string> VESSEL_SPRITES = {
     "BFS.png",
     "DFS.png",
@@ -77,7 +74,7 @@ const std::vector<std::string> VESSEL_SPRITES = {
     "ExhaustivePlus.png",
     "Floyd.png",
     "Greedy.png",
-    "LocalSearch.cpp"
+    "LocalSearch.png"
 };
 
 const std::string SOUNDS_FOLDER = "assets/sounds/";

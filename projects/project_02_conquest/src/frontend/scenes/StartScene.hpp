@@ -5,14 +5,13 @@
 #include "Button.hpp"
 #include "SFMLImage.hpp"
 #include "SFMLSound.hpp"
-
 #include "ScenesConstants.hpp"
 
 class StartScene {
  public:
   StartScene();
   void handleEvent(sf::RenderWindow& window, sf::Event& event,
-      SceneState& currentState);
+      SceneState& currentState, bool& gameActive, SFMLSound &buttonClickSound);
   void draw(sf::RenderWindow& window);
 
  private:
