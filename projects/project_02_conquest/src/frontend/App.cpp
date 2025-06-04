@@ -6,7 +6,9 @@ App::App()
   : appActive(true)
   , gameActive(false)
   , currentState(START)
-  , startScene(), startSceneMusic(MUSIC_FOLDER + "startScene.wav", true)
+  , startScene()
+  , informationScene()
+  , startSceneMusic(MUSIC_FOLDER + "startScene.wav", true)
   {
   setMainWindow();
 }

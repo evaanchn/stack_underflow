@@ -3,6 +3,7 @@
 #pragma once
 
 #include "StartScene.hpp"
+#include "InformationScene.hpp"
 
 #define MAIN_WINDOW_WIDTH 1280
 #define MAIN_WINDOW_HEIGHT 720
@@ -20,6 +21,7 @@ class App {
   sf::RenderWindow mainWindow;
 
   StartScene startScene;
+  InformationScene informationScene;
   SFMLSound startSceneMusic;
 
  private:

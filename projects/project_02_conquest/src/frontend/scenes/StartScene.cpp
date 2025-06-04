@@ -14,7 +14,13 @@ StartScene::StartScene()
 
 void StartScene::handleEvent(sf::RenderWindow& window, sf::Event& event,
     SceneState& currentState) {
-  // pending
+  if (startButton.isMouseOver(window) &&
+      event.type == sf::Event::MouseButtonPressed) {
+    currentState = GAME;
+  } else if (infoButton.isMouseOver(window) &&
+      event.type == sf::Event::MouseButtonPressed) {
+     currentState = INFORMATION;
+  }
 }
 
 void StartScene::draw(sf::RenderWindow& window) {
