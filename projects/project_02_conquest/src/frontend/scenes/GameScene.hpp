@@ -12,8 +12,8 @@
 #include <string>
 #include <vector>
 
-#include "CustomIconButton.hpp"
 #include "GameInfoText.hpp"
+#include "LayeredButton.hpp"
 #include "TextButton.hpp"
 
 #define ACTIVE true
@@ -22,27 +22,16 @@ const std::string SCENES_BACKGROUND_PATH = "assets/scenes_backgrounds/";
 const std::string GAME_SCENE_BACKGROUND = SCENES_BACKGROUND_PATH
     + "gameScene.png";
 
-const std::string VESSELS_SPRITES_PATH = "assets/sprites/spaceVessel/";
-const std::vector<std::vector<std::string>> VESSEL_BUTTONS
-    = {{"BFS.png", "DFS.png"}
-    , {"Dijkstra.png", "Floyd.png"}
-    , {"Greedy.png", "LocalSearch.png"
-    , "Exhaustive.png", "ExhaustivePlus.png"}};
 
-enum Actions {
+enum ACTIONS {
   NO_ACTION = -1, PROBE, EXPLORE, ATTACK
-};
-
-struct ActionCallbackData {
-  int* selectedAction;
-  int actionID;
 };
 
 #define ACTION_BUTTONS_X 60
 #define ACTION_BUTTON_W 150
 #define ACTION_BUTTON_H 50
 
-enum Vessels {
+enum VESSEL_ID {
   NONE_SELECTED = -1, BFS, DFS, DIJKSTRA, FLOYD, GREEDY, LOCAL_SEARCH
   , EXHAUSTIVE, EXHAUSTIVE_PRUNED
 };
@@ -51,6 +40,9 @@ enum Vessels {
 #define LONG_LABEL_BOX_W 300
 #define LABEL_BOX_W 100
 #define LABEL_BOX_H 70
+
+#define VESSEL_BUTTON_DIM 100
+const std::string VESSELS_SPRITES_PATH = "assets/sprites/spaceVessel/";
 
 class GameScene {
  private:
@@ -68,14 +60,26 @@ class GameScene {
       , attackButton};
 
  private:
-  Vessels selectedVessel = NONE_SELECTED;
-  std::vector<std::vector<CustomIconButton*>> vesselButtons;
+  size_t selectedVessel = NONE_SELECTED;
+  LayeredButton *bfsButton, *dfsButton, *dijkstraButton, *floydButton
+      , *greedySearchButton, *localSearchButton, *exhausativeSearchButton
+      , *exhaustivePruneButton;
+  std::vector<std::vector<LayeredButton*>> vesselButtons
+      = {{bfsButton, dfsButton}
+      , {dijkstraButton, floydButton}
+      , {greedySearchButton, localSearchButton
+      , exhausativeSearchButton, exhaustivePruneButton}};
 
+ private:
   GameInfoText *remainingBossesLabel = nullptr, *ownedMinesLabel = nullptr
       , *availableEtheriumLabel = nullptr, *solarSystemsLeftLabel = nullptr;
   std::vector<GameInfoText*> labels = {remainingBossesLabel, ownedMinesLabel
       , availableEtheriumLabel, solarSystemsLeftLabel};
+
+  // TODO (ANY) add solarSystemArea implementation
   // Group solar system so it can be removed without deleting previous elements
+  // with delete UiSolarSystem and then this->window->remove(solarSystemArea)
+  // then add another and add to the group and restart the group
   Fl_Group* solarSystemArea = nullptr;
 
  public:
@@ -84,14 +88,14 @@ class GameScene {
 
  private:
   void setBackground();
+  void setLabels();
   void setActionButtons();
   void setActionButtonCallBack(TextButton* button, int actionID);
-  void setLabels();
-
   void switchVesselButtons(int newAction);
-  void addSolarSystem();
-  void removeSolarSystem();
-  void refreshGameWindow();
+
+  void setVesselButtons();
+  void setVesselButtonCallBack(LayeredButton* button, size_t vesselID);
+
 
  public:
   int run();

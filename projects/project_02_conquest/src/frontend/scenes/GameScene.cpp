@@ -13,8 +13,8 @@ GameScene::GameScene(int width, int height, const std::string& title) {
 }
 
 GameScene::~GameScene() {
-  for (std::vector<CustomIconButton*>& row : this->vesselButtons) {
-    for (CustomIconButton* vesselButton : row) {
+  for (std::vector<LayeredButton*>& row : this->vesselButtons) {
+    for (LayeredButton* vesselButton : row) {
       if (vesselButton) delete vesselButton;
     }
   }
@@ -34,6 +34,18 @@ void GameScene::setBackground() {
   this->backgroundImageBox->image(backgroundImage);  // Place image in box
   this->backgroundImageBox->box(FL_NO_BOX);  // No borders
   this->backgroundImageBox->redraw();  // Marks as needs a draw()
+}
+
+// TODO (any) leave initial texts as empty once game is implemented
+void GameScene::setLabels() {
+  this->remainingBossesLabel = new GameInfoText(110, /*Y*/ 20, LABEL_BOX_W
+      , LABEL_BOX_H, "1 remaining", FL_WHITE);
+  this->ownedMinesLabel = new GameInfoText(90, /*Y*/ 100, LABEL_BOX_W
+      , LABEL_BOX_H, "1 owned", FL_WHITE);
+  this->availableEtheriumLabel = new GameInfoText(120, /*Y*/ 180, LABEL_BOX_W
+      , LABEL_BOX_H, "999 available", FL_WHITE);
+  this->solarSystemsLeftLabel = new GameInfoText(40, /*Y*/ 620, LONG_LABEL_BOX_W
+      , LABEL_BOX_H, "9 solar systems left", FL_WHITE);
 }
 
 void GameScene::setActionButtons() {
@@ -63,31 +75,40 @@ void GameScene::setActionButtonCallBack(TextButton* button, int actionID) {
 void GameScene::switchVesselButtons(int newAction) {
   if (this->selectedAction != NO_ACTION) {
     this->actionButtons[this->selectedAction]->deselect();
-  }
-
-  if (this->vesselButtons.size() > 0) {
     // Deselect the other buttons, hide the other categories' vessel buttons
-    for (CustomIconButton* vesselButton
+    for (LayeredButton* vesselButton
         : this->vesselButtons[this->selectedAction]) {
-      vesselButton->hide();
-      vesselButton->deactivate();
+      if (vesselButton) {
+        vesselButton->hide();
+        vesselButton->deactivate();
+      }
     }
-    for (CustomIconButton* vesselButton : this->vesselButtons[newAction]) {
+  }
+    
+  for (LayeredButton* vesselButton : this->vesselButtons[newAction]) {
+    if (vesselButton) {
       vesselButton->activate();
       vesselButton->show();
+      vesselButton->redraw();
     }
   }
 }
 
-void GameScene::setLabels() {
-  this->remainingBossesLabel = new GameInfoText(110, /*Y*/ 20, LABEL_BOX_W
-      , LABEL_BOX_H, "1 remaining", FL_WHITE);
-  this->ownedMinesLabel = new GameInfoText(90, /*Y*/ 100, LABEL_BOX_W
-      , LABEL_BOX_H, "1 owned", FL_WHITE);
-  this->availableEtheriumLabel = new GameInfoText(120, /*Y*/ 180, LABEL_BOX_W
-      , LABEL_BOX_H, "999 available", FL_WHITE);
-  this->solarSystemsLeftLabel = new GameInfoText(40, /*Y*/ 620, LONG_LABEL_BOX_W
-      , LABEL_BOX_H, "9 solar systems left", FL_WHITE);
+void GameScene::setVesselButtons() {
+  this->dfsButton = new LayeredButton(/*X*/ ACTION_BUTTONS_X + 40, 350
+    , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM);
+  Fl_PNG_Image dfs = Fl_PNG_Image("assets/sprites/spaceVessel/DFS.png");
+  this->dfsButton->setLayer(0, &dfs);
+  setVesselButtonCallBack(this->dfsButton, 1);
+}
+
+void GameScene::setVesselButtonCallBack(LayeredButton* button
+    , size_t vesselID) {
+  button->setOnClick([this, vesselID]() {
+    this->selectedVessel = vesselID;
+    // TODO(any): add vessel button sound
+    // this->vesselButtonSound.play();
+  });
 }
 
 int GameScene::run() {
@@ -105,10 +126,12 @@ int GameScene::run() {
   return Fl::run();
 }
 
+// TODO (ANY) add handle methdods for each available action (3)
 void GameScene::handleEvents() {
 
 }
 
+// TODO (ANY) complete update method, depending on game occurences
 void GameScene::update() {
 
 }
