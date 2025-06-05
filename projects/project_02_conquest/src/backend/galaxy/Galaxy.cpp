@@ -11,7 +11,7 @@ Galaxy::~Galaxy() {
 }
 
 void Galaxy::setUpGalaxy(const char* galaxyFileDirectory) {
-  // TODO (any) add try catch for galaxy instancing
+  // TODO(any) add try catch for galaxy instancing
   CSVReader reader = CSVReader();
   reader.decomposeLines(galaxyFileDirectory, this->solarSystemsData, true);
 }

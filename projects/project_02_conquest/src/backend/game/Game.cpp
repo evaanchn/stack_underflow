@@ -36,7 +36,7 @@ void Game::probe(size_t vesselID, Coordinates& startPlanet) {
   // Check if the vesselID is valid
   if (vesselID == SPACE_VESSEL_TYPE::BFS_VESSEL) {
     // this->battleLog->recordAction(this->vessels.bfs.probe();)
-  } else if (vesselID == SPACE_VESSEL_TYPE::DFS_VESSEL){
+  } else if (vesselID == SPACE_VESSEL_TYPE::DFS_VESSEL) {
     // this->battleLog->recordAction(this->vessels.dfs.probe();)
   }
 }
@@ -48,7 +48,7 @@ void Game::scout(size_t vesselID, Coordinates& startPlanet) {
   // Check if the vesselID is valid
   if (vesselID == SPACE_VESSEL_TYPE::DIJKSTRA_VESSEL) {
     // this->battleLog->recordAction(this->vessels.dijkstra.scout(startPlanet));
-  } else if (vesselID == SPACE_VESSEL_TYPE::FLOYD_VESSEL){
+  } else if (vesselID == SPACE_VESSEL_TYPE::FLOYD_VESSEL) {
     // this->battleLog->recordAction(this->vessels.floyd.scout(startPlanet));
   }
 }
@@ -64,24 +64,24 @@ size_t Game::attack(size_t vesselID, Coordinates& startPlanet
   if (vesselID == SPACE_VESSEL_TYPE::GREEDY_VESSEL) {
     // this->battleLog->recordAction(this->vessels.exhaustiveSearch
       // .attack(startPlanet, targetPlanet));
-  } else if (vesselID == SPACE_VESSEL_TYPE::LOCAL_SEARCH_VESSEL){
+  } else if (vesselID == SPACE_VESSEL_TYPE::LOCAL_SEARCH_VESSEL) {
     // this->battleLog->recordAction(this->vessels.localSearch
       //  .attack(startPlanet, targetPlanet));
-  } else if (vesselID == SPACE_VESSEL_TYPE::EXHAUSTIVE_SEARCH_VESSEL){
+  } else if (vesselID == SPACE_VESSEL_TYPE::EXHAUSTIVE_SEARCH_VESSEL) {
     // this->battleLog->recordAction(this->vessels.exhaustiveSearch
       // .attack(startPlanet, targetPlanet));
-  } else if (vesselID == SPACE_VESSEL_TYPE::EXHAUSTIVE_PRUNE_VESSEL){
+  } else if (vesselID == SPACE_VESSEL_TYPE::EXHAUSTIVE_PRUNE_VESSEL) {
     // this->battleLog->recordAction(this->vessels.exhaustiveSearchPrune
       // .attack(startPlanet, targetPlanet);));
   }
   // recieve the attack result into the the targetPlanet and update boss status
-  return 0; // Placeholder return value, replace with actual attack result
+  return 0;  // Placeholder return value, replace with actual attack result
 }
 
 void Game::collectPurchasePoints() {
   // Collect purchase points based on active mines
   if (this->player.purchasePoints < MAX_PURCHASE_POINTS) {
-    this->player.purchasePoints 
+    this->player.purchasePoints
       += this->player.activeMines * PURCHASE_POINTS_INC;
   }
 }

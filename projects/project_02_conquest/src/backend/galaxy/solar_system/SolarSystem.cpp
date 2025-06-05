@@ -86,7 +86,7 @@ void SolarSystem::setEntryAndExit(Planet* currentPlanet
     this->entryPlanet = currentPlanet;
     this->entryPlanet->setMine();  // Entry planet has mine
     this->entryPlanet->removeBoss();  // Entry planet cannot have a boss
-    this->exploredPlanets.insert(this->entryPlanet); // explored
+    this->exploredPlanets.insert(this->entryPlanet);  // explored
   } else if (currentPlanet->getName() == exitPlanetName) {
     this->exitPlanet = currentPlanet;
   }
@@ -195,9 +195,6 @@ size_t SolarSystem::countBossesAlive() {
   this->bossesAlive = 0;
   for (const auto& planet : this->planets) {
     if (planet->hasBoss()) {
-      if (planet ==  entryPlanet) {
-        std::cerr << "Entry planet cannot have a boss" << std::endl;
-      }
       ++this->bossesAlive;  // Count only planets with bosses
     }
   }

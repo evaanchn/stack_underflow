@@ -12,7 +12,7 @@
 #include "Galaxy.hpp"
 #include "VesselsCollection.hpp"
 
-//TODO(any): move these constants to a common header file
+// TODO(any): move these constants to a common header file
 #define MAX_DAMAGE 25
 #define MAX_PURCHASE_POINTS 999
 #define PURCHASE_POINTS_INC 15
@@ -32,7 +32,7 @@ class Game {
   Player player;
   /// Flag indicating if the game is over
   bool gameOver;
-  
+
   VesselsCollection<Planet*, size_t> vessels;
 
  public:

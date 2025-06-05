@@ -32,7 +32,7 @@ class Galaxy {
 
  private:
   void setUpGalaxy(const char* galaxyFileDirectory);
- 
+
  public:
   SolarSystem* getCurrentSolarSystem();
 };
