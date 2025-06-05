@@ -31,17 +31,23 @@ enum ACTIONS {
 #define ACTION_BUTTON_W 150
 #define ACTION_BUTTON_H 50
 
-enum VESSEL_ID {
-  NONE_SELECTED = -1, BFS, DFS, DIJKSTRA, FLOYD, GREEDY, LOCAL_SEARCH
-  , EXHAUSTIVE, EXHAUSTIVE_PRUNED
-};
-
 #define LABELS_X 70
 #define LONG_LABEL_BOX_W 300
 #define LABEL_BOX_W 100
 #define LABEL_BOX_H 70
 
+#define NONE_SELECTED -1
 #define VESSEL_BUTTON_DIM 100
+// X Positions
+#define VESSEL_X_LEFT   240
+#define VESSEL_X_RIGHT  360
+
+// Y Positions
+#define VESSEL_Y_TOP    270
+#define VESSEL_Y_MID    320
+#define VESSEL_Y_BOTTOM 370
+#define VESSEL_HIDDEN true
+
 const std::string VESSELS_SPRITES_PATH = "assets/sprites/spaceVessel/";
 
 class GameScene {
@@ -53,24 +59,19 @@ class GameScene {
   Fl_PNG_Image* backgroundImage = nullptr;
 
  private:
-  int selectedAction = NO_ACTION;
+  int selectedAction = PROBE;
   TextButton* probeButton = nullptr, *exploreButton = nullptr
       , * attackButton = nullptr;
-  std::vector<TextButton*> actionButtons = {probeButton, exploreButton
-      , attackButton};
+  std::vector<TextButton*> actionButtons = {};
 
  private:
-  size_t selectedVessel = NONE_SELECTED;
+  int selectedVessel = NONE_SELECTED;
   LayeredButton *bfsButton = nullptr, *dfsButton = nullptr
       , *dijkstraButton = nullptr, *floydButton = nullptr
       , *greedySearchButton = nullptr, *localSearchButton = nullptr
       , *exhausativeSearchButton = nullptr
       , *exhaustivePruneButton = nullptr;
-  std::vector<std::vector<LayeredButton*>> vesselButtons
-      = {{bfsButton, dfsButton}
-      , {dijkstraButton, floydButton}
-      , {greedySearchButton, localSearchButton
-      , exhausativeSearchButton, exhaustivePruneButton}};
+  std::vector<std::vector<LayeredButton*>> vesselButtons = {};
 
  private:
   GameInfoText *remainingBossesLabel = nullptr, *ownedMinesLabel = nullptr
@@ -96,8 +97,10 @@ class GameScene {
   void switchVesselButtons(int newAction);
 
   void setVesselButtons();
-  void setVesselButtonCallBack(LayeredButton* button, size_t vesselID);
-
+  LayeredButton* createVesselButton(int x, int y
+      , const std::string& imageName, int vesselID, bool hidden = true);
+  void setVesselButtonAppearance(LayeredButton* button, std::string path);
+  void setVesselButtonCallBack(LayeredButton* button, int vesselID);
 
  public:
   int run();

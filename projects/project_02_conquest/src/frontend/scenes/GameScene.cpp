@@ -7,6 +7,7 @@ GameScene::GameScene(int width, int height, const std::string& title) {
   this->setBackground();
   this->setLabels();
   this->setActionButtons();
+  this->setVesselButtons();
   // TODO add game elements
   this->window->end();  // Ends window's elements' grouping
   this->window->show();
@@ -73,18 +74,22 @@ void GameScene::setActionButtonCallBack(TextButton* button, int actionID) {
 }
 
 void GameScene::switchVesselButtons(int newAction) {
-  if (this->selectedAction != NO_ACTION) {
-    this->actionButtons[this->selectedAction]->deselect();
-    // Deselect the other buttons, hide the other categories' vessel buttons
-    for (LayeredButton* vesselButton
-        : this->vesselButtons[this->selectedAction]) {
-      if (vesselButton) {
-        vesselButton->hide();
-        vesselButton->deactivate();
-      }
+  // Avoid switch if selected remains the same, or if NONE_SELECTED is involved
+  if (this->selectedAction == newAction
+      || this->selectedAction == NONE_SELECTED
+      || newAction == NONE_SELECTED) return;
+
+  this->actionButtons[this->selectedAction]->deselect();
+  // Hide and deactivate current selected actions' vessels
+  for (LayeredButton* vesselButton
+      : this->vesselButtons[this->selectedAction]) {
+    if (vesselButton) {
+      vesselButton->hide();
+      vesselButton->deactivate();
+      vesselButton->redraw();
     }
   }
-
+  // Activate and show new action's vessels
   for (LayeredButton* vesselButton : this->vesselButtons[newAction]) {
     if (vesselButton) {
       vesselButton->activate();
@@ -94,20 +99,62 @@ void GameScene::switchVesselButtons(int newAction) {
   }
 }
 
+#include "VesselsCollection.hpp"  // Include for constants
 void GameScene::setVesselButtons() {
-  this->dfsButton = new LayeredButton(/*X*/ ACTION_BUTTONS_X + 40, 350
-    , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM);
-  Fl_PNG_Image dfs = Fl_PNG_Image("assets/sprites/spaceVessel/DFS.png");
-  this->dfsButton->setLayer(0, &dfs);
-  setVesselButtonCallBack(this->dfsButton, 1);
+  // Initially visible buttons
+  this->bfsButton = createVesselButton(VESSEL_X_LEFT, VESSEL_Y_MID
+      , "BFS.png", BFS_VESSEL, !VESSEL_HIDDEN);
+  this->dfsButton = createVesselButton(VESSEL_X_RIGHT, VESSEL_Y_MID
+      , "DFS.png", DFS_VESSEL, !VESSEL_HIDDEN);
+
+  // Hidden by default
+  this->dijkstraButton = createVesselButton(VESSEL_X_LEFT, VESSEL_Y_MID
+      , "Dijkstra.png", DIJKSTRA_VESSEL);
+  this->floydButton = createVesselButton(VESSEL_X_RIGHT, VESSEL_Y_MID
+      , "Floyd.png", FLOYD_VESSEL);
+  this->greedySearchButton = createVesselButton(VESSEL_X_LEFT, VESSEL_Y_TOP
+      , "Greedy.png", GREEDY_VESSEL);
+  this->localSearchButton = createVesselButton(VESSEL_X_RIGHT, VESSEL_Y_TOP
+      , "LocalSearch.png", LOCAL_SEARCH_VESSEL);
+  this->exhausativeSearchButton = createVesselButton(VESSEL_X_LEFT
+      , VESSEL_Y_BOTTOM, "Exhaustive.png", EXHAUSTIVE_SEARCH_VESSEL);
+  this->exhaustivePruneButton = createVesselButton(VESSEL_X_RIGHT
+      , VESSEL_Y_BOTTOM, "ExhaustivePlus.png", EXHAUSTIVE_PRUNE_VESSEL);
+
+  this->vesselButtons = {
+    {this->bfsButton, this->dfsButton}
+    , {this->dijkstraButton, this->floydButton}
+    , {this->greedySearchButton, this->localSearchButton
+    , this->exhausativeSearchButton, this->exhaustivePruneButton}
+  };
+}
+
+LayeredButton* GameScene::createVesselButton(int x, int y,
+    const std::string& imageName, int vesselID, bool hidden) {
+  auto* button = new LayeredButton(x, y, VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM);
+  this->setVesselButtonAppearance(button, VESSELS_SPRITES_PATH + imageName);
+  this->setVesselButtonCallBack(button, vesselID);
+  if (hidden) {
+    button->hide();
+    button->deactivate();
+  }
+  return button;
+}
+
+void GameScene::setVesselButtonAppearance(LayeredButton* button
+    ,std::string path) {
+  Fl_PNG_Image appearance = Fl_PNG_Image(path.c_str());
+  button->setLayer(/*FIRST LAYER*/ 0, &appearance);
 }
 
 void GameScene::setVesselButtonCallBack(LayeredButton* button
-    , size_t vesselID) {
+    , int vesselID) {
   button->setOnClick([this, vesselID]() {
-    this->selectedVessel = vesselID;
-    // TODO(any): add vessel button sound
-    // this->vesselButtonSound.play();
+    if (this->selectedVessel == NONE_SELECTED) {
+      this->selectedVessel = vesselID;
+      // TODO(any): add vessel button sound
+      // this->vesselButtonSound.play();
+    }
   });
 }
 
