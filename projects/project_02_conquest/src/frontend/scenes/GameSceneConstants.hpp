@@ -34,16 +34,24 @@ enum ACTIONS {
 #define VESSEL_X_RIGHT  360
 
 // Y Positions
-#define VESSEL_Y_TOP    270
+#define VESSEL_Y_TOP    260
 #define VESSEL_Y_MID    320
-#define VESSEL_Y_BOTTOM 370
+#define VESSEL_Y_BOTTOM 380
 #define VESSEL_HIDDEN true
 
 const std::string VESSELS_SPRITES_PATH = "assets/sprites/spaceVessel/";
+const std::vector<std::string> VESSELS_LABELS = {
+    "Rapid Sight", "Deep Probe"
+    , "Path Finder", "Star Mapper"
+    , "Raider", "Forager"
+    , "Wayfarer", "Oracle"
+};
 
 const std::vector<std::string> VESSELS_DATA = {
     "Algorithm: BFS\nCost: 10", "Algorithm: DFS\nCost: 10"
     , "Algorithm: Dijkstra\nCost: 20", "Algorithm: Floyd\nCost: 30"
-    , "Algorithm: Greedy Search\nCost: 35", "Algorithm: Local Search\nCost: 40"
-    , "Algorithm: Exhaustive Search\nCost: 45", "Algorithm: Exhaustive Prune\nCost: 50"
+    , "Algorithm: Greedy Search\nCost: 35"
+    , "Algorithm: Local Search\nCost: 40"
+    , "Algorithm: Exhaustive Search\nCost: 45"
+    , "Algorithm: Exhaustive Prune\nCost: 50"
 };

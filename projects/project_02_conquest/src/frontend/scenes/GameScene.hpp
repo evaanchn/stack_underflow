@@ -69,7 +69,8 @@ class GameScene {
 
   void setVesselButtons();
   LayeredButton* createVesselButton(int x, int y
-      , const std::string& imageName, int vesselID, bool hidden = true);
+      , const std::string& imageName, const std::string& label, int vesselID
+      , bool hidden = true);
   void setVesselButtonAppearance(LayeredButton* button, std::string path);
   void setVesselButtonCallBack(LayeredButton* button, int vesselID);
 

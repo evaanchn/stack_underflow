@@ -3,13 +3,17 @@
 #include "LayeredButton.hpp"
 #include <FL/fl_draw.H>
 
-LayeredButton::LayeredButton(int x, int y, int w, int h)
+LayeredButton::LayeredButton(int x, int y, int w, int h
+    , const char* buttonLabel)
     : Fl_Button(x, y, w, h) {
   box(FL_NO_BOX);
-  label(nullptr);
-  clear_visible_focus();  // Removes focus rectangle
+  label(buttonLabel);  // Can be nullptr
+  if (buttonLabel) {
+    labelfont(FL_COURIER_BOLD);
+    labelsize(16);
+  }
+  clear_visible_focus();
   box(FL_FLAT_BOX);
-  // Tells button that it will execute onClick when clicked
   callback([](Fl_Widget* widget, void* data) {
     if (widget) {
       auto* self = static_cast<LayeredButton*>(data);
@@ -19,6 +23,7 @@ LayeredButton::LayeredButton(int x, int y, int w, int h)
     }
   }, this);
 }
+
 
 LayeredButton::~LayeredButton() {
   this->clearAllLayers();
@@ -59,14 +64,28 @@ void LayeredButton::clearAllLayers() {
 }
 
 void LayeredButton::draw() {
-  // Ensuresit doesn't draw beyond set region inside the button
+  // Clip drawing region to the button
   fl_push_clip(x(), y(), w(), h());
+
   // Draw all layers
   for (auto* img : this->layers) {
-    if (img) img->draw(x(), y(), w(), h());  // Draw scaled to button size
+    if (img) img->draw(x(), y(), w(), h());
   }
+
   fl_pop_clip();
+
+  // Draw the label manually, centered below images
+  if (label()) {
+    fl_font(labelfont(), labelsize());
+
+    fl_color(FL_WHITE);
+    // Draw near bottom
+    int tw = 0, th = 0;
+    fl_measure(label(), tw, th);
+    fl_draw(label(), x() + (w() - tw)/2, y() + h() + 20);
+  }
 }
+
 
 // Method to set the callback
 void LayeredButton::setOnClick(std::function<void()> func) {

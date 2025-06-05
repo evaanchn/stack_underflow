@@ -106,23 +106,26 @@ void GameScene::switchVesselButtons(int newAction) {
 void GameScene::setVesselButtons() {
   // Initially visible buttons
   this->bfsButton = createVesselButton(VESSEL_X_LEFT, VESSEL_Y_MID
-      , "BFS.png", BFS_VESSEL, !VESSEL_HIDDEN);
+      , "BFS.png", VESSELS_LABELS[BFS_VESSEL], BFS_VESSEL, !VESSEL_HIDDEN);
   this->dfsButton = createVesselButton(VESSEL_X_RIGHT, VESSEL_Y_MID
-      , "DFS.png", DFS_VESSEL, !VESSEL_HIDDEN);
+      , "DFS.png", VESSELS_LABELS[DFS_VESSEL], DFS_VESSEL, !VESSEL_HIDDEN);
 
   // Hidden by default
   this->dijkstraButton = createVesselButton(VESSEL_X_LEFT, VESSEL_Y_MID
-      , "Dijkstra.png", DIJKSTRA_VESSEL);
+      , "Dijkstra.png", VESSELS_LABELS[DIJKSTRA_VESSEL], DIJKSTRA_VESSEL);
   this->floydButton = createVesselButton(VESSEL_X_RIGHT, VESSEL_Y_MID
-      , "Floyd.png", FLOYD_VESSEL);
+      , "Floyd.png", VESSELS_LABELS[FLOYD_VESSEL], FLOYD_VESSEL);
   this->greedySearchButton = createVesselButton(VESSEL_X_LEFT, VESSEL_Y_TOP
-      , "Greedy.png", GREEDY_VESSEL);
+      , "Greedy.png", VESSELS_LABELS[GREEDY_VESSEL], GREEDY_VESSEL);
   this->localSearchButton = createVesselButton(VESSEL_X_RIGHT, VESSEL_Y_TOP
-      , "LocalSearch.png", LOCAL_SEARCH_VESSEL);
+      , "LocalSearch.png", VESSELS_LABELS[LOCAL_SEARCH_VESSEL]
+      , LOCAL_SEARCH_VESSEL);
   this->exhausativeSearchButton = createVesselButton(VESSEL_X_LEFT
-      , VESSEL_Y_BOTTOM, "Exhaustive.png", EXHAUSTIVE_SEARCH_VESSEL);
+      , VESSEL_Y_BOTTOM, "Exhaustive.png"
+      , VESSELS_LABELS[EXHAUSTIVE_SEARCH_VESSEL], EXHAUSTIVE_SEARCH_VESSEL);
   this->exhaustivePruneButton = createVesselButton(VESSEL_X_RIGHT
-      , VESSEL_Y_BOTTOM, "ExhaustivePlus.png", EXHAUSTIVE_PRUNE_VESSEL);
+      , VESSEL_Y_BOTTOM, "ExhaustivePlus.png"
+      , VESSELS_LABELS[EXHAUSTIVE_PRUNE_VESSEL], EXHAUSTIVE_PRUNE_VESSEL);
 
   this->vesselButtons = {
     {this->bfsButton, this->dfsButton}
@@ -133,9 +136,10 @@ void GameScene::setVesselButtons() {
 }
 
 LayeredButton* GameScene::createVesselButton(int x, int y,
-    const std::string& imageName, int vesselID, bool hidden) {
+    const std::string& imageName, const std::string& label, int vesselID
+    , bool hidden) {
   auto* button = new LayeredButton(x, y, VESSEL_BUTTON_DIM
-      , VESSEL_BUTTON_DIM);
+      , VESSEL_BUTTON_DIM, label.c_str());
   this->setVesselButtonAppearance(button, VESSELS_SPRITES_PATH + imageName);
   this->setVesselButtonCallBack(button, vesselID);
   if (hidden) {
