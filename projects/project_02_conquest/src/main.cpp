@@ -1,6 +1,9 @@
 // Copyright 2025 stack_underflow CC-BY 4.0
 
 #include <iostream>
+#include <SFML/Graphics.hpp>
+
+#include "App.hpp"
 
 const char* const usage =
   "Usage: spaceOps [galaxy.csv] [operationNumber] [outputFolder]"
@@ -37,7 +40,7 @@ int main(int argc, char* argv[]) {
     }
     return EXIT_FAILURE;
   }
-  return EXIT_SUCCESS/*App().run();*/;
+  return App().run();
 }
 
 bool analyzeArguments(int argc, char* argv[]/*, Simulation& simulation*/) {

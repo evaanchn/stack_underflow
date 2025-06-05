@@ -1,3 +1,7 @@
 include ../../common/Makefile
 
-ARGS = tests/andromeda_systems.csv 10
+FLAG +=-Iinclude
+FLAG += $(shell fltk-config --cxxflags)
+
+LIBS +=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lfltk_images -lpng
+LIBS += $(shell fltk-config --ldflags)
