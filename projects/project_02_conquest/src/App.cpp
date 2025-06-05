@@ -26,10 +26,10 @@ int App::run() {
     if (!this->gameActive) {
       this->runMainWindow();
     } else {
-      // error = this->startGame();
+      error = this->startGame();
       if (error != EXIT_SUCCESS) return error;
-      // gameScene->run();
-      // this->endGame();/*Volume*/ 
+      gameScene->run();
+      this->endGame();  /*Volume*/ 
     }
   }
   return error;
@@ -90,21 +90,21 @@ void App::renderInformationScene() {
 //   gameOverScene.draw(mainWindow);
 // }
 
-// int App::startGame() {
-//   this->startSceneMusic.stop();
-//   this->gameSceneMusic.play();
-//   this->gameScene = new GameScene(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT
-//       , GAME_NAME);
-//   if (!this->gameScene) return EXIT_FAILURE;
-//   this->gameActive = ACTIVE;
-//   return EXIT_SUCCESS;
-// }
+int App::startGame() {
+  this->startSceneMusic.stop();
+  // this->gameSceneMusic.play();
+  this->gameScene = new GameScene(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT
+      , GAME_NAME);
+  if (!this->gameScene) return EXIT_FAILURE;
+  this->gameActive = ACTIVE;
+  return EXIT_SUCCESS;
+}
 
-// void App::endGame() {
-//   this->gameSceneMusic.stop();
-//   this->gameActive = !ACTIVE;
-//   if(this->gameScene) delete this->gameScene;
-//   this->gameScene = nullptr;
-//   this->setMainWindow();
-//   this->currentState = SceneState::GAME_OVER;
-// }
+void App::endGame() {
+  // this->gameSceneMusic.stop();
+  this->gameActive = !ACTIVE;
+  if(this->gameScene) delete this->gameScene;
+  this->gameScene = nullptr;
+  this->setMainWindow();
+  this->currentState = SceneState::GAME_OVER;
+}

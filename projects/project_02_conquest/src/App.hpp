@@ -2,16 +2,18 @@
 
 #pragma once
 
-#include "StartScene.hpp"
-#include "InformationScene.hpp"
 
 #include <iostream>
+
+#include "StartScene.hpp"
+#include "InformationScene.hpp"
+#include "GameScene.hpp"
 
 #define MAIN_WINDOW_WIDTH 1280
 #define MAIN_WINDOW_HEIGHT 720
 #define GAME_WINDOW_WIDTH 1280
 #define GAME_WINDOW_HEIGHT 720
-#define GAME_NAME "Space Ops: Algorithms Conquest"
+#define GAME_NAME "CosmoConquest: Algorithms master"
 #define LOOP true
 
 class App {
@@ -28,6 +30,7 @@ class App {
 
   StartScene startScene;
   InformationScene informationScene;
+  GameScene* gameScene = nullptr;
 
   SFMLSound startSceneMusic;
 
@@ -43,6 +46,6 @@ class App {
   void renderInformationScene();
   // void renderGameOverScene();
 
-  // int startGame();
-  // void endGame();
+  int startGame();
+  void endGame();
 };

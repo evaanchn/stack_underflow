@@ -61,9 +61,11 @@ class GameScene {
 
  private:
   size_t selectedVessel = NONE_SELECTED;
-  LayeredButton *bfsButton, *dfsButton, *dijkstraButton, *floydButton
-      , *greedySearchButton, *localSearchButton, *exhausativeSearchButton
-      , *exhaustivePruneButton;
+  LayeredButton *bfsButton = nullptr, *dfsButton = nullptr
+      , *dijkstraButton = nullptr, *floydButton = nullptr
+      , *greedySearchButton = nullptr, *localSearchButton = nullptr
+      , *exhausativeSearchButton = nullptr
+      , *exhaustivePruneButton = nullptr;
   std::vector<std::vector<LayeredButton*>> vesselButtons
       = {{bfsButton, dfsButton}
       , {dijkstraButton, floydButton}

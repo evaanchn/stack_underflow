@@ -84,7 +84,7 @@ void GameScene::switchVesselButtons(int newAction) {
       }
     }
   }
-    
+
   for (LayeredButton* vesselButton : this->vesselButtons[newAction]) {
     if (vesselButton) {
       vesselButton->activate();
