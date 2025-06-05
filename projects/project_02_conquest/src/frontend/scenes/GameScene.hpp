@@ -14,6 +14,7 @@
 
 #include "GameSceneConstants.hpp"
 
+#include "GameInfoWindow.hpp"
 #include "GameInfoText.hpp"
 #include "LayeredButton.hpp"
 #include "TextButton.hpp"
@@ -21,8 +22,9 @@
 
 class GameScene {
  private:
-  bool gameActive;
+  bool gameActive = ACTIVE;
   Fl_Window* window = nullptr;
+  GameInfoWindow* infoWindow = nullptr;
 
   Fl_Box* backgroundImageBox = nullptr;
   Fl_PNG_Image* backgroundImage = nullptr;

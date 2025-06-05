@@ -2,7 +2,8 @@
 
 #include "GameScene.hpp"
 
-GameScene::GameScene(int width, int height, const std::string& title) {
+GameScene::GameScene(int width, int height, const std::string& title)
+    : gameActive(ACTIVE) {
   this->window = new Fl_Window(width, height, title.c_str());
   this->setBackground();
   this->setLabels();
@@ -11,6 +12,8 @@ GameScene::GameScene(int width, int height, const std::string& title) {
   // TODO add game elements
   this->window->end();  // Ends window's elements' grouping
   this->window->show();
+
+  this->infoWindow = new GameInfoWindow();
 }
 
 GameScene::~GameScene() {
@@ -131,7 +134,8 @@ void GameScene::setVesselButtons() {
 
 LayeredButton* GameScene::createVesselButton(int x, int y,
     const std::string& imageName, int vesselID, bool hidden) {
-  auto* button = new LayeredButton(x, y, VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM);
+  auto* button = new LayeredButton(x, y, VESSEL_BUTTON_DIM
+      , VESSEL_BUTTON_DIM);
   this->setVesselButtonAppearance(button, VESSELS_SPRITES_PATH + imageName);
   this->setVesselButtonCallBack(button, vesselID);
   if (hidden) {
@@ -152,6 +156,7 @@ void GameScene::setVesselButtonCallBack(LayeredButton* button
   button->setOnClick([this, vesselID]() {
     if (this->selectedVessel == NONE_SELECTED) {
       this->selectedVessel = vesselID;
+      this->infoWindow->log(VESSELS_DATA[vesselID]);
       // TODO(any): add vessel button sound
       // this->vesselButtonSound.play();
     }
