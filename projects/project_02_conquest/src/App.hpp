@@ -8,6 +8,7 @@
 #include "StartScene.hpp"
 #include "InformationScene.hpp"
 #include "GameScene.hpp"
+#include "GameOverScene.hpp"
 
 #define MAIN_WINDOW_WIDTH 1280
 #define MAIN_WINDOW_HEIGHT 720
@@ -31,6 +32,7 @@ class App {
   StartScene startScene;
   InformationScene informationScene;
   GameScene* gameScene = nullptr;
+  GameOverScene gameOverScene;
 
   SFMLSound startSceneMusic;
   SFMLSound informationSceneMusic;
@@ -49,7 +51,7 @@ class App {
  private:
   void renderStartScene();
   void renderInformationScene();
-  // void renderGameOverScene();
+  void renderGameOverScene();
 
   int startGame();
   void endGame();
