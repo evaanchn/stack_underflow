@@ -3,6 +3,7 @@
 #pragma once
 
 #include <string>
+#include <SFMLRectangle.hpp>
 
 enum SceneState {
     START,
@@ -37,3 +38,5 @@ namespace Sizes {
 
 const std::string BACKGROUNDS_FOLDER = "assets/scenes_backgrounds/";
 const std::string MUSIC_FOLDER = "assets/music/";
+const std::string SOUNDS_FOLDER = "assets/sounds/";
+

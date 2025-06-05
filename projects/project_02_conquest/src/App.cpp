@@ -9,6 +9,10 @@ App::App()
   , startScene()
   , informationScene()
   , startSceneMusic(MUSIC_FOLDER + "startScene.wav", LOOP)
+  , informationSceneMusic(MUSIC_FOLDER + "informationScene.wav", LOOP)
+  , gameSceneMusic(MUSIC_FOLDER + "gameScene.wav", LOOP)
+  , gameOverSceneMusic(MUSIC_FOLDER + "gameOverScene.wav", LOOP)
+  , buttonClickSound(SOUNDS_FOLDER + "soundButtonClick.wav", !LOOP)
   {
   setMainWindow();
 }
@@ -58,10 +62,10 @@ void App::handleGlobalEvents(sf::RenderWindow& window, sf::Event& event) {
 
 void App::handleStateEvents(sf::Event& event) {
   if (currentState == START) startScene.handleEvent(this->mainWindow, event
-      , this->currentState, this->gameActive/*, this->buttonClickSound*/);
+      , this->currentState, this->gameActive, this->buttonClickSound);
   else if (currentState == INFORMATION) informationScene.handleEvent(
       this->mainWindow, event, this->currentState, this->appActive
-      /*, this->buttonClickSound*/);
+      , this->buttonClickSound);
   // else if (currentState == GAME_OVER) gameOverScene.handleEvent(this->mainWindow
   //     , event, this->currentState, this->appActive, this->buttonClickSound);
 }
@@ -73,15 +77,15 @@ void App::handleStateRendering() {
 }
 
 void App::renderStartScene() {
-  // informationSceneMusic.stop();
-  // gameOverSceneMusic.stop();
+  informationSceneMusic.stop();
+  gameOverSceneMusic.stop();
   startSceneMusic.play();
   startScene.draw(mainWindow);
 }
 
 void App::renderInformationScene() {
   startSceneMusic.pause();
-  // informationSceneMusic.play();
+  informationSceneMusic.play();
   informationScene.draw(mainWindow);
 }
 
@@ -92,7 +96,7 @@ void App::renderInformationScene() {
 
 int App::startGame() {
   this->startSceneMusic.stop();
-  // this->gameSceneMusic.play();
+  this->gameSceneMusic.play();
   this->gameScene = new GameScene(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT
       , GAME_NAME);
   if (!this->gameScene) return EXIT_FAILURE;
@@ -101,7 +105,7 @@ int App::startGame() {
 }
 
 void App::endGame() {
-  // this->gameSceneMusic.stop();
+  this->gameSceneMusic.stop();
   this->gameActive = !ACTIVE;
   if(this->gameScene) delete this->gameScene;
   this->gameScene = nullptr;
