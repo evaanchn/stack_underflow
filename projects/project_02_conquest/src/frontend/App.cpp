@@ -5,10 +5,10 @@
 App::App()
   : appActive(true)
   , gameActive(false)
-  , currentState(START)
+  , currentState(SceneState::START)
   , startScene()
   , informationScene()
-  , startSceneMusic(MUSIC_FOLDER + "startScene.wav", true)
+  , startSceneMusic(MUSIC_FOLDER + "startScene.wav", LOOP)
   {
   setMainWindow();
 }
@@ -20,16 +20,19 @@ void App::setMainWindow() {
   }
 }
 
-
 int App::run() {
+  int error = EXIT_SUCCESS;
   while (this->appActive) {
     if (!this->gameActive) {
-      runMainWindow();
+      this->runMainWindow();
     } else {
-      // FLTK Game menu
+      // error = this->startGame();
+      if (error != EXIT_SUCCESS) return error;
+      // gameScene->run();
+      // this->endGame();/*Volume*/ 
     }
   }
-  return EXIT_SUCCESS;
+  return error;
 }
 
 void App::runMainWindow() {
@@ -54,16 +57,54 @@ void App::handleGlobalEvents(sf::RenderWindow& window, sf::Event& event) {
 }
 
 void App::handleStateEvents(sf::Event& event) {
-  if (currentState == START) startScene.handleEvent(mainWindow, event
-      , currentState);
-  
+  if (currentState == START) startScene.handleEvent(this->mainWindow, event
+      , this->currentState, this->gameActive/*, this->buttonClickSound*/);
+  else if (currentState == INFORMATION) informationScene.handleEvent(
+      this->mainWindow, event, this->currentState, this->appActive
+      /*, this->buttonClickSound*/);
+  // else if (currentState == GAME_OVER) gameOverScene.handleEvent(this->mainWindow
+  //     , event, this->currentState, this->appActive, this->buttonClickSound);
 }
 
 void App::handleStateRendering() {
   if (this->currentState == START) renderStartScene();
+  else if (this->currentState == INFORMATION) renderInformationScene();
+  // else if (this->currentState == GAME_OVER) renderGameOverScene();
 }
 
 void App::renderStartScene() {
+  // informationSceneMusic.stop();
+  // gameOverSceneMusic.stop();
   startSceneMusic.play();
   startScene.draw(mainWindow);
 }
+
+void App::renderInformationScene() {
+  startSceneMusic.pause();
+  // informationSceneMusic.play();
+  informationScene.draw(mainWindow);
+}
+
+// void App::renderGameOverScene() {
+//   gameOverSceneMusic.play();
+//   gameOverScene.draw(mainWindow);
+// }
+
+// int App::startGame() {
+//   this->startSceneMusic.stop();
+//   this->gameSceneMusic.play();
+//   this->gameScene = new GameScene(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT
+//       , GAME_NAME);
+//   if (!this->gameScene) return EXIT_FAILURE;
+//   this->gameActive = ACTIVE;
+//   return EXIT_SUCCESS;
+// }
+
+// void App::endGame() {
+//   this->gameSceneMusic.stop();
+//   this->gameActive = !ACTIVE;
+//   if(this->gameScene) delete this->gameScene;
+//   this->gameScene = nullptr;
+//   this->setMainWindow();
+//   this->currentState = SceneState::GAME_OVER;
+// }

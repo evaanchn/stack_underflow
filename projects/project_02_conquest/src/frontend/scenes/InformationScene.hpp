@@ -13,10 +13,11 @@ class InformationScene {
  public:
   InformationScene();
   void handleEvent(sf::RenderWindow& window, sf::Event& event,
-      SceneState& currentState, bool& appActive, SFMLSound &buttonClickSound);
+      SceneState& currentState, bool& appActive/*, SFMLSound &buttonClickSound*/);
   void draw(sf::RenderWindow& window);
 
  private:
   SFMLImage background;
+  Button backButton;
   Button exitButton;
 };

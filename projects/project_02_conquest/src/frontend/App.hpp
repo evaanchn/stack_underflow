@@ -5,9 +5,15 @@
 #include "StartScene.hpp"
 #include "InformationScene.hpp"
 
+#include <iostream>
+
 #define MAIN_WINDOW_WIDTH 1280
 #define MAIN_WINDOW_HEIGHT 720
+#define GAME_WINDOW_WIDTH 1280
+#define GAME_WINDOW_HEIGHT 720
 #define GAME_NAME "Space Ops: Algorithms Conquest"
+#define LOOP true
+
 class App {
  public:
   App();
@@ -22,6 +28,7 @@ class App {
 
   StartScene startScene;
   InformationScene informationScene;
+
   SFMLSound startSceneMusic;
 
  private:
@@ -33,4 +40,9 @@ class App {
 
  private:
   void renderStartScene();
+  void renderInformationScene();
+  // void renderGameOverScene();
+
+  // int startGame();
+  // void endGame();
 };

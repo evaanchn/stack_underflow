@@ -11,7 +11,7 @@ class StartScene {
  public:
   StartScene();
   void handleEvent(sf::RenderWindow& window, sf::Event& event,
-      SceneState& currentState);
+      SceneState&, bool& gameActive/*, SFMLSound &buttonClickSound*/);
   void draw(sf::RenderWindow& window);
 
  private:
