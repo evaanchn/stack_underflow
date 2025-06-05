@@ -25,6 +25,7 @@ class SolarSystem {
  private:
   std::string name;
   size_t planetsCount;
+  size_t bossesAlive;
 
   Graph<Planet*, size_t>* planetGraph;
   std::vector<Planet*> planets;
@@ -78,6 +79,10 @@ class SolarSystem {
   /// @return The planet count.
   size_t getPlanetsCount() const;
 
+  /// @brief Gets the entry planet of the solar system.
+  /// @return Pointer to the entry planet.
+  Planet* getEntryPlanet() const;
+
   /// @brief Gets a pointer to the planet graph.
   /// @return Pointer to the graph representing planet connections.
   Graph<Planet*, size_t>* getGraph();
@@ -93,4 +98,15 @@ class SolarSystem {
   /// @brief Gets the mapping of planets to their respective indexes.
   /// @return Reference to the map from Planet* to size_t index.
   std::unordered_map<Planet*, size_t>& getPlanetsIndexes();
+  /// @brief Updates the status of a boss on a given planet and decrements the
+  /// count of alive bosses if defeated.
+  /// @param planet containing the boss to check.
+  /// @return true if the boss is still alive, false if it was defeated.
+  bool updateBossAlive(Planet* planet);
+  /// @brief Counts the number of bosses that are still alive
+  /// @return The count of alive bosses.
+  size_t countBossesAlive();
+  /// @brief Checks if the solar system is complete.
+  /// @return True if all bosses are defeated, false otherwise.
+  bool isComplete() const;
 };
