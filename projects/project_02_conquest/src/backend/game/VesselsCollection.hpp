@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include <Planet.hpp>
-
 #include "BFSVessel.hpp"
 #include "DFSVessel.hpp"
 #include "DijkstraVessel.hpp"

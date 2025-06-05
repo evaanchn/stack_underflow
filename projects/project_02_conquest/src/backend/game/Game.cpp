@@ -10,16 +10,25 @@ Game::Game() : galaxy(nullptr), player({0, 0}), gameOver(false) {
   }
 }
 
-void Game::startGame(const char* galaxyFileDirectory) {
+bool Game::startGame(const char* galaxyFileDirectory) {
   // avoid memory leaks if called multiple times
   if (this->galaxy) {
     delete this->galaxy;
     this->galaxy = nullptr;
   }
-  this->galaxy = new Galaxy(galaxyFileDirectory);
-  if (!this->galaxy) {
-    throw std::runtime_error("Galaxy instance could not be created.");
+  try {
+    this->galaxy = new Galaxy(galaxyFileDirectory);
+    if (!this->galaxy) {
+      throw std::runtime_error("Galaxy instance could not be created.");
+    }
+  } catch(const CSVException& e) {
+    std::cerr << e.what() << '\n';
+    return false;
+  } catch (const std::runtime_error& e) {
+    std::cerr << e.what() << '\n';
+    return false;
   }
+  return true;
 }
 
 Game::~Game() {
@@ -29,8 +38,8 @@ Game::~Game() {
   this->battleLog = nullptr;
 }
 
-void Game::probe(size_t vesselID, Coordinates& startPlanet) {
-  (void)startPlanet;  // Suppress unused variable warning
+void Game::probe(int vesselID, size_t startPlanetIndex) {
+  (void)startPlanetIndex;  // Suppress unused variable warning
   // SolarSystem* currentSolarSystem = this->galaxy->getCurrentSolarSystem();
   // transform the startPlanet coordinates to a Node<Planet*> pointer
   // Check if the vesselID is valid
@@ -41,8 +50,8 @@ void Game::probe(size_t vesselID, Coordinates& startPlanet) {
   }
 }
 
-void Game::scout(size_t vesselID, Coordinates& startPlanet) {
-  (void)startPlanet;  // Suppress unused variable warning
+void Game::scout(int vesselID, size_t startPlanetIndex) {
+  (void)startPlanetIndex;  // Suppress unused variable warning
   // SolarSystem* currentSolarSystem = this->galaxy->getCurrentSolarSystem();
   // transform the startPlanet coordinates to a Node<Planet*> pointer
   // Check if the vesselID is valid
@@ -53,10 +62,8 @@ void Game::scout(size_t vesselID, Coordinates& startPlanet) {
   }
 }
 
-size_t Game::attack(size_t vesselID, Coordinates& startPlanet
-    , Coordinates& targetPlanet) {
-  (void)startPlanet;  // Suppress unused variable warning
-  (void)targetPlanet;  // Suppress unused variable warning
+size_t Game::attack(int vesselID, size_t targetPlanetIndex) {
+  (void)targetPlanetIndex;  // Suppress unused variable warning
   // SolarSystem* currentSolarSystem = this->galaxy->getCurrentSolarSystem();
   // transform the startPlanet coordinates to a Node<Planet*> pointer
   // transform the targetPlanet coordinates to a Node<Planet*> pointer
@@ -78,17 +85,17 @@ size_t Game::attack(size_t vesselID, Coordinates& startPlanet
   return 0;  // Placeholder return value, replace with actual attack result
 }
 
-void Game::collectPurchasePoints() {
+void Game::collectEtherium() {
   // Collect purchase points based on active mines
-  if (this->player.purchasePoints < MAX_PURCHASE_POINTS) {
-    this->player.purchasePoints
+  if (this->player.etherium < MAX_PURCHASE_POINTS) {
+    this->player.etherium
       += this->player.activeMines * PURCHASE_POINTS_INC;
   }
 }
 
-bool Game::consumePurchasePoints(size_t points) {
-  if (this->player.purchasePoints >= points) {
-    this->player.purchasePoints -= points;
+bool Game::consumeEtherium(size_t points) {
+  if (this->player.etherium >= points) {
+    this->player.etherium -= points;
     return true;
   }
   return false;
@@ -101,6 +108,14 @@ bool Game::isGameOver() {
 Galaxy* Game::getGalaxy() const {
   return this->galaxy;
 }
+
+size_t Game::getSystemsLeftCount() const {
+  if (this->galaxy) {
+    return this->galaxy->getSystemsLeftCount();
+  }
+  return 0;
+}
+
 BattleLog* Game::getBattleLog() const {
   return this->battleLog;
 }
@@ -108,6 +123,13 @@ VesselsCollection<Planet*, size_t>& Game::getVessels() {
   return this->vessels;
 }
 
-size_t Game::getPurchasePoints() {
-  return this->player.purchasePoints;
+size_t Game::getVesselsCount() const {
+  return this->vessels.vesselsCount;
+}
+size_t Game::getMInesCount() const {
+  return this->player.activeMines;
+}
+
+size_t Game::getEtherium() const {
+  return this->player.etherium;
 }
