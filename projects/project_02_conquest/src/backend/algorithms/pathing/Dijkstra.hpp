@@ -61,7 +61,8 @@ class Dijkstra : public PathingAlgorithm<DataType, WeightType> {
     minHeap.push(std::pair<WeightType, Node<DataType>*>
         (newDistance, startingNode));
     // set edge as true in validEdges
-    validEdges[nodeIndexes[startingNode]][nodeIndexes[startingNode]] = true;
+    this->updateEdgeIndex(validEdges, nodeIndexes[startingNode]
+      , nodeIndexes[startingNode], true);
     // visit all unvisited adjacents
 
     while (!minHeap.empty()) {
@@ -79,15 +80,16 @@ class Dijkstra : public PathingAlgorithm<DataType, WeightType> {
           newDistance = currentNode.first + adjacent.second;
           // if the new distance is less than the saved distance
           if (newDistance < distances[nodeIndexes[adjacent.first]].first) {
-            // set past measured edge as false
-            this->updateEdgeIndex(validEdges, distances
+            // set past measured edge as false [oldShortest][adjacent] = false
+            this->updateEdgeIndex(validEdges
+              , distances.at(nodeIndexes[adjacent.first]).second
               , nodeIndexes[adjacent.first], false);
             // update the distance for the adjacent node
             distances[nodeIndexes[adjacent.first]]
               = std::pair<WeightType, size_t>(newDistance
               , nodeIndexes[currentNode.second]);
-            // mark the edge as measured
-            this->updateEdgeIndex(validEdges, distances
+            // mark the edge as measured: [currentNode][adjacent] = true
+            this->updateEdgeIndex(validEdges, nodeIndexes[currentNode.second]
               , nodeIndexes[adjacent.first], true);
             // push the adjacent node with its new distance into the minHeap
             minHeap.push(std::pair<WeightType, Node<DataType>*>
