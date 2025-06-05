@@ -18,7 +18,7 @@
 #define PURCHASE_POINTS_INC 15
 
 struct Player {
-  size_t purchasePoints;
+  size_t etherium;  /// currency
   size_t activeMines;
 };
 
@@ -44,33 +44,31 @@ class Game {
   /// @brief Start the game objects with the given galaxy
   /// @param galaxyFileDirectory path to the galaxy CSV file
   /// @throws std::runtime_error if the galaxy could not be created
-  void startGame(const char* galaxyFileDirectory);
+  bool startGame(const char* galaxyFileDirectory);
 
   /// @brief Uses a probing vessel to explore solar system planets
   /// @param vesselID ID of the vessel to be used in the probe
   /// @param startPlanet coordinates of the planet where the probe starts
-  void probe(size_t vesselID, Coordinates& startPlanet);
+  void probe(size_t vesselID, size_t startPlanetID);
 
   /// @brief Uses a scouting vessel to explore solar system paths
   /// @param vesselID ID of the vessel to be used in the scout
   /// @param startPlanet coordinates of the planet where the scout starts
-  void scout(size_t vesselID, Coordinates& startPlanet);
+  void scout(size_t vesselID, size_t startPlanetID);
 
   /// @brief Sends an attack to a planet
   /// @param vesselID ID of the vessel to be used in the attack
-  /// @param startPlanet coordinates of the planet where the attack starts
-  /// @param targetPlanet coordinates of the planet to be attacked
+  /// @param targetPlanet index of the planet to be attacked
   /// @return the result of the attack
-  size_t attack(size_t vesselID, Coordinates& startPlanet
-    , Coordinates& targetPlanet);
+  size_t attack(size_t vesselID, size_t targetPlanetID);
 
   /// Collects purchase points based on the number of active mines
-  void collectPurchasePoints();
+  void collectEtherium();
 
   /// @brief Tries to consume purchase points if there is enough
   /// @param points number of purchase points to consume
   /// @return true on success, false if not enough points
-  bool consumePurchasePoints(size_t points);
+  bool consumeEtherium(size_t points);
 
   /**
    * @brief checks if the game is over
@@ -80,8 +78,10 @@ class Game {
 
   /// @brief Getters
   Galaxy* getGalaxy() const;
+  size_t getSystemsLeftCount() const;
   BattleLog* getBattleLog() const;
   VesselsCollection<Planet*, size_t>& getVessels();
-  /// @brief get player's purchase points
-  size_t getPurchasePoints();
+  size_t getVesselsCount() const;
+  size_t getMInesCount() const;
+  size_t getEtherium() const;
 };

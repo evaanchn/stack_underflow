@@ -16,6 +16,7 @@ class Galaxy {
   std::vector<std::vector<std::string>> solarSystemsData;
   SolarSystem* currentSolarSystem;
   size_t currentSolarSystemIndex = 0;
+  size_t solarSystemsLeft = 0;
 
  public:
   /// @brief Constructs a Galaxy from a CSV file containing solar systems data.
@@ -35,4 +36,6 @@ class Galaxy {
 
  public:
   SolarSystem* getCurrentSolarSystem();
+  /// @brief Gets the number of solar systems left to explore.
+  size_t getSystemsLeftCount() const;
 };

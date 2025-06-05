@@ -14,6 +14,7 @@ void Galaxy::setUpGalaxy(const char* galaxyFileDirectory) {
   // TODO(any) add try catch for galaxy instancing
   CSVReader reader = CSVReader();
   reader.decomposeLines(galaxyFileDirectory, this->solarSystemsData, true);
+  this->solarSystemsLeft = this->solarSystemsData.size();
 }
 
 void Galaxy::createCurrentSolarSystem() {
@@ -31,6 +32,7 @@ void Galaxy::createCurrentSolarSystem() {
 
 void Galaxy::destroyCurrentSolarSystem() {
   if (this->currentSolarSystem) delete this->currentSolarSystem;
+  --this->solarSystemsLeft;  // count as completed
   this->currentSolarSystem = nullptr;
 }
 
@@ -45,4 +47,8 @@ bool Galaxy::passNextSolarSystem() {
 
 SolarSystem* Galaxy::getCurrentSolarSystem() {
   return this->currentSolarSystem;
+}
+
+size_t Galaxy::getSystemsLeftCount() const {
+  return this->solarSystemsLeft;
 }
