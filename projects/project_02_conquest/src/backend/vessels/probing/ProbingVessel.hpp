@@ -49,6 +49,7 @@ class ProbingVessel : public SpaceVessel {
     , std::unordered_set<DataType>& exploredElements, const WeightType limit) {
     // record algorithm execution
     ActionLog actionLog = ActionLog(this->traversalAlgorithm->getName());
+    actionLog.setResponsible("ProbingVessel");
     // whenever the graph is not fully explored and starting node
     // is already explored, execute the algorithm
     if (exploredElements.size() < adjacencyList.size()

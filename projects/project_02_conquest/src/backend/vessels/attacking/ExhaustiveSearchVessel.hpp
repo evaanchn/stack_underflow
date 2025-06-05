@@ -6,7 +6,7 @@
 #include <vector>
 
 #include <ActionLog.hpp>
-#include "GreedySearch.hpp"
+#include "ExhaustiveSearch.hpp"
 #include "AttackVessel.hpp"
 
 /// @brief Exhaustive search attack vessel
@@ -17,7 +17,7 @@ template<typename DataType, typename WeightType>
 class ExhaustiveSearchVessel : public AttackVessel<DataType, WeightType> {
  public:
   /// Constructor
-  AssaltVessel() {
-    this->AttackAlgorithm = new GreedySearch<DataType, WeightType>();
+  ExhaustiveSearchVessel() {
+    this->attackAlgorithm = new ExhaustiveSearch<DataType, WeightType>();
   }
 };

@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <queue>
 #include <unordered_set>
+#include <vector>
 
 #include "Algorithm.hpp"
 #include "Graph.hpp"
@@ -25,12 +26,15 @@ class AttackAlgorithm : public Algorithm<DataType, WeightType> {
    * @param startNode first element to visit
    * @param endNode Goal node
    * @param adjacencyList read only map with available edges from each node
+   * @param nodeIndexes Map nodes to their assigned index
+   * @param validEdges matrix to check if an edge is accesible
    * @param totalWeight total weight of the attack
    * @return size_t iterations taken
    */
-  virtual size_t attack(
-      Node<DataType>* startingNode, Node<DataType>* endNode
-      , const std::unordered_map<Node<DataType>*
-        , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList,
-      size_t& totalWeight) = 0;
+  virtual size_t attack(Node<DataType>* startNode, Node<DataType>* endNode
+    , const std::unordered_map<Node<DataType>*
+      , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
+    , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
+    , std::vector<std::vector<bool>>& validEdges
+    , WeightType& totalWeight) = 0;
 };

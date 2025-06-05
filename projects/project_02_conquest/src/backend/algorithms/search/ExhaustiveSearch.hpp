@@ -10,6 +10,7 @@
 #include <limits>
 #include <queue>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include "AttackAlgorithm.hpp"
@@ -24,64 +25,97 @@ class ExhaustiveSearch : public AttackAlgorithm<DataType, WeightType> {
  public:
   /// @brief Constructor of the class
   ExhaustiveSearch() {
-    this->algorithmName = "Exhaustive";
+    this->algorithmName = "Exhaustive Search";
   }
 
   /**
-   * @brief Exhaustive Search: always follows the locally cheapest edge
-   *        until reaching a previously explored node
+   * @brief Recursively explores possible paths from current node to and bound
+   *        destination while tracking the minimum path weight found.
+   *
+   * @param currentNode Node being currently visited in the search
+   * @param destiny Target node to reach
+   * @param visited Set of already visited nodes to avoid cycles
+   * @param adjacencyList Graph's adjacency list representation
+   * @param nodeIndexes Map nodes to their assigned index
+   * @param validEdges matrix to check if an edge is accesible
+   * @param currentWeight Accumulated weight of the current path
+   * @param minWeight Reference to store the minimum weight found
+   * @param iterations Counter of recursive calls (performance metric)
+   * @param prune if prune == true, punes all unnecesary paths
+   */
+  void findMinPath(Node<DataType>* currentNode, Node<DataType>* destiny
+      , std::unordered_set<DataType>& visited
+      , const std::unordered_map<Node<DataType>*
+        , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
+      , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
+      , std::vector<std::vector<bool>>& validEdges
+      , WeightType currentWeight, WeightType& minWeight, size_t& iterations
+      , bool prune) {
+    iterations++;
+    // if we find destiny, compare weights
+    if (currentNode == destiny) {
+      if (currentWeight < minWeight) {
+        minWeight = currentWeight;
+      }
+      return;
+    }
+    // mark current node as visited
+    visited.insert(currentNode->getData());
+    // explore all the neigbors
+    const auto& neighbors = adjacencyList.at(currentNode);
+    for (const auto& neighborPair : neighbors) {
+      Node<DataType>* neighbor = neighborPair.first;
+      // Check if the edge is valid or neighbor has been visited
+      if (!(validEdges[nodeIndexes[currentNode]][nodeIndexes[neighbor]])
+          || visited.find(neighbor->getData()) != visited.end()) {
+        continue;  // take different path
+      }
+      WeightType edgeWeight = neighborPair.second;
+      // verifies Exhaustive Search version
+      if (prune) {
+        // cut branches if the current weight is exceeded
+        if (currentWeight + edgeWeight < minWeight) {
+          findMinPath(neighbor, destiny, visited, adjacencyList, nodeIndexes
+            , validEdges, currentWeight + edgeWeight, minWeight, iterations
+            , prune);
+        }
+      } else {
+        findMinPath(neighbor, destiny, visited, adjacencyList, nodeIndexes
+          , validEdges, currentWeight + edgeWeight, minWeight, iterations
+            , prune);
+      }
+    }
+    // go back and unmark the current node to probe other possible paths
+    visited.erase(currentNode->getData());
+  }
+
+  /**
+   * @brief Exhaustive Search: evaluate all possible paths until find the best
+   *        one in the graph
    *
    * @param startNode first element to visit
    * @param endNode Goal node
    * @param adjacencyList read only map with available edges from each node
+   * @param nodeIndexes Map nodes to their assigned index
+   * @param validEdges matrix to check if an edge is accesible
    * @param totalWeight total weight of the attack
    * @return size_t iterations taken
    */
   size_t attack(Node<DataType>* startNode, Node<DataType>* endNode
       , const std::unordered_map<Node<DataType>*
         , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
-      , size_t& totalWeight) override {
+      , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
+      , std::vector<std::vector<bool>>& validEdges
+      , WeightType& totalWeight) override {
+    // total weight initialization
     totalWeight = std::numeric_limits<WeightType>::max();
+    // iterations taken by the algorithm
     size_t iterations = 0;
-    // Collect all nodes except start for permutation
-    std::vector<Node<DataType>*> nodes;
-    for (const auto& [node, neighbors] : adjacencyList) {
-      if (node != startNode) {
-        nodes.push_back(node);
-      }
-    }
-    // Try all permutations of paths
-    while (std::next_permutation(nodes.begin(), nodes.end())) {
-      WeightType currentWeight = 0;
-      Node<DataType>* currentNode = startNode;
-      bool validPath = true;
-      // Follow the current permutation
-      for (Node<DataType>* nextNode : nodes) {
-        iterations++;
-        // Check if edge exists
-        if (adjacencyList.at(currentNode).count(nextNode) == 0) {
-          validPath = false;
-          break;
-        }
-        currentWeight += adjacencyList.at(currentNode).at(nextNode);
-        // Early exit if path is already worse than the best
-        if (currentWeight >= totalWeight) {
-          validPath = false;
-          break;
-        }
-        currentNode = nextNode;
-        // Stop if reached the end node
-        if (currentNode == endNode) {
-          break;
-        }
-      }
-      // Update best weight if this path is valid and better
-      if (validPath && currentNode == endNode &&
-          currentWeight < totalWeight) {
-        totalWeight = currentWeight;
-      }
-    }
-    // If no path found, return 0
+    // container to store visited elements in actual traversal
+    std::unordered_set<DataType> visited;
+    findMinPath(startNode, endNode, visited, adjacencyList, nodeIndexes
+      , validEdges, static_cast<WeightType>(0), totalWeight, iterations, false);
+    // validates if no path was found
     if (totalWeight == std::numeric_limits<WeightType>::max()) {
       totalWeight = 0;
     }
