@@ -8,9 +8,16 @@
 #include "BattleLog.hpp"
 #include "Galaxy.hpp"
 #include "Game.hpp"
+#include "GameConstants.hpp"
 #include "SolarSystem.hpp"
 
 #define MAX_DAMAGE_SIMULATION 1
+
+enum ACTIONS {
+  PROBE, SCOUT, ATTACK
+};
+
+#define RECORD_ACTIONS true
 
 /**
  * @class Simulation
@@ -24,27 +31,22 @@ class Simulation {
   /// @brief Pointer to the BattleLog instance for recording actions.
   BattleLog* battleLog;
   /// @brief The name of the Galaxy CSV file to be loaded.
-  std::string galaxyCSVPath;
-  /// @brief The number of operations to be executed for each algorithm.
-  size_t operationsNumber = 0;
+  std::string galaxyCSVPath = GALAXY_FILE;
   /// @brief The output folder where BattleLog files will be stored.
   std::string outputFolder;
-  /// @brief The probability of linking planets in the galaxy graph.
-  double linkProbability;  // Default value if not specified
+  /// @brief Flag for deciding whether to record actions or not
+  bool recordActions = !RECORD_ACTIONS;
 
   /// @brief Provides usage instructions for the program.
   const char* const usage =
-  "Usage: spaceOps galaxy.csv operationNumber [outputFolder]"
-  " [linkProbability]\n"
+  "Usage: project_02_conquest galaxy.csv [outputFolder] print\n"
   "\n"
   "  - galaxy.csv: relative path from the executing folder to the required csv"
   " file\n"
-  "  - operationNumber: Number of executions to be done for each algorithm\n"
-  "  - outputFolder: {optional} relative path from the executing folder to a"
-  "writeable folder to store BattleLog files\n"
-  "  - linkProbability: {optional} Number betwen 0-100, modify graph"
-  " conectivity level\n";
-
+  "  - print: {optional} Indicate if specific actions must be printed into"
+  "report\n"
+  " - outputFolder: {optional} relative path from the executing folder to a"
+  "writeable folder to store BattleLog files\n";
  public:
   /// @brief Constructs a Simulation instance.
   /// Initializes the battle log and loads a Galaxy CSV file.
@@ -72,6 +74,14 @@ class Simulation {
   void test();
   /// @brief Perform ramndom actions until the solar system is complete.
   void completeSystemTest();
+  void testProbe(std::vector<ActionLog>& BFSLogs
+      , std::vector<ActionLog>& DFSLogs);
+  void testScout(std::vector<ActionLog>& dijkstraLogs
+      , std::vector<ActionLog>& floydLogs);
+  void testAttack(std::vector<DamageLog>& GreedyLogs
+      , std::vector<DamageLog>& LocalSearchLogs
+      , std::vector<DamageLog>& ExhaustiveSearchLogs
+      , std::vector<DamageLog>& exhaustiveSearchPruneLogs);
   /// @brief Test executions for various space vessel algorithms.
   /// @return ActionLog object containing the results of the tests.
   ActionLog tesProbingVessel(ProbingVessel<Planet*, size_t>* vessel);

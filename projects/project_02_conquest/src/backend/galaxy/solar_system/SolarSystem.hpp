@@ -9,7 +9,7 @@
 
 #include "ArticulationPointsFinder.hpp"
 #include "Graph.hpp"
-#include "Planet.hpp"
+#include "planet/Planet.hpp"
 #include "Random.hpp"
 
 enum SOL_SYS_DATA_POSITIONS {
@@ -19,7 +19,7 @@ enum SOL_SYS_DATA_POSITIONS {
 #define MINE_BOSS_SPAWN_PROB 0.1
 #define LINK_PROB 0.7
 #define DISTANCE_MAGNIFIER 10
-#define X_COORDS_MAGNIFIER 2
+#define X_COORDS_MAGNIFIER 1
 
 class SolarSystem {
  private:
