@@ -8,8 +8,24 @@ GameScene::GameScene(int width, int height, const std::string& title) {
   this->setLabels();
   this->setActionButtons();
   // TODO add game elements
+  this->testPlanetLoading();
   this->window->end();  // Ends window's elements' grouping
   this->window->show();
+}
+
+void GameScene::testPlanetLoading() {
+  std::vector<Planet*> testPlanets;
+  for (int i = 0; i < 8; ++i) {
+    std::string name = "Planeta " + std::to_string(i+1);
+    bool hasMine = (i % 3 == 0);
+    Planet* p = new Planet(name, hasMine);
+
+    Coordinates* coords = new Coordinates{i, i};
+    p->setCoordinates(coords);
+
+    testPlanets.push_back(p);
+  }
+  this->setSolarSystem(testPlanets);
 }
 
 GameScene::~GameScene() {
@@ -109,6 +125,21 @@ void GameScene::setVesselButtonCallBack(LayeredButton* button
     // TODO(any): add vessel button sound
     // this->vesselButtonSound.play();
   });
+}
+
+void GameScene::setSolarSystem(std::vector<Planet*> planets) {
+  if (solarSystemArea) {
+    window->remove(solarSystemArea);
+    delete solarSystemArea;
+  }
+  
+  solarSystemArea = new Fl_Group(0, 0, window->w(), window->h());
+  solarSystem = new UISolarSystem();
+  solarSystem->createPlanets(planets);
+  
+  // Añadir solarSystemArea al window
+  window->add(solarSystemArea);
+  window->redraw();
 }
 
 int GameScene::run() {

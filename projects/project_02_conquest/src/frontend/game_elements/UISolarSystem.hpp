@@ -12,12 +12,22 @@
 
 #pragma once
 
+#include <algorithm>
+#include <cmath>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
+#include "Random.hpp"
 #include "UIPlanet.hpp"
 #include "../backend/galaxy/solar_system/planet/Planet.hpp"
 
+#define NONE_SELECTED -1
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
+#define RIGHT_HALF_START_X (WINDOW_WIDTH / 2)
+#define MIN_MARGIN 20
+#define MIN_PLANET_DISTANCE 30
 #define NONE_SELECTED -1
 
 class UISolarSystem {
@@ -25,8 +35,21 @@ class UISolarSystem {
   std::vector<UIPlanet*> UiPlanets;
   int selectedPlanet = NONE_SELECTED;
 
+  const int areaWidth = WINDOW_WIDTH / 2 - MIN_MARGIN * 2;
+  const int areaHeight = WINDOW_HEIGHT - MIN_MARGIN * 2;
+  const int startX = RIGHT_HALF_START_X + MIN_MARGIN;
+
  public:
   UISolarSystem() = default;
+  ~UISolarSystem();
   void createPlanets(std::vector<Planet*> planets);
   int getSelectedPlanet() const;
+
+ private:
+  std::vector<std::pair<int, int>> generateValidPositions(size_t count
+      , const std::vector<int>& planetSizes);
+  
+  bool isValidPosition(int x, int y, int size
+      , const std::vector<std::pair<int, int>>& positions
+      , const std::vector<int>& sizes);
 };

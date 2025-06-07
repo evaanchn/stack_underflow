@@ -15,6 +15,7 @@
 #include "GameInfoText.hpp"
 #include "LayeredButton.hpp"
 #include "TextButton.hpp"
+#include "UISolarSystem.hpp"
 
 #define ACTIVE true
 
@@ -32,7 +33,7 @@ enum ACTIONS {
 #define ACTION_BUTTON_H 50
 
 enum VESSEL_ID {
-  NONE_SELECTED = -1, BFS, DFS, DIJKSTRA, FLOYD, GREEDY, LOCAL_SEARCH
+  BFS, DFS, DIJKSTRA, FLOYD, GREEDY, LOCAL_SEARCH
   , EXHAUSTIVE, EXHAUSTIVE_PRUNED
 };
 
@@ -83,6 +84,7 @@ class GameScene {
   // with delete UiSolarSystem and then this->window->remove(solarSystemArea)
   // then add another and add to the group and restart the group
   Fl_Group* solarSystemArea = nullptr;
+  UISolarSystem* solarSystem = nullptr;
 
  public:
   GameScene(int width, int height, const std::string& title);
@@ -98,6 +100,8 @@ class GameScene {
   void setVesselButtons();
   void setVesselButtonCallBack(LayeredButton* button, size_t vesselID);
 
+  void setSolarSystem(std::vector<Planet*> planets);
+  void testPlanetLoading(); // Test method
 
  public:
   int run();
