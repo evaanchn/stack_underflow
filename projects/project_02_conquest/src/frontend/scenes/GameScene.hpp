@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "SFMLSound.hpp"
+
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
@@ -19,6 +21,7 @@
 #include "LayeredButton.hpp"
 #include "TextButton.hpp"
 
+#include "Game.hpp"  // Include controller
 
 class GameScene {
  private:
@@ -31,9 +34,10 @@ class GameScene {
 
  private:
   int selectedAction = PROBE;
-  TextButton* probeButton = nullptr, *exploreButton = nullptr
+  TextButton* probeButton = nullptr, *scoutButton = nullptr
       , * attackButton = nullptr;
   std::vector<TextButton*> actionButtons = {};
+  SFMLSound actionButtonSound;
 
  private:
   int selectedVessel = NONE_SELECTED;
@@ -43,30 +47,40 @@ class GameScene {
       , *exhausativeSearchButton = nullptr
       , *exhaustivePruneButton = nullptr;
   std::vector<std::vector<LayeredButton*>> vesselButtons = {};
+  SFMLSound vesselButtonSound;
+  SFMLSound attackSound;
 
  private:
   GameInfoText *remainingBossesLabel = nullptr, *ownedMinesLabel = nullptr
-      , *availableEtheriumLabel = nullptr, *solarSystemsLeftLabel = nullptr;
+      , *availableEtheriumLabel = nullptr, *currentSystemLabel = nullptr
+      , *solarSystemsLeftLabel = nullptr;
   std::vector<GameInfoText*> labels = {remainingBossesLabel, ownedMinesLabel
-      , availableEtheriumLabel, solarSystemsLeftLabel};
+      , availableEtheriumLabel, currentSystemLabel, solarSystemsLeftLabel};
+
+ private:
+  Game* game = nullptr;  // Controller for the game logic
+  sf::Clock etheriumClock;  // Clock to manage etherium production timing
 
   // TODO (ANY) add solarSystemArea implementation
   // Group solar system so it can be removed without deleting previous elements
   // with delete UiSolarSystem and then this->window->remove(solarSystemArea)
   // then add another and add to the group and restart the group
   Fl_Group* solarSystemArea = nullptr;
+  SFMLSound newSystemSound;
 
  public:
   GameScene(int width, int height, const std::string& title);
   ~GameScene();
 
  private:
+  void setGameInstance();
+
   void setBackground();
   void setLabels();
   void setActionButtons();
   void setActionButtonCallBack(TextButton* button, int actionID);
   void switchVesselButtons(int newAction);
-
+  
   void setVesselButtons();
   LayeredButton* createVesselButton(int x, int y
       , const std::string& imageName, const std::string& label, int vesselID
@@ -74,17 +88,25 @@ class GameScene {
   void setVesselButtonAppearance(LayeredButton* button, std::string path);
   void setVesselButtonCallBack(LayeredButton* button, int vesselID);
 
+
  public:
   int run();
 
  private:
   void handleEvents();
-  void update();
+  void handleProbeAction();
+  void handleScoutAction();
+  void handleAttackAction();
+  void handleEtheriumProduction();
 
  private:
+  void update();
+  void updateCompleteSystem();
+  void updateNewSolarSystem();
   void updateLabels();
   void updateRemainingBossesLabel();
   void updateOwnedMinesLabel();
   void updateAvailableEtheriumLabel();
+  void updateCurrentSystemLabel();
   void updateSolarSystemsLeftLabel();
 };

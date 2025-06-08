@@ -18,10 +18,14 @@ enum Confirmation { NO_CHOICE, CONFIRM, CANCEL };
 #define CONFIRM_BUTTONS_HEIGHT 30
 #define CONFIRM_BUTTONS_SPACING 20
 
+#define INFO_WINDOW_X 320
+#define INFO_WINDOW_Y 100
+
 class GameInfoWindow {
  public:
-  explicit GameInfoWindow(int width = INFO_WINDOW_WIDTH
-      , int height = INFO_WINDOW_HEIGHT, const char* title = "Game Info");
+  explicit GameInfoWindow(int posX = INFO_WINDOW_X, int posY = INFO_WINDOW_Y
+    , int width = INFO_WINDOW_WIDTH, int height = INFO_WINDOW_HEIGHT
+    , const char* title = "Game Info");
   ~GameInfoWindow();
 
   void show();

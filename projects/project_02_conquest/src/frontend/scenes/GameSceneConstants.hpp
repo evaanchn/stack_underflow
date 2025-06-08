@@ -4,7 +4,20 @@
 
 #include <string>
 
+#include "GameConstants.hpp"
+
 #define ACTIVE true
+
+// MUSIC
+const std::string VESSEL_BUTTON_SOUND_PATH
+  = "assets/sounds/soundVesselButton.wav";
+const std::string SOUND_ACTION_BUTTON_PATH
+  = "assets/sounds/soundActionButton.wav";
+const std::string SOUND_NEW_SYSTEM_PATH
+= "assets/sounds/transitionMistery.wav";
+const std::string SOUND_ATTACK_PATH
+= "assets/sounds/attack.wav";
+
 
 // BACKGROUND
 const std::string SCENES_BACKGROUND_PATH = "assets/scenes_backgrounds/";
@@ -19,7 +32,7 @@ const std::string GAME_SCENE_BACKGROUND = SCENES_BACKGROUND_PATH
 
 // ACTIONS
 enum ACTIONS {
-  NO_ACTION = -1, PROBE, EXPLORE, ATTACK
+  NO_ACTION = -1, PROBE, SCOUT, ATTACK
 };
 
 #define ACTION_BUTTONS_X 60
@@ -27,6 +40,7 @@ enum ACTIONS {
 #define ACTION_BUTTON_H 50
 
 // VESSELS
+#define BLOCKED -2
 #define NONE_SELECTED -1
 #define VESSEL_BUTTON_DIM 100
 // X Positions
@@ -48,10 +62,13 @@ const std::vector<std::string> VESSELS_LABELS = {
 };
 
 const std::vector<std::string> VESSELS_DATA = {
-    "Algorithm: BFS\nCost: 10", "Algorithm: DFS\nCost: 10"
-    , "Algorithm: Dijkstra\nCost: 20", "Algorithm: Floyd\nCost: 30"
-    , "Algorithm: Greedy Search\nCost: 35"
-    , "Algorithm: Local Search\nCost: 40"
-    , "Algorithm: Exhaustive Search\nCost: 45"
-    , "Algorithm: Exhaustive Prune\nCost: 50"
+  "Algorithm: BFS\nCost: " +  std::to_string(BFS_COST)
+  , "Algorithm: DFS\nCost: " +  std::to_string(DFS_COST)
+  , "Algorithm: Dijkstra\nCost: " +  std::to_string(DIJKSTRA_COST)
+  , "Algorithm: Floyd\nCost: " +  std::to_string(FLOYD_COST)
+  , "Algorithm: Greedy Search\nCost: " +  std::to_string(GREEDY_COST)
+  , "Algorithm: Local Search\nCost: " +  std::to_string(LOCALSEARCH_COST)
+  , "Algorithm: Exhaustive Search\nCost: " +  std::to_string(EXHAUSTIVE_COST)
+  , "Algorithm: Exhaustive Prune\nCost: "
+    +  std::to_string(EXHAUSTIVEPRUNE_COST)
 };

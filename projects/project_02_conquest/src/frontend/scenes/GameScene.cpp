@@ -3,13 +3,18 @@
 #include "GameScene.hpp"
 
 GameScene::GameScene(int width, int height, const std::string& title)
-    : gameActive(ACTIVE) {
+    : gameActive(ACTIVE)
+    , actionButtonSound(SOUND_ACTION_BUTTON_PATH, false)
+    , vesselButtonSound(VESSEL_BUTTON_SOUND_PATH, false) 
+    , attackSound(SOUND_ATTACK_PATH, false)
+    , newSystemSound(SOUND_NEW_SYSTEM_PATH, false) {
   this->window = new Fl_Window(width, height, title.c_str());
+  this->setGameInstance();
   this->setBackground();
   this->setLabels();
   this->setActionButtons();
   this->setVesselButtons();
-  // TODO add game elements
+  // TODO (any) add solar system area
   this->window->end();  // Ends window's elements' grouping
   this->window->show();
 
@@ -27,6 +32,25 @@ GameScene::~GameScene() {
   delete this->backgroundImage;
   delete this->backgroundImageBox;
   delete this->window;
+  delete this->infoWindow;
+  delete this->game;  // Delete game controller
+  this->game = nullptr;  // Avoid dangling pointer
+}
+
+
+void GameScene::setGameInstance() {
+  this->game = new Game();  // Initialize game controller
+  if (!this->game) {
+    throw std::runtime_error("Game instance could not be created");
+  }
+  if (!this->game->startGame()) {  // Start game with default galaxy file
+    delete this->game;  // Delete game controller if it could not be started
+    this->game = nullptr;  // Avoid dangling pointer
+    throw std::runtime_error("Game could not be started");
+  }
+  if (this->game->getBattleLog()->setBattleLog(RECORD_GAME) == EXIT_FAILURE) {
+    throw std::runtime_error("Battle log could not be set");
+  }
 }
 
 void GameScene::setBackground() {
@@ -43,61 +67,75 @@ void GameScene::setBackground() {
 // TODO (any) leave initial texts as empty once game is implemented
 void GameScene::setLabels() {
   this->remainingBossesLabel = new GameInfoText(110, /*Y*/ 20, LABEL_BOX_W
-      , LABEL_BOX_H, "1 remaining", FL_WHITE);
+    , LABEL_BOX_H, "", FL_WHITE);
   this->ownedMinesLabel = new GameInfoText(90, /*Y*/ 100, LABEL_BOX_W
-      , LABEL_BOX_H, "1 owned", FL_WHITE);
+    , LABEL_BOX_H, "", FL_WHITE);
   this->availableEtheriumLabel = new GameInfoText(120, /*Y*/ 180, LABEL_BOX_W
-      , LABEL_BOX_H, "999 available", FL_WHITE);
+    , LABEL_BOX_H, "", FL_WHITE);
+  this->currentSystemLabel = new GameInfoText(40, /*Y*/ 560, LONG_LABEL_BOX_W
+    , LABEL_BOX_H, "", FL_WHITE);
   this->solarSystemsLeftLabel = new GameInfoText(40, /*Y*/ 620, LONG_LABEL_BOX_W
-      , LABEL_BOX_H, "9 solar systems left", FL_WHITE);
+    , LABEL_BOX_H, "", FL_WHITE);
+  this->updateLabels();
 }
 
 void GameScene::setActionButtons() {
   this->probeButton = new TextButton(ACTION_BUTTONS_X, /*Y*/ 300
-      , ACTION_BUTTON_W, ACTION_BUTTON_H, "PROBE");
+    , ACTION_BUTTON_W, ACTION_BUTTON_H, "PROBE");
   this->setActionButtonCallBack(this->probeButton, PROBE);
 
-  this->exploreButton  = new TextButton(ACTION_BUTTONS_X, /*Y*/ 350
-      , ACTION_BUTTON_W, ACTION_BUTTON_H, "EXPLORE");
-  this->setActionButtonCallBack(this->exploreButton, EXPLORE);
+  this->scoutButton  = new TextButton(ACTION_BUTTONS_X, /*Y*/ 350
+    , ACTION_BUTTON_W, ACTION_BUTTON_H, "SCOUT");
+  this->setActionButtonCallBack(this->scoutButton, SCOUT);
 
   this->attackButton  = new TextButton(ACTION_BUTTONS_X, /*Y*/ 400
-      , ACTION_BUTTON_W, ACTION_BUTTON_H, "ATTACK");
+    , ACTION_BUTTON_W, ACTION_BUTTON_H, "ATTACK");
   this->setActionButtonCallBack(this->attackButton, ATTACK);
 
-  actionButtons = {probeButton, exploreButton, attackButton};
+  actionButtons = {probeButton, scoutButton, attackButton};
 }
 
 void GameScene::setActionButtonCallBack(TextButton* button, int actionID) {
   button->set_click_callback([button, this, actionID]() {
+    if (this->selectedVessel != NONE_SELECTED) {
+      this->infoWindow->log("Vessel already selected");
+      return;  // Do not change action if a vessel is selected
+    }
+    if (this->selectedAction == BLOCKED) return;
     this->switchVesselButtons(actionID);
     this->selectedAction = actionID;
+    this->actionButtonSound.play();
     button->select();
   });
 }
 
 void GameScene::switchVesselButtons(int newAction) {
-  // Avoid switch if selected remains the same, or if NONE_SELECTED is involved
+  // Avoid switch if selected remains the same, or if NONE_SELECTED
   if (this->selectedAction == newAction
       || this->selectedAction == NONE_SELECTED
       || newAction == NONE_SELECTED) return;
 
-  this->actionButtons[this->selectedAction]->deselect();
-  // Hide and deactivate current selected actions' vessels
-  for (LayeredButton* vesselButton
-      : this->vesselButtons[this->selectedAction]) {
-    if (vesselButton) {
-      vesselButton->hide();
-      vesselButton->deactivate();
-      vesselButton->redraw();
+  if (this->selectedAction != BLOCKED) {
+    this->actionButtons[this->selectedAction]->deselect();
+    // Hide and deactivate current selected actions' vessels
+    for (LayeredButton* vesselButton
+        : this->vesselButtons[this->selectedAction]) {
+      if (vesselButton) {
+        vesselButton->hide();
+        vesselButton->deactivate();
+        vesselButton->redraw();
+      }
     }
   }
-  // Activate and show new action's vessels
-  for (LayeredButton* vesselButton : this->vesselButtons[newAction]) {
-    if (vesselButton) {
-      vesselButton->activate();
-      vesselButton->show();
-      vesselButton->redraw();
+
+  if (newAction != BLOCKED) {
+    // Activate and show new action's vessels
+    for (LayeredButton* vesselButton : this->vesselButtons[newAction]) {
+      if (vesselButton) {
+        vesselButton->activate();
+        vesselButton->show();
+        vesselButton->redraw();
+      }
     }
   }
 }
@@ -158,11 +196,10 @@ void GameScene::setVesselButtonAppearance(LayeredButton* button
 void GameScene::setVesselButtonCallBack(LayeredButton* button
     , int vesselID) {
   button->setOnClick([this, vesselID]() {
+    // if (this->selectedAction == BLOCKED) return;
     if (this->selectedVessel == NONE_SELECTED) {
       this->selectedVessel = vesselID;
-      this->infoWindow->log(VESSELS_DATA[vesselID]);
-      // TODO(any): add vessel button sound
-      // this->vesselButtonSound.play();
+      this->vesselButtonSound.play();
     }
   });
 }
@@ -171,8 +208,7 @@ int GameScene::run() {
   while (this->gameActive) {
     this->handleEvents();
     this->update();
-    // TODO (any) uncomment when game is included
-    if (/*this->game->isGameOver()||*/ !this->window->visible()) {
+    if (this->game->isGameOver() || !this->window->visible()) {
       this->window->hide();
       this->gameActive = !ACTIVE;
     }
@@ -184,42 +220,176 @@ int GameScene::run() {
 
 // TODO (ANY) add handle methdods for each available action (3)
 void GameScene::handleEvents() {
+  // Handle events for actions
+  if (this->selectedAction == PROBE) {
+    handleProbeAction();
+  } else if (this->selectedAction == SCOUT) {
+    handleScoutAction();
+  } else if (this->selectedAction == ATTACK) {
+    handleAttackAction();
+  }
+  this->handleEtheriumProduction();
+}
 
+void GameScene::handleProbeAction() {
+  if (this->selectedVessel != NONE_SELECTED) {
+    int selectedPlanet = 0;// this->system->getSelectedPlanet();
+    if (selectedPlanet != NONE_SELECTED) {
+      if(!this->game->probe(this->selectedVessel, selectedPlanet)) {
+        this->infoWindow->log("Failed, insuficient etherium\n"
+          + VESSELS_DATA[selectedVessel]);
+      }
+      this->selectedVessel = NONE_SELECTED;  // Reset selected vessel
+    }
+  }
+}
+
+void GameScene::handleScoutAction() {
+  if (this->selectedVessel != NONE_SELECTED) {
+    int selectedPlanet = 0;  // this->system->getSelectedPlanet();
+    if (selectedPlanet != NONE_SELECTED) {
+      if(!this->game->scout(this->selectedVessel, selectedPlanet)) {
+        this->infoWindow->log("Failed, insuficient etherium\n"
+          + VESSELS_DATA[selectedVessel]);
+      }
+      this->selectedVessel = NONE_SELECTED;  // Reset selected vessel
+    }
+  }
+}
+void GameScene::handleAttackAction() {
+  if (this->selectedVessel != NONE_SELECTED) {
+    int selectedPlanet = NONE_SELECTED;// this->system->getSelectedPlanet();
+
+    // TODO(Albin) remove this
+    for (size_t i = 0; i < this->game->getGalaxy()->getCurrentSolarSystem()
+      ->getPlanetsCount(); ++i) {
+      if (this->game->getGalaxy()->getCurrentSolarSystem()->getGraph()
+        ->getNodes().at(i)->getData()->hasBoss()) {
+        // For testing purposes, attack first planet with a boss
+        selectedPlanet = i; 
+        break;
+      }
+    }
+    if (selectedPlanet != NONE_SELECTED) {
+      int damage = this->game->attack(this->selectedVessel, selectedPlanet);
+      if (damage == INSUFICIENT_ETHERIUM) {
+        this->infoWindow->log("Failed, insuficient etherium\n"
+          + VESSELS_DATA[selectedVessel]);
+      } else if (damage == HAS_NO_BOSS){
+        this->infoWindow->log("Failed, no boss at planet");
+      } else {
+        this->infoWindow->log(std::to_string(damage) + " damage pts");
+        this->attackSound.play();
+      }
+      this->selectedVessel = NONE_SELECTED;  // Reset selected vessel
+    }
+  }
+}
+
+void GameScene::handleEtheriumProduction() {
+  // Do not produce etherium if not enough time has passed
+  if (this->etheriumClock.getElapsedTime().asSeconds()
+      < ETHERUM_PRODUCTION_TIME) {
+    return;
+  }
+  this->etheriumClock.restart();  // Restart the clock for next production
+  this->game->collectEtherium();  // Collect etherium based on owned mines
+  this->updateAvailableEtheriumLabel();
 }
 
 // TODO (ANY) complete update method, depending on game occurences
 void GameScene::update() {
-
+  if (this->selectedAction  == PROBE) {
+    this->updateAvailableEtheriumLabel();
+    // this->updateVisiblePlanets();
+  } else if (this->selectedAction == SCOUT) {
+    this->updateAvailableEtheriumLabel();
+    // this->updateExploredPaths();
+  } else if (this->selectedAction == ATTACK) {
+    this->updateRemainingBossesLabel();
+    this->updateOwnedMinesLabel();
+    this->updateAvailableEtheriumLabel();
+  }
+  if (this->game->isCurrentSolarSystemCompleted()) {
+    this->updateCompleteSystem();  // Update to next solar system
+    if (this->infoWindow->getConfirmationChoice() == CONFIRM) {
+      this->infoWindow->toggle();
+      this->infoWindow->resetConfirmationChoice();
+      this->updateNewSolarSystem();
+    }
+    this->updateLabels();
+  }
 }
 
-// TODO (any) uncomment once game is implemented
+void GameScene::updateCompleteSystem() {
+  // wait for confirmation before proceeding
+  this->switchVesselButtons(BLOCKED);
+  this->selectedAction = BLOCKED;  // don´t allow to handle actions
+  std::string systemName = this->game->getGalaxy()->getCurrentSolarSystem()
+    ->getName();
+  this->infoWindow->solicitConfirmation(systemName + " completed");
+}
+
+void GameScene::updateNewSolarSystem() {
+  this->switchVesselButtons(PROBE);
+  this->selectedAction = PROBE;
+  // EndGame condition will stop run method
+  if (this->game->passNextSolarSystem() == false) return;
+  this->newSystemSound.play();
+  this->newSystemSound.setVolume(100);
+  this->updateCurrentSystemLabel();
+  // this uiSolarSystemArea->hide();  // Hide old solar system area
+  // TODO(any) remove old solar system area
+  delete this->solarSystemArea;  // Delete old solar system area
+  this->solarSystemArea = nullptr;  // Avoid dangling pointer
+  // this.solarSystemArea = new 
+    // UiSolarSystem(this->game.getGalaxy().getCurrentSolarSystem());
+  // TODO(any) add solar system area update
+}
+
 void GameScene::updateLabels() {
   this->updateRemainingBossesLabel();
   this->updateOwnedMinesLabel();
   this->updateAvailableEtheriumLabel();
+  this->updateCurrentSystemLabel();
   this->updateSolarSystemsLeftLabel();
 }
 
 void GameScene::updateRemainingBossesLabel() {
-  // std::string bosses = std::to_string(this->game->getCurrentRemainingBosses())
-  //     + " remaining"
-  // this->remainingBossesLabel->updateText(bosses.c_str());
+  std::string bosses = std::to_string(this->game->getCurrentRemainingBosses())
+    + " remaining";
+  this->remainingBossesLabel->updateText(bosses.c_str());
+  this->remainingBossesLabel->hide();  // Hide to force redraw
+  this->remainingBossesLabel->show();  // Show again to update the label
+  this->remainingBossesLabel->redraw();  // Redraw to update the label
 }
 
 void GameScene::updateOwnedMinesLabel() {
-  // std::string minesOWned = std::to_string(this->game->getCurrentOwnedMines())
-  //     + " owned";
-  // this->ownedMinesLabel->updateText(minesOWned.c_str());
+  std::string minesOWned = std::to_string(this->game->getCurrentMInes())
+    + " owned";
+  this->ownedMinesLabel->updateText(minesOWned.c_str());
+  this->ownedMinesLabel->hide();  // Hide to force redraw
+  this->ownedMinesLabel->show();  // Show again to update the label
+  this->ownedMinesLabel->redraw();  // Redraw to update the label
 }
 
 void GameScene::updateAvailableEtheriumLabel() {
-  // std::string etherium = std::to_string(this->game->getCurrentEtherium())
-  //     + "available";
-  // this->availableEtheriumLabel->updateText(etherium.c_str());
+  std::string etherium = std::to_string(this->game->getCurrentEtherium())
+    + " available";
+  this->availableEtheriumLabel->updateText(etherium.c_str());
+  this->availableEtheriumLabel->hide();  // Hide to force redraw
+  this->availableEtheriumLabel->show();  // Show again to update the label
+  this->availableEtheriumLabel->redraw();  // Redraw to update the label
+}
+
+void GameScene::updateCurrentSystemLabel() {
+  std::string systemName = this->game->getGalaxy()->getCurrentSolarSystem()
+    ->getName();
+  this->currentSystemLabel->updateText(systemName.c_str());
 }
 
 void GameScene::updateSolarSystemsLeftLabel() {
-  // std::string solarSystemsLeft = 
-  //     std::to_string(this->game->getSolarSystemsLeft());
-  // this->solarSystemLeftLabel->updateText(solarSystemsLeft.c_str());
+  std::string solarSystemsLeft = 
+      std::to_string(this->game->getSystemsLeftCount()) + " solar systems left";
+  this->solarSystemsLeftLabel->updateText(solarSystemsLeft.c_str());
 }

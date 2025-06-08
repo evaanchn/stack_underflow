@@ -2,9 +2,9 @@
 
 #include "GameInfoWindow.hpp"
 
-GameInfoWindow::GameInfoWindow(int windowWidth, int windowHeight
-    , const char* title) {
-  window = new Fl_Window(windowWidth, windowHeight, title);
+GameInfoWindow::GameInfoWindow(int posX, int posY, int windowWidth
+  , int windowHeight, const char* title) {
+  window = new Fl_Window(posX, posY, windowWidth, windowHeight, title);
   this->window->color(FL_BLACK);
   this->window->labelcolor(FL_WHITE);
 
