@@ -1,13 +1,20 @@
 // Copyright 2025 stack_underflow CC-BY 4.0
 
+#include <stdexcept>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
 #include "SolarSystem.hpp"
+#include "SolarSystemExceptions.hpp"
 
-SolarSystem::SolarSystem(std::vector<std::string>& solarSystemData) {
+SolarSystem::SolarSystem(std::vector<std::string>& solarSystemData)
+  : planetsCount(0)
+  , bossesAlive(0)
+  , planetGraph(nullptr)
+  , entryPlanet(nullptr)
+  , exitPlanet(nullptr) {
   this->planetGraph = new Graph<Planet*, size_t>(!DIRECTED);
   this->initSolarSystem(solarSystemData);
   this->setPlanetsConnections();
@@ -15,6 +22,7 @@ SolarSystem::SolarSystem(std::vector<std::string>& solarSystemData) {
   if (this->countBossesAlive() == 0) {
     this->exitPlanet->setMine();
     this->exitPlanet->spawnBoss();
+    ++this->bossesAlive;  // increment bosses alive
   }
 }
 
@@ -46,7 +54,6 @@ void SolarSystem::initSolarSystem(std::vector<std::string>& solarSystemData) {
       ; ++planetIndex) {
     std::string currentPlanetName
         = solarSystemData[planetIndex + PLANETS_START_POS];
-
     bool hasMine = randDouble.generateRandomInRange(0.0, 1.0)
         < MINE_BOSS_SPAWN_PROB;
     Planet* currentPlanet = new Planet(currentPlanetName, hasMine);
@@ -61,6 +68,10 @@ void SolarSystem::initSolarSystem(std::vector<std::string>& solarSystemData) {
     this->setPlanetCoordinates(currentPlanet, planetIndex);
     // Determine if current planet was entry or exit planet
     this->setEntryAndExit(currentPlanet, solarSystemData);
+  }
+  // If entry or exit planets were not set, throw an error
+  if (!this->entryPlanet || !this->exitPlanet) {
+    throw InsufficientDataException();
   }
 }
 
@@ -161,6 +172,10 @@ Planet* SolarSystem::getEntryPlanet() const {
   return this->entryPlanet;
 }
 
+size_t SolarSystem::getBossesAlive() const {
+  return this->bossesAlive;
+}
+
 Graph<Planet*, size_t>* SolarSystem::getGraph() {
   return this->planetGraph;
 }
@@ -202,5 +217,6 @@ size_t SolarSystem::countBossesAlive() {
 }
 
 bool SolarSystem::isComplete() const {
-  return bossesAlive == 0;
+  return bossesAlive == 0 && (this->exploredPlanets.find(this->exitPlanet)
+    != this->exploredPlanets.end());
 }

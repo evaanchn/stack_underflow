@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include <FL/fl_draw.H>
+#include "SFMLSound.hpp"
+
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
@@ -13,109 +14,99 @@
 #include <string>
 #include <vector>
 
+#include "GameSceneConstants.hpp"
+
+#include "GameInfoWindow.hpp"
 #include "GameInfoText.hpp"
 #include "LayeredButton.hpp"
 #include "TextButton.hpp"
-#include "UISolarSystem.hpp"
 
-#define ACTIVE true
-
-const std::string SCENES_BACKGROUND_PATH = "assets/scenes_backgrounds/";
-const std::string GAME_SCENE_BACKGROUND = SCENES_BACKGROUND_PATH
-    + "gameScene.png";
-
-
-enum ACTIONS {
-  NO_ACTION = -1, PROBE, EXPLORE, ATTACK
-};
-
-#define ACTION_BUTTONS_X 60
-#define ACTION_BUTTON_W 150
-#define ACTION_BUTTON_H 50
-
-enum VESSEL_ID {
-  BFS, DFS, DIJKSTRA, FLOYD, GREEDY, LOCAL_SEARCH
-  , EXHAUSTIVE, EXHAUSTIVE_PRUNED
-};
-
-#define LABELS_X 70
-#define LONG_LABEL_BOX_W 300
-#define LABEL_BOX_W 100
-#define LABEL_BOX_H 70
-
-#define VESSEL_BUTTON_DIM 100
-const std::string VESSELS_SPRITES_PATH = "assets/sprites/spaceVessel/";
+#include "Game.hpp"  // Include controller
 
 class GameScene {
  private:
-  bool gameActive;
+  bool gameActive = ACTIVE;
   Fl_Window* window = nullptr;
+  GameInfoWindow* infoWindow = nullptr;
 
   Fl_Box* backgroundImageBox = nullptr;
   Fl_PNG_Image* backgroundImage = nullptr;
 
  private:
-  int selectedAction = NO_ACTION;
-  TextButton* probeButton = nullptr, *exploreButton = nullptr
+  int selectedAction = PROBE;
+  TextButton* probeButton = nullptr, *scoutButton = nullptr
       , * attackButton = nullptr;
-  std::vector<TextButton*> actionButtons = {probeButton, exploreButton
-      , attackButton};
+  std::vector<TextButton*> actionButtons = {};
+  SFMLSound actionButtonSound;
 
  private:
-  size_t selectedVessel = NONE_SELECTED;
+  int selectedVessel = NONE_SELECTED;
   LayeredButton *bfsButton = nullptr, *dfsButton = nullptr
       , *dijkstraButton = nullptr, *floydButton = nullptr
       , *greedySearchButton = nullptr, *localSearchButton = nullptr
       , *exhausativeSearchButton = nullptr
       , *exhaustivePruneButton = nullptr;
-  std::vector<std::vector<LayeredButton*>> vesselButtons
-      = {{bfsButton, dfsButton}
-      , {dijkstraButton, floydButton}
-      , {greedySearchButton, localSearchButton
-      , exhausativeSearchButton, exhaustivePruneButton}};
+  std::vector<std::vector<LayeredButton*>> vesselButtons = {};
+  SFMLSound vesselButtonSound;
+  SFMLSound attackSound;
 
  private:
   GameInfoText *remainingBossesLabel = nullptr, *ownedMinesLabel = nullptr
-      , *availableEtheriumLabel = nullptr, *solarSystemsLeftLabel = nullptr;
+      , *availableEtheriumLabel = nullptr, *currentSystemLabel = nullptr
+      , *solarSystemsLeftLabel = nullptr;
   std::vector<GameInfoText*> labels = {remainingBossesLabel, ownedMinesLabel
-      , availableEtheriumLabel, solarSystemsLeftLabel};
+      , availableEtheriumLabel, currentSystemLabel, solarSystemsLeftLabel};
+
+ private:
+  Game* game = nullptr;  // Controller for the game logic
+  sf::Clock etheriumClock;  // Clock to manage etherium production timing
 
   // TODO (ANY) add solarSystemArea implementation
   // Group solar system so it can be removed without deleting previous elements
   // with delete UiSolarSystem and then this->window->remove(solarSystemArea)
   // then add another and add to the group and restart the group
   Fl_Group* solarSystemArea = nullptr;
-  UISolarSystem* solarSystem = nullptr;
+  SFMLSound newSystemSound;
 
  public:
   GameScene(int width, int height, const std::string& title);
   ~GameScene();
 
  private:
+  void setGameInstance();
+
   void setBackground();
   void setLabels();
   void setActionButtons();
   void setActionButtonCallBack(TextButton* button, int actionID);
   void switchVesselButtons(int newAction);
-
+  
   void setVesselButtons();
-  void setVesselButtonCallBack(LayeredButton* button, size_t vesselID);
+  LayeredButton* createVesselButton(int x, int y
+      , const std::string& imageName, const std::string& label, int vesselID
+      , bool hidden = true);
+  void setVesselButtonAppearance(LayeredButton* button, std::string path);
+  void setVesselButtonCallBack(LayeredButton* button, int vesselID);
 
-  void setSolarSystem(std::vector<Planet*> planets
-      , Graph<Planet*, double>* graph);
-  void testPlanetLoading(); // Test method
 
  public:
   int run();
 
  private:
   void handleEvents();
-  void update();
+  void handleProbeAction();
+  void handleScoutAction();
+  void handleAttackAction();
+  void handleEtheriumProduction();
 
  private:
+  void update();
+  void updateCompleteSystem();
+  void updateNewSolarSystem();
   void updateLabels();
   void updateRemainingBossesLabel();
   void updateOwnedMinesLabel();
   void updateAvailableEtheriumLabel();
+  void updateCurrentSystemLabel();
   void updateSolarSystemsLeftLabel();
 };

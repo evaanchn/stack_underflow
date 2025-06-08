@@ -1,11 +1,11 @@
 System,EntryPlanet,ExitPlanet,Planet1,Planet2,Planet3,Planet4,Planet5,Planet6,Planet7,Planet8,Planet9,Planet10,Planet11,Planet12,Planet13,Planet14,Planet15,Planet16,Planet17,Planet18,Planet19,Planet20
-SolarSystem,Mercury,Neptune,Mercury,Venus,Earth,Mars,Jupiter,Saturn,Uranus,Neptune,,,,,,,,,,,,,
-TRAPPIST-1,TRAPPIST-1 b,TRAPPIST-1 h,TRAPPIST-1 b,TRAPPIST-1 c,TRAPPIST-1 d,TRAPPIST-1 e,TRAPPIST-1 f,TRAPPIST-1 g,TRAPPIST-1 h,,,,,,,,,,,,,,
-Kepler-186,Kepler-186 b,Kepler-186 f,Kepler-186 b,Kepler-186 c,Kepler-186 d,Kepler-186 e,Kepler-186 f,,,,,,,,,,,,,,,
-Kepler-62,Kepler-62 b,Kepler-62 f,Kepler-62 b,Kepler-62 c,Kepler-62 d,Kepler-62 e,Kepler-62 f,,,,,,,,,,,,,,,
-HD69830,HD 69830 b,HD 69830 d,HD 69830 b,HD 69830 c,HD 69830 d,,,,,,,,,,,,,,,,,
-Gliese 581,Gliese 581 e,Gliese 581 g,Gliese 581 e,Gliese 581 b,Gliese 581 c,Gliese 581 d,Gliese 581 g,,,,,,,,,,,,,,,
-55 Cancri,55 Cancri b,55 Cancri f,55 Cancri b,55 Cancri c,55 Cancri d,55 Cancri e,55 Cancri f,,,,,,,,,,,,,,,
-Tau Ceti,Tau Ceti b,Tau Ceti f,Tau Ceti b,Tau Ceti c,Tau Ceti d,Tau Ceti e,Tau Ceti f,,,,,,,,,,,,,,,
-HD 40307,HD 40307 b,HD 40307 g,HD 40307 b,HD 40307 c,HD 40307 d,HD 40307 e,HD 40307 f,HD 40307 g,,,,,,,,,,,,,,
-Kepler-90,Kepler-90 b,Kepler-90 h,Kepler-90 b,Kepler-90 c,Kepler-90 i,Kepler-90 d,Kepler-90 e,Kepler-90 f,Kepler-90 g,Kepler-90 h,,,,,,,,,,,,,
+SolarSystem,Mercury,Neptune,Mercury,Venus,Earth,Mars,Jupiter,Saturn,Uranus,Neptune
+TRAPPIST-1,TRAPPIST-1 b,TRAPPIST-1 h,TRAPPIST-1 b,TRAPPIST-1 c,TRAPPIST-1 d,TRAPPIST-1 e,TRAPPIST-1 f,TRAPPIST-1 g,TRAPPIST-1 h
+Kepler-186,Kepler-186 b,Kepler-186 f,Kepler-186 b,Kepler-186 c,Kepler-186 d,Kepler-186 e,Kepler-186 f
+Kepler-62,Kepler-62 b,Kepler-62 f,Kepler-62 b,Kepler-62 c,Kepler-62 d,Kepler-62 e,Kepler-62 f
+HD69830,HD 69830 b,HD 69830 d,HD 69830 b,HD 69830 c,HD 69830 d
+Gliese 581,Gliese 581 e,Gliese 581 g,Gliese 581 e,Gliese 581 b,Gliese 581 c,Gliese 581 d,Gliese 581 g
+55 Cancri,55 Cancri b,55 Cancri f,55 Cancri b,55 Cancri c,55 Cancri d,55 Cancri e,55 Cancri f
+Tau Ceti,Tau Ceti b,Tau Ceti f,Tau Ceti b,Tau Ceti c,Tau Ceti d,Tau Ceti e,Tau Ceti f
+HD 40307,HD 40307 b,HD 40307 g,HD 40307 b,HD 40307 c,HD 40307 d,HD 40307 e,HD 40307 f,HD 40307 g
+Kepler-90,Kepler-90 b,Kepler-90 h,Kepler-90 b,Kepler-90 c,Kepler-90 i,Kepler-90 d,Kepler-90 e,Kepler-90 f,Kepler-90 g,Kepler-90 h

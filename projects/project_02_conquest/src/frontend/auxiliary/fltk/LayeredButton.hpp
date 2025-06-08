@@ -19,7 +19,8 @@ class LayeredButton : public Fl_Button {
   std::function<void()> onClick;
 
  public:
-  LayeredButton(int x, int y, int w, int h);   // Constructor
+  LayeredButton(int x, int y, int w, int h
+      , const char* buttonLabel = nullptr);
   ~LayeredButton();  // Destructor
 
   /// @brief Sets layer for button representation

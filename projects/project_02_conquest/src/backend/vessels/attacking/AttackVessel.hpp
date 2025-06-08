@@ -7,7 +7,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "ActionLog.hpp"
+#include "DamageLog.hpp"
 #include "SpaceVessel.hpp"
 
 #define ATTACK_COST 5  ///< Cost of an attack vessel
@@ -41,22 +41,24 @@ class AttackVessel : public SpaceVessel {
    * @param nodeIndexes Map nodes to their assigned index
    * @param validEdges matrix to check if an edge is accesible
    * @param totalWeight total weight of the attack
-   * @return ActionLog containing algorithm iteratations and time
+   * @return DamageLog containing execution iteratations, time and damage
    */
-  virtual ActionLog attack(Node<DataType>* startNode, Node<DataType>* endNode
+  virtual DamageLog attack(Node<DataType>* startNode, Node<DataType>* endNode
       , const std::unordered_map<Node<DataType>*
         , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
       , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
       , std::vector<std::vector<bool>>& validEdges
       , WeightType& totalWeight) {
     // record algorithm execution
-    ActionLog actionLog = ActionLog(this->attackAlgorithm->getName());
-    actionLog.setResponsible("AttackVessel");
+    DamageLog damageLog = DamageLog(this->attackAlgorithm->getName());
+    damageLog.setResponsible("AttackVessel");
     // timed algorithm execution
-    actionLog.recordStart();
+    damageLog.recordStart();
     size_t iterations = attackAlgorithm->attack(startNode, endNode
       , adjacencyList, nodeIndexes, validEdges, totalWeight);
-    actionLog.recordEnd(iterations);
-    return actionLog;
+    damageLog.recordEnd(iterations);
+    // set damage amount
+    damageLog.setDamage(totalWeight);
+    return damageLog;
   }
 };
