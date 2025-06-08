@@ -2,9 +2,10 @@
 
 #pragma once
 
-#include <string>
-#include <ctime>
 #include <cstdint>
+#include <ctime>
+#include <queue>
+#include <string>
 #include <vector>
 
 class ActionLog {
@@ -60,32 +61,27 @@ class ActionLog {
   std::string getResponsible();
 
   /**
+   * @brief Get action name
+   * 
+   * @return std::string 
+   */
+  std::string getAction();
+
+  /**
    * @brief Converts the logged action details to a string representation.
    * @return A formatted string containing the action details.
    */
-  std::string toString();
+  virtual std::string toString();
 
-   /**
-   * @brief Calculates the aritmetic mean from the iterations of a given logs
-   * array
-   * @warning the sum of all iterations must be lower than 2^64
-   * 
-   * @param logs 
-   * @return int64_t 
-   */
+
+  /// @brief Calculating the aritmetic mean from the iterations of ActionLog
+  /// @param logs logs array
+  /// @return resulting mean
   static uint64_t iterationsMean(std::vector<ActionLog>& logs);
 
-  /**
-   * @brief Calculates the aritmetic mean from the duration of a given logs
-   * array
-   * @warning the sum of all iterations must be lower than long double max value
-   * 
-   * @param logs 
-   * @return long double 
-   */
   static long double durationMean(std::vector<ActionLog>& logs);
 
- private:
+ protected:
   std::string responsible;  ///< The alogrithm responsible for the action.
   std::string action;  ///< The action being logged.
   size_t iterations;  ///< Number of iterations performed
@@ -98,3 +94,45 @@ class ActionLog {
    */
   std::string getDuration();
 };
+
+/**
+ * @brief Calculates the aritmetic mean from the iterations of a given logs
+ * array
+ * @warning the sum of all iterations must be lower than 2^64
+ * 
+ * @param logs 
+ * @return int64_t 
+ * @tparam LogType of the log entries in the vector
+ */
+template <typename LogType>
+uint64_t iterationsMean(std::vector<LogType>& logs) {
+  uint64_t sum = 0;
+  uint64_t mean = 0;
+  if (logs.empty()) return 0;
+  for (auto &log : logs) {
+    sum += log.getIterations();
+  }
+  mean = sum / logs.size();
+  return mean;
+}
+
+/**
+ * @brief Calculates the aritmetic mean from the duration of a given logs
+ * array
+ * @warning the sum of all iterations must be lower than long double max value
+ * 
+ * @param logs 
+ * @return long double 
+ * @tparam LogType of the log entries in the vector
+ */
+template <typename LogType>
+long double durationMean(std::vector<LogType>& logs) {
+  long double sum = 0.0L;
+  long double mean = 0.0L;
+  if (logs.empty()) return 0.0L;
+  for (auto &log : logs) {
+    sum += log.getDurationTime();
+  }
+  mean = sum / static_cast<long double>(logs.size());
+  return mean;
+}

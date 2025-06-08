@@ -45,6 +45,10 @@ std::string ActionLog::getResponsible() {
   return this->responsible;
 }
 
+std::string ActionLog::getAction() {
+  return this->action;
+}
+
 std::string ActionLog::toString() {
   std::string result = this->responsible + " - " + this->action
     + " | Iterations: " + std::to_string(this->iterations)
@@ -53,23 +57,9 @@ std::string ActionLog::toString() {
 }
 
 uint64_t ActionLog::iterationsMean(std::vector<ActionLog>& logs) {
-  uint64_t sum = 0;
-  uint64_t mean = 0;
-  if (logs.empty()) return 0;
-  for (auto &log : logs) {
-    sum += log.getIterations();
-  }
-  mean = sum / logs.size();
-  return mean;
+  return ::iterationsMean<ActionLog>(logs);
 }
 
 long double ActionLog::durationMean(std::vector<ActionLog>& logs) {
-  long double sum = 0.0L;
-  long double mean = 0.0L;
-  if (logs.empty()) return 0.0L;
-  for (auto &log : logs) {
-    sum += log.getDurationTime();
-  }
-  mean = sum / static_cast<long double>(logs.size());
-  return mean;
+  return ::durationMean<ActionLog>(logs);
 }

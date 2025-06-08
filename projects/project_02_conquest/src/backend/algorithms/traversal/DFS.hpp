@@ -49,11 +49,10 @@ class DFS : public TraversalAlgorithm<DataType, WeightType> {
       // Pop node from stack
       Node<DataType>* actual = visitingNodes.top();
       visitingNodes.pop();
-
+      ++iterations;  // Record visited nodes as an iteration
       // Determine if current node has been discovered before
       if (discoveredElements.find(actual->getData())
             == discoveredElements.end()) {
-        ++iterations;  // Record to discover node as iteration
         // one less element to discover
         --limit;
         // set node element as visited

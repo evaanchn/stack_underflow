@@ -172,6 +172,10 @@ Planet* SolarSystem::getEntryPlanet() const {
   return this->entryPlanet;
 }
 
+size_t SolarSystem::getBossesAlive() const {
+  return this->bossesAlive;
+}
+
 Graph<Planet*, size_t>* SolarSystem::getGraph() {
   return this->planetGraph;
 }
@@ -213,5 +217,6 @@ size_t SolarSystem::countBossesAlive() {
 }
 
 bool SolarSystem::isComplete() const {
-  return bossesAlive == 0;
+  return bossesAlive == 0 && (this->exploredPlanets.find(this->exitPlanet)
+    != this->exploredPlanets.end());
 }

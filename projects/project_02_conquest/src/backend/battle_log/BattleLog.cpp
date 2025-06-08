@@ -2,7 +2,10 @@
 
 #include "BattleLog.hpp"
 
-int BattleLog::setBattleLog(const char &recordMode) {
+int BattleLog::setBattleLog(const char &recordMode,
+    const std::string& battleLogFolder) {
+  this->battleLogFolder = battleLogFolder;
+  this->logRecordPath = this->battleLogFolder + "/" + BATTLE_LOG_RECORD_FILE;
   int error = setBattleLogName(recordMode);
   if (error != EXIT_FAILURE) {
     this->battleLogFile = fopen(this->battleLogName.c_str(), "a+");
@@ -14,26 +17,59 @@ void BattleLog::recordAction(ActionLog &action) {
   fprintf(this->battleLogFile, "%s\n", action.toString().c_str());
 }
 
-void BattleLog::recordStatsHeader(int elementCount, int operationCount) {
+void BattleLog::recordAction(DamageLog &action) {
+  fprintf(this->battleLogFile, "%s\n", action.toString().c_str());
+}
+
+void BattleLog::recordStatsHeader(std::string recordTitle, int elementCount
+  , int actionsCount) {
+  fprintf(this->battleLogFile,
+    "//////////////////////////////////////////\n"
+    "%s\n", recordTitle.c_str());
+  if (elementCount > 0) {
+    fprintf(this->battleLogFile, "- %d elements\n", elementCount);
+  }
+  if (actionsCount > 0) {
+    fprintf(this->battleLogFile, "- %d actions\n", actionsCount);
+  }
   fprintf(this->battleLogFile,
     "<====================================>\n"
-    "Aritmetic Mean\n"
-    "- %d element insertions\n"
-    "- %d search & delete operations\n", elementCount, operationCount);
+    "Arithmetic Mean\n");
 }
 
 void BattleLog::recordStats(std::vector<ActionLog>& actions
-  , std::string actionType) {
-  // only print responsible at insert (start)
-  if (actionType == "insert") {
+    , bool printResponsible) {
+  if (actions.empty()) {
+    fprintf(this->battleLogFile, "Empty action log, nothing to record\n");
+    return;
+  }
+  if (printResponsible) {
     fprintf(this->battleLogFile, "%s\titerations\tduration\n",
       actions.front().getResponsible().c_str());
   }
   fprintf(this->battleLogFile, "%s\t%" PRIu64
     "\t%Lg\n",
-    actionType.c_str(),
+    actions.front().getAction().c_str(),
     ActionLog::iterationsMean(actions),
     ActionLog::durationMean(actions));
+}
+
+void BattleLog::recordStats(std::vector<DamageLog>& actions
+    , bool printResponsible) {
+  if (actions.empty()) {
+    fprintf(this->battleLogFile, "Empty action log, nothing to record\n");
+    return;
+  }
+  if (printResponsible) {
+    fprintf(this->battleLogFile, "%s\titerations\tduration\tdamage\n",
+      actions.front().getResponsible().c_str());
+  }
+  fprintf(this->battleLogFile, "%s\t%" PRIu64
+    "\t%Lg\t%" PRIu64 "\n",
+    actions.front().getAction().c_str(),
+    DamageLog::iterationsMean(actions),
+    DamageLog::durationMean(actions),
+    DamageLog::damageMean(actions));
 }
 
 BattleLog::~BattleLog() {
@@ -42,11 +78,11 @@ BattleLog::~BattleLog() {
 
 int BattleLog::setBattleLogName(const char &recordMode) {
   size_t gamesAmount = 0, simulationsAmount = 0;
-  FILE* battleLogRecordFile = fopen(BATTLE_LOG_RECORD_FILE, "r");
+  FILE* battleLogRecordFile = fopen(logRecordPath.c_str(), "r");
 
   // If file record file does not exist yet, open with 'w' mode to create
   if (!battleLogRecordFile) {
-    battleLogRecordFile = fopen(BATTLE_LOG_RECORD_FILE, "w");
+    battleLogRecordFile = fopen(logRecordPath.c_str(), "w");
   } else {
     // Make sure of successful read
     if (fscanf(battleLogRecordFile, "%*s\t%zu\t%*s\t%zu",
@@ -58,15 +94,13 @@ int BattleLog::setBattleLogName(const char &recordMode) {
 
   // Add number to file name based on whether it is a game or simulation
   if (recordMode == RECORD_GAME) {
-    this->battleLogName = "battleLogs/GameBattleLog#"
-        + std::to_string(++gamesAmount) + ".txt";
+    this->battleLogName = this->battleLogFolder + "/GameBattleLog#"
+        + std::to_string(++gamesAmount) + FILE_EXTENSION;
   } else {
-    this->battleLogName = "battleLogs/SimulationBattleLog#" +
-        std::to_string(++simulationsAmount) + ".txt";
+    this->battleLogName = this->battleLogFolder + "/SimulationBattleLog#" +
+        std::to_string(++simulationsAmount) + FILE_EXTENSION;
   }
-
-  // Reopen to update numbers
-  freopen(BATTLE_LOG_RECORD_FILE, "w", battleLogRecordFile);
+  freopen(logRecordPath.c_str(), "w", battleLogRecordFile);
   fprintf(battleLogRecordFile, "Games\t%zu\tSimulations\t%zu",
     gamesAmount, simulationsAmount);
 
