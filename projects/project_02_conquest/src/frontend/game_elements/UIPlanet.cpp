@@ -2,13 +2,14 @@
 
 #include "UIPlanet.hpp"
 
-UIPlanet::UIPlanet(size_t x, size_t y, size_t dimension) {
+UIPlanet::UIPlanet(size_t x, size_t y, size_t dimension
+    , const char* planetName) {
   this->x = x;
   this->y = y;
   this->dimension = dimension;
-  this->button = new LayeredButton(x, y, dimension, dimension);
-  // this->button->deactivate();
-  // this->button->hide();
+  this->button = new LayeredButton(x, y, dimension, dimension, planetName);
+  this->button->deactivate();
+  this->button->hide();
   this->setPlanetAppearance();
 }
 

@@ -19,10 +19,14 @@
  */
 class UIPath : public Fl_Widget {
  private:
-  UIPlanet* planetA;     ///< Pointer to the first planet connected by this path
-  UIPlanet* planetB;     ///< Pointer to the second planet connected by this path
-  size_t weight;         ///< Weight/value associated with this path
-  Fl_Color color;        ///< Color used to draw this path
+  ///< Pointer to the first planet connected by this path
+  UIPlanet* planetA = nullptr;
+  ///< Pointer to the second planet connected by this path
+  UIPlanet* planetB = nullptr;
+  ///< Pointer to the second planet connected by this path  
+  size_t weight = 0;
+  ///< Color used to draw this path 
+  Fl_Color color = 0;
 
  public:
   /**
@@ -32,8 +36,12 @@ class UIPath : public Fl_Widget {
    * @param weight Initial weight of the path (default: 0)
    * @param color Initial color of the path (default: FL_WHITE)
    */
-  UIPath(UIPlanet* a, UIPlanet* b, size_t weight = 0, Fl_Color color = FL_WHITE);
+  UIPath(UIPlanet* a, UIPlanet* b, size_t weight = 0
+    , Fl_Color color = FL_WHITE);
   
+  /// @brief Default constructor
+  UIPath() = default;
+
   /**
    * @brief Draw the path on the FLTK widget
    * 

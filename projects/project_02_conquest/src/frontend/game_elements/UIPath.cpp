@@ -5,7 +5,7 @@
 UIPath::UIPath(UIPlanet* a, UIPlanet* b, size_t weight, Fl_Color color)
     : Fl_Widget(0, 0, 1, 1)
     , planetA(a), planetB(b), weight(weight), color(color) {
- // hide();
+  hide();
 }
 
 void UIPath::draw() {
@@ -18,7 +18,7 @@ void UIPath::draw() {
   int y2 = planetB->getY() + planetB->getSize() / 2;
 
   fl_color(color);
-  fl_line_style(FL_SOLID, planetA->getSize() / 10);
+  fl_line_style(FL_SOLID, planetA->getSize() / 14);
   fl_line(x1, y1, x2, y2);
 
   // Draw weight label

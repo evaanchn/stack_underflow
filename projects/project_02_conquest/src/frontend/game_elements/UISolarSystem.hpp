@@ -10,6 +10,8 @@
 #include <unordered_set>
 #include <vector>
 
+#include "SFMLSound.hpp"
+
 #include "Coordinates.hpp"
 #include "Graph.hpp"
 #include "Random.hpp"
@@ -17,23 +19,40 @@
 #include "UIPlanet.hpp"
 #include "../backend/galaxy/solar_system/planet/Planet.hpp"
 
+
 // Window and layout constants
-#define WINDOW_WIDTH 1280       ///< Total window width in pixels
-#define WINDOW_HEIGHT 720       ///< Total window height in pixels
-#define RIGHT_HALF_START_X (WINDOW_WIDTH / 2)  ///< X-coordinate where right half begins
-#define MIN_MARGIN 20           ///< Minimum margin around UI elements
-#define MIN_PLANET_DISTANCE 30  ///< Minimum distance between planets in pixels
-#define DEFAULT_PATH_COLOR FL_BLUE  ///< Default color for paths
-#define NONE_SELECTED -1        ///< Constant representing no selected planet
+///< Total window width in pixels
+#define WINDOW_WIDTH 1280       
+///< Total window height in pixels
+#define WINDOW_HEIGHT 720       
+///< X-coordinate where right half begins
+#define RIGHT_HALF_START_X (WINDOW_WIDTH / 2)  
+///< Minimum margin around UI elements
+#define MIN_MARGIN 20           
+///< Minimum distance between planets in pixels
+#define MIN_PLANET_DISTANCE 30  
+///< Default color for paths
+#define DEFAULT_PATH_COLOR FL_BLUE  
+///< Constant representing no selected planet
+#define NONE_SELECTED -1        
 
 // Layout calculation macros
-#define AREA_WIDTH (WINDOW_WIDTH / 2 - MIN_MARGIN * 2)  ///< Width of the interactive area
-#define AREA_HEIGHT (WINDOW_HEIGHT - MIN_MARGIN * 2)    ///< Height of the interactive area
-#define START_X (RIGHT_HALF_START_X + MIN_MARGIN)       ///< Starting X coordinate for layout
+///< Width of the interactive area
+#define AREA_WIDTH (WINDOW_WIDTH / 2 - MIN_MARGIN * 2)
+///< Height of the interactive area
+#define AREA_HEIGHT (WINDOW_HEIGHT - MIN_MARGIN * 2)
+///< Starting X coordinate for layout
+#define START_X (RIGHT_HALF_START_X + MIN_MARGIN)
 
 // Sprite paths
-const std::string BOSS_SPRITE_PATH = "assets/sprites/boss/Atlas.png";  ///< Path to boss sprite image
-const std::string MINE_SPRITE_PATH = "assets/sprites/mine/extractor.png";  ///< Path to mine sprite image
+///< Path to boss sprite image
+const std::string BOSS_SPRITE_PATH = "assets/sprites/boss/Atlas.png";
+///< Path to mine sprite image
+const std::string MINE_SPRITE_PATH = "assets/sprites/mine/extractor.png";
+
+// Sounds path
+const std::string SOUND_PLANET_SELECTED
+  = "assets/sounds/planetSelectedSound.wav";
 
 /**
  * @class UISolarSystem
@@ -46,9 +65,10 @@ const std::string MINE_SPRITE_PATH = "assets/sprites/mine/extractor.png";  ///< 
 class UISolarSystem {
  private:
   std::vector<UIPlanet*> UiPlanets;  ///< Vector of UI planet objects
-  std::unordered_map<Coordinates*, UIPath*> UiPaths;  ///< Map of UI paths between planets
+  std::vector<std::vector<UIPath*>> UiPaths;
   int selectedPlanet = NONE_SELECTED;  ///< Index of currently selected planet (-1 for none)
   Fl_PNG_Image* mineSprite = nullptr;  ///< Pointer to mine sprite image
+  SFMLSound planetSelectedSound;  // planet interaction sound
 
  public:
   /**
@@ -76,10 +96,10 @@ class UISolarSystem {
   void createPaths(Graph<Planet*, size_t>* graph, Fl_Group* container);
 
   /**
-   * @brief Get the index of the currently selected planet
+   * @brief Get the index of the currently selected planet and restart to NONE
    * @return int Index of selected planet or NONE_SELECTED (-1)
    */
-  int getSelectedPlanet() const;
+  int obtainSelectedPlanet();
   
   /**
    * @brief Update visibility of paths based on exploration state
@@ -105,5 +125,5 @@ class UISolarSystem {
    * @brief Remove boss representation from a planet
    * @param planetIdx Index of the planet to remove boss from
    */
-  void removeBoss(size_t planetIdx);
+  void removeBoss(int planetIdx);
 };

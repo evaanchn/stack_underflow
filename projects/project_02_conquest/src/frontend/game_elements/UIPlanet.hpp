@@ -42,7 +42,8 @@ class UIPlanet {
   /// @param x The x-coordinate of the planet's position.
   /// @param y The y-coordinate of the planet's position.
   /// @param dimension The width and height of the square-shaped planet button.
-  explicit UIPlanet(size_t x, size_t y, size_t dimension);
+  explicit UIPlanet(size_t x, size_t y, size_t dimension
+      , const char* planetName = nullptr);
 
   /// @brief Destructor. Cleans up dynamically allocated resources.
   ~UIPlanet();
@@ -78,4 +79,5 @@ class UIPlanet {
   size_t getX() const;
   size_t getY() const;
   size_t getSize() const;
+  Fl_Widget* getButton() { return this-> button; }
 };
