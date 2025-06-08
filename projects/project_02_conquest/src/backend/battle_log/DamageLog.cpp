@@ -33,3 +33,21 @@ uint64_t DamageLog::damageMean(std::vector<DamageLog>& logs) {
   mean = sum / logs.size();
   return mean;
 }
+
+uint64_t DamageLog::damageMode(std::vector<DamageLog>& logs) {
+  std::unordered_map<size_t, size_t> damageAparitions;
+  if (logs.empty()) return 0;
+  for (auto &log : logs) {
+    size_t damage = log.getDamage();
+    ++damageAparitions[damage];
+  }
+  uint64_t mode = 0;
+  size_t maxAparitions = 0;
+  for (auto [damage, aparitions] : damageAparitions) {
+    if (aparitions > maxAparitions) {
+      maxAparitions = aparitions;
+      mode = damage;
+    }
+  }
+  return mode;
+}
