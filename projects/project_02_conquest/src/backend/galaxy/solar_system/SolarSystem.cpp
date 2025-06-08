@@ -69,6 +69,9 @@ void SolarSystem::initSolarSystem(std::vector<std::string>& solarSystemData) {
     // Determine if current planet was entry or exit planet
     this->setEntryAndExit(currentPlanet, solarSystemData);
   }
+  if (this->planetsCount > 4) {
+    PlanetsPositioner().positionPlanets(this->planets, this->planetsCount);
+  }
   // If entry or exit planets were not set, throw an error
   if (!this->entryPlanet || !this->exitPlanet) {
     throw InsufficientDataException();

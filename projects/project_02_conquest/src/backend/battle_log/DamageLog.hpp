@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "ActionLog.hpp"
+#include <unordered_map>
 
 class DamageLog : public ActionLog {
  public:
@@ -54,14 +55,20 @@ class DamageLog : public ActionLog {
   static long double durationMean(std::vector<DamageLog>& logs);
 
   /**
-   * @brief Calculates the aritmetic mean from the damage of a given logs
-   * array
+   * @brief Calculates the aritmetic mean of the damages recorded in logs
    * 
-   * @param logs 
-   * @return uint64_t 
+   * @param logs array of logs
+   * @return uint64_t Mean
    */
   static uint64_t damageMean(std::vector<DamageLog>& logs);
 
+  /**
+   * @brief Calculates the mode of the recorded damages in a logs array
+   * 
+   * @param logs array of damage logs
+   * @return uint64_t Mode
+   */
+  static uint64_t damageMode(std::vector<DamageLog>& logs);
  private:
   size_t damage;  ///< The amount of damage recorded.
 };

@@ -100,7 +100,6 @@ void Simulation::completeSystemTest() {
   std::vector<DamageLog> localSearchLogs;
   std::vector<DamageLog> exhaustiveSearchLogs;
   std::vector<DamageLog> exhaustiveSearchPruneLogs;
-  std::unordered_set<std::string> attacksPerformed = {};
 
   // Start with initial probe and scout to continue game
   this->testProbe(BFSLogs, DFSLogs);
@@ -125,12 +124,13 @@ void Simulation::completeSystemTest() {
       // Set the only available action to attack, now that paths are revealed
       if (currentSystem->getExploredPlanets().size()
          == currentSystem->getPlanetsCount()) {
+        // Only action available is Attack now
         startingAction = ATTACK;
       }
     }
     else if (actionType == ATTACK) {
       this->testAttack(greedyLogs, localSearchLogs
-        , exhaustiveSearchLogs, exhaustiveSearchPruneLogs, attacksPerformed);
+        , exhaustiveSearchLogs, exhaustiveSearchPruneLogs);
     }
     ++actionsCount;
   }
@@ -179,15 +179,8 @@ void Simulation::testScout(std::vector<ActionLog>& dijkstraLogs
 void Simulation::testAttack(std::vector<DamageLog>& greedyLogs
       , std::vector<DamageLog>& localSearchLogs
       , std::vector<DamageLog>& exhaustiveSearchLogs
-      , std::vector<DamageLog>& exhaustiveSearchPruneLogs
-      , std::unordered_set<std::string>& attacksPerformed) {
-  if (attacksPerformed.size() == ATTACKS_AVAILABLE) attacksPerformed.clear();
-  int vesselType = GREEDY;
-  do {
-    vesselType = Random<int>().generateRandomInRange(GREEDY, PRUNED);
-  } while (attacksPerformed.find(ATTACKS_IDS[vesselType])
-      != attacksPerformed.end());
-  attacksPerformed.insert(ATTACKS_IDS[vesselType]);
+      , std::vector<DamageLog>& exhaustiveSearchPruneLogs) {
+  int vesselType = Random<int>().generateRandomInRange(GREEDY, PRUNED);
 
   if (vesselType == GREEDY) {
     greedyLogs.push_back(this->testAttackVessel
@@ -258,8 +251,11 @@ DamageLog Simulation::testAttackVessel(AttackVessel<Planet*, size_t>* vessel
       , attackWeight);
   // Take the damage from the attack
   if (attackWeight > 0) {
-    int attack = 500 / attackWeight < MIN_DAMAGE_SIMULATION ?
-        MIN_DAMAGE_SIMULATION :  500 / attackWeight ;
+    // Formula for attack inflicted on boss, proportional to boss's health
+    // and amount of planets
+    int attack = BOSS_INIT_HEALTH * system->getPlanetsCount() / attackWeight
+        < MIN_DAMAGE_SIMULATION ? MIN_DAMAGE_SIMULATION
+        : BOSS_INIT_HEALTH * system->getPlanetsCount() / attackWeight ;
     // only base points of damage for simulation purposes
     system->getGraph()->getNodes()[targetIndex]->getData()
     ->getBoss()->receiveDamage(attack);
