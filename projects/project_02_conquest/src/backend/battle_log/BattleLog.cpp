@@ -69,7 +69,7 @@ void BattleLog::recordStats(std::vector<DamageLog>& actions
     actions.front().getAction().c_str(),
     DamageLog::iterationsMean(actions),
     DamageLog::durationMean(actions),
-    DamageLog::damageMean(actions));
+    DamageLog::damageMode(actions));
 }
 
 BattleLog::~BattleLog() {

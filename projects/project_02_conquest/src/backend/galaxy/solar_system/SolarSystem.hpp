@@ -11,6 +11,7 @@
 #include "ArticulationPointsFinder.hpp"
 #include "Graph.hpp"
 #include "planet/Planet.hpp"
+#include "PlanetsPositioner.hpp"
 #include "Random.hpp"
 
 enum SOL_SYS_DATA_POSITIONS {
