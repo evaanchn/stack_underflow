@@ -82,7 +82,7 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
           || visited.find(neighbor->getData()) != visited.end()) {
           continue;  // skip invalid edges
         }
-        // Explore all the neigbors to get the cheapest one
+        // Explore all the neighbors to get the cheapest one
         if (weight < minWeight) {
           // if the neighbor has not been visited and the weight is lower than
           // the current minimum weight, update the next node

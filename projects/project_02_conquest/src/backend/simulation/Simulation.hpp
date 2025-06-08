@@ -4,7 +4,6 @@
 
 #include <string>
 #include <vector>
-#include <unordered_set>
 
 #include "BattleLog.hpp"
 #include "Galaxy.hpp"
@@ -88,8 +87,7 @@ class Simulation {
   void testAttack(std::vector<DamageLog>& GreedyLogs
       , std::vector<DamageLog>& LocalSearchLogs
       , std::vector<DamageLog>& ExhaustiveSearchLogs
-      , std::vector<DamageLog>& exhaustiveSearchPruneLogs
-      , std::unordered_set<std::string>& attacksPerformed);
+      , std::vector<DamageLog>& exhaustiveSearchPruneLogs);
   /// @brief Test executions for various space vessel algorithms.
   /// @return ActionLog object containing the results of the tests.
   ActionLog tesProbingVessel(ProbingVessel<Planet*, size_t>* vessel);
