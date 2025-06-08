@@ -29,14 +29,14 @@ class PathingAlgorithm : public Algorithm<DataType, WeightType> {
   /// @param directed if the graph is directed or not
   /// @throws std::out_of_range
   void updateEdgeIndex(std::vector<std::vector<bool>>& validEdges
-      , std::vector<std::pair<WeightType, size_t>>& distances
+      , const size_t adjacentIndex
       , const size_t nodeIndex, const bool valid, const bool directed = false) {
     try {
       // validEdges[node][last adjacent]
-      validEdges.at(nodeIndex).at(distances.at(nodeIndex).second) = valid;
+      validEdges.at(nodeIndex).at(adjacentIndex) = valid;
       if (directed) return;  // update only one direction if directed
       // validEdges[last adjacent conected to node][node]
-      validEdges.at(distances.at(nodeIndex).second).at(nodeIndex) = valid;
+      validEdges.at(adjacentIndex).at(nodeIndex) = valid;
     } catch(const std::out_of_range& error) {
       throw std::out_of_range("Invalid edge index in updateEdgeIndex");
     }

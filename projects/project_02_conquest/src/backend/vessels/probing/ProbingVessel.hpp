@@ -52,8 +52,7 @@ class ProbingVessel : public SpaceVessel {
     actionLog.setResponsible("ProbingVessel");
     // whenever the graph is not fully explored and starting node
     // is already explored, execute the algorithm
-    if (exploredElements.size() < adjacencyList.size()
-      && exploredElements.find(startingNode->getData())
+    if (exploredElements.find(startingNode->getData())
       != exploredElements.end()) {
       // timed algorithm execution
       actionLog.recordStart();

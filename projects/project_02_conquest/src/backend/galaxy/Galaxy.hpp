@@ -15,7 +15,8 @@ class Galaxy {
   /// @brief Vector containing all solar systems data.
   std::vector<std::vector<std::string>> solarSystemsData;
   SolarSystem* currentSolarSystem;
-  size_t currentSolarSystemIndex = 0;
+  size_t currentSolarSystemIndex;
+  size_t solarSystemsLeft;
 
  public:
   /// @brief Constructs a Galaxy from a CSV file containing solar systems data.
@@ -23,11 +24,12 @@ class Galaxy {
   /// @brief  Destructor
   ~Galaxy();
   /// @brief Allocates a new SolarSystem based on the current index in the data.
-  void createCurrentSolarSystem();
+  /// @return true if the SolarSystem was created successfully, false otherwise.
+  bool createCurrentSolarSystem();
   /// @brief Destroys the current SolarSystem and resets the pointer.
   void destroyCurrentSolarSystem();
   /// @brief Advances to the next solar system in the data.
-  /// @return true if there is a next solar system, false otherwise.
+  /// @return true if there was a next solar system, false otherwise.
   bool passNextSolarSystem();
 
  private:
@@ -35,4 +37,6 @@ class Galaxy {
 
  public:
   SolarSystem* getCurrentSolarSystem();
+  /// @brief Gets the number of solar systems left to explore.
+  size_t getSystemsLeftCount() const;
 };

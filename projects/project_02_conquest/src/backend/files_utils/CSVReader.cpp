@@ -58,7 +58,12 @@ void CSVReader::decomposeLines(const char* fileName,
       // Using nullptr means "read where you last left off"
       token = std::strtok(nullptr, ",");  // Gets next token
     }
-
+    // clear line spaces and new lines
+    for (auto& word : line) {
+      // Remove leading and trailing spaces
+      word.erase(0, word.find_first_not_of(" \t\n\r"));
+      word.erase(word.find_last_not_of(" \t\n\r") + 1);
+    }
     // Add line to separated collection
     csvData.push_back(line);
   }
