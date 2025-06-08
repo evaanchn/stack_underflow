@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "App.hpp"
 #include "Simulation.hpp"
 
 /**
@@ -17,5 +18,5 @@ int main(int argc, char* argv[]) {
     std::cout << "Starting simulation..." << std::endl;
     return simulation.run(argc, argv);
   }
-  return EXIT_SUCCESS/*App().run();*/;
+  return App().run();
 }

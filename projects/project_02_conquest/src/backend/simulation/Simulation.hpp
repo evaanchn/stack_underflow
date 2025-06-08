@@ -14,10 +14,6 @@
 
 #define MIN_DAMAGE_SIMULATION 1
 
-enum ACTIONS {
-  PROBE, SCOUT, ATTACK
-};
-
 #define RECORD_ACTIONS true
 #define ATTACKS_AVAILABLE 4
 #define MAX_ATTACKS 10
@@ -42,7 +38,7 @@ class Simulation {
   /// @brief Pointer to the BattleLog instance for recording actions.
   BattleLog* battleLog;
   /// @brief The name of the Galaxy CSV file to be loaded.
-  std::string galaxyCSVPath = GALAXY_FILE;
+  std::string galaxyCSVPath = GALAXY_FILE_PATH;
   /// @brief The output folder where BattleLog files will be stored.
   std::string outputFolder;
   /// @brief Flag for deciding whether to record actions or not

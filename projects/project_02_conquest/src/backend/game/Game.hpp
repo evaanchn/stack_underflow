@@ -112,4 +112,6 @@ class Game {
   VesselsCollection<Planet*, size_t>& getVessels();
   size_t getVesselsCount() const;
   size_t getCurrentRemainingBosses() const;
+  size_t getCurrentMInes() const;
+  size_t getCurrentEtherium() const;
 };

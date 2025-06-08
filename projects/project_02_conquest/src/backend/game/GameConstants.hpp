@@ -6,6 +6,11 @@
 
 #define GALAXY_FILE_PATH "tests/andromeda_systems.csv"
 
+// ACTIONS
+enum ACTIONS {
+  NO_ACTION = -1, PROBE, SCOUT, ATTACK
+};
+
 // limitations
 #define PROBE_LIMIT 3
 

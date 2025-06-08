@@ -77,8 +77,6 @@ void Simulation::initSimulation() {
 }
 
 void Simulation::test() {
-  // first solar system
-  if (!this->game->getGalaxy()->createCurrentSolarSystem()) return;
   // Loop through all solar systems in the galaxy completing them
   do {
     SolarSystem* solarSystem = this->game->getGalaxy()->getCurrentSolarSystem();
