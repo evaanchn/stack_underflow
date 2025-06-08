@@ -18,6 +18,11 @@ App::App()
   setMainWindow();
 }
 
+App::~App() {
+  if (this->gameScene) delete this->gameScene;
+  this->gameScene = nullptr;
+}
+
 void App::setMainWindow() {
   if (!mainWindow.isOpen()) {
     mainWindow.create(sf::VideoMode(MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT)
@@ -33,7 +38,7 @@ int App::run() {
     } else {
       error = this->startGame();
       if (error != EXIT_SUCCESS) return error;
-      gameScene->run();
+      error = gameScene->run();
       this->endGame();  /*Volume*/ 
     }
   }
@@ -98,10 +103,16 @@ void App::renderGameOverScene() {
 int App::startGame() {
   this->startSceneMusic.stop();
   this->gameSceneMusic.play();
-  this->gameScene = new GameScene(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT
+  try {
+    this->gameScene = new GameScene(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT
       , GAME_NAME);
-  if (!this->gameScene) return EXIT_FAILURE;
-  this->gameActive = ACTIVE;
+    if (!this->gameScene) throw std::runtime_error(
+        "GameScene instance could not be created.");
+    this->gameActive = ACTIVE;
+  } catch (const std::exception& e) {
+    std::cerr << "App:" << e.what() << '\n';
+    return EXIT_FAILURE;
+  }
   return EXIT_SUCCESS;
 }
 

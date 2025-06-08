@@ -20,6 +20,7 @@
 class App {
  public:
   App();
+  ~App();
   int run();
 
  private:
