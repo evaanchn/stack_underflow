@@ -6,7 +6,9 @@
 
 #include <FL/fl_draw.H>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "UIPlanet.hpp"
 
@@ -19,10 +21,14 @@
  */
 class UIPath : public Fl_Widget {
  private:
-  UIPlanet* planetA;     ///< Pointer to the first planet connected by this path
-  UIPlanet* planetB;     ///< Pointer to the second planet connected by this path
-  size_t weight;         ///< Weight/value associated with this path
-  Fl_Color color;        ///< Color used to draw this path
+  ///< Pointer to the first planet connected by this path
+  UIPlanet* planetA = nullptr;
+  ///< Pointer to the second planet connected by this path
+  UIPlanet* planetB = nullptr;
+  ///< Pointer to the second planet connected by this path
+  size_t weight = 0;
+  ///< Color used to draw this path
+  Fl_Color color = 0;
 
  public:
   /**
@@ -32,40 +38,44 @@ class UIPath : public Fl_Widget {
    * @param weight Initial weight of the path (default: 0)
    * @param color Initial color of the path (default: FL_WHITE)
    */
-  UIPath(UIPlanet* a, UIPlanet* b, size_t weight = 0, Fl_Color color = FL_WHITE);
-  
+  UIPath(UIPlanet* a, UIPlanet* b, size_t weight = 0
+    , Fl_Color color = FL_WHITE);
+
+  /// @brief Default constructor
+  UIPath() = default;
+
   /**
    * @brief Draw the path on the FLTK widget
    * 
    * Overrides the Fl_Widget draw method to render the path between the two planets.
    */
   void draw() override;
-  
+
   /**
    * @brief Make the path visible
    * 
    * Changes the path's appearance to make it visible in the UI.
    */
   void reveal();
-  
+
   /**
    * @brief Set the weight of this path
    * @param newWeight The new weight value to set
    */
   void setWeight(size_t newWeight);
-  
+
   /**
    * @brief Set the color of this path
    * @param newColor The new color to set (FL_Color value)
    */
   void setColor(Fl_Color newColor);
-  
+
   /**
    * @brief Get the current weight of this path
    * @return int The current weight value
    */
   int getWeight() const;
-  
+
   /**
    * @brief Get the planets connected by this path
    * @return std::pair<UIPlanet*, UIPlanet*> A pair containing pointers to the connected planets

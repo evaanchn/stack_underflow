@@ -44,7 +44,6 @@ class LocalSearch : public AttackAlgorithm<DataType, WeightType> {
       std::unordered_map<Node<DataType>*, size_t>& nodeIndexes,
       std::vector<std::vector<bool>>& validEdges,
       WeightType& totalWeight) override {
-
     size_t iterations = 0;
     WeightType bestWeight = std::numeric_limits<WeightType>::max();
     bool pathFound = false;
@@ -66,10 +65,11 @@ class LocalSearch : public AttackAlgorithm<DataType, WeightType> {
     }
 
     // Attempt to improve the path using local search
-    for (size_t optimization = 0; optimization < LOCAL_OPTIMIZATION_LIMIT; ++optimization) {
+    for (size_t optimization = 0; optimization < LOCAL_OPTIMIZATION_LIMIT
+        ; ++optimization) {
       WeightType attemptWeight = 0;
-      size_t localIters = localSearch(startNode, endNode, adjacencyList, nodeIndexes,
-                                      validEdges, attemptWeight, usedEdges);
+      size_t localIters = localSearch(startNode, endNode, adjacencyList
+          , nodeIndexes, validEdges, attemptWeight, usedEdges);
       iterations += localIters;
 
       if (attemptWeight > 0 && attemptWeight < bestWeight) {

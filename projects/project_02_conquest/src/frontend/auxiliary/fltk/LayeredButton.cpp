@@ -58,6 +58,7 @@ void LayeredButton::clearLayer(size_t index) {
 void LayeredButton::clearAllLayers() {
   for (auto* layer : this->layers) {
     if (layer) delete layer;
+    layer = nullptr;
   }
   this->layers.clear();
   redraw();

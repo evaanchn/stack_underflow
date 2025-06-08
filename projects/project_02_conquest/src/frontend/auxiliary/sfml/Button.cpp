@@ -10,7 +10,7 @@ Button::Button(const std::string& label, const std::string& filePath,
     throw std::runtime_error("BUTTON ERROR: Font could not be loaded");
   }
 
-  //TriangleFan for rounded corner buttons
+  // TriangleFan for rounded corner buttons
   shape.setPrimitiveType(sf::TriangleFan);
   createRoundedRectangle(shape, position, size, radius,
       cornerPoints, buttonColor);
@@ -142,22 +142,29 @@ void Button::createArc(sf::VertexArray& vertices, sf::Vector2f center,
 void Button::createRoundedRectangle(sf::VertexArray& vertices,
     sf::Vector2f position, sf::Vector2f size, float radius,
     int cornerPoints, const sf::Color& color) {
-  createArc(vertices, position + sf::Vector2f(radius, radius), radius, 3.14159f, 3.14159f / 2, cornerPoints, color);
-  createArc(vertices, position + sf::Vector2f(size.x - radius, radius), radius, 3.14159f / 2, 0, cornerPoints, color);
-  createArc(vertices, position + sf::Vector2f(size.x - radius, size.y - radius), radius, 0, -3.14159f / 2, cornerPoints, color);
-  createArc(vertices, position + sf::Vector2f(radius, size.y - radius), radius, -3.14159f / 2, -3.14159f, cornerPoints, color);
+  createArc(vertices, position + sf::Vector2f(radius, radius), radius, 3.14159f
+      , 3.14159f / 2, cornerPoints, color);
+  createArc(vertices, position + sf::Vector2f(size.x - radius, radius), radius
+      , 3.14159f / 2, 0, cornerPoints, color);
+  createArc(vertices, position + sf::Vector2f(size.x - radius, size.y - radius)
+      , radius, 0, -3.14159f / 2, cornerPoints, color);
+  createArc(vertices, position + sf::Vector2f(radius, size.y - radius), radius
+      , -3.14159f / 2, -3.14159f, cornerPoints, color);
 
   vertices.append(sf::Vertex(position + sf::Vector2f(radius, size.y), color));
-  vertices.append(sf::Vertex(position + sf::Vector2f(size.x - radius, size.y), color));
-  vertices.append(sf::Vertex(position + sf::Vector2f(size.x, size.y - radius), color));
+  vertices.append(sf::Vertex(position + sf::Vector2f(size.x - radius, size.y)
+      , color));
+  vertices.append(sf::Vertex(position + sf::Vector2f(size.x, size.y - radius)
+      , color));
   vertices.append(sf::Vertex(position + sf::Vector2f(size.x, radius), color));
-  vertices.append(sf::Vertex(position + sf::Vector2f(size.x - radius, 0), color));
+  vertices.append(sf::Vertex(position + sf::Vector2f(size.x - radius, 0)
+      , color));
   vertices.append(sf::Vertex(position + sf::Vector2f(radius, 0), color));
   vertices.append(sf::Vertex(position + sf::Vector2f(0, radius), color));
 }
 
 bool Button::isMouseOver(sf::RenderWindow& window) const {
   sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-  sf::FloatRect boundingBox = shape.getBounds(); 
+  sf::FloatRect boundingBox = shape.getBounds();
   return boundingBox.contains(static_cast<sf::Vector2f>(mousePos));
 }

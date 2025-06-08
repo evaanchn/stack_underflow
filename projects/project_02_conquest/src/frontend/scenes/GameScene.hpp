@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include "SFMLSound.hpp"
-
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
@@ -15,10 +13,12 @@
 #include <vector>
 
 #include "GameSceneConstants.hpp"
+#include "UISolarSystem.hpp"
 
 #include "GameInfoWindow.hpp"
 #include "GameInfoText.hpp"
 #include "LayeredButton.hpp"
+#include "SFMLSound.hpp"
 #include "TextButton.hpp"
 
 #include "Game.hpp"  // Include controller
@@ -60,12 +60,9 @@ class GameScene {
  private:
   Game* game = nullptr;  // Controller for the game logic
   sf::Clock etheriumClock;  // Clock to manage etherium production timing
-
-  // TODO (ANY) add solarSystemArea implementation
-  // Group solar system so it can be removed without deleting previous elements
-  // with delete UiSolarSystem and then this->window->remove(solarSystemArea)
-  // then add another and add to the group and restart the group
   Fl_Group* solarSystemArea = nullptr;
+  UISolarSystem* solarSystem = nullptr;
+
   SFMLSound newSystemSound;
 
  public:
@@ -74,13 +71,14 @@ class GameScene {
 
  private:
   void setGameInstance();
+  void setSolarSystemArea();
 
   void setBackground();
   void setLabels();
   void setActionButtons();
   void setActionButtonCallBack(TextButton* button, int actionID);
   void switchVesselButtons(int newAction);
-  
+
   void setVesselButtons();
   LayeredButton* createVesselButton(int x, int y
       , const std::string& imageName, const std::string& label, int vesselID
@@ -97,12 +95,19 @@ class GameScene {
   void handleProbeAction();
   void handleScoutAction();
   void handleAttackAction();
+  void handlePlanetSeek();
   void handleEtheriumProduction();
 
  private:
   void update();
+
+  void updateProbe();
+  void updateScout();
+  void updateAttack();
+
   void updateCompleteSystem();
   void updateNewSolarSystem();
+
   void updateLabels();
   void updateRemainingBossesLabel();
   void updateOwnedMinesLabel();

@@ -3,6 +3,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #define GALAXY_FILE_PATH "tests/andromeda_systems.csv"
 

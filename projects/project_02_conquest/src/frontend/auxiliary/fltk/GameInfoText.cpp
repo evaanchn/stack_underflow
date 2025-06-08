@@ -6,7 +6,8 @@ GameInfoText::GameInfoText(int x, int y, int w, int h
     , const char* initialText, Fl_Color color)
   : Fl_Box(x, y, w, h, nullptr), currentText(nullptr) {
   currentText = new char[strlen(initialText) + 1];
-  strcpy(currentText, initialText);
+  snprintf(currentText, strlen(initialText) + 1, "%s", initialText);
+  // strcpy(currentText, initialText);
   label(currentText);
 
   labelsize(20);
@@ -22,7 +23,8 @@ GameInfoText::~GameInfoText() {
 void GameInfoText::updateText(const char* newText) {
   delete[] currentText;
   currentText = new char[strlen(newText) + 1];
-  strcpy(currentText, newText);
+  snprintf(currentText, strlen(newText) + 1, "%s", newText);
+  // strcpy(currentText, newText);
   label(currentText);
   redraw();
 }

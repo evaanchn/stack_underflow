@@ -13,8 +13,7 @@ App::App()
   , informationSceneMusic(MUSIC_FOLDER + "informationScene.wav", LOOP)
   , gameSceneMusic(MUSIC_FOLDER + "gameScene.wav", LOOP)
   , gameOverSceneMusic(MUSIC_FOLDER + "gameOverScene.wav", LOOP)
-  , buttonClickSound(SOUNDS_FOLDER + "soundButtonClick.wav", !LOOP)
-  {
+  , buttonClickSound(SOUNDS_FOLDER + "soundButtonClick.wav", !LOOP) {
   setMainWindow();
 }
 
@@ -39,7 +38,7 @@ int App::run() {
       error = this->startGame();
       if (error != EXIT_SUCCESS) return error;
       error = gameScene->run();
-      this->endGame();  /*Volume*/ 
+      this->endGame();  /*Volume*/
     }
   }
   return error;
@@ -119,7 +118,7 @@ int App::startGame() {
 void App::endGame() {
   this->gameSceneMusic.stop();
   this->gameActive = !ACTIVE;
-  if(this->gameScene) delete this->gameScene;
+  if (this->gameScene) delete this->gameScene;
   this->gameScene = nullptr;
   this->setMainWindow();
   this->currentState = SceneState::GAME_OVER;
