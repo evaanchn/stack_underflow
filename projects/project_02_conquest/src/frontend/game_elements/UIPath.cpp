@@ -4,10 +4,12 @@
 
 UIPath::UIPath(UIPlanet* a, UIPlanet* b, size_t weight, Fl_Color color)
     : Fl_Widget(0, 0, 1, 1)
-    , planetA(a), planetB(b), weight(weight), color(color), visible(true) {}
+    , planetA(a), planetB(b), weight(weight), color(color) {
+ // hide();
+}
 
 void UIPath::draw() {
-  if (!visible || !planetA || !planetB) return;
+  if (!planetA || !planetB) return;
 
   // Get center coordinates of both planets
   int x1 = planetA->getX() + planetA->getSize() / 2;
@@ -16,7 +18,7 @@ void UIPath::draw() {
   int y2 = planetB->getY() + planetB->getSize() / 2;
 
   fl_color(color);
-  fl_line_style(FL_SOLID, 5);
+  fl_line_style(FL_SOLID, planetA->getSize() / 10);
   fl_line(x1, y1, x2, y2);
 
   // Draw weight label
@@ -29,11 +31,14 @@ void UIPath::draw() {
   }
 }
 
-void UIPath::setVisible() { show(); redraw();}
+void UIPath::reveal() {
+  show();
+  redraw();
+}
+
 void UIPath::setWeight(size_t newWeight) { weight = newWeight; redraw();}
 void UIPath::setColor(Fl_Color newColor) { color = newColor; redraw();}
 
-bool UIPath::isVisible() const { return visible; }
 int UIPath::getWeight() const { return weight; }
 std::pair<UIPlanet*, UIPlanet*> UIPath::getPlanets() const { 
   return {planetA, planetB}; 

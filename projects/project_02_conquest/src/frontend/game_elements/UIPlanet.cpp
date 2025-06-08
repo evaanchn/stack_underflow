@@ -8,6 +8,7 @@ UIPlanet::UIPlanet(size_t x, size_t y, size_t dimension) {
   this->dimension = dimension;
   this->button = new LayeredButton(x, y, dimension, dimension);
   // this->button->deactivate();
+  // this->button->hide();
   this->setPlanetAppearance();
 }
 
@@ -43,6 +44,7 @@ std::string UIPlanet::constructLayerPath(const std::string& initialLayerPath
 void UIPlanet::reveal() {
   this->button->activate();
   this->button->show();
+  this->button->redraw();
 }
 
 void UIPlanet::setOccupier(Fl_PNG_Image* occupier) {

@@ -11,7 +11,7 @@
 
 class CustomIconButton : public Fl_Button {
  public:
-  CustomIconButton(int x, int y, int w, int h, const char* icon_path, 
+  CustomIconButton(int x, int y, int w, int h, const char* icon_path,
       const char* text = "");
   ~CustomIconButton() { delete icon; }
 
@@ -28,7 +28,7 @@ class CustomIconButton : public Fl_Button {
 
   // Virtual on_click method that can be overridden
   virtual void on_click() {
-    // Default does nothing; override if desired 
+    // Default does nothing; override if desired
   }
 
   void draw() override;
@@ -46,12 +46,11 @@ class CustomIconButton : public Fl_Button {
     if (w) {
       CustomIconButton* btn = static_cast<CustomIconButton*>(data);
       if (btn) {
-        btn->on_click(); // Call virtual method
+        btn->on_click();  // Call virtual method
         if (btn->clickCallback) {
-          btn->clickCallback(); // Call custom callback if set
+          btn->clickCallback();  // Call custom callback if set
         }
       }
     }
   }
-
 };

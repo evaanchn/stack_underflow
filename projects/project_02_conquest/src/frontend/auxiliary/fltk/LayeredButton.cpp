@@ -28,7 +28,7 @@ void LayeredButton::setLayer(size_t index, Fl_Image* image) {
   if (index >= this->layers.size()) {
     this->layers.resize(index + 1, nullptr);
   }
-  
+
   // Scale image to fit inside button
   double scaleX = static_cast<double>(this->w()) / image->w();
   double scaleY = static_cast<double>(this->h()) / image->h();

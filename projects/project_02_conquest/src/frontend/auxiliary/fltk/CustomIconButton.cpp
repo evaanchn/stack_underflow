@@ -14,7 +14,7 @@ CustomIconButton::CustomIconButton(int x, int y, int w, int h,
   down_box(FL_NO_BOX);
   color(FL_BACKGROUND_COLOR);  // Not visible anyway
   label("");               // We draw our own label
-  callback(StaticCallback, this); // FLTK requires static callbacks
+  callback(StaticCallback, this);  // FLTK requires static callbacks
 }
 
 void CustomIconButton::draw() {
