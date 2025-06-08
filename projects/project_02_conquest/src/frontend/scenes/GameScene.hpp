@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "GameSceneConstants.hpp"
+#include "UISolarSystem.hpp"
 
 #include "GameInfoWindow.hpp"
 #include "GameInfoText.hpp"
@@ -66,6 +67,8 @@ class GameScene {
   // with delete UiSolarSystem and then this->window->remove(solarSystemArea)
   // then add another and add to the group and restart the group
   Fl_Group* solarSystemArea = nullptr;
+  UISolarSystem* solarSystem = nullptr;
+
   SFMLSound newSystemSound;
 
  public:
@@ -74,6 +77,7 @@ class GameScene {
 
  private:
   void setGameInstance();
+  void setSolarSystemArea();
 
   void setBackground();
   void setLabels();
@@ -97,12 +101,19 @@ class GameScene {
   void handleProbeAction();
   void handleScoutAction();
   void handleAttackAction();
+  void handlePlanetSeek();
   void handleEtheriumProduction();
 
  private:
   void update();
+
+  void updateProbe();
+  void updateScout();
+  void updateAttack();
+
   void updateCompleteSystem();
   void updateNewSolarSystem();
+
   void updateLabels();
   void updateRemainingBossesLabel();
   void updateOwnedMinesLabel();

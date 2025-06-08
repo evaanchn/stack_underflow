@@ -56,6 +56,11 @@ const std::vector<std::string> VESSELS_LABELS = {
     , "Wayfarer", "Oracle"
 };
 
+#define ALREADY_SELECTED(selectedVesselIndex) \
+  VESSELS_LABELS[selectedVesselIndex] \
+    + " already selected\n" \
+    + "Click on a planet"
+
 const std::vector<std::string> VESSELS_DATA = {
   "Algorithm: BFS\nCost: " +  std::to_string(BFS_COST)
   , "Algorithm: DFS\nCost: " +  std::to_string(DFS_COST)

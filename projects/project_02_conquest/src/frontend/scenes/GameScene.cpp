@@ -14,7 +14,7 @@ GameScene::GameScene(int width, int height, const std::string& title)
   this->setLabels();
   this->setActionButtons();
   this->setVesselButtons();
-  // TODO (any) add solar system area
+  this->setSolarSystemArea();
   this->window->end();  // Ends window's elements' grouping
   this->window->show();
 
@@ -22,6 +22,9 @@ GameScene::GameScene(int width, int height, const std::string& title)
 }
 
 GameScene::~GameScene() {
+  delete this->infoWindow;
+  delete this->solarSystem;
+  delete this->solarSystemArea;
   for (std::vector<LayeredButton*>& row : this->vesselButtons) {
     for (LayeredButton* vesselButton : row) {
       if (vesselButton) delete vesselButton;
@@ -31,10 +34,9 @@ GameScene::~GameScene() {
   for (GameInfoText* label : this->labels) if (label) delete label;
   delete this->backgroundImage;
   delete this->backgroundImageBox;
-  delete this->window;
-  delete this->infoWindow;
   delete this->game;  // Delete game controller
   this->game = nullptr;  // Avoid dangling pointer
+  delete this->window;
 }
 
 
@@ -51,6 +53,30 @@ void GameScene::setGameInstance() {
   if (this->game->getBattleLog()->setBattleLog(RECORD_GAME) == EXIT_FAILURE) {
     throw std::runtime_error("Battle log could not be set");
   }
+}
+
+void GameScene::setSolarSystemArea() {
+  if (this->solarSystem) {
+    delete this->solarSystem;
+    this->solarSystem = nullptr;
+  }
+  if (this->solarSystemArea) {
+    this->window->remove(this->solarSystemArea);
+    delete this->solarSystemArea;
+    this->solarSystemArea = nullptr;
+  }
+  this->solarSystemArea = new Fl_Group(RIGHT_HALF_START_X, 0
+      , this->window->w() - RIGHT_HALF_START_X, this->window->h());
+  this->solarSystemArea->box(FL_NO_BOX);  // no border
+  this->solarSystem = new UISolarSystem();
+  this->solarSystem->createPlanets(this->game->getCurrentPlanets());
+  this->solarSystem->createPaths(this->game->getCurrentGraph()
+    , this->solarSystemArea);
+  // end of grouping
+  this->solarSystemArea->end();
+  // ensure group is added befor redraw
+  this->window->add(this->solarSystemArea);
+  this->window->redraw();
 }
 
 void GameScene::setBackground() {
@@ -98,7 +124,7 @@ void GameScene::setActionButtons() {
 void GameScene::setActionButtonCallBack(TextButton* button, int actionID) {
   button->set_click_callback([button, this, actionID]() {
     if (this->selectedVessel != NONE_SELECTED) {
-      this->infoWindow->log("Vessel already selected");
+      this->infoWindow->log(ALREADY_SELECTED(this->selectedVessel));
       return;  // Do not change action if a vessel is selected
     }
     if (this->selectedAction == BLOCKED) return;
@@ -200,6 +226,8 @@ void GameScene::setVesselButtonCallBack(LayeredButton* button
     if (this->selectedVessel == NONE_SELECTED) {
       this->selectedVessel = vesselID;
       this->vesselButtonSound.play();
+    } else {
+      this->infoWindow->log(ALREADY_SELECTED(this->selectedVessel));
     }
   });
 }
@@ -218,7 +246,6 @@ int GameScene::run() {
   return Fl::run();
 }
 
-// TODO (ANY) add handle methdods for each available action (3)
 void GameScene::handleEvents() {
   // Handle events for actions
   if (this->selectedAction == PROBE) {
@@ -228,12 +255,15 @@ void GameScene::handleEvents() {
   } else if (this->selectedAction == ATTACK) {
     handleAttackAction();
   }
+  if (this->selectedVessel == NONE_SELECTED) {
+    this->handlePlanetSeek();
+  }
   this->handleEtheriumProduction();
 }
 
 void GameScene::handleProbeAction() {
   if (this->selectedVessel != NONE_SELECTED) {
-    int selectedPlanet = 0;// this->system->getSelectedPlanet();
+    int selectedPlanet = this->solarSystem->obtainSelectedPlanet();
     if (selectedPlanet != NONE_SELECTED) {
       if(!this->game->probe(this->selectedVessel, selectedPlanet)) {
         this->infoWindow->log("Failed, insuficient etherium\n"
@@ -246,7 +276,7 @@ void GameScene::handleProbeAction() {
 
 void GameScene::handleScoutAction() {
   if (this->selectedVessel != NONE_SELECTED) {
-    int selectedPlanet = 0;  // this->system->getSelectedPlanet();
+    int selectedPlanet = this->solarSystem->obtainSelectedPlanet();
     if (selectedPlanet != NONE_SELECTED) {
       if(!this->game->scout(this->selectedVessel, selectedPlanet)) {
         this->infoWindow->log("Failed, insuficient etherium\n"
@@ -258,18 +288,7 @@ void GameScene::handleScoutAction() {
 }
 void GameScene::handleAttackAction() {
   if (this->selectedVessel != NONE_SELECTED) {
-    int selectedPlanet = NONE_SELECTED;// this->system->getSelectedPlanet();
-
-    // TODO(Albin) remove this
-    for (size_t i = 0; i < this->game->getGalaxy()->getCurrentSolarSystem()
-      ->getPlanetsCount(); ++i) {
-      if (this->game->getGalaxy()->getCurrentSolarSystem()->getGraph()
-        ->getNodes().at(i)->getData()->hasBoss()) {
-        // For testing purposes, attack first planet with a boss
-        selectedPlanet = i; 
-        break;
-      }
-    }
+    int selectedPlanet = this->solarSystem->obtainSelectedPlanet();
     if (selectedPlanet != NONE_SELECTED) {
       int damage = this->game->attack(this->selectedVessel, selectedPlanet);
       if (damage == INSUFICIENT_ETHERIUM) {
@@ -280,9 +299,22 @@ void GameScene::handleAttackAction() {
       } else {
         this->infoWindow->log(std::to_string(damage) + " damage pts");
         this->attackSound.play();
+
+        // TODO prettify
+        if(!this->game->getCurrentPlanets()[selectedPlanet]->hasBoss()) {
+          this->solarSystem->removeBoss(selectedPlanet);
+        }
       }
       this->selectedVessel = NONE_SELECTED;  // Reset selected vessel
     }
+  }
+}
+
+void GameScene::handlePlanetSeek() {
+  int selectedPlanet = this->solarSystem->obtainSelectedPlanet();
+  if (selectedPlanet != NONE_SELECTED) {
+    this->infoWindow->log(this->game->getCurrentPlanets().
+      at(selectedPlanet)->toString());
   }
 }
 
@@ -297,28 +329,36 @@ void GameScene::handleEtheriumProduction() {
   this->updateAvailableEtheriumLabel();
 }
 
-// TODO (ANY) complete update method, depending on game occurences
 void GameScene::update() {
   if (this->selectedAction  == PROBE) {
-    this->updateAvailableEtheriumLabel();
-    // this->updateVisiblePlanets();
+    this->updateProbe();
   } else if (this->selectedAction == SCOUT) {
-    this->updateAvailableEtheriumLabel();
-    // this->updateExploredPaths();
+    this->updateScout();
   } else if (this->selectedAction == ATTACK) {
-    this->updateRemainingBossesLabel();
-    this->updateOwnedMinesLabel();
-    this->updateAvailableEtheriumLabel();
+    this->updateAttack();
   }
   if (this->game->isCurrentSolarSystemCompleted()) {
     this->updateCompleteSystem();  // Update to next solar system
-    if (this->infoWindow->getConfirmationChoice() == CONFIRM) {
-      this->infoWindow->toggle();
-      this->infoWindow->resetConfirmationChoice();
-      this->updateNewSolarSystem();
-    }
-    this->updateLabels();
   }
+}
+
+void GameScene::updateProbe() {
+  this->updateAvailableEtheriumLabel();
+  this->solarSystem->updatePlanetsVisibility(this->game->getCurrentExplored()
+    , this->game->getCurrentPlanets());
+}
+
+void GameScene::updateScout() {
+  this->updateAvailableEtheriumLabel();
+  this->solarSystem->updatePathsVisibility(this->game->getCurrentPaths());
+  this->solarSystem->updatePlanetsVisibility(this->game->getCurrentExplored()
+    , this->game->getCurrentPlanets());
+}
+
+void GameScene::updateAttack() {
+  this->updateRemainingBossesLabel();
+  this->updateOwnedMinesLabel();
+  this->updateAvailableEtheriumLabel();
 }
 
 void GameScene::updateCompleteSystem() {
@@ -328,6 +368,13 @@ void GameScene::updateCompleteSystem() {
   std::string systemName = this->game->getGalaxy()->getCurrentSolarSystem()
     ->getName();
   this->infoWindow->solicitConfirmation(systemName + " completed");
+  // update next
+  if (this->infoWindow->getConfirmationChoice() == CONFIRM) {
+    this->infoWindow->toggle();
+    this->infoWindow->resetConfirmationChoice();
+    this->updateNewSolarSystem();
+  }
+  this->updateLabels();
 }
 
 void GameScene::updateNewSolarSystem() {
@@ -339,12 +386,7 @@ void GameScene::updateNewSolarSystem() {
   this->newSystemSound.setVolume(100);
   this->updateCurrentSystemLabel();
   // this uiSolarSystemArea->hide();  // Hide old solar system area
-  // TODO(any) remove old solar system area
-  delete this->solarSystemArea;  // Delete old solar system area
-  this->solarSystemArea = nullptr;  // Avoid dangling pointer
-  // this.solarSystemArea = new 
-    // UiSolarSystem(this->game.getGalaxy().getCurrentSolarSystem());
-  // TODO(any) add solar system area update
+  this->setSolarSystemArea();
 }
 
 void GameScene::updateLabels() {
