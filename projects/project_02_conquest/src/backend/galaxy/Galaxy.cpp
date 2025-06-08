@@ -45,7 +45,6 @@ bool Galaxy::passNextSolarSystem() {
   if (this->currentSolarSystemIndex < this->solarSystemsData.size()) {
     this->destroyCurrentSolarSystem();
     return this->createCurrentSolarSystem();
-
   }
   return false;
 }

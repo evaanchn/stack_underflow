@@ -105,7 +105,7 @@ class GreedySearch : public AttackAlgorithm<DataType, WeightType> {
     }
     if (current != endNode) {
       // if exit the loop without having reached the end Node, no path was found
-      totalWeight = 0;
+      totalWeight = defaultNoEdge<WeightType>();
     }
     return iterations;
   }

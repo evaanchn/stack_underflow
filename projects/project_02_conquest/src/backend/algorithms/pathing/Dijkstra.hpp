@@ -69,10 +69,9 @@ class Dijkstra : public PathingAlgorithm<DataType, WeightType> {
       // get the node with the minimum distance
       std::pair<WeightType, Node<DataType>*> currentNode = minHeap.top();
       minHeap.pop();
-
+      ++iterations;  // for each adyacent from actual node
       // traverse adjacent nodes comparing distances
       for (auto& adjacent : adjacencyList.at(currentNode.second)) {
-        ++iterations;  // for each adyacent from actual node
         // only visit discovered nodes
         if ((discoveredElements.find(adjacent.first->getData())
             != discoveredElements.end())) {

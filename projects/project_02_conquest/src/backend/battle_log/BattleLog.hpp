@@ -34,9 +34,15 @@ class BattleLog {
 
   /**
    * @brief Records an action into the battle log.
-   * @param action, The ActionLog object containing action details.
+   * @param action The ActionLog object containing action details.
    */
   void recordAction(ActionLog &action);
+
+  /**
+   * @brief Records an action into the battle log.
+   * @param action The DamageLog object containing action details.
+   */
+  void recordAction(DamageLog &action);
 
   /**
    * @brief Records the header for statistics in the battle log.

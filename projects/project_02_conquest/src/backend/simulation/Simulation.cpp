@@ -102,26 +102,39 @@ void Simulation::completeSystemTest() {
   std::vector<DamageLog> localSearchLogs;
   std::vector<DamageLog> exhaustiveSearchLogs;
   std::vector<DamageLog> exhaustiveSearchPruneLogs;
-  size_t actionsCount = 2;
+  std::unordered_set<std::string> attacksPerformed = {};
+
   // Start with initial probe and scout to continue game
   this->testProbe(BFSLogs, DFSLogs);
   this->testScout(dijkstraLogs, floydLogs);
+  size_t actionsCount = 2;
   SolarSystem* currentSystem = this->game->getGalaxy()->getCurrentSolarSystem();
+  int startingAction = PROBE;  // First of available actions is probing
   // Perform random actions until the solar system is complete
   while (!this->game->getGalaxy()->getCurrentSolarSystem()->isComplete()) {
-    int actionType = Random<int>().generateRandomInRange(PROBE, ATTACK);
+    int actionType = Random<int>().generateRandomInRange(startingAction
+        , ATTACK);
     if (actionType == PROBE) {
       this->testProbe(BFSLogs, DFSLogs);
+      // If all planets have been discovered, discard PROBE as an option
+      if (currentSystem->getExploredPlanets().size()
+         == currentSystem->getPlanetsCount()) {
+        startingAction = SCOUT;
+      }
     }
     else if (actionType == SCOUT) {
       this->testScout(dijkstraLogs, floydLogs);
+      // Set the only available action to attack, now that paths are revealed
+      if (currentSystem->getExploredPlanets().size()
+         == currentSystem->getPlanetsCount()) {
+        startingAction = ATTACK;
+      }
     }
     else if (actionType == ATTACK) {
       this->testAttack(greedyLogs, localSearchLogs
-        , exhaustiveSearchLogs, exhaustiveSearchPruneLogs);
+        , exhaustiveSearchLogs, exhaustiveSearchPruneLogs, attacksPerformed);
     }
     ++actionsCount;
-
   }
 
   // Log the results of the tests
@@ -153,6 +166,9 @@ void Simulation::testProbe(std::vector<ActionLog>& BFSLogs
 void Simulation::testScout(std::vector<ActionLog>& dijkstraLogs
       , std::vector<ActionLog>& floydLogs) {
   int vesselType = Random<int>().generateBinaryRandom(0, 1);
+  SolarSystem* system = this->game->getGalaxy()->getCurrentSolarSystem();
+  if (system->getExploredPlanets().size() == system->getPlanetsCount()) 
+      vesselType = 1;
   if (vesselType == 0) {
     dijkstraLogs.push_back(this->tesScoutingVessel
         (&this->game->getVessels().dijkstra));
@@ -165,20 +181,28 @@ void Simulation::testScout(std::vector<ActionLog>& dijkstraLogs
 void Simulation::testAttack(std::vector<DamageLog>& greedyLogs
       , std::vector<DamageLog>& localSearchLogs
       , std::vector<DamageLog>& exhaustiveSearchLogs
-      , std::vector<DamageLog>& exhaustiveSearchPruneLogs) {
-  int vesselType = Random<int>().generateRandomInRange(0, 3);
-  if (vesselType == 0) {
+      , std::vector<DamageLog>& exhaustiveSearchPruneLogs
+      , std::unordered_set<std::string>& attacksPerformed) {
+  if (attacksPerformed.size() == ATTACKS_AVAILABLE) attacksPerformed.clear();
+  int vesselType = GREEDY;
+  do {
+    vesselType = Random<int>().generateRandomInRange(GREEDY, PRUNED);
+  } while (attacksPerformed.find(ATTACKS_IDS[vesselType])
+      != attacksPerformed.end());
+  attacksPerformed.insert(ATTACKS_IDS[vesselType]);
+
+  if (vesselType == GREEDY) {
     greedyLogs.push_back(this->testAttackVessel
-        (&this->game->getVessels().greedySearch));
-  } else if (vesselType == 1) {
+        (&this->game->getVessels().greedySearch, GREEDY));
+  } else if (vesselType == LOCAL) {
     localSearchLogs.push_back(this->testAttackVessel
-        (&this->game->getVessels().localSearch));
-  } else if (vesselType == 2) {
+        (&this->game->getVessels().localSearch, LOCAL));
+  } else if (vesselType == EXHAUSTIVE) {
     exhaustiveSearchLogs.push_back(this->testAttackVessel
-        (&this->game->getVessels().exhaustiveSearch));
-  } else if (vesselType == 3) {
+        (&this->game->getVessels().exhaustiveSearch, EXHAUSTIVE));
+  } else if (vesselType == PRUNED) {
     exhaustiveSearchPruneLogs.push_back(this->testAttackVessel
-          (&this->game->getVessels().exhaustiveSearchPrune));
+        (&this->game->getVessels().exhaustiveSearchPrune, PRUNED));
   }
 }
 
@@ -209,20 +233,22 @@ ActionLog Simulation::tesScoutingVessel(ScoutingVessel<Planet*
   return log;
 }
 
-DamageLog Simulation::testAttackVessel(AttackVessel<Planet*, size_t>* vessel) {
+DamageLog Simulation::testAttackVessel(AttackVessel<Planet*, size_t>* vessel
+    , int type) {
   SolarSystem* system = this->game->getGalaxy()->getCurrentSolarSystem();
   if (system->isComplete()) return DamageLog("NA");
   size_t attackWeight = 0;
-  size_t targetIndex = 0;
-  // Select the first planet with a boss to attack
-  for (size_t index = 0; targetIndex < system->getGraph()->getNodes().size()
-      ; ++index) {
-    // Ensure the target has a boss
-    if (system->getGraph()->getNodes()[index]->getData()->hasBoss()) {
-      targetIndex = index;
-      break;
+  int targetIndex = -1;
+  std::unordered_set<Planet*> explored = system->getExploredPlanets();
+  // Find an explored planet with boss
+  for (auto* planet : explored) {
+    if (planet->hasBoss()) {
+      targetIndex = system->getPlanetsIndexes()[planet];
     }
   }
+  // If no boss in sight yet
+  if (targetIndex == -1) return DamageLog(ATTACKS_IDS[type]);
+
   // start at entry planet
   Node<Planet*>* startingNode = system->getGraph()->getNodes()
     [system->getPlanetsIndexes()[system->getEntryPlanet()]];
@@ -234,13 +260,16 @@ DamageLog Simulation::testAttackVessel(AttackVessel<Planet*, size_t>* vessel) {
       , attackWeight);
   // Take the damage from the attack
   if (attackWeight > 0) {
+    int attack = 500 / attackWeight < MIN_DAMAGE_SIMULATION ?
+        MIN_DAMAGE_SIMULATION :  500 / attackWeight ;
     // only base points of damage for simulation purposes
     system->getGraph()->getNodes()[targetIndex]->getData()
-    ->getBoss()->receiveDamage(MAX_DAMAGE_SIMULATION /*/ attackWeight*/);
+    ->getBoss()->receiveDamage(attack);
     // Update the boss alive status
     system->updateBossAlive(system->getGraph()->getNodes()
       [targetIndex]->getData());
-    if (this->recordActions) this->battleLog->recordAction(log);
   }
+  if (this->recordActions) this->battleLog->recordAction(log);
+
   return log;
 }

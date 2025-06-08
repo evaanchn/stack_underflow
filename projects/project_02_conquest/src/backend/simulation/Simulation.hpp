@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_set>
 
 #include "BattleLog.hpp"
 #include "Galaxy.hpp"
@@ -11,13 +12,23 @@
 #include "GameConstants.hpp"
 #include "SolarSystem.hpp"
 
-#define MAX_DAMAGE_SIMULATION 1
+#define MIN_DAMAGE_SIMULATION 1
 
 enum ACTIONS {
   PROBE, SCOUT, ATTACK
 };
 
 #define RECORD_ACTIONS true
+#define ATTACKS_AVAILABLE 4
+#define MAX_ATTACKS 10
+enum ATTACKS {
+  GREEDY, LOCAL, EXHAUSTIVE, PRUNED
+};
+const std::string ATTACKS_IDS[ATTACKS_AVAILABLE] =
+  { "Greedy"
+  , "Local Search"
+  , "Exhaustive Search"
+  , "Exhaustive Search Pruned"};
 
 /**
  * @class Simulation
@@ -81,10 +92,11 @@ class Simulation {
   void testAttack(std::vector<DamageLog>& GreedyLogs
       , std::vector<DamageLog>& LocalSearchLogs
       , std::vector<DamageLog>& ExhaustiveSearchLogs
-      , std::vector<DamageLog>& exhaustiveSearchPruneLogs);
+      , std::vector<DamageLog>& exhaustiveSearchPruneLogs
+      , std::unordered_set<std::string>& attacksPerformed);
   /// @brief Test executions for various space vessel algorithms.
   /// @return ActionLog object containing the results of the tests.
   ActionLog tesProbingVessel(ProbingVessel<Planet*, size_t>* vessel);
   ActionLog tesScoutingVessel(ScoutingVessel<Planet*, size_t>* vessel);
-  DamageLog testAttackVessel(AttackVessel<Planet*, size_t>* vessel);
+  DamageLog testAttackVessel(AttackVessel<Planet*, size_t>* vessel, int type);
 };

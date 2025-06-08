@@ -30,7 +30,7 @@ void BattleLog::recordStatsHeader(std::string recordTitle, int elementCount
   }
   fprintf(this->battleLogFile,
     "<====================================>\n"
-    "Aritmetic Mean\n");
+    "Arithmetic Mean\n");
 }
 
 void BattleLog::recordStats(std::vector<ActionLog>& actions
