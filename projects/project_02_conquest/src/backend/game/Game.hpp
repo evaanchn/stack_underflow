@@ -82,6 +82,13 @@ class Game {
   /// @return damage dealed || -1 not enough etherium || -2 planet has NO boss
   int attack(int vesselID, int targetPlanetIndex);
 
+  /// @brief Recieve the attack result into the the targetPlanet and update boss
+  /// status
+  /// @param attackWeight search weight
+  /// @param targetPlanetIndex
+  /// @return calculated damage
+  int damageAction(const size_t attackWeight, int targetPlanetIndex);
+
   /// Collects purchase points based on the number of active mines
   void collectEtherium();
 
@@ -107,6 +114,10 @@ class Game {
 
   /// @brief Getters
   Galaxy* getGalaxy() const;
+  std::vector<Planet*> getCurrentPlanets();
+  std::unordered_set<Planet *>& getCurrentExplored();
+  std::vector<std::vector<bool>>& getCurrentPaths();
+  Graph<Planet *, size_t>* getCurrentGraph();
   size_t getSystemsLeftCount() const;
   BattleLog* getBattleLog() const;
   VesselsCollection<Planet*, size_t>& getVessels();

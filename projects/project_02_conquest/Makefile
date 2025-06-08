@@ -7,7 +7,7 @@ LIBS +=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lfltk_images -l
 LIBS += $(shell fltk-config --ldflags)
 
 # default test
-DEFAULT_ARGS = tests/andromeda_systems.csv 10
+DEFAULT_ARGS = tests/andromeda_systems.csv print
 .PHONY: simulation
 # prioritize command line ARGS
 simulation:

@@ -118,14 +118,23 @@ int Game::attack(int vesselID, int targetPlanetIndex, DamageLog attackLog) {
       , attackWeight);
   // Record the attack action
   this->battleLog->recordAction(attackLog);
-  // recieve the attack result into the the targetPlanet and update boss status
+  return this->damageAction(attackWeight, targetPlanetIndex);
+}
+
+int Game::damageAction(const size_t attackWeight, int targetPlanetIndex) {
+  SolarSystem* system = this->galaxy->getCurrentSolarSystem();
+  assert(system);
   int damage = 0;
   if (attackWeight > 0) {
-    system->getGraph()->getNodes()[targetPlanetIndex]->getData()
-    // TODO(any): improve the damage calculation
-    ->getBoss()->receiveDamage( damage = (MAX_DAMAGE * 100) / attackWeight);
+    size_t planetCount = this->galaxy->getCurrentSolarSystem()
+      ->getPlanetsCount();
+    Planet* planet = system->getGraph()->getNodes()[targetPlanetIndex]
+      ->getData();
+    // damage calculation
+    planet->getBoss()->receiveDamage( damage = (BOSS_INIT_HEALTH * planetCount)
+      / attackWeight);
     // Update the boss alive status and add a mine if dead
-    if(!system->updateBossAlive(targetNode->getData())) {
+    if(!system->updateBossAlive(planet)) {
       ++this->player.activeMines;
     }
   }
@@ -173,6 +182,23 @@ bool Game::isGameOver() const {
 
 Galaxy* Game::getGalaxy() const {
   return this->galaxy;
+}
+
+std::vector<Planet*> Game::getCurrentPlanets() {
+  assert(this->galaxy);
+  return this->galaxy->getCurrentSolarSystem()->getPlanets();
+}
+
+std::unordered_set<Planet *>& Game::getCurrentExplored() {
+  return this->galaxy->getCurrentSolarSystem()->getExploredPlanets();
+}
+
+std::vector<std::vector<bool>>& Game::getCurrentPaths() {
+  return this->galaxy->getCurrentSolarSystem()->getRevealedPaths();
+}
+
+Graph<Planet *, size_t>* Game::getCurrentGraph() {
+  return this->galaxy->getCurrentSolarSystem()->getGraph();
 }
 
 size_t Game::getSystemsLeftCount() const {
