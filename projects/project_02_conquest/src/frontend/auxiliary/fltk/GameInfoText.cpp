@@ -14,11 +14,11 @@ GameInfoText::GameInfoText(int x, int y, int w, int h
   labelcolor(color);
   box(FL_NO_BOX);
 }
-  
+
 GameInfoText::~GameInfoText() {
   delete[] currentText;
 }
-  
+
 void GameInfoText::updateText(const char* newText) {
   delete[] currentText;
   currentText = new char[strlen(newText) + 1];

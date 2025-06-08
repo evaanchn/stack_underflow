@@ -3,7 +3,7 @@
 #include "AnimatedGIF.hpp"
 
 AnimatedGIF::~AnimatedGIF() {
-  for (auto* frame : this->frames) if(frame) delete frame;
+  for (auto* frame : this->frames) if (frame) delete frame;
   delete this->gifBox;
 }
 

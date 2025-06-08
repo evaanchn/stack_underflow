@@ -8,6 +8,7 @@
 #include "LayeredButton.hpp"
 
 #include "Random.hpp"
+#include "Planet.hpp"
 
 enum PLANET_LAYERS {
   SPHERE, TERRAIN, OCCUPIER
@@ -29,6 +30,9 @@ class UIPlanet {
  private:
   /// @brief The underlying FLTK layered button used to render the planet.
   LayeredButton* button = nullptr;
+  size_t x;
+  size_t y;
+  size_t dimension;
 
  public:
   /// @brief Default constructor. Does not initialize the planet button.
@@ -70,4 +74,8 @@ class UIPlanet {
   /// @brief Assigns a function to execute when the planet is clicked.
   /// @param func The action the planet's button must carry out
   void setPlanetInteraction(std::function<void()> func);
+
+  size_t getX() const;
+  size_t getY() const;
+  size_t getSize() const;
 };

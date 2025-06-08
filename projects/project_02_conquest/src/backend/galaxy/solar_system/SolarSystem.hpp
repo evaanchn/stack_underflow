@@ -113,4 +113,6 @@ class SolarSystem {
   /// @brief Checks if the solar system is complete.
   /// @return True if all bosses are defeated, false otherwise.
   bool isComplete() const;
+
+  std::vector<Planet*> getPlanets() { return this->planets; }
 };
