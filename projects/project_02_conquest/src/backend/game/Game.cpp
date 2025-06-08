@@ -21,6 +21,9 @@ bool Game::startGame(const char* galaxyFileDirectory) {
     if (!this->galaxy) {
       throw std::runtime_error("Galaxy instance could not be created.");
     }
+    if (!this->galaxy->createCurrentSolarSystem()) {
+      throw std::runtime_error("Initial Solar System could not be created.");
+    }
   } catch(const CSVException& e) {
     std::cerr << e.what() << '\n';
     return false;
@@ -28,6 +31,8 @@ bool Game::startGame(const char* galaxyFileDirectory) {
     std::cerr << e.what() << '\n';
     return false;
   }
+  this->player = {0, 1};  // Reset player data
+  this->gameOver = false;  // Reset game over status
   return true;
 }
 
@@ -38,58 +43,105 @@ Game::~Game() {
   this->battleLog = nullptr;
 }
 
-void Game::probe(int vesselID, size_t startPlanetIndex) {
-  (void)startPlanetIndex;  // Suppress unused variable warning
-  // SolarSystem* currentSolarSystem = this->galaxy->getCurrentSolarSystem();
-  // transform the startPlanet coordinates to a Node<Planet*> pointer
-  // Check if the vesselID is valid
-  if (vesselID == SPACE_VESSEL_TYPE::BFS_VESSEL) {
-    // this->battleLog->recordAction(this->vessels.bfs.probe();)
-  } else if (vesselID == SPACE_VESSEL_TYPE::DFS_VESSEL) {
-    // this->battleLog->recordAction(this->vessels.dfs.probe();)
-  }
+bool Game::probe(int vesselID, int startPlanetIndex, ActionLog& probeLog) {
+  if (!this->consumeEtherium(VESSELS_COSTS[vesselID])) return false;
+  SolarSystem* system = this->galaxy->getCurrentSolarSystem();
+  // start planet node
+  assert(startPlanetIndex >= 0 || startPlanetIndex <
+      (int)system->getPlanetsCount());  // Invalid planet index
+  Node<Planet*>* startingNode = system->getGraph()->getNodes()
+    [startPlanetIndex];
+  // Check if the vessel ID is valid
+  assert(vesselID >= BFS_VESSEL || vesselID <= DFS_VESSEL);
+  // Choose probing vessel
+  probeLog = vessels.probingVessels.at(vesselID - BFS_VESSEL)->probe
+    (startingNode, system->getGraph()->getAdjacencyList()
+    , system->getExploredPlanets(), PROBE_LIMIT);
+  this->battleLog->recordAction(probeLog);
+  return true;
 }
 
-void Game::scout(int vesselID, size_t startPlanetIndex) {
-  (void)startPlanetIndex;  // Suppress unused variable warning
-  // SolarSystem* currentSolarSystem = this->galaxy->getCurrentSolarSystem();
-  // transform the startPlanet coordinates to a Node<Planet*> pointer
-  // Check if the vesselID is valid
-  if (vesselID == SPACE_VESSEL_TYPE::DIJKSTRA_VESSEL) {
-    // this->battleLog->recordAction(this->vessels.dijkstra.scout(startPlanet));
-  } else if (vesselID == SPACE_VESSEL_TYPE::FLOYD_VESSEL) {
-    // this->battleLog->recordAction(this->vessels.floyd.scout(startPlanet));
-  }
+bool Game::probe(int vesselID, int startPlanetIndex) {
+  ActionLog probeLog;
+  return this->probe(vesselID, startPlanetIndex, probeLog);
 }
 
-size_t Game::attack(int vesselID, size_t targetPlanetIndex) {
-  (void)targetPlanetIndex;  // Suppress unused variable warning
-  // SolarSystem* currentSolarSystem = this->galaxy->getCurrentSolarSystem();
-  // transform the startPlanet coordinates to a Node<Planet*> pointer
-  // transform the targetPlanet coordinates to a Node<Planet*> pointer
-  // Check if the vesselID is valid
-  if (vesselID == SPACE_VESSEL_TYPE::GREEDY_VESSEL) {
-    // this->battleLog->recordAction(this->vessels.exhaustiveSearch
-      // .attack(startPlanet, targetPlanet));
-  } else if (vesselID == SPACE_VESSEL_TYPE::LOCAL_SEARCH_VESSEL) {
-    // this->battleLog->recordAction(this->vessels.localSearch
-      //  .attack(startPlanet, targetPlanet));
-  } else if (vesselID == SPACE_VESSEL_TYPE::EXHAUSTIVE_SEARCH_VESSEL) {
-    // this->battleLog->recordAction(this->vessels.exhaustiveSearch
-      // .attack(startPlanet, targetPlanet));
-  } else if (vesselID == SPACE_VESSEL_TYPE::EXHAUSTIVE_PRUNE_VESSEL) {
-    // this->battleLog->recordAction(this->vessels.exhaustiveSearchPrune
-      // .attack(startPlanet, targetPlanet);));
+bool Game::scout(int vesselID, int startPlanetIndex, ActionLog& scoutLog) {
+  // Consume etherium for scouting
+  if (!this->consumeEtherium(VESSELS_COSTS[vesselID])) return false;
+  SolarSystem* system = this->galaxy->getCurrentSolarSystem();
+  assert(startPlanetIndex >= 0 || startPlanetIndex <
+    (int)system->getPlanetsCount());  // Invalid planet index
+  // start planet node
+  Node<Planet*>* startingNode = system->getGraph()->getNodes()
+    [startPlanetIndex];
+  // Check if the vessel ID is valid
+  assert(vesselID >= DIJKSTRA_VESSEL || vesselID <= FLOYD_VESSEL);
+  scoutLog = vessels.scoutingVessels.at(vesselID - DIJKSTRA_VESSEL)
+    ->scout(system->getGraph(), system->getExploredPlanets()
+    , system->getRevealedPaths(), startingNode);
+  this->battleLog->recordAction(scoutLog);
+  return true;
+}
+
+bool Game::scout(int vesselID, int startPlanetIndex) {
+  ActionLog scoutLog;
+  return this->scout(vesselID, startPlanetIndex, scoutLog);
+}
+
+int Game::attack(int vesselID, int targetPlanetIndex, DamageLog attackLog) {
+  // Consume etherium for attacking
+  if (!this->consumeEtherium(VESSELS_COSTS[vesselID]))
+    return INSUFICIENT_ETHERIUM;
+  SolarSystem* system = this->galaxy->getCurrentSolarSystem();
+  // Validate target planet index
+  assert(targetPlanetIndex >= 0 || targetPlanetIndex <
+      (int)system->getPlanetsCount());
+  Node<Planet*>* targetNode = system->getGraph()->getNodes()
+    [targetPlanetIndex];
+  // Ensure the target has a boss
+  if (!targetNode->getData()->hasBoss()) {
+    return HAS_NO_BOSS;  // Target planet does not have a boss
   }
+  // start at entry planet
+  Node<Planet*>* startingNode = system->getGraph()->getNodes()
+    [system->getPlanetsIndexes()[system->getEntryPlanet()]];
+  size_t attackWeight = 0;
+  // Check if the vessel ID is valid
+  assert(vesselID >= GREEDY_VESSEL || vesselID <= EXHAUSTIVE_PRUNE_VESSEL);
+  // Choose scouting vessel and attack
+  AttackVessel<Planet*, size_t>* attackVessel = this->vessels.attackVessels.at
+    (vesselID - GREEDY_VESSEL);
+  attackLog = attackVessel->attack(startingNode, targetNode
+      , system->getGraph()->getAdjacencyList()
+      , system->getGraph()->getNodeIndexes(), system->getRevealedPaths()
+      , attackWeight);
+  // Record the attack action
+  this->battleLog->recordAction(attackLog);
   // recieve the attack result into the the targetPlanet and update boss status
-  return 0;  // Placeholder return value, replace with actual attack result
+  int damage = 0;
+  if (attackWeight > 0) {
+    system->getGraph()->getNodes()[targetPlanetIndex]->getData()
+    // TODO(any): improve the damage calculation
+    ->getBoss()->receiveDamage( damage = (MAX_DAMAGE * 100) / attackWeight);
+    // Update the boss alive status and add a mine if dead
+    if(!system->updateBossAlive(targetNode->getData())) {
+      ++this->player.activeMines;
+    }
+  }
+  return damage;
+}
+
+int Game::attack(int vesselID, int targetPlanetIndex) {
+  DamageLog attackLog;
+  return this->attack(vesselID, targetPlanetIndex, attackLog);
 }
 
 void Game::collectEtherium() {
   // Collect purchase points based on active mines
-  if (this->player.etherium < MAX_PURCHASE_POINTS) {
+  if (this->player.etherium < MAX_ETHERIUM) {
     this->player.etherium
-      += this->player.activeMines * PURCHASE_POINTS_INC;
+      += this->player.activeMines * ETHERIUM_INC;
   }
 }
 
@@ -101,7 +153,21 @@ bool Game::consumeEtherium(size_t points) {
   return false;
 }
 
-bool Game::isGameOver() {
+bool Game::isCurrentSolarSystemCompleted() const {
+  return this->galaxy->getCurrentSolarSystem()->isComplete();
+}
+
+bool Game::passNextSolarSystem() {
+  if (this->galaxy->passNextSolarSystem()) {
+    this->player.activeMines = 1;  // Reset active mines for the new system
+    this->player.etherium = 0;  // Reset etherium for the new system
+    return true;
+  }
+  this->gameOver = true;
+  return false;
+}
+
+bool Game::isGameOver() const {
   return this->gameOver;
 }
 
@@ -126,10 +192,16 @@ VesselsCollection<Planet*, size_t>& Game::getVessels() {
 size_t Game::getVesselsCount() const {
   return this->vessels.vesselsCount;
 }
-size_t Game::getMInesCount() const {
+
+size_t Game::getCurrentRemainingBosses() const {
+  if (!this->galaxy) return 0;
+  return this->galaxy->getCurrentSolarSystem()->getBossesAlive();
+}
+
+size_t Game::getCurrentMInes() const {
   return this->player.activeMines;
 }
 
-size_t Game::getEtherium() const {
+size_t Game::getCurrentEtherium() const {
   return this->player.etherium;
 }
