@@ -125,25 +125,37 @@ void SolarSystem::adjustPlanetsConnections() {
       = this->planetGraph->getAdjacencyMatrix();
   std::vector<Node<Planet*>*> nodes = this->planetGraph->getNodes();
   // For every connection available (lower triangle of adjacency matrix,
-  // since the graph used is undirected)
+  // since the graph used is undirected), collect valid connections
+  std::vector<std::pair<size_t, size_t>> edgeIndices;
   for (size_t fromIdx = 1; fromIdx < adjacencyMatrix.size(); ++fromIdx) {
     for (size_t toIdx = 0; toIdx < fromIdx; ++toIdx) {
-      if (adjacencyMatrix[fromIdx][toIdx] == defaultNoEdge<size_t>()) continue;
-      std::unordered_set<Node<Planet*>*> unremovableNodes;
-      ArticulationPointsFinder<Planet*, size_t>().findArticulationPoints
-          (this->planetGraph, unremovableNodes);
-      // If from node is an articulation point, skip its disconnections
-      if (unremovableNodes.find(nodes[fromIdx]) != unremovableNodes.end())
-          break;
-      // Otherwise, calculate whether to disconnect or not for this to
-      bool disconnect = Random<double>().generateRandomInRange(0.0, 1.0)
-          < 1 - LINK_PROB;  // Complement of link is unlink prob
-      if (disconnect) {
-        // If the node to which we have a connection to is not an art. point
-        if (unremovableNodes.find(nodes[toIdx]) == unremovableNodes.end()) {
-          // Remove edge between them
-          this->planetGraph->removeEdge(nodes[fromIdx], nodes[toIdx]);
-        }
+      if (adjacencyMatrix[fromIdx][toIdx] != defaultNoEdge<size_t>()) {
+        edgeIndices.emplace_back(fromIdx, toIdx);
+      }
+    }
+  }
+  // Shuffle the connections read
+  std::shuffle(edgeIndices.begin(), edgeIndices.end()
+      , std::mt19937{std::random_device{}()});
+  // Iterate through connections randomly
+  for (auto& pair : edgeIndices) {
+    size_t fromIdx = pair.first;
+    size_t toIdx = pair.second;
+    if (adjacencyMatrix[fromIdx][toIdx] == defaultNoEdge<size_t>()) continue;
+    std::unordered_set<Node<Planet*>*> unremovableNodes;
+    ArticulationPointsFinder<Planet*, size_t>().findArticulationPoints
+        (this->planetGraph, unremovableNodes);
+    // If from node is an articulation point, skip its disconnections
+    if (unremovableNodes.find(nodes[fromIdx]) != unremovableNodes.end())
+        break;
+    // Otherwise, calculate whether to disconnect or not for this to
+    bool disconnect = Random<double>().generateRandomInRange(0.0, 1.0)
+        < 1 - LINK_PROB;  // Complement of link is unlink prob
+    if (disconnect) {
+      // If the node to which we have a connection to is not an art. point
+      if (unremovableNodes.find(nodes[toIdx]) == unremovableNodes.end()) {
+        // Remove edge between them
+        this->planetGraph->removeEdge(nodes[fromIdx], nodes[toIdx]);
       }
     }
   }
