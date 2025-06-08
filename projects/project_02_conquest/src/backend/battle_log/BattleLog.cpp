@@ -17,6 +17,10 @@ void BattleLog::recordAction(ActionLog &action) {
   fprintf(this->battleLogFile, "%s\n", action.toString().c_str());
 }
 
+void BattleLog::recordAction(DamageLog &action) {
+  fprintf(this->battleLogFile, "%s\n", action.toString().c_str());
+}
+
 void BattleLog::recordStatsHeader(std::string recordTitle, int elementCount
   , int actionsCount) {
   fprintf(this->battleLogFile,
