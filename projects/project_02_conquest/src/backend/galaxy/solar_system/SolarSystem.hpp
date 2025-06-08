@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -17,7 +18,7 @@ enum SOL_SYS_DATA_POSITIONS {
 };
 
 #define MINE_BOSS_SPAWN_PROB 0.3
-#define LINK_PROB 0.7
+#define LINK_PROB 0.25
 #define DISTANCE_MAGNIFIER 10
 #define X_COORDS_MAGNIFIER 1
 
