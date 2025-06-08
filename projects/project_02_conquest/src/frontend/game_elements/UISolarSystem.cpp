@@ -4,11 +4,18 @@
 
 #include "Random.hpp"
 
+UISolarSystem::UISolarSystem(){}
+
 UISolarSystem::~UISolarSystem() {
   for (auto planet : UiPlanets) {
     delete planet;
   }
   UiPlanets.clear();
+  
+  for (auto path : UiPaths) {
+    delete path;
+  }
+  UiPaths.clear();
 }
 
 void UISolarSystem::createPlanets(std::vector<Planet*> planets) {
@@ -34,7 +41,7 @@ void UISolarSystem::createPlanets(std::vector<Planet*> planets) {
     uiPlanet->setPlanetInteraction([this, i]() { 
       this->selectedPlanet = static_cast<int>(i); 
     });
-    uiPlanet->reveal();
+    // uiPlanet->reveal();
     
     UiPlanets.push_back(uiPlanet);
   }
@@ -56,9 +63,10 @@ std::vector<std::pair<int, int>> UISolarSystem::generateValidPositions(
     while (!positionFound && attempts < maxAttempts) {
       attempts++;
       
-      int x = random.generateRandomInRange(startX, startX + areaWidth - size);
-      int y = random.generateRandomInRange(MIN_MARGIN, 
-                                         MIN_MARGIN + areaHeight - size);
+      int x = random.generateRandomInRange(START_X
+          , START_X + AREA_WIDTH - size);
+      int y = random.generateRandomInRange(MIN_MARGIN
+          , MIN_MARGIN + AREA_HEIGHT - size);
       
       if (usedYValues.find(y) != usedYValues.end()) {
         continue;
@@ -75,12 +83,12 @@ std::vector<std::pair<int, int>> UISolarSystem::generateValidPositions(
       int y = MIN_MARGIN;
       while (usedYValues.find(y) != usedYValues.end()) {
         y += MIN_PLANET_DISTANCE + planetSizes[i];
-        if (y > MIN_MARGIN + areaHeight - size) {
+        if (y > MIN_MARGIN + AREA_HEIGHT - size) {
           y = MIN_MARGIN;
         }
       }
       
-      int x = startX + (i % 2) * (areaWidth / 2);
+      int x = START_X + (i % 2) * (AREA_WIDTH / 2);
       positions.emplace_back(x, y);
       usedYValues.insert(y);
     }
@@ -89,9 +97,9 @@ std::vector<std::pair<int, int>> UISolarSystem::generateValidPositions(
   return positions;
 }
 
-bool UISolarSystem::isValidPosition(int x, int y, int size, 
-                                   const std::vector<std::pair<int, int>>& positions,
-                                   const std::vector<int>& sizes) {
+bool UISolarSystem::isValidPosition(int x, int y, int size
+    , const std::vector<std::pair<int, int>>& positions
+    , const std::vector<int>& sizes) {
   for (size_t i = 0; i < positions.size(); ++i) {
     int otherX = positions[i].first;
     int otherY = positions[i].second;
@@ -102,8 +110,8 @@ bool UISolarSystem::isValidPosition(int x, int y, int size,
     int otherCenterX = otherX + otherSize / 2;
     int otherCenterY = otherY + otherSize / 2;
     
-    double distance = std::sqrt(std::pow(centerX - otherCenterX, 2) + 
-                              std::pow(centerY - otherCenterY, 2));
+    double distance = std::sqrt(std::pow(centerX - otherCenterX, 2) +
+        std::pow(centerY - otherCenterY, 2));
     
     if (distance < (size + otherSize) / 2 + MIN_PLANET_DISTANCE) {
       return false;
@@ -114,4 +122,48 @@ bool UISolarSystem::isValidPosition(int x, int y, int size,
 
 int UISolarSystem::getSelectedPlanet() const {
   return selectedPlanet;
+}
+
+void UISolarSystem::createPaths(Graph<Planet*, size_t>* graph
+    , Fl_Group* container) {
+  // Clear existing paths
+  for (auto path : UiPaths) {
+    delete path;
+  }
+  UiPaths.clear();
+
+  std::cout << " UI PLANETS " << UiPlanets.size()<<std::endl;
+
+  auto& adjacencyMatrix = graph->getAdjacencyMatrix();
+  auto& nodes = graph->getNodes();
+
+  std::cout << " NODES " << nodes.size()<<std::endl;
+
+  for (size_t fromIdx = 1; fromIdx < adjacencyMatrix.size(); ++fromIdx) {
+    for (size_t toIdx = 0; toIdx < fromIdx; ++toIdx) {
+      size_t weight = adjacencyMatrix[fromIdx][toIdx];
+      if (weight != defaultNoEdge<size_t>()) {
+        UIPlanet* uiSource = this->UiPlanets[fromIdx];
+        UIPlanet* uiDestiny = this->UiPlanets[toIdx];
+        if (uiSource && uiDestiny) {
+          UIPath* path = new UIPath(uiSource, uiDestiny, weight, DEFAULT_PATH_COLOR);
+          path->setVisible();
+          container->add(path);
+          UiPaths.push_back(path);
+        }
+
+      }
+
+    }
+  }
+  for (size_t i = 0; i < UiPlanets.size(); ++i) {
+    UiPlanets[i]->reveal();
+  }
+      
+  std::cout << UiPaths.size()<<std::endl;
+}
+
+void UISolarSystem::setupDrawCallback(Fl_Group* container) {
+  container->redraw();  // Forzar redibujo
+  std::cout << "succces" << std::endl;
 }

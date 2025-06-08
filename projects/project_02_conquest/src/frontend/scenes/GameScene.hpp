@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <FL/fl_draw.H>
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
@@ -100,7 +101,8 @@ class GameScene {
   void setVesselButtons();
   void setVesselButtonCallBack(LayeredButton* button, size_t vesselID);
 
-  void setSolarSystem(std::vector<Planet*> planets);
+  void setSolarSystem(std::vector<Planet*> planets
+      , Graph<Planet*, double>* graph);
   void testPlanetLoading(); // Test method
 
  public:

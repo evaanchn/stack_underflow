@@ -3,6 +3,9 @@
 #include "UIPlanet.hpp"
 
 UIPlanet::UIPlanet(size_t x, size_t y, size_t dimension) {
+  this->x = x;
+  this->y = y;
+  this->dimension = dimension;
   this->button = new LayeredButton(x, y, dimension, dimension);
   // this->button->deactivate();
   this->setPlanetAppearance();
@@ -52,4 +55,16 @@ void UIPlanet::removeOccupier() {
 
 void UIPlanet::setPlanetInteraction(std::function<void()> func) {
   this->button->setOnClick(func);
+}
+
+size_t UIPlanet::getX() const {
+  return this->x;
+}
+
+size_t UIPlanet::getY() const {
+  return this->y;
+}
+
+size_t UIPlanet::getSize() const {
+  return this->dimension;
 }

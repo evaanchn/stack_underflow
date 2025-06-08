@@ -14,11 +14,14 @@
 
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 #include <string>
 #include <unordered_set>
 #include <vector>
 
+#include "Graph.hpp"
 #include "Random.hpp"
+#include "UIPath.hpp"
 #include "UIPlanet.hpp"
 #include "../backend/galaxy/solar_system/planet/Planet.hpp"
 
@@ -28,22 +31,31 @@
 #define RIGHT_HALF_START_X (WINDOW_WIDTH / 2)
 #define MIN_MARGIN 20
 #define MIN_PLANET_DISTANCE 30
+#define DEFAULT_PATH_COLOR FL_BLUE
 #define NONE_SELECTED -1
+
+#define AREA_WIDTH (WINDOW_WIDTH / 2 - MIN_MARGIN * 2)
+#define AREA_HEIGHT (WINDOW_HEIGHT - MIN_MARGIN * 2)
+#define START_X (RIGHT_HALF_START_X + MIN_MARGIN)
 
 class UISolarSystem {
  private:
   std::vector<UIPlanet*> UiPlanets;
   int selectedPlanet = NONE_SELECTED;
 
-  const int areaWidth = WINDOW_WIDTH / 2 - MIN_MARGIN * 2;
-  const int areaHeight = WINDOW_HEIGHT - MIN_MARGIN * 2;
-  const int startX = RIGHT_HALF_START_X + MIN_MARGIN;
+  std::vector<UIPath*> UiPaths;
 
  public:
-  UISolarSystem() = default;
+  UISolarSystem();
   ~UISolarSystem();
   void createPlanets(std::vector<Planet*> planets);
   int getSelectedPlanet() const;
+
+  void createPaths(Graph<Planet*, size_t>* graph, Fl_Group* container);
+  void setPathVisibility(bool visible);
+  void highlightShortestPath(const std::vector<Planet*>& path);
+
+  void setupDrawCallback(Fl_Group* container);
 
  private:
   std::vector<std::pair<int, int>> generateValidPositions(size_t count
@@ -52,4 +64,6 @@ class UISolarSystem {
   bool isValidPosition(int x, int y, int size
       , const std::vector<std::pair<int, int>>& positions
       , const std::vector<int>& sizes);
+
+  UIPlanet* findUIPlanet(Planet* planet) const;
 };

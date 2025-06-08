@@ -13,19 +13,47 @@ GameScene::GameScene(int width, int height, const std::string& title) {
   this->window->show();
 }
 
+#include "SolarSystem.hpp"
 void GameScene::testPlanetLoading() {
-  std::vector<Planet*> testPlanets;
-  for (int i = 0; i < 8; ++i) {
-    std::string name = "Planeta " + std::to_string(i+1);
-    bool hasMine = (i % 3 == 0);
-    Planet* p = new Planet(name, hasMine);
+  // std::vector<Planet*> testPlanets;
+  //   // Crear planetas de prueba
+  //   for (int i = 0; i < 20; ++i) {
+  //       std::string name = "Planet " + std::to_string(i+1);
+  //       bool hasMine = (i % 3 == 0);
+  //       Planet* p = new Planet(name, hasMine);
+  //       Coordinates* coords = new Coordinates{i, i};
+  //       p->setCoordinates(coords);
+  //       testPlanets.push_back(p);
+  //   }
+    
+  //   // Crear grafo de prueba
+  //   Graph<Planet*, double>* testGraph = new Graph<Planet*, double>();
+  //   for (size_t i = 0; i < testPlanets.size(); i++) {
+  //       for (size_t j = i + 1; j < testPlanets.size(); j++) {
+  //           if (rand() % 3 == 0) {  // Conectar planetas aleatoriamente
+  //               Node<Planet*>* planet1 = new Node<Planet*>();
+  //               Node<Planet*>* planet2 = new Node<Planet*>();
+  //               planet1->setData(testPlanets[i]);
+  //               planet2->setData(testPlanets[j]);
+  //               double distance = testPlanets[i]->getDistanceTo(testPlanets[j]);
+  //               testGraph->addEdge(planet1, planet2, distance);
+  //           }
+  //       }
+  //   }
+    std::vector<std::string> planets = {"SolarSystem", "Earth", "Mars", "Earth", "Mars", "Neptune", "Saturn", "Jupiter", "Venus"};
+    SolarSystem* testPlanets = new SolarSystem(planets);
 
-    Coordinates* coords = new Coordinates{i, i};
-    p->setCoordinates(coords);
-
-    testPlanets.push_back(p);
-  }
-  this->setSolarSystem(testPlanets);
+    this->solarSystemArea = new Fl_Group(RIGHT_HALF_START_X, 0
+      , this->window->w() - RIGHT_HALF_START_X, this->window->h());
+    this->solarSystemArea->box(FL_NO_BOX);  // Importante: sin borde
+    this->solarSystem = new UISolarSystem();
+    this->solarSystem->createPlanets(testPlanets->getPlanets());
+    this->solarSystem->createPaths(testPlanets->getGraph(), this->solarSystemArea);
+    this->solarSystem->setupDrawCallback(this->solarSystemArea);
+    this->solarSystemArea->end();
+    // Asegúrate de que el grupo se añade al window antes de redibujar
+    this->window->add(this->solarSystemArea);
+    this->window->redraw();
 }
 
 GameScene::~GameScene() {
@@ -111,11 +139,11 @@ void GameScene::switchVesselButtons(int newAction) {
 }
 
 void GameScene::setVesselButtons() {
-  this->dfsButton = new LayeredButton(/*X*/ ACTION_BUTTONS_X + 40, 350
-    , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM);
-  Fl_PNG_Image dfs = Fl_PNG_Image("assets/sprites/spaceVessel/DFS.png");
-  this->dfsButton->setLayer(0, &dfs);
-  setVesselButtonCallBack(this->dfsButton, 1);
+  // this->dfsButton = new LayeredButton(/*X*/ ACTION_BUTTONS_X + 40, 350
+  //   , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM);
+  // Fl_PNG_Image dfs = Fl_PNG_Image("assets/sprites/spaceVessel/DFS.png");
+  // this->dfsButton->setLayer(0, &dfs);
+  // setVesselButtonCallBack(this->dfsButton, 1);
 }
 
 void GameScene::setVesselButtonCallBack(LayeredButton* button
@@ -127,19 +155,11 @@ void GameScene::setVesselButtonCallBack(LayeredButton* button
   });
 }
 
-void GameScene::setSolarSystem(std::vector<Planet*> planets) {
-  if (solarSystemArea) {
-    window->remove(solarSystemArea);
-    delete solarSystemArea;
+void GameScene::setSolarSystem(std::vector<Planet*> planets, Graph<Planet*, double>* graph) {
+  if (this->solarSystemArea) {
+    this->window->remove(solarSystemArea);
+    delete this->solarSystemArea;
   }
-  
-  solarSystemArea = new Fl_Group(0, 0, window->w(), window->h());
-  solarSystem = new UISolarSystem();
-  solarSystem->createPlanets(planets);
-  
-  // Añadir solarSystemArea al window
-  window->add(solarSystemArea);
-  window->redraw();
 }
 
 int GameScene::run() {
