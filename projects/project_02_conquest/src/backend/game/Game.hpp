@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <cassert>
 #include <cstddef>
 #include <cstdint>
 #include <map>
@@ -10,15 +11,11 @@
 #include "BattleLog.hpp"
 #include "Coordinates.hpp"
 #include "Galaxy.hpp"
+#include "GameConstants.hpp"
 #include "VesselsCollection.hpp"
 
-// TODO(any): move these constants to a common header file
-#define MAX_DAMAGE 25
-#define MAX_PURCHASE_POINTS 999
-#define PURCHASE_POINTS_INC 15
-
 struct Player {
-  size_t purchasePoints;
+  size_t etherium;  /// currency
   size_t activeMines;
 };
 
@@ -43,45 +40,78 @@ class Game {
 
   /// @brief Start the game objects with the given galaxy
   /// @param galaxyFileDirectory path to the galaxy CSV file
-  /// @throws std::runtime_error if the galaxy could not be created
-  void startGame(const char* galaxyFileDirectory);
+  /// @return true on success, false if the galaxy file could not be loaded
+  bool startGame(const char* galaxyFileDirectory = GALAXY_FILE_PATH);
 
   /// @brief Uses a probing vessel to explore solar system planets
   /// @param vesselID ID of the vessel to be used in the probe
-  /// @param startPlanet coordinates of the planet where the probe starts
-  void probe(size_t vesselID, Coordinates& startPlanet);
+  /// @param startPlanetIndex planet where the probe starts
+  /// @param probeLog
+  /// @return true if the probe was successful, false otherwise
+  bool probe(int vesselID, int startPlanetIndex, ActionLog& probeLog);
+
+  /// @brief Uses a probing vessel to explore solar system planets
+  /// @param vesselID ID of the vessel to be used in the probe
+  /// @param startPlanetIndex planet where the probe starts
+  /// @return true if the probe was successful, false otherwise
+  bool probe(int vesselID, int startPlanetIndex);
 
   /// @brief Uses a scouting vessel to explore solar system paths
   /// @param vesselID ID of the vessel to be used in the scout
-  /// @param startPlanet coordinates of the planet where the scout starts
-  void scout(size_t vesselID, Coordinates& startPlanet);
+  /// @param startPlanetIndex planet where the scout starts
+  /// @param scoutLog
+  /// @return true if the scout was successful, false otherwise
+  bool scout(int vesselID, int startPlanetIndex, ActionLog& scoutLog);
+
+  /// @brief Uses a scouting vessel to explore solar system paths
+  /// @param vesselID ID of the vessel to be used in the scout
+  /// @param startPlanetIndex planet where the scout starts
+  /// @return true if the scout was successful, false otherwise
+  bool scout(int vesselID, int startPlanetIndex);
 
   /// @brief Sends an attack to a planet
   /// @param vesselID ID of the vessel to be used in the attack
-  /// @param startPlanet coordinates of the planet where the attack starts
-  /// @param targetPlanet coordinates of the planet to be attacked
-  /// @return the result of the attack
-  size_t attack(size_t vesselID, Coordinates& startPlanet
-    , Coordinates& targetPlanet);
+  /// @param targetPlanetIndex planet to be attacked
+  /// @param attackLog
+  /// @return damage dealed || -1 not enough etherium || -2 planet has NO boss
+  int attack(int vesselID, int targetPlanetIndex, DamageLog attackLog);
+
+  /// @brief Sends an attack to a planet
+  /// @param vesselID ID of the vessel to be used in the attack
+  /// @param targetPlanetIndex planet to be attacked
+  /// @return damage dealed || -1 not enough etherium || -2 planet has NO boss
+  int attack(int vesselID, int targetPlanetIndex);
 
   /// Collects purchase points based on the number of active mines
-  void collectPurchasePoints();
+  void collectEtherium();
 
   /// @brief Tries to consume purchase points if there is enough
   /// @param points number of purchase points to consume
   /// @return true on success, false if not enough points
-  bool consumePurchasePoints(size_t points);
+  bool consumeEtherium(size_t points);
+
+  /**
+   * @brief checks if the current solar system is completed
+   */
+  bool isCurrentSolarSystemCompleted() const;
+
+  /**
+   * @brief sets a new turn for the game
+   */
+  bool passNextSolarSystem();
 
   /**
    * @brief checks if the game is over
-   * @return true is game is over
    */
-  bool isGameOver();
+  bool isGameOver() const;
 
   /// @brief Getters
   Galaxy* getGalaxy() const;
+  size_t getSystemsLeftCount() const;
   BattleLog* getBattleLog() const;
   VesselsCollection<Planet*, size_t>& getVessels();
-  /// @brief get player's purchase points
-  size_t getPurchasePoints();
+  size_t getVesselsCount() const;
+  size_t getCurrentRemainingBosses() const;
+  size_t getCurrentMInes() const;
+  size_t getCurrentEtherium() const;
 };

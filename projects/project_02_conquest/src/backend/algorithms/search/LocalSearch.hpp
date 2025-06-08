@@ -38,36 +38,51 @@ class LocalSearch : public AttackAlgorithm<DataType, WeightType> {
    * @param totalWeight total weight of the attack
    * @return size_t iterations taken
    */
-  size_t attack(Node<DataType>* startNode, Node<DataType>* endNode
-      , const std::unordered_map<Node<DataType>*
-        , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList
-      , std::unordered_map<Node<DataType>*, size_t>& nodeIndexes
-      , std::vector<std::vector<bool>>& validEdges
-      , WeightType& totalWeight) override {
-    // iterations taken by the algorithm
+  size_t attack(Node<DataType>* startNode, Node<DataType>* endNode,
+      const std::unordered_map<Node<DataType>*
+        , std::unordered_map<Node<DataType>*, WeightType>>& adjacencyList,
+      std::unordered_map<Node<DataType>*, size_t>& nodeIndexes,
+      std::vector<std::vector<bool>>& validEdges,
+      WeightType& totalWeight) override {
+
     size_t iterations = 0;
-    // save minimum total weight
-    WeightType minTotalWeight = WeightType();
-    // map to save the used edges and their accumulated weight
+    WeightType bestWeight = std::numeric_limits<WeightType>::max();
+    bool pathFound = false;
+
+    // Used edge map shared between greedy and local search
     std::unordered_map<Node<DataType>*
       , std::unordered_map<Node<DataType>*, WeightType>> usedEdges;
-    // path to be optimized
-    iterations += GreedySearch<DataType, WeightType>::greedy(startNode, endNode
-      , adjacencyList, nodeIndexes, validEdges, minTotalWeight, usedEdges);
-    // perform local search on the initial path taking different paths
-    for (size_t optimization = 0; optimization < LOCAL_OPTIMIZATION_LIMIT
-        ; ++optimization) {
-      // perform local search
-      iterations += localSearch(startNode, endNode, adjacencyList, nodeIndexes
-        , validEdges, totalWeight, usedEdges);
-      // save the current total weight
-      if (totalWeight < minTotalWeight) {
-        minTotalWeight = totalWeight;
+
+    // Run greedy to get an initial solution
+    WeightType initialWeight = 0;
+    size_t greedyIters = GreedySearch<DataType, WeightType>::greedy(
+        startNode, endNode, adjacencyList, nodeIndexes,
+        validEdges, initialWeight, usedEdges);
+    iterations += greedyIters;
+
+    if (initialWeight > 0) {
+      bestWeight = initialWeight;
+      pathFound = true;
+    }
+
+    // Attempt to improve the path using local search
+    for (size_t optimization = 0; optimization < LOCAL_OPTIMIZATION_LIMIT; ++optimization) {
+      WeightType attemptWeight = 0;
+      size_t localIters = localSearch(startNode, endNode, adjacencyList, nodeIndexes,
+                                      validEdges, attemptWeight, usedEdges);
+      iterations += localIters;
+
+      if (attemptWeight > 0 && attemptWeight < bestWeight) {
+        bestWeight = attemptWeight;
+        pathFound = true;
       }
     }
-    totalWeight = minTotalWeight;
+
+    // Set the final weight
+    totalWeight = pathFound ? bestWeight : 0;
     return iterations;
   }
+
   /// @brief Performs a search taking different paths by avoiding used edges
   /// @param startNode search begin
   /// @param endNode objective node to reach

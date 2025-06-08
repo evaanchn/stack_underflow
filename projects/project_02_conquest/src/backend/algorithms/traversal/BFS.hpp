@@ -49,6 +49,7 @@ class BFS : public TraversalAlgorithm<DataType, WeightType> {
       // dequeue node to visit its adjacents
       Node<DataType>* actual = visitingNodes.front();
       visitingNodes.pop();
+      ++iterations;  // Record visited nodes as an iteration
       // if the element was never visited before
       if ((discoveredElements.find(actual->getData())
         == discoveredElements.end())) {
@@ -60,7 +61,6 @@ class BFS : public TraversalAlgorithm<DataType, WeightType> {
       }
       // traverse adjacent nodes adding them to the queue
       for (auto& adjacent : adjacencyList.at(actual)) {
-        ++iterations;  // for each adyacent from actual node
         // avoid revisiting explored nodes
         if ((visitedActual.find(adjacent.first->getData())
             == visitedActual.end())) {

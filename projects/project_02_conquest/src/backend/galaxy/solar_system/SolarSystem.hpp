@@ -10,17 +10,17 @@
 
 #include "ArticulationPointsFinder.hpp"
 #include "Graph.hpp"
-#include "Planet.hpp"
+#include "planet/Planet.hpp"
 #include "Random.hpp"
 
 enum SOL_SYS_DATA_POSITIONS {
   NAME_POS, ENTRY_PLANET_POS, EXIT_PLANET_POS, PLANETS_START_POS
 };
 
-#define MINE_BOSS_SPAWN_PROB 0.1
+#define MINE_BOSS_SPAWN_PROB 0.3
 #define LINK_PROB 0.25
 #define DISTANCE_MAGNIFIER 10
-#define X_COORDS_MAGNIFIER 2
+#define X_COORDS_MAGNIFIER 1
 
 class SolarSystem {
  private:
@@ -99,6 +99,10 @@ class SolarSystem {
   /// @brief Gets the mapping of planets to their respective indexes.
   /// @return Reference to the map from Planet* to size_t index.
   std::unordered_map<Planet*, size_t>& getPlanetsIndexes();
+
+  /// @brief Gets the number of alive bosses in the solar system.
+  size_t getBossesAlive() const;
+
   /// @brief Updates the status of a boss on a given planet and decrements the
   /// count of alive bosses if defeated.
   /// @param planet containing the boss to check.

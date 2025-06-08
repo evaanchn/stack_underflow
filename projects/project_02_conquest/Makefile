@@ -5,3 +5,10 @@ FLAG += $(shell fltk-config --cxxflags)
 
 LIBS +=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lfltk_images -lpng
 LIBS += $(shell fltk-config --ldflags)
+
+# default test
+DEFAULT_ARGS = tests/andromeda_systems.csv 10
+.PHONY: simulation
+# prioritize command line ARGS
+simulation:
+	@$(MAKE) run ARGS='$(if $(ARGS),$(ARGS),$(DEFAULT_ARGS))'

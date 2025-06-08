@@ -31,7 +31,7 @@ void SolarSystemVerifier::analyzeSolarSystemData(std::vector<std::string>&
   if (!planetExists(solarSystemData, solarSystemData[ENTRY_PLANET_POS]))
       throw MissingEntryPlanetException();
   // or if exit planet is not in the list
-  else if (!planetExists(solarSystemData, solarSystemData[ENTRY_PLANET_POS]))
+  else if (!planetExists(solarSystemData, solarSystemData[EXIT_PLANET_POS]))
       throw MissingExitPlanetException();
 
   // Verify if there are duplicates in solar system
