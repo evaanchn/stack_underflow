@@ -48,7 +48,7 @@ bool Game::probe(int vesselID, int startPlanetIndex, ActionLog& probeLog) {
   SolarSystem* system = this->galaxy->getCurrentSolarSystem();
   // start planet node
   assert(startPlanetIndex >= 0 || startPlanetIndex <
-      (int)system->getPlanetsCount());  // Invalid planet index
+      static_cast<int>(system->getPlanetsCount()));  // Invalid planet index
   Node<Planet*>* startingNode = system->getGraph()->getNodes()
     [startPlanetIndex];
   // Check if the vessel ID is valid
@@ -71,7 +71,7 @@ bool Game::scout(int vesselID, int startPlanetIndex, ActionLog& scoutLog) {
   if (!this->consumeEtherium(VESSELS_COSTS[vesselID])) return false;
   SolarSystem* system = this->galaxy->getCurrentSolarSystem();
   assert(startPlanetIndex >= 0 || startPlanetIndex <
-    (int)system->getPlanetsCount());  // Invalid planet index
+    static_cast<int>(system->getPlanetsCount()));  // Invalid planet index
   // start planet node
   Node<Planet*>* startingNode = system->getGraph()->getNodes()
     [startPlanetIndex];
@@ -96,7 +96,7 @@ int Game::attack(int vesselID, int targetPlanetIndex, DamageLog attackLog) {
   SolarSystem* system = this->galaxy->getCurrentSolarSystem();
   // Validate target planet index
   assert(targetPlanetIndex >= 0 || targetPlanetIndex <
-      (int)system->getPlanetsCount());
+      static_cast<int>(system->getPlanetsCount()));
   Node<Planet*>* targetNode = system->getGraph()->getNodes()
     [targetPlanetIndex];
   // Ensure the target has a boss
@@ -131,10 +131,10 @@ int Game::damageAction(const size_t attackWeight, int targetPlanetIndex) {
     Planet* planet = system->getGraph()->getNodes()[targetPlanetIndex]
       ->getData();
     // damage calculation
-    planet->getBoss()->receiveDamage( damage = (BOSS_INIT_HEALTH * planetCount)
+    planet->getBoss()->receiveDamage(damage = (BOSS_INIT_HEALTH * planetCount)
       / attackWeight);
     // Update the boss alive status and add a mine if dead
-    if(!system->updateBossAlive(planet)) {
+    if (!system->updateBossAlive(planet)) {
       ++this->player.activeMines;
     }
   }

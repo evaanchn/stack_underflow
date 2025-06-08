@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include "SFMLSound.hpp"
-
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
@@ -20,6 +18,7 @@
 #include "GameInfoWindow.hpp"
 #include "GameInfoText.hpp"
 #include "LayeredButton.hpp"
+#include "SFMLSound.hpp"
 #include "TextButton.hpp"
 
 #include "Game.hpp"  // Include controller
@@ -61,11 +60,6 @@ class GameScene {
  private:
   Game* game = nullptr;  // Controller for the game logic
   sf::Clock etheriumClock;  // Clock to manage etherium production timing
-
-  // TODO (ANY) add solarSystemArea implementation
-  // Group solar system so it can be removed without deleting previous elements
-  // with delete UiSolarSystem and then this->window->remove(solarSystemArea)
-  // then add another and add to the group and restart the group
   Fl_Group* solarSystemArea = nullptr;
   UISolarSystem* solarSystem = nullptr;
 
@@ -84,7 +78,7 @@ class GameScene {
   void setActionButtons();
   void setActionButtonCallBack(TextButton* button, int actionID);
   void switchVesselButtons(int newAction);
-  
+
   void setVesselButtons();
   LayeredButton* createVesselButton(int x, int y
       , const std::string& imageName, const std::string& label, int vesselID

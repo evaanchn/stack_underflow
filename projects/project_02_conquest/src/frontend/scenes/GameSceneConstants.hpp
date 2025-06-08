@@ -3,26 +3,26 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include "GameConstants.hpp"
 
 #define ACTIVE true
 
 // MUSIC
-const std::string VESSEL_BUTTON_SOUND_PATH
-  = "assets/sounds/soundVesselButton.wav";
-const std::string SOUND_ACTION_BUTTON_PATH
-  = "assets/sounds/soundActionButton.wav";
-const std::string SOUND_NEW_SYSTEM_PATH
-= "assets/sounds/transitionMistery.wav";
-const std::string SOUND_ATTACK_PATH
-= "assets/sounds/attack.wav";
-
+const std::string VESSEL_BUTTON_SOUND_PATH  // NOLINT(runtime/string)
+    = "assets/sounds/soundVesselButton.wav";
+const std::string SOUND_ACTION_BUTTON_PATH  // NOLINT(runtime/string)
+    = "assets/sounds/soundActionButton.wav";
+const std::string SOUND_NEW_SYSTEM_PATH  // NOLINT(runtime/string)
+    = "assets/sounds/transitionMistery.wav";
+const std::string SOUND_ATTACK_PATH  // NOLINT(runtime/string)
+    = "assets/sounds/attack.wav";
 
 // BACKGROUND
 const std::string SCENES_BACKGROUND_PATH = "assets/scenes_backgrounds/";
-const std::string GAME_SCENE_BACKGROUND = SCENES_BACKGROUND_PATH
-    + "gameScene.png";
+const std::string GAME_SCENE_BACKGROUND  // NOLINT(runtime/string)
+    = "assets/scenes_backgrounds/gameScene.png";
 
 // LABELS
 #define LABELS_X 70

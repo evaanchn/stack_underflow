@@ -36,6 +36,7 @@ void TextButton::handleCallback() {
 }
 
 void TextButton::callbackThunk(Fl_Widget* widget, void* data) {
+  (void) widget;
   if (auto* self = static_cast<TextButton*>(data)) {
     self->handleCallback();
   }

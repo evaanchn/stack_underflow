@@ -6,6 +6,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <map>
+#include <unordered_set>
 #include <vector>
 
 #include "BattleLog.hpp"

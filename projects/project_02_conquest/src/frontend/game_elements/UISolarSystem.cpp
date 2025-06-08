@@ -38,7 +38,7 @@ void UISolarSystem::createPlanets(std::vector<Planet*> planets) {
 
     if (x > WINDOW_WIDTH) x -= (size + MIN_MARGIN);
     if (y > WINDOW_HEIGHT) y -= (size + MIN_MARGIN);
-    
+
     UIPlanet* uiPlanet = new UIPlanet(x, y, size);
     if (planets[i]->hasBoss()) {
       Fl_PNG_Image boss = Fl_PNG_Image(BOSS_SPRITE_PATH.c_str());
@@ -52,7 +52,7 @@ void UISolarSystem::createPlanets(std::vector<Planet*> planets) {
     }
 
     // Planet stores in selected planet, its index
-    uiPlanet->setPlanetInteraction([this, i]() { 
+    uiPlanet->setPlanetInteraction([this, i]() {
       this->selectedPlanet = static_cast<int>(i);
       this->planetSelectedSound.play();
     });
@@ -102,7 +102,7 @@ void UISolarSystem::updatePathsVisibility(
         if (this->UiPaths[fromIdx][toIdx])
             this->UiPaths[fromIdx][toIdx]->reveal();
       }
-    } 
+    }
   }
 }
 

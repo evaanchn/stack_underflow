@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include "BFSVessel.hpp"
 #include "DFSVessel.hpp"
 #include "DijkstraVessel.hpp"

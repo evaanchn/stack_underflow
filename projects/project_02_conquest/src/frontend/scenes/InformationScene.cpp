@@ -17,7 +17,7 @@ InformationScene::InformationScene()
 void InformationScene::handleEvent(sf::RenderWindow& window, sf::Event& event,
     SceneState& currentState, bool& appActive, SFMLSound& buttonClickSound) {
   if (backButton.isMouseOver(window) &&
-    event.type == sf::Event::MouseButtonPressed) {  
+    event.type == sf::Event::MouseButtonPressed) {
     currentState = START;
   } else if (exitButton.isMouseOver(window) &&
     event.type == sf::Event::MouseButtonPressed) {

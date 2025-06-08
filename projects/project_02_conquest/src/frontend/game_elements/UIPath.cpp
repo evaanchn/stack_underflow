@@ -40,6 +40,6 @@ void UIPath::setWeight(size_t newWeight) { weight = newWeight; redraw();}
 void UIPath::setColor(Fl_Color newColor) { color = newColor; redraw();}
 
 int UIPath::getWeight() const { return weight; }
-std::pair<UIPlanet*, UIPlanet*> UIPath::getPlanets() const { 
-  return {planetA, planetB}; 
+std::pair<UIPlanet*, UIPlanet*> UIPath::getPlanets() const {
+  return {planetA, planetB};
 }

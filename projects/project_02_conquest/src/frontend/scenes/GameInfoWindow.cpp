@@ -33,7 +33,7 @@ GameInfoWindow::GameInfoWindow(int posX, int posY, int windowWidth
       CONFIRM_BUTTONS_HEIGHT, "Confirm");
   confirmButton->labelcolor(FL_WHITE);
   confirmButton->labelfont(FL_COURIER);
-  confirmButton->color(FL_DARK_GREEN); // Button background
+  confirmButton->color(FL_DARK_GREEN);  // Button background
   confirmButton->callback([](Fl_Widget*, void* data) {
       GameInfoWindow* self = static_cast<GameInfoWindow*>(data);
       self->confirmationInput = CONFIRM;
@@ -63,15 +63,15 @@ GameInfoWindow::~GameInfoWindow() {
   delete window;
 }
 
-void GameInfoWindow::show() { 
+void GameInfoWindow::show() {
   window->show();
 }
 
-void GameInfoWindow::hide() { 
+void GameInfoWindow::hide() {
   window->hide();
 }
 
-void GameInfoWindow::toggle() { 
+void GameInfoWindow::toggle() {
   window->visible() ? hide() : show();
 }
 

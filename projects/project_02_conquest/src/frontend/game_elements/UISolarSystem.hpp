@@ -22,19 +22,19 @@
 
 // Window and layout constants
 ///< Total window width in pixels
-#define WINDOW_WIDTH 1280       
+#define WINDOW_WIDTH 1280
 ///< Total window height in pixels
-#define WINDOW_HEIGHT 720       
+#define WINDOW_HEIGHT 720
 ///< X-coordinate where right half begins
-#define RIGHT_HALF_START_X (WINDOW_WIDTH / 2)  
+#define RIGHT_HALF_START_X (WINDOW_WIDTH / 2)
 ///< Minimum margin around UI elements
-#define MIN_MARGIN 20           
+#define MIN_MARGIN 20
 ///< Minimum distance between planets in pixels
-#define MIN_PLANET_DISTANCE 30  
+#define MIN_PLANET_DISTANCE 30
 ///< Default color for paths
-#define DEFAULT_PATH_COLOR FL_BLUE  
+#define DEFAULT_PATH_COLOR FL_BLUE
 ///< Constant representing no selected planet
-#define NONE_SELECTED -1        
+#define NONE_SELECTED -1
 
 // Layout calculation macros
 ///< Width of the interactive area
@@ -51,8 +51,7 @@ const std::string BOSS_SPRITE_PATH = "assets/sprites/boss/Atlas.png";
 const std::string MINE_SPRITE_PATH = "assets/sprites/mine/extractor.png";
 
 // Sounds path
-const std::string SOUND_PLANET_SELECTED
-  = "assets/sounds/planetSelectedSound.wav";
+const std::string SOUND_PLANET_SELECTED = "assets/sounds/planetSelectedSound.wav";
 
 /**
  * @class UISolarSystem
@@ -66,7 +65,8 @@ class UISolarSystem {
  private:
   std::vector<UIPlanet*> UiPlanets;  ///< Vector of UI planet objects
   std::vector<std::vector<UIPath*>> UiPaths;
-  int selectedPlanet = NONE_SELECTED;  ///< Index of currently selected planet (-1 for none)
+  ///< Index of currently selected planet (-1 for none)
+  int selectedPlanet = NONE_SELECTED;
   Fl_PNG_Image* mineSprite = nullptr;  ///< Pointer to mine sprite image
   SFMLSound planetSelectedSound;  // planet interaction sound
 
@@ -75,7 +75,7 @@ class UISolarSystem {
    * @brief Construct a new UISolarSystem object
    */
   UISolarSystem();
-  
+
   /**
    * @brief Destroy the UISolarSystem object
    * Cleans up allocated resources
@@ -100,7 +100,7 @@ class UISolarSystem {
    * @return int Index of selected planet or NONE_SELECTED (-1)
    */
   int obtainSelectedPlanet();
-  
+
   /**
    * @brief Update visibility of paths based on exploration state
    * @param pathsRevealed 2D vector indicating which paths should be visible

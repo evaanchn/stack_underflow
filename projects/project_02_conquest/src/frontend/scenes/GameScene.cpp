@@ -5,7 +5,7 @@
 GameScene::GameScene(int width, int height, const std::string& title)
     : gameActive(ACTIVE)
     , actionButtonSound(SOUND_ACTION_BUTTON_PATH, false)
-    , vesselButtonSound(VESSEL_BUTTON_SOUND_PATH, false) 
+    , vesselButtonSound(VESSEL_BUTTON_SOUND_PATH, false)
     , attackSound(SOUND_ATTACK_PATH, false)
     , newSystemSound(SOUND_NEW_SYSTEM_PATH, false) {
   this->window = new Fl_Window(width, height, title.c_str());
@@ -90,7 +90,6 @@ void GameScene::setBackground() {
   this->backgroundImageBox->redraw();  // Marks as needs a draw()
 }
 
-// TODO (any) leave initial texts as empty once game is implemented
 void GameScene::setLabels() {
   this->remainingBossesLabel = new GameInfoText(110, /*Y*/ 20, LABEL_BOX_W
     , LABEL_BOX_H, "", FL_WHITE);
@@ -214,7 +213,7 @@ LayeredButton* GameScene::createVesselButton(int x, int y,
 }
 
 void GameScene::setVesselButtonAppearance(LayeredButton* button
-    ,std::string path) {
+    , std::string path) {
   Fl_PNG_Image appearance = Fl_PNG_Image(path.c_str());
   button->setLayer(/*FIRST LAYER*/ 0, &appearance);
 }
@@ -265,7 +264,7 @@ void GameScene::handleProbeAction() {
   if (this->selectedVessel != NONE_SELECTED) {
     int selectedPlanet = this->solarSystem->obtainSelectedPlanet();
     if (selectedPlanet != NONE_SELECTED) {
-      if(!this->game->probe(this->selectedVessel, selectedPlanet)) {
+      if (!this->game->probe(this->selectedVessel, selectedPlanet)) {
         this->infoWindow->log("Failed, insuficient etherium\n"
           + VESSELS_DATA[selectedVessel]);
       }
@@ -278,7 +277,7 @@ void GameScene::handleScoutAction() {
   if (this->selectedVessel != NONE_SELECTED) {
     int selectedPlanet = this->solarSystem->obtainSelectedPlanet();
     if (selectedPlanet != NONE_SELECTED) {
-      if(!this->game->scout(this->selectedVessel, selectedPlanet)) {
+      if (!this->game->scout(this->selectedVessel, selectedPlanet)) {
         this->infoWindow->log("Failed, insuficient etherium\n"
           + VESSELS_DATA[selectedVessel]);
       }
@@ -294,14 +293,14 @@ void GameScene::handleAttackAction() {
       if (damage == INSUFICIENT_ETHERIUM) {
         this->infoWindow->log("Failed, insuficient etherium\n"
           + VESSELS_DATA[selectedVessel]);
-      } else if (damage == HAS_NO_BOSS){
+      } else if (damage == HAS_NO_BOSS) {
         this->infoWindow->log("Failed, no boss at planet");
       } else {
         this->infoWindow->log(std::to_string(damage) + " damage pts");
         this->attackSound.play();
 
-        // TODO prettify
-        if(!this->game->getCurrentPlanets()[selectedPlanet]->hasBoss()) {
+        // TODO(albin) prettify
+        if (!this->game->getCurrentPlanets()[selectedPlanet]->hasBoss()) {
           this->solarSystem->removeBoss(selectedPlanet);
         }
       }
@@ -431,7 +430,7 @@ void GameScene::updateCurrentSystemLabel() {
 }
 
 void GameScene::updateSolarSystemsLeftLabel() {
-  std::string solarSystemsLeft = 
+  std::string solarSystemsLeft =
       std::to_string(this->game->getSystemsLeftCount()) + " solar systems left";
   this->solarSystemsLeftLabel->updateText(solarSystemsLeft.c_str());
 }

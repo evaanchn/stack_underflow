@@ -147,7 +147,7 @@ void SolarSystem::adjustPlanetsConnections() {
   }
   // Shuffle the connections read
   std::shuffle(edgeIndices.begin(), edgeIndices.end()
-      , std::mt19937{std::random_device{}()});
+      , std::mt19937 {std::random_device{}()});
   // Iterate through connections randomly
   for (auto& pair : edgeIndices) {
     size_t fromIdx = pair.first;
