@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "ArticulationPointsFinder.hpp"
+#include "GameConstants.hpp"
 #include "Graph.hpp"
 #include "planet/Planet.hpp"
 #include "PlanetsPositioner.hpp"
@@ -18,11 +19,6 @@
 enum SOL_SYS_DATA_POSITIONS {
   NAME_POS, ENTRY_PLANET_POS, EXIT_PLANET_POS, PLANETS_START_POS
 };
-
-#define MINE_BOSS_SPAWN_PROB 0.3
-#define LINK_PROB 0.25
-#define DISTANCE_MAGNIFIER 10
-#define X_COORDS_MAGNIFIER 1
 
 class SolarSystem {
  private:

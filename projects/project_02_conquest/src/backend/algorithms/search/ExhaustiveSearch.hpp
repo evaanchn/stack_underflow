@@ -115,10 +115,6 @@ class ExhaustiveSearch : public AttackAlgorithm<DataType, WeightType> {
     std::unordered_set<DataType> visited;
     findMinPath(startNode, endNode, visited, adjacencyList, nodeIndexes
       , validEdges, static_cast<WeightType>(0), totalWeight, iterations, false);
-    // validates if no path was found
-    if (totalWeight == std::numeric_limits<WeightType>::max()) {
-      totalWeight = 0;
-    }
     return iterations;
   }
 };

@@ -4,7 +4,7 @@
 
 #include <string>
 
-#define BOSS_INIT_HEALTH 50
+#include "GameConstants.hpp"
 
 class Boss {
  private:

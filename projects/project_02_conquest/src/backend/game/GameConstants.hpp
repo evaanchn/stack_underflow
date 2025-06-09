@@ -21,7 +21,16 @@ enum ACTIONS {
 // currency
 #define MAX_ETHERIUM 999
 #define ETHERIUM_INC 10  // etherium points increment
-#define ETHERUM_PRODUCTION_TIME 5  // seconds
+#define ETHERUM_PRODUCTION_TIME 3  // seconds
+
+// MOFIFIABLE FOR GAME
+#define MINE_BOSS_SPAWN_PROB 0.3
+#define LINK_PROB 0.25
+#define BOSS_INIT_HEALTH 50
+
+// PLANET GENERATION
+#define DISTANCE_MAGNIFIER 10
+#define X_COORDS_MAGNIFIER 1
 
 // Space vessels
 #define TOTAL_VESSELS 8
@@ -35,6 +44,7 @@ enum SPACE_VESSEL_TYPE {
   EXHAUSTIVE_SEARCH_VESSEL,
   EXHAUSTIVE_PRUNE_VESSEL
 };
+
 #define BFS_COST  10
 #define DFS_COST  10
 #define DIJKSTRA_COST  20

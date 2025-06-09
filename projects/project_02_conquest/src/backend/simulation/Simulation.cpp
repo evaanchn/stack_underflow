@@ -1,6 +1,8 @@
 // Copyright 2025 stack_underflow CC-BY 4.0
 
-#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_set>
 
 #include "Random.hpp"
 #include "Simulation.hpp"
@@ -38,7 +40,7 @@ bool Simulation::analyzeArguments(int argc, char* argv[]) {
   if (argc >= 3) {
     std::string thirdArg = argv[2];
     if (thirdArg.find("print") != std::string::npos)
-        this->recordActions = RECORD_ACTIONS; 
+        this->recordActions = RECORD_ACTIONS;
   }
   if (argc >= 4) this->outputFolder = argv[3];
   return true;
@@ -107,10 +109,11 @@ void Simulation::completeSystemTest() {
   size_t actionsCount = 2;
   SolarSystem* currentSystem = this->game->getGalaxy()->getCurrentSolarSystem();
   int startingAction = PROBE;  // First of available actions is probing
+  int endingAction = SCOUT;
   // Perform random actions until the solar system is complete
   while (!this->game->getGalaxy()->getCurrentSolarSystem()->isComplete()) {
     int actionType = Random<int>().generateRandomInRange(startingAction
-        , ATTACK);
+        , endingAction);
     if (actionType == PROBE) {
       this->testProbe(BFSLogs, DFSLogs);
       // If all planets have been discovered, discard PROBE as an option
@@ -118,17 +121,15 @@ void Simulation::completeSystemTest() {
          == currentSystem->getPlanetsCount()) {
         startingAction = SCOUT;
       }
-    }
-    else if (actionType == SCOUT) {
+    } else if (actionType == SCOUT) {
       this->testScout(dijkstraLogs, floydLogs);
       // Set the only available action to attack, now that paths are revealed
       if (currentSystem->getExploredPlanets().size()
          == currentSystem->getPlanetsCount()) {
         // Only action available is Attack now
-        startingAction = ATTACK;
+        startingAction = endingAction = ATTACK;
       }
-    }
-    else if (actionType == ATTACK) {
+    } else if (actionType == ATTACK) {
       this->testAttack(greedyLogs, localSearchLogs
         , exhaustiveSearchLogs, exhaustiveSearchPruneLogs);
     }
@@ -165,7 +166,7 @@ void Simulation::testScout(std::vector<ActionLog>& dijkstraLogs
       , std::vector<ActionLog>& floydLogs) {
   int vesselType = Random<int>().generateBinaryRandom(0, 1);
   SolarSystem* system = this->game->getGalaxy()->getCurrentSolarSystem();
-  if (system->getExploredPlanets().size() == system->getPlanetsCount()) 
+  if (system->getExploredPlanets().size() == system->getPlanetsCount())
       vesselType = 1;
   if (vesselType == 0) {
     dijkstraLogs.push_back(this->tesScoutingVessel
@@ -253,9 +254,7 @@ DamageLog Simulation::testAttackVessel(AttackVessel<Planet*, size_t>* vessel
   if (attackWeight > 0) {
     // Formula for attack inflicted on boss, proportional to boss's health
     // and amount of planets
-    int attack = BOSS_INIT_HEALTH * system->getPlanetsCount() / attackWeight
-        < MIN_DAMAGE_SIMULATION ? MIN_DAMAGE_SIMULATION
-        : BOSS_INIT_HEALTH * system->getPlanetsCount() / attackWeight ;
+    int attack = BOSS_INIT_HEALTH * system->getPlanetsCount() / attackWeight;
     // only base points of damage for simulation purposes
     system->getGraph()->getNodes()[targetIndex]->getData()
     ->getBoss()->receiveDamage(attack);
