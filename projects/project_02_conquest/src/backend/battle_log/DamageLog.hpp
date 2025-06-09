@@ -9,6 +9,9 @@
 #include <unordered_map>
 
 class DamageLog : public ActionLog {
+ private:
+  size_t damage;  ///< The amount of damage recorded.
+
  public:
   /**
    * @brief Constructs a DamageLog object for recording damage actions.
@@ -69,6 +72,4 @@ class DamageLog : public ActionLog {
    * @return uint64_t Mode
    */
   static uint64_t damageMode(std::vector<DamageLog>& logs);
- private:
-  size_t damage;  ///< The amount of damage recorded.
 };

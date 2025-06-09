@@ -1,5 +1,7 @@
 // Copyright 2025 stack_underflow CC-BY 4.0
 
+#include <vector>
+
 #include "PlanetsPositioner.hpp"
 
 void PlanetsPositioner::positionPlanets(std::vector<Planet*>& planets
@@ -27,7 +29,7 @@ bool PlanetsPositioner::positionPlanetsRecursive(std::vector<Planet*>& planets
   static std::random_device rd;
   static std::mt19937 gen(rd());
   std::shuffle(colIndices.begin(), colIndices.end(), gen);
-  
+
   for (size_t col : colIndices) {
     if (unoccupiedCols[col] &&
         unoccupiedAscendingCols[row + col] &&
@@ -35,7 +37,7 @@ bool PlanetsPositioner::positionPlanetsRecursive(std::vector<Planet*>& planets
       // Mark flags for cols arrays
       unoccupiedCols[col] = false;
       unoccupiedAscendingCols[row + col] = false;
-      unoccupiedDescendingCols[row - col + planetsCount] = false; 
+      unoccupiedDescendingCols[row - col + planetsCount] = false;
       // Re-position planet
       Coordinates* planetCoords = planets[row]->getCoordinates();
       planetCoords->row = row;
@@ -44,7 +46,7 @@ bool PlanetsPositioner::positionPlanetsRecursive(std::vector<Planet*>& planets
       if (positionPlanetsRecursive(planets, planetsCount, row + 1,
           unoccupiedCols, unoccupiedAscendingCols, unoccupiedDescendingCols)) {
         return true;  // Success: stop further recursion
-      } 
+      }
       // Backtrack
       unoccupiedCols[col] = true;
       unoccupiedAscendingCols[row + col] = true;
