@@ -107,10 +107,11 @@ void Simulation::completeSystemTest() {
   size_t actionsCount = 2;
   SolarSystem* currentSystem = this->game->getGalaxy()->getCurrentSolarSystem();
   int startingAction = PROBE;  // First of available actions is probing
+  int endingAction = SCOUT;
   // Perform random actions until the solar system is complete
   while (!this->game->getGalaxy()->getCurrentSolarSystem()->isComplete()) {
     int actionType = Random<int>().generateRandomInRange(startingAction
-        , ATTACK);
+        , endingAction);
     if (actionType == PROBE) {
       this->testProbe(BFSLogs, DFSLogs);
       // If all planets have been discovered, discard PROBE as an option
@@ -125,7 +126,7 @@ void Simulation::completeSystemTest() {
       if (currentSystem->getExploredPlanets().size()
          == currentSystem->getPlanetsCount()) {
         // Only action available is Attack now
-        startingAction = ATTACK;
+        startingAction = endingAction = ATTACK;
       }
     }
     else if (actionType == ATTACK) {
@@ -253,9 +254,7 @@ DamageLog Simulation::testAttackVessel(AttackVessel<Planet*, size_t>* vessel
   if (attackWeight > 0) {
     // Formula for attack inflicted on boss, proportional to boss's health
     // and amount of planets
-    int attack = BOSS_INIT_HEALTH * system->getPlanetsCount() / attackWeight
-        < MIN_DAMAGE_SIMULATION ? MIN_DAMAGE_SIMULATION
-        : BOSS_INIT_HEALTH * system->getPlanetsCount() / attackWeight ;
+    int attack = BOSS_INIT_HEALTH * system->getPlanetsCount() / attackWeight ;
     // only base points of damage for simulation purposes
     system->getGraph()->getNodes()[targetIndex]->getData()
     ->getBoss()->receiveDamage(attack);
