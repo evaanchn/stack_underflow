@@ -28,24 +28,26 @@ class GeneticAlgorithm:
         self.max_generations = max_generations
         """ Determines fitness of a cromosome """
         self.fitness_function = fitness_function
-        """" Amount of elites to keep around """
-        self.elites_count = round(self.population_size * elitism_percentage)
         """ Binary, real or permutation chromosome """
         self.chromosome_type = chromosome_type
-        """ Max amount of generations without improvements """
+
+        """" Amount of elites to keep in new generations """
+        self.elites_count = round(self.population_size * elitism_percentage)
+        """ Max amount of generations without improvements allowed """
         self.max_fails = max_fails
         """ Amount of parents to consider in a selection """
         self.parents_per_selection = parents_per_selection
-        
+
         """ Ranking, Roulette or Tournament """
         self.parent_selection_type = parent_selection_type
 
+        """ Probabilities for new chromosomes creation """
         self.crossover_prob = crossover_prob
         self.mutation_prob = mutation_prob
 
     def create_chromosome(self):
-        """
-        Create with designated chromosome type, len of each is length of input
+        """! Create with designated chromosome type,
+            length of each is length of input
         """
         chromosome = self.chromosome_type(len(self.input))
         chromosome.initialize()
@@ -75,45 +77,59 @@ class GeneticAlgorithm:
     def pick_best_chromosomes(self, chromosomes, amount):
         if amount == 0: return []
         return self.sort_by_fitness(chromosomes)[:amount]
-    
-    def ranking(self):   
+
+    def ranking(self):
         return self.pick_best_chromosomes(self.population,
                                           self.parents_per_selection)
 
     def roulette(self):
-        fitness_values = self.evaluate_fitness()
-        # chromosomes =  self.population
-        # Pair each chromosome with its fitness
-        paired = list(zip(self.population, fitness_values))
-        selected =  []    
-        for pair in paired:
-            if (random.uniform([0, 1]) < pair[1]):
-                selected.append(pair[0])
-                sel
-        
+        fitnesses = self.evaluate_fitness(self.population)
+        fitnesses_sum = sum(fitnesses)
+        # proportional probability from the sum of fitnesses
+        probs = [fitness / fitnesses_sum for fitness in fitnesses]
+
+        # choose random with fitness weight probability
+        selected = random.choices(self.population, weights=probs,
+            k = self.parents_per_selection)
+
         return selected
 
-    def tournament(self):
-        pass
+    def tournament(self, deterministic_value = 0.8):
+        selected = []
+        for _ in range(self.parents_per_selection):
+            competitors = random.sample(self.population,
+                                        self.parents_per_selection)
+            fitness_values = self.evaluate_fitness(competitors)
+            paired = list(zip(competitors, fitness_values))
+            paired.sort(key = lambda pair: pair[1], reverse = True)
+            if random.random() < deterministic_value:
+                selected.append(paired[0][0])  # The best
+            else:
+                selected.append(paired[-1][0])  # The worst
+        return selected
 
     def selection(self):
-        if (self.parent_selection_type == "RANKING"):
+        if self.parent_selection_type == "RANKING":
             return self.ranking()
-        elif (self.parent_selection_type == "ROULETTE"):
+        elif self.parent_selection_type == "ROULETTE":
             return self.roulette()
-        elif (self.parent_selection_type == "TOURNAMENT"):
+        elif self.parent_selection_type == "TOURNAMENT":
             return self.tournament()
 
-    def elitism(self):
+    def select_elites(self):
         return self.pick_best_chromosomes(self.population, self.elites_count)
     
     def reproduce(self, children_count):
+        """! Creates new chromosomes, in a list
+        @
+        @param children_count Amount of children to createreturn List of children
+        """
         children = []
         for _ in range(children_count):
             best_parents = self.selection()
             child = Chromosome.crossover(best_parents, self.crossover_prob,
                                          self.chromosome_type)
-            if (random.uniform([0, 1]) < self.mutation_prob):
+            if random.uniform([0, 1]) < self.mutation_prob:
                 child.mutate()
             children.append(child)
         return children
@@ -124,7 +140,7 @@ class GeneticAlgorithm:
         return max(self.evaluate_fitness(self.population)) < max(
             self.evaluate_fitness(children))
 
-    def evolve(self):   
+    def evolve(self):
         """! Creates a new generation of chromosomes based on prev population
 
         @return True if at least one new child was better than the best 
@@ -132,7 +148,7 @@ class GeneticAlgorithm:
         """
         evolved = True
     
-        new_population = self.elitism()  # First add elites, if any
+        new_population = self.select_elites()  # First add elites, if any
         # Calculate remaining children to reproduce
         children_count = self.population_size - len(new_population)
         children = self.reproduce(children_count)

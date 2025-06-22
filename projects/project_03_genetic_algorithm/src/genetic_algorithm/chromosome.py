@@ -49,16 +49,9 @@ class BinaryChromosome(Chromosome):
         # Then flip bit
         self.genes[i] ^= 1
 
-# TODO(any): Add min and max gene
 class RealChromosome(Chromosome):
-    def __init__(self, length, min_gene, max_gene):
-        super.__init__(length)
-        self.min_gene = min_gene
-        self.max_gene = max_gene
-
     def initialize(self):
-        self.genes = [random.uniform([self.min_gene, self.max_gene])
-                      for _ in range(self.length)]
+        self.genes = [random.uniform(0, 1) for _ in range(self.length)]
 
     def mutate(self):
         i = random.randint(0, self.length - 1)
@@ -74,4 +67,3 @@ class PermutationChromosome(Chromosome):
         # Mutation for permutation is to swap two
         i, j = random.sample(range(self.length), 2)  # get positions
         self.genes[i], self.genes[j] = self.genes[j], self.genes[i]  # swap
-    
