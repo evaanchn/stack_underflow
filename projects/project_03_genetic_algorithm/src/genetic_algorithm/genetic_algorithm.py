@@ -1,4 +1,4 @@
-# Copyright 2025 stack_underflow CC-BY 4.0
+""" Copyright 2025 stack_underflow CC-BY 4.0 """
 
 import random
 from .chromosome import Chromosome
@@ -62,7 +62,7 @@ class GeneticAlgorithm:
         return [self.fitness_function(self.input, chrom.genes)
                  for chrom in chromosomes]
 
-    def sort_by_fitness(self, chromosomes):
+    def sort_by_fitness(self, chromosomes, descending=True):
         # Extract top N chromosomes
         fitness_values = self.evaluate_fitness(chromosomes)
 
@@ -70,7 +70,7 @@ class GeneticAlgorithm:
         paired = list(zip(self.population, fitness_values))
 
         # Sort by fitness descending
-        paired.sort(key=lambda pair: pair[1], reverse=True)
+        paired.sort(key=lambda pair: pair[1], reverse=descending)
 
         return [chrom for chrom, _ in paired]  # Return sorted chromosomes only
 
@@ -94,19 +94,24 @@ class GeneticAlgorithm:
 
         return selected
 
-    def tournament(self, deterministic_value = 0.8):
+    def tournament(self, pick_winner_prob=0.75, tournament_size=3):
         selected = []
-        for _ in range(self.parents_per_selection):
-            competitors = random.sample(self.population,
-                                        self.parents_per_selection)
-            fitness_values = self.evaluate_fitness(competitors)
-            paired = list(zip(competitors, fitness_values))
-            paired.sort(key = lambda pair: pair[1], reverse = True)
-            if random.random() < deterministic_value:
-                selected.append(paired[0][0])  # The best
+        while len(selected) < self.parents_per_selection:
+            # Randomly pick `tournament_size` unique competitors
+            competitors = random.sample(self.population, tournament_size)
+
+            # Sort by fitness (best first)
+            ranked = self.sort_by_fitness(competitors)
+
+            # Select best or worst based on probability
+            if random.random() < pick_winner_prob:
+                winner = ranked[0]  # best
             else:
-                selected.append(paired[-1][0])  # The worst
+                winner = ranked[-1]  # worst
+
+            selected.append(winner)
         return selected
+
 
     def selection(self):
         if self.parent_selection_type == "RANKING":
@@ -121,8 +126,9 @@ class GeneticAlgorithm:
     
     def reproduce(self, children_count):
         """! Creates new chromosomes, in a list
-        @
-        @param children_count Amount of children to createreturn List of children
+
+        @param children_count Amount of children to create
+        @return List of children
         """
         children = []
         for _ in range(children_count):
@@ -134,11 +140,10 @@ class GeneticAlgorithm:
             children.append(child)
         return children
     
-    def generation_evolved(self, children):
-        # If max fitness of current population is lower than the max fitness
-        # of the children, then new generation truly evolved
-        return max(self.evaluate_fitness(self.population)) < max(
-            self.evaluate_fitness(children))
+    def generation_evolved(self, new_population):
+        # evaluate if total fitness of new population is better than current sum
+        return sum(self.evaluate_fitness(self.population)) < sum(
+            self.evaluate_fitness(new_population))
 
     def evolve(self):
         """! Creates a new generation of chromosomes based on prev population
@@ -149,19 +154,24 @@ class GeneticAlgorithm:
         evolved = True
     
         new_population = self.select_elites()  # First add elites, if any
+
         # Calculate remaining children to reproduce
         children_count = self.population_size - len(new_population)
         children = self.reproduce(children_count)
 
         # compare self population and new children
-        if self.max_fails != float('inf'):
-            evolved = self.generation_evolved(children)
+        new_population.extend(children) # Add children
         
-        self.population = new_population.extend(children)  # Add children 
+        if self.max_fails != float('inf'):
+            evolved = self.generation_evolved(new_population)
+        
+        self.population =  new_population
 
         return evolved
 
     def run(self):
+        self.initialize_population()
+        
         fails = 0
         # Create each generation
         for _ in range(self.max_generations):
@@ -171,7 +181,10 @@ class GeneticAlgorithm:
                 if not evolved:
                     fails += 1
                 else:
+                    pass
                     fails = 0  # Reset consecutive fails
 
                 if fails >= self.max_fails:
                     break
+        # Return best chromosome from the last generation
+        return self.population[0]
