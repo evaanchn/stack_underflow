@@ -1,12 +1,14 @@
-# Copyright 2025 stack_underflow CC-BY 4.0
+""" Copyright 2025 stack_underflow CC-BY 4.0 """
 
 import random
 
 class Chromosome:
     """ @brief Abstract chromosome class with length and genes vector """
-    def __init__(self, length):
+    def __init__(self, length, min_gene_val = 0, max_gene_val = 1):
         self.length = length
-        self.genes = []
+        self.genes = [0] * length
+        self.min_gene_val = min_gene_val
+        self.max_gene_val = max_gene_val
 
     def initialize(self):
         raise NotImplementedError
@@ -24,7 +26,8 @@ class Chromosome:
         if chromosome_class is None:
             chromosome_class = type(parents[0])
 
-        child = chromosome_class(length)
+        child = chromosome_class(length, parents[0].min_gene_val,
+                                 parents[0].max_gene_val)
         child.genes = []
 
         for gene_idx in range(length):
@@ -53,11 +56,22 @@ class BinaryChromosome(Chromosome):
 
 class RealChromosome(Chromosome):
     def initialize(self):
-        self.genes = [random.uniform(0, 1) for _ in range(self.length)]
+        if type(self.min_gene_val) == int and type(self.max_gene_val) == int:
+            self.genes = [random.randint(self.min_gene_val, self.max_gene_val)
+                          for _ in range(self.length)]
+        else:
+            self.genes = [random.uniform(self.min_gene_val,
+                                         self.max_gene_val)
+                                         for _ in range(self.length)]
 
     def mutate(self):
         i = random.randint(0, self.length - 1)
-        self.genes[i] += random.gauss(0, 0.1)  # Gaussian noise
+        if type(self.min_gene_val) == int and type(self.max_gene_val) == int:
+            other_genes = list(range(self.min_gene_val, self.max_gene_val))
+            other_genes.remove(self.genes[i])
+            self.genes[i] = random.choice(other_genes)
+        else:
+            self.genes[i] += random.gauss(0, 0.1)  # Gaussian noise
 
 # TODO(us) Implement crossover for permutation
 class PermutationChromosome(Chromosome):
