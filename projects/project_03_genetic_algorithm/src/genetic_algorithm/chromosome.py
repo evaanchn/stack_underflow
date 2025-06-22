@@ -30,7 +30,9 @@ class Chromosome:
         for gene_idx in range(length):
             gene = parents[0].genes[gene_idx]  # Default from first parent
             if random.random() < crossover_probability:
-                gene = random.choice(parents).genes[gene_idx]
+                # Choose gene from parent that is not first chromosome
+                other_parent = random.choice(parents[1:])
+                gene = other_parent.genes[gene_idx]
             child.genes.append(gene)
 
         return child
