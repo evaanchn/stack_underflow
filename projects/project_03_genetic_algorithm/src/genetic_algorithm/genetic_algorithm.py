@@ -1,7 +1,7 @@
 # Copyright 2025 stack_underflow CC-BY 4.0
 
 import random
-from chromosome import Chromosome
+from .chromosome import Chromosome
 
 class GeneticAlgorithm:
     def __init__(
@@ -59,7 +59,7 @@ class GeneticAlgorithm:
                            for _ in range(self.population_size)]
 
     def evaluate_fitness(self, chromosomes):
-        return [self.fitness_func(self.input, chrom.genes)
+        return [self.fitness_function(self.input, chrom.genes)
                  for chrom in chromosomes]
 
     def sort_by_fitness(self, chromosomes):
@@ -129,7 +129,7 @@ class GeneticAlgorithm:
             best_parents = self.selection()
             child = Chromosome.crossover(best_parents, self.crossover_prob,
                                          self.chromosome_type)
-            if random.uniform([0, 1]) < self.mutation_prob:
+            if random.random() < self.mutation_prob:
                 child.mutate()
             children.append(child)
         return children

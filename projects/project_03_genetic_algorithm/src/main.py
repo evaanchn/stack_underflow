@@ -5,34 +5,48 @@ import random
 from genetic_algorithm.chromosome import Chromosome
 from genetic_algorithm.chromosome import BinaryChromosome
 from genetic_algorithm.chromosome import RealChromosome
+from genetic_algorithm.genetic_algorithm import GeneticAlgorithm
+
+def sample_fitness_function(input, solution):
+    # Example fitness: count of 1s for BinaryChromosome, sum of values for RealChromosome
+    return sum(solution)
+
+def make_subset_sum_function(target):
+    def subset_sum_fitness(input, solution):
+        paired = list(zip(input, solution))
+        subset_sum = sum([value * sol for value, sol in paired])
+        difference = abs(target - subset_sum)
+        # Penalize difference
+        return 1 / (1 + difference)
+    return subset_sum_fitness
 
 def main():
-    #random.seed(42)  # For reproducible results
-    length = 5
-    crossover_prob = 0.7
+    # random.seed(42)
 
-    # === Binary Chromosomes ===
-    binary_parents = [BinaryChromosome(length) for _ in range(4)]
-    for i, parent in enumerate(binary_parents):
-        parent.initialize()
-        print(f"Binary Parent {i + 1}:", parent.genes, "\n")
-    binary_child = Chromosome.crossover(binary_parents, crossover_prob, BinaryChromosome)
-    print("Binary Child before mutation:", binary_child.genes, "\n")
-    binary_child.mutate()
-    print("Binary Child after mutation:", binary_child.genes, "\n")
+    #input_data = [0] * 10  # Dummy input to set chromosome length
+    input_data = [2, 2, 2, 2, 1, 10]
+    target = 3
+    population_size = 6
+    max_generations = 20
 
-    print()
+    print("=== Initializing Genetic Algorithm with BinaryChromosome ===")
+    ga_binary = GeneticAlgorithm(
+        input=input_data,
+        population_size=population_size,
+        max_generations=max_generations,
+        fitness_function=make_subset_sum_function(target),
+        chromosome_type=BinaryChromosome,
+        elitism_percentage=0.2,
+        crossover_prob=0.7,
+        mutation_prob=0.1
+    )
+    
+    ga_binary.initialize_population()
 
-    # === Real Chromosomes ===
-    real_parents = [RealChromosome(length) for _ in range(4)]
-    for i, parent in enumerate(real_parents):
-        parent.initialize()
-        print(f"Real Parent {i + 1}:", parent.genes, "\n")
-
-    real_child = Chromosome.crossover(real_parents, crossover_prob, RealChromosome)
-    print("Real Child before mutation:", real_child.genes, "\n")
-    real_child.mutate()
-    print("Real Child after mutation:", real_child.genes, "\n")
+    fitnesses = ga_binary.evaluate_fitness(ga_binary.population)
+    # print genetic algorithm population and fitnesses
+    for i, chromo in enumerate(ga_binary.population):
+        print(f"Binary Chromosome {i + 1}: {chromo.genes}, Fitness: {fitnesses[i]}")
 
 if __name__ == '__main__':
     main()
