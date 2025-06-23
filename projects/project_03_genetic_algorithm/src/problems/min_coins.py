@@ -1,4 +1,6 @@
-# Copyright Sergio Moya Valerin, ejemplo de clase CI-0116
+""" Copyright Sergio Moya Valerin, ejemplo de clase CI-0116 """
+
+""" min coins dp """
 def min_coins_topdown(coins, amount, memo=None):
     if amount in memo:
         return memo[amount]
@@ -6,7 +8,7 @@ def min_coins_topdown(coins, amount, memo=None):
         return 0
     if amount < 0:
         return float('inf')
-    
+
     min_coins = float('inf')
     for coin in coins:
         res = min_coins_topdown(coins, amount - coin, memo)
