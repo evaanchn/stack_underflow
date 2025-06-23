@@ -6,19 +6,19 @@ from .chromosome import Chromosome
 class GeneticAlgorithm:
     def __init__(
                 self,
-                input,
                 population_size,
                 max_generations,
                 fitness_function,
                 chromosome_type,
+                chromosome_length,
+                min_gene_value = 0,
+                max_gene_value = 1,
                 elitism_percentage = 0.0,
                 max_fails = float('inf'),
                 parents_per_selection = 2,
                 parent_selection_type = "RANKING",
                 crossover_prob = 0.6,
                 mutation_prob = 0.1):
-        """ Input from which algorithm will be working with """
-        self.input = input
         """ Set of possible solutions """
         self.population = []
         """ Amount of cromosomes in population """
@@ -30,6 +30,12 @@ class GeneticAlgorithm:
         self.fitness_function = fitness_function
         """ Binary, real or permutation chromosome """
         self.chromosome_type = chromosome_type
+        """ Amount oof elements in input"""
+        self.chromosome_length = chromosome_length
+
+        """ Min and max values gene can take on """
+        self.min_gene_value = min_gene_value
+        self.max_gene_value = max_gene_value
 
         """" Amount of elites to keep in new generations """
         self.elites_count = round(self.population_size * elitism_percentage)
@@ -44,12 +50,61 @@ class GeneticAlgorithm:
         """ Probabilities for new chromosomes creation """
         self.crossover_prob = crossover_prob
         self.mutation_prob = mutation_prob
+        
+        self.validate_attributes()
 
+    def validate_attributes(self):
+        # ---------- Validation ----------
+        if type(self.population_size) != int or self.population_size <= 0:
+            raise ValueError("Population size must be a positive integer.")
+
+        if type(self.max_generations) != int or self.max_generations <= 0:
+            raise ValueError("Max generations must be a positive integer.")
+
+        if not callable(self.fitness_function):
+            raise TypeError("Fitness function must be a callable function.")
+
+        # valid_chromosome_types = {"BINARY", "REAL", "PERMUTATION"}
+        if not issubclass(self.chromosome_type, Chromosome):
+            raise ValueError(f"Invalid chromosome type")
+
+        #if self.chromosome_type :   
+
+        if type(self.chromosome_length) != int or self.chromosome_length <= 0:
+            raise ValueError("Chromosome length must be a positive integer.")
+        
+        if not (type(self.min_gene_value) == int or type(self.min_gene_value) == float):
+            raise TypeError("Minimum gene value must be an integer or float.")
+        
+        if not (type(self.max_gene_value) == int or type(self.max_gene_value) == float):
+            raise TypeError("Maximum gene value must be an integer or float.")
+    
+        if not (0 <= self.elites_count < self.population_size):
+            raise ValueError("Elites to preserve must be less than population size.")
+
+        if not (type(self.max_fails) == int or self.max_fails == float('inf')) or self.max_fails < 0:
+            raise ValueError("Maximun fails must be a non-negative integer or float('inf').")
+
+        if type(self.parents_per_selection) != int or self.parents_per_selection < 2:
+            raise ValueError("Parents per selection must be an integer ≥ 2.")
+
+        valid_selection_types = {"RANKING", "ROULETTE", "TOURNAMENT"}
+        if self.parent_selection_type not in valid_selection_types:
+            raise ValueError(f"Parent selection type must be one of {valid_selection_types}.")
+
+        if not (0 <= self.crossover_prob <= 1):
+            raise ValueError("Crossover probability must be between 0 and 1.")
+
+        if not (0 <= self.mutation_prob <= 1):
+            raise ValueError("Mutation probability must be between 0 and 1.")
+        
     def create_chromosome(self):
         """! Create with designated chromosome type,
             length of each is length of input
         """
-        chromosome = self.chromosome_type(len(self.input))
+        chromosome = self.chromosome_type(self.chromosome_length,
+                                          self.min_gene_value,
+                                          self.max_gene_value)
         chromosome.initialize()
         return chromosome
 
@@ -59,7 +114,7 @@ class GeneticAlgorithm:
                            for _ in range(self.population_size)]
 
     def evaluate_fitness(self, chromosomes):
-        return [self.fitness_function(self.input, chrom.genes)
+        return [self.fitness_function(chrom.genes)
                  for chrom in chromosomes]
 
     def sort_by_fitness(self, chromosomes, descending=True):
@@ -79,6 +134,7 @@ class GeneticAlgorithm:
         return self.sort_by_fitness(chromosomes)[:amount]
 
     def ranking(self):
+        """ Returns list of chromosomes with best fitness """
         return self.pick_best_chromosomes(self.population,
                                           self.parents_per_selection)
 
@@ -94,24 +150,38 @@ class GeneticAlgorithm:
 
         return selected
 
-    def tournament(self, pick_winner_prob=0.75, tournament_size=3):
-        selected = []
-        while len(selected) < self.parents_per_selection:
-            # Randomly pick `tournament_size` unique competitors
-            competitors = random.sample(self.population, tournament_size)
+    def tournament(self, pick_winner_prob = 0.8):
+        competitors = self.population[:]  # Copy to avoid modifying population
+        prev_winners = competitors[:]
+        while len(competitors) > self.parents_per_selection:
+            next_round = []
 
-            # Sort by fitness (best first)
-            ranked = self.sort_by_fitness(competitors)
-
-            # Select best or worst based on probability
-            if random.random() < pick_winner_prob:
-                winner = ranked[0]  # best
-            else:
-                winner = ranked[-1]  # worst
-
-            selected.append(winner)
-        return selected
-
+            # if odd number, one chromosome passes to the next round
+            if len(competitors) % 2 == 1:
+                # select a random competitor
+                lucky = competitors.pop(random.randrange(len(competitors)))
+                next_round.append(lucky)
+            # battle in pairs
+            for i in range(0, len(competitors), 2):
+                a, b = competitors[i], competitors[i + 1]
+                fitness_a = self.fitness_function(a.genes)
+                fitness_b = self.fitness_function(b.genes)
+                if fitness_a > fitness_b:
+                    best, worst = a, b
+                else:
+                    best, worst = b, a
+                
+                best_choice = random.random() < pick_winner_prob
+                # pick winner with a probability
+                winner = best if best_choice else worst
+                next_round.append(winner)
+            # Collects current round's losers, []
+            prev_winners = [competitor for competitor in competitors
+                            if competitor not in next_round]
+            competitors = next_round
+        if len(competitors) < self.parents_per_selection and len(prev_winners) > 0:
+            competitors.append(random.choice(prev_winners))
+        return competitors[:self.parents_per_selection]
 
     def selection(self):
         if self.parent_selection_type == "RANKING":
@@ -120,6 +190,8 @@ class GeneticAlgorithm:
             return self.roulette()
         elif self.parent_selection_type == "TOURNAMENT":
             return self.tournament()
+        else:
+            raise AssertionError("No suitable selection type found")
 
     def select_elites(self):
         return self.pick_best_chromosomes(self.population, self.elites_count)
