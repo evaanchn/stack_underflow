@@ -67,7 +67,7 @@ class RealChromosome(Chromosome):
     def mutate(self):
         i = random.randint(0, self.length - 1)
         if type(self.min_gene_val) == int and type(self.max_gene_val) == int:
-            other_genes = list(range(self.min_gene_val, self.max_gene_val))
+            other_genes = list(range(self.min_gene_val, self.max_gene_val + 1))
             other_genes.remove(self.genes[i])
             self.genes[i] = random.choice(other_genes)
         else:
