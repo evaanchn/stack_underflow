@@ -15,6 +15,8 @@ class Solver:
             log.solution = self.solve_recursive(log)
         elif solve_mode == "DYNAMIC_TD":
             log.solution = self.solve_dynamic_top_down(log)
+        elif solve_mode == "DYNAMIC_BU":
+            log.solution = self.solve_dynamic_bottom_up(log)
         elif solve_mode == "GENETIC":
             if genetic_algorithm is None:
                 raise ValueError("genetic_algorithm must be provided for GENETIC solve mode")
@@ -30,6 +32,9 @@ class Solver:
 
     def solve_dynamic_top_down(self, log):
         raise NotImplementedError
+    
+    def solve_dynamic_bottom_up(self, log):
+        pass
 
     def solve_genetic(self, genetic_algorithm, log):
         # Iterations for genetic algorithm will be the following product
