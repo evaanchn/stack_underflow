@@ -1,5 +1,4 @@
 """ Copyright Stack Underflow 2025 CC-BY 4.0 """
-
 from .solver import Solver
 from .solution_log import SolutionLog
 
