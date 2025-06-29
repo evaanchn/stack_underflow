@@ -85,7 +85,7 @@ class PartitionSolver(Solver):
                            if combination[i] == 1]
 
         return (left_partition, sum(left_partition)), \
-            (right_partition, sum(left_partition))
+            (right_partition, sum(right_partition))
 
     def solve_recursive(self, log):
         solution = [0] * len(self.input)
