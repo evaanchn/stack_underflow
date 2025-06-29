@@ -10,7 +10,7 @@
 
 [[general_description]]
 == General description 
-
+This project consists on an evaluative comparison of the performance of genetic algorithms, exhaustive recursion and dynamic programming when it comes to solving problems with NP complexity. The four problems involved are: subset sum, partition, bin packing, and double knapsack.
 
 [[user_manual]]
 == User manual
@@ -19,12 +19,21 @@
 === Build
 Pre-requisites:
 
-==== Compilation
+Firstly, device must have python3 installed, with pip.
 
+Install optuna, plotly, and sklearn with the following commands
+
+`pip install optuna`
+
+`pip install plotly`
+
+`pip install scikit-learn`
 
 [[usage]]
 === Usage
+Use the `make run` command to run the simulation.
 
+NOTE: The `optuna_studies/` folder contains summaries of genetic algorithm optimizations, while graphs related to the process will be generated in folders at the source directory.
 
 [[credits]]
 == Credits
