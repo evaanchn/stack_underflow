@@ -8,12 +8,12 @@ class SolutionLog:
         self.finish_time = time.time()
         self.solution = None
 
-    def log_iteration(self):
-        self.iterations = self.iterations + 1
+    def log_iteration(self, iterations=1):
+        self.iterations = self.iterations + iterations
 
     def record_start(self):
         self.start_time = time.perf_counter()
-    
+
     def record_finish(self):
         self.finish_time = time.perf_counter()
 

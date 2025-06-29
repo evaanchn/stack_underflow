@@ -2,6 +2,7 @@
 
 import random
 from .chromosome import Chromosome
+from problems.solution_log import SolutionLog
 
 class GeneticAlgorithm:
     def __init__(
@@ -241,7 +242,7 @@ class GeneticAlgorithm:
 
         return evolved
 
-    def run(self):
+    def run(self, log=SolutionLog()):
         self.initialize_population()
         
         fails = 0
@@ -258,5 +259,7 @@ class GeneticAlgorithm:
 
                 if fails >= self.max_fails:
                     break
+            log.log_iteration(self.population_size * self.chromosome_length)
+
         # Return best chromosome from the last generation
         return self.population[0]

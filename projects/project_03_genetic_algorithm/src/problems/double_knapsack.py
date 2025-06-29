@@ -8,13 +8,13 @@ class DoubleKnapsackSolver(Solver):
         super().__init__(input)
         self.capacity1 = capacity1
         self.capacity2 = capacity2
+        self.fitness_function = self.create_fitness_function()
 
-    """"
+    """
     source: https://www.geeksforgeeks.org/double-knapsack-dynamic-programming/
     """
     @staticmethod
-    def double_knapsack_rec(n, arr, capacity1, capacity2, log=SolutionLog(),
-                            index = 0):
+    def double_knapsack_rec(n, arr, capacity1, capacity2, index = 0, log=SolutionLog()):
         log.log_iteration()
         # Base case: If current index is past the last element, the current
         # recursive branch is done with
@@ -26,8 +26,8 @@ class DoubleKnapsackSolver(Solver):
                                                             arr,
                                                             capacity1,
                                                             capacity2,
-                                                            log, 
-                                                            index + 1)
+                                                            index + 1,
+                                                            log)
 
         # Option 2: If the current item can be
         # added to the first knapsack, do it
@@ -37,8 +37,8 @@ class DoubleKnapsackSolver(Solver):
                                                          arr,
                                                          capacity1 - arr[index],
                                                          capacity2,
-                                                         log,
-                                                         index + 1)
+                                                         index + 1,
+                                                         log)
             accumulated = max(accumulated, takeInFirst)
 
         # Option 3: If the current item can be
@@ -49,14 +49,13 @@ class DoubleKnapsackSolver(Solver):
                                                          arr,
                                                          capacity1,
                                                          capacity2 - arr[index],
-                                                         log,
-                                                         index + 1)
+                                                         index + 1,
+                                                         log)
             accumulated = max(accumulated, takeInSecond)
         return accumulated
 
     @staticmethod
-    def double_knapsack_td(n, arr, capacity1, capacity2, memo=dict(),
-                           log=SolutionLog(), index = 0):
+    def double_knapsack_td(n, arr, capacity1, capacity2, memo, index=0, log=SolutionLog()):
         log.log_iteration()
 
         # Base case: if all items have been considered
@@ -73,8 +72,8 @@ class DoubleKnapsackSolver(Solver):
                                                        capacity1,
                                                        capacity2,
                                                        memo,
-                                                       log,
-                                                       index + 1)
+                                                       index + 1,
+                                                       log)
 
         # Option 2: If the current item can be
         # added to the first knapsack, do it
@@ -85,8 +84,8 @@ class DoubleKnapsackSolver(Solver):
                                                          capacity1 - arr[index],
                                                          capacity2,
                                                          memo,
-                                                         log,
-                                                         index + 1)
+                                                         index + 1,
+                                                         log)
             memo[key] = max(memo[key], takeInFirst)
 
         # Option 3: If the current item can be
@@ -98,27 +97,27 @@ class DoubleKnapsackSolver(Solver):
                                                          capacity1,
                                                          capacity2 - arr[index],
                                                          memo,
-                                                         log,
-                                                         index + 1)
+                                                         index + 1,
+                                                         log)
             memo[key] = max(memo[key], takeInSecond)
         return memo[key]
 
     def solve_recursive(self, log):
-        return self.double_knapsack_rec(len(self.input),
-                                        self.input,
-                                        self.capacity1,
-                                        self.capacity2,
-                                        log)
+        return self.double_knapsack_rec(n=len(self.input),
+                                        arr=self.input,
+                                        capacity1=self.capacity1,
+                                        capacity2=self.capacity2,
+                                        log=log)
 
     def solve_dynamic_top_down(self, log):
-        return self.double_knapsack_rec(len(self.input),
-                                        self.input,
-                                        self.capacity1,
-                                        self.capacity2,
-                                        log)
+        return self.double_knapsack_rec(n=len(self.input),
+                                        arr=self.input,
+                                        capacity1=self.capacity1,
+                                        capacity2=self.capacity2,
+                                        log=log)
 
     def solve_genetic(self, genetic_algorithm, log):
-        solution_chromosome = genetic_algorithm.run(log)
+        solution_chromosome = genetic_algorithm.run(log=log)
         # The sum of weights both knapsacks retrieve is the solution to the prob
         accumulated = sum([self.input[i] for i in range(len(self.input))
                            if solution_chromosome[i] == 1
@@ -126,17 +125,23 @@ class DoubleKnapsackSolver(Solver):
         return accumulated
 
     def create_fitness_function(self):
+        """ Create fitness function for real chromosome, where, at each index:
+            gene = 0 means the element is not included
+            gene = 1 means the element is included in knapsack 1
+            gene = 2 means the element is included in knapsack 2 """
         def fitness_function(solution):
             paired = list(zip(self.input, solution))
+            # Calculated accumulated weights for each knapsack
             first_sum = sum([value for value, sol in paired if sol == 1])
             second_sum = sum([value for value, sol in paired if sol == 2])
 
-            # check capacity. Must not exceed
+            # The knapsack capacities must not be surpassed, a solution with 0
+            # weight taken is invalid. Return worst fitness for these scenarios
             if first_sum > self.capacity1 or second_sum > self.capacity2 \
                 or first_sum + second_sum == 0:
                 return 0
 
-            # Penalize difference
-            return 1 - (1 / first_sum + second_sum)
+            # Maximization problem: The bigger the total sum, the less is subtracted
+            return 1 - (1 / first_sum + second_sum)  # Sum will never be 0
         return fitness_function
 
