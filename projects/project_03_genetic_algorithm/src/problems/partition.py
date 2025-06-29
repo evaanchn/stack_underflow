@@ -5,10 +5,11 @@ from .solution_log import SolutionLog
 class PartitionSolver(Solver):
     def __init__(self, input):
         super().__init__(input)
-        
+        self.fitness_function = self.create_fitness_function()
+
     @staticmethod
-    def partition_rec(input, solution, best_solution, log=None, index = 0):
-        if log: log.log_iteration()
+    def partition_rec(input, solution, best_solution, index=0, log=SolutionLog()):
+        log.log_iteration()
 
         if index == len(input):
             sum_left = sum([input[i] for i in range(len(input)) if solution[i] == 0])
@@ -25,23 +26,23 @@ class PartitionSolver(Solver):
         # left
         solution[index] = 0
         difference = PartitionSolver.partition_rec(input, solution,
-                                                  best_solution, log, index + 1)
+                                                  best_solution, index + 1, log)
         if difference != float('inf'):
            least_difference = min(least_difference, difference)
 
         # right
         solution[index] = 1
         difference = PartitionSolver.partition_rec(input, solution,
-                                                  best_solution, log, index + 1)
+                                                  best_solution, index + 1, log)
         if difference != float('inf'):
            least_difference = min(least_difference, difference)
 
         return least_difference
 
     @staticmethod
-    def partition_td(input, solution, memo, best_solution, log=None,
-                     index = 0, sum_left = 0):
-        if log: log.log_iteration()
+    def partition_td(input, solution, memo, best_solution,
+                     index=0, sum_left=0, log=SolutionLog()):
+        log.log_iteration()
 
         if index == len(input):
             difference = abs(sum_left - (sum(input) - sum_left))
@@ -61,34 +62,47 @@ class PartitionSolver(Solver):
         # left
         solution[index] = 0
         difference = PartitionSolver.partition_td(input, solution, memo,
-                                                  best_solution, log, index + 1,
-                                                  sum_left + input[index])
+                                                  best_solution, index + 1,
+                                                  sum_left + input[index], log)
         if difference != float('inf'):
            least_difference = min(least_difference, difference)
 
         # right
         solution[index] = 1
         difference = PartitionSolver.partition_td(input, solution, memo,
-                                                  best_solution, log, index + 1,
-                                                  sum_left)
+                                                  best_solution, index + 1,
+                                                  sum_left, log)
         if difference != float('inf'):
            least_difference = min(least_difference, difference)
 
         memo[key] = least_difference
         return least_difference
-    
+
+    def get_partitions(self, combination):
+        left_partition = [self.input[i] for i in range(len(self.input)) \
+                          if combination[i] == 0]
+        right_partition = [self.input[i] for i in range(len(self.input)) \
+                           if combination[i] == 1]
+
+        return (left_partition, sum(left_partition)), \
+            (right_partition, sum(left_partition))
+
     def solve_recursive(self, log):
         solution = [0] * len(self.input)
         best_solution = [0] * len(self.input)
-        self.partition_rec(self.input, solution, best_solution, log)
-        return best_solution
+        self.partition_rec(self.input, solution, best_solution, log=log)
+        return self.get_partitions(best_solution)
     
     def solve_dynamic_top_down(self, log):
         solution = [0] * len(self.input)
         best_solution = [0] * len(self.input)
         memo = {}
-        self.partition_td(self.input, solution, memo, best_solution, log)
-        return best_solution
+        self.partition_td(self.input, solution, memo, best_solution, log=log)
+        return self.get_partitions(best_solution)
+
+    def solve_genetic(self, genetic_algorithm, log):
+        solution_chromosome = genetic_algorithm.run(log)
+        return self.get_partitions(solution_chromosome.genes)
 
     def create_fitness_function(self):
         def fitness_function(solution):
