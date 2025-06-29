@@ -6,12 +6,14 @@ import optuna.visualization as vis
 # Local imports
 from .chromosome import Chromosome
 from .genetic_algorithm import GeneticAlgorithm
+from problems.solution_log import SolutionLog
 
 class GAOptimizer:
     def __init__(self,
                  chromosome_type,
                  chromosome_length,
                  fitness_function,
+                 base_time,
                  min_gene_value=0,
                  max_gene_value=1,
                  study_name=None,
@@ -23,8 +25,10 @@ class GAOptimizer:
         :param chromosome_type: The Chromosome subclass to use.
         :param chromosome_length: Length of input, same length as chromosome.
         :param fitness_function: Problem-specific fitness function.
+        :param base_time: Recursive's duration for the same problem.
         :param min_gene_value: Minimum value a gene could be
         :param max_gene_value: Maximum value gene can be
+        :param storage: Directory of storage.
         :param study_name: Optional name for the study.
         :param direction: Optimization direction ("maximize" or "minimize").
         """
@@ -34,6 +38,7 @@ class GAOptimizer:
         self.fitness_function = fitness_function
         self.min_gene_value = min_gene_value
         self.max_gene_value = max_gene_value
+        self.base_time = base_time
 
         # Create or load study
         if storage:
@@ -79,11 +84,14 @@ class GAOptimizer:
         )
  
         # Create log to take duration into consideration
-        best_chromosome = ga.run()
+        log =  SolutionLog()
+        log.record_start()
+        best_chromosome = ga.run(log)
+        log.record_finish()
         fitness = self.fitness_function(best_chromosome.genes)
 
-        # Optuna will try to maximize the fitness
-        return fitness
+        # Optuna will try to maximize the fitness + speedup
+        return fitness + self.base_time / log.get_duration()
 
     def optimize(self, n_trials=20, n_jobs=1):
         """
