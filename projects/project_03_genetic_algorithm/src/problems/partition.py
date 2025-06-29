@@ -8,14 +8,21 @@ class PartitionSolver(Solver):
         self.fitness_function = self.create_fitness_function()
 
     @staticmethod
+    def get_differences(input, sum_left, best_solution):
+        difference = abs(sum_left - (sum(input) - sum_left))
+        best_left = sum([input[i] for i in range(len(input)) if best_solution[i] == 0])
+        return difference, abs(best_left - (sum(input) - best_left))
+       
+    @staticmethod
     def partition_rec(input, solution, best_solution, index=0, log=SolutionLog()):
         log.log_iteration()
 
         if index == len(input):
             sum_left = sum([input[i] for i in range(len(input)) if solution[i] == 0])
-            difference = abs(sum_left - (sum(input) - sum_left))
-            best_left = sum([input[i] for i in range(len(input)) if best_solution[i] == 0])
-            best_difference = abs(best_left - (sum(input) - best_left))
+            difference, best_difference = \
+                PartitionSolver.get_differences(input,
+                                                sum_left,
+                                                best_solution)
 
             if difference < best_difference:
                 best_solution[:] = solution
@@ -45,10 +52,10 @@ class PartitionSolver(Solver):
         log.log_iteration()
 
         if index == len(input):
-            difference = abs(sum_left - (sum(input) - sum_left))
-            paired = list(zip(input, best_solution))
-            best_left = sum([value for value, sol in paired if sol == 0])
-            best_difference = abs(best_left - (sum(input) - best_left))
+            difference, best_difference = \
+                PartitionSolver.get_differences(input,
+                                                sum_left,
+                                                best_solution)
             if difference < best_difference:
                 best_solution[:] = solution
 
