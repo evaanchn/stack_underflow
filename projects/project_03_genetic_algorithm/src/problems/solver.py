@@ -37,9 +37,7 @@ class Solver:
         pass
 
     def solve_genetic(self, genetic_algorithm, log):
-        # Iterations for genetic algorithm will be the following product
-        log.iterations = genetic_algorithm.max_generations * genetic_algorithm.population_size * genetic_algorithm.chromosome_length
-        return genetic_algorithm.run()
+        raise NotImplementedError
     
     def create_fitness_function(self, log):
         raise NotImplementedError
