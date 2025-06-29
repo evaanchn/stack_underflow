@@ -20,14 +20,34 @@ This project consists on an evaluative comparison of the performance of genetic 
 Pre-requisites:
 
 Firstly, device must have python3 installed, with pip.
+Some OS like Debian are protected and can only install pip packages on virtual enviroments such as *venv*.
 
-Install optuna, plotly, and sklearn with the following commands
+[[external_enviroment]]
+==== External enviroment allowed
+
+
+Install optuna, plotly, and sklearn with the following commands. If any of them fails check <<virtual_eviroment>>
 
 `pip install optuna`
 
 `pip install plotly`
 
 `pip install scikit-learn`
+
+[[virtual_eviroment]]
+==== Protected enviroment such as Debian (Enforces PEP 668)
+Execute the following commands on the "project_03_genetic_algorithm" directory to run with Optuna on a virtual enviroment:
+
+`python3 -m venv .venv`
+
+`source .venv/bin/activate`
+
+`pip install --upgrade pip`
+
+`pip install optuna`
+
+
+`PYTHONPATH=src python src/main.py`  instead of <<usage>> instructions
 
 [[usage]]
 === Usage

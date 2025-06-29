@@ -1,6 +1,7 @@
 bin/
 build/
 doc/
+.venv/
 *.pyc
 .DS_Store
 .vscode
