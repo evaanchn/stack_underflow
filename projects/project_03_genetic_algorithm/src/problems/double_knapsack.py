@@ -55,7 +55,7 @@ class DoubleKnapsackSolver(Solver):
         return accumulated
 
     @staticmethod
-    def double_knapsack_td(n, arr, capacity1, capacity2, memo, index=0, log=SolutionLog()):
+    def double_knapsack_top_down(n, arr, capacity1, capacity2, memo, index=0, log=SolutionLog()):
         log.log_iteration()
 
         # Base case: if all items have been considered
@@ -67,7 +67,7 @@ class DoubleKnapsackSolver(Solver):
             return memo[key]
 
         # Option 1: Don't take the current item
-        memo[key] = DoubleKnapsackSolver.double_knapsack_td(n,
+        memo[key] = DoubleKnapsackSolver.double_knapsack_top_down(n,
                                                        arr,
                                                        capacity1,
                                                        capacity2,
@@ -79,7 +79,7 @@ class DoubleKnapsackSolver(Solver):
         # added to the first knapsack, do it
         if capacity1 >= arr[index]:
             takeInFirst = arr[index] + \
-                DoubleKnapsackSolver.double_knapsack_td(n,
+                DoubleKnapsackSolver.double_knapsack_top_down(n,
                                                          arr,
                                                          capacity1 - arr[index],
                                                          capacity2,
@@ -92,7 +92,7 @@ class DoubleKnapsackSolver(Solver):
         # added to the second knapsack, do it
         if capacity2 >= arr[index]:
             takeInSecond = arr[index] + \
-                DoubleKnapsackSolver.double_knapsack_td(n,
+                DoubleKnapsackSolver.double_knapsack_top_down(n,
                                                          arr,
                                                          capacity1,
                                                          capacity2 - arr[index],
@@ -110,10 +110,12 @@ class DoubleKnapsackSolver(Solver):
                                         log=log)
 
     def solve_dynamic_top_down(self, log):
-        return self.double_knapsack_rec(n=len(self.input),
+        memo = dict()
+        return self.double_knapsack_top_down(n=len(self.input),
                                         arr=self.input,
                                         capacity1=self.capacity1,
                                         capacity2=self.capacity2,
+                                        memo=memo,
                                         log=log)
 
     def solve_genetic(self, genetic_algorithm, log):
@@ -143,6 +145,6 @@ class DoubleKnapsackSolver(Solver):
                 return 0
 
             # Maximization problem: The bigger the total sum, the less is subtracted
-            return 1 - (1 / 1 + first_sum + second_sum)
+            return 1 - (1 / (1 + first_sum + second_sum))
         return fitness_function
 
