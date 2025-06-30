@@ -90,18 +90,18 @@ class Tester:
         optimizer.plot_param_importances()
         optimizer.plot_parallel_coordinate()
 
-
     def test_increasing_input(self, solver, optimizations, chromosome_type,
-                              iterations, increase_size, size, min_gene=0,
-                              max_gene=1):
+                              iterations, increase_size, size, range_numbers,
+                              min_gene=0, max_gene=1):
         # Test with the initial input size and increase as specified
         for increase in range(iterations):
-            new_input = list(range(1, size + 1))
+            new_input = [random.randint(1, range_numbers) for _ in range(size)]
+
             random.shuffle(new_input)
             solver.input = new_input
             print(f"Testing input size: {size} with input: {solver.input}")
 
             self.test_fixed_input(solver, optimizations, chromosome_type,
                                   min_gene, max_gene)
-            
+
             size += increase_size
