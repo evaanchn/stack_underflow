@@ -74,7 +74,7 @@ class GAOptimizer:
             chromosome_type=self.chromosome_type,
             chromosome_length=self.chromosome_length,
             min_gene_value = self.min_gene_value,
-            max_gene_value = self.min_gene_value,
+            max_gene_value = self.max_gene_value,
             max_fails=max_fails,
             elitism_percentage=elitism_percentage,
             parents_per_selection=parents_per_selection,
@@ -89,7 +89,7 @@ class GAOptimizer:
         best_chromosome = ga.run(log)
         log.record_finish()
         fitness = self.fitness_function(best_chromosome.genes)
-
+        print(log.get_duration())
         # Optuna will try to maximize the fitness + speedup
         return fitness + self.base_time / log.get_duration()
 
@@ -124,7 +124,7 @@ class GAOptimizer:
         path = os.path.join(directory, summmary_name)
 
         # Open summary file in writing mode and write best value and best params
-        with open(path, "w") as f:
+        with open(path, "a") as f:
             f.write(f"Best value: {self.study.best_value}\n")
             f.write(f"Best params:\n")
             for key, val in self.study.best_params.items():

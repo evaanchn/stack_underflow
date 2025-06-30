@@ -118,10 +118,11 @@ class DoubleKnapsackSolver(Solver):
 
     def solve_genetic(self, genetic_algorithm, log):
         solution_chromosome = genetic_algorithm.run(log=log)
+        solution_genes = solution_chromosome.genes
         # The sum of weights both knapsacks retrieve is the solution to the prob
         accumulated = sum([self.input[i] for i in range(len(self.input))
-                           if solution_chromosome[i] == 1
-                           or solution_chromosome[i] == 2])
+                           if solution_genes[i] == 1
+                           or solution_genes[i] == 2])
         return accumulated
 
     def create_fitness_function(self):
@@ -142,6 +143,6 @@ class DoubleKnapsackSolver(Solver):
                 return 0
 
             # Maximization problem: The bigger the total sum, the less is subtracted
-            return 1 - (1 / first_sum + second_sum)  # Sum will never be 0
+            return 1 - (1 / 1 + first_sum + second_sum)
         return fitness_function
 
