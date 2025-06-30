@@ -120,8 +120,9 @@ class SubsetSumSolver(Solver):
     def solve_genetic(self, genetic_algorithm, log):
         solution_chromosome = genetic_algorithm.run(log)
         solution_genes = solution_chromosome.genes
-        return [self.input[i] for i in range(len(self.input))
-                if solution_genes[i] == 1]
+        solution_sum = sum([self.input[i] for i in range(len(self.input))
+                            if solution_genes[i] == 1])
+        return solution_sum == self.target_sum
         
 
     def create_fitness_function(self):
