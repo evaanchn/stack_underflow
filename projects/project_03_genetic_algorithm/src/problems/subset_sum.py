@@ -20,23 +20,21 @@ class SubsetSumSolver(Solver):
             return False
 
         # Skip current number
-        if SubsetSumSolver.subset_sum_rec(nums, target, subset, index + 1, log):
-            return True
+        has_sum = SubsetSumSolver.subset_sum_rec(nums, target, subset, index + 1, log)
 
         # Then, include current number, if it's not larger than target
         if nums[index] <= target:
             subset.append(nums[index])  # Add element
-            if SubsetSumSolver.subset_sum_rec(nums,
+            has_sum = SubsetSumSolver.subset_sum_rec(nums,
                                               target - nums[index],
                                               subset,
                                               index + 1,
-                                              log):
-                return True
-            else:
+                                              log)
+            if not has_sum:
                 subset.pop()
 
         # No subset found
-        return False
+        return has_sum
 
     @staticmethod
     def subset_sum_top_down(nums, target, memo, subset=[], index=0, log=SolutionLog()):
