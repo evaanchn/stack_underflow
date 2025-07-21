@@ -5,3 +5,4 @@ doc/
 *.pyc
 .DS_Store
 .vscode
+optuna_studies/
