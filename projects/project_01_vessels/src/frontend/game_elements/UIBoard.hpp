@@ -10,14 +10,14 @@
 
 #define BOARD_ROWS 6
 #define BOARD_COLS 16
-#define SLOT_DIMENSION 100
+#define SLOT_DIMENSION 67
 #define NO_COORDINATES -1
 
 #define PLAYER_1 1
 #define PLAYER_2 2
 
-#define X_OFFSET 85
-#define Y_OFFSET 125
+#define X_OFFSET 57
+#define Y_OFFSET 83
 
 #define SLOT_MASKS_TYPES 3
 

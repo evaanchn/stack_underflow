@@ -9,10 +9,10 @@
 
 #include <iostream>
 
-#define MAIN_WINDOW_WIDTH 1920
-#define MAIN_WINDOW_HEIGHT 1080
-#define GAME_WINDOW_WIDTH 1920
-#define GAME_WINDOW_HEIGHT 1080
+#define MAIN_WINDOW_WIDTH 1280
+#define MAIN_WINDOW_HEIGHT 720
+#define GAME_WINDOW_WIDTH 1280
+#define GAME_WINDOW_HEIGHT 720
 #define GAME_NAME "Vessels of Order: Battle for the Seas"
 #define LOOP true
 

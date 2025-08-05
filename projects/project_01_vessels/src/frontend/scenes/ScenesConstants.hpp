@@ -12,31 +12,31 @@
 enum SceneState { START, INFORMATION, GAME, GAME_OVER };
 
 namespace Positions {
-const sf::Vector2f SCENES(0, 0);
-const sf::Vector2f BUTTON_START(1610, 735);
-const sf::Vector2f BUTTON_INFO(1610, 900);
-
-const sf::Vector2f BUTTON_SIMULATE(1535, 80);
-const sf::Vector2f BUTTON_MANUAL(1540, 390);
-const sf::Vector2f BUTTON_RETURN(1400, 710);
-const sf::Vector2f BUTTON_INFO_EXIT(1680, 710);
-
-const sf::Vector2f BUTTON_RESTART(1550, 295);
-const sf::Vector2f BUTTON_EXIT(1650, 405);
+  const sf::Vector2f SCENES(0, 0);
+  const sf::Vector2f BUTTON_START(1073, 490);
+  const sf::Vector2f BUTTON_INFO(1073, 600);
+  
+  const sf::Vector2f BUTTON_SIMULATE(1023, 53);
+  const sf::Vector2f BUTTON_MANUAL(1027, 260);
+  const sf::Vector2f BUTTON_RETURN(933, 473);
+  const sf::Vector2f BUTTON_INFO_EXIT(1120, 473);
+  
+  const sf::Vector2f BUTTON_RESTART(1033, 197);
+  const sf::Vector2f BUTTON_EXIT(1100, 270);
 };
-
+  
 namespace Sizes {
-const sf::Vector2f SCENES(1920, 1080);
-const sf::Vector2f REGULAR_BUTTON(200, 60);
-const sf::Vector2f LARGE_BUTTON(350, 60);
-const sf::Vector2f CIRCULAR_BUTTON(160, 160);
+  const sf::Vector2f SCENES(1280, 720);
+  const sf::Vector2f REGULAR_BUTTON(133, 40);
+  const sf::Vector2f LARGE_BUTTON(233, 40);
+  const sf::Vector2f CIRCULAR_BUTTON(107, 107);
 };
 
-#define RADIUS_REGULAR_BUTTON 35
-#define CORNERS_REGULAR_BUTTON 20
+#define RADIUS_REGULAR_BUTTON 23
+#define CORNERS_REGULAR_BUTTON 13
 
-#define RADIUS_CIRCULAR_BUTTON 45.0f
-#define CORNERS_CIRCULAR_BUTTON 35
+#define RADIUS_CIRCULAR_BUTTON 30.0f
+#define CORNERS_CIRCULAR_BUTTON 23
 
 #define ACTIVE true
 #define EMPTY_TEXT ""
@@ -46,19 +46,19 @@ const std::string BACKGROUNDS_FOLDER = "assets/scenes_backgrounds/";
 const std::string MUSIC_FOLDER = "assets/music/";
 const std::string GAME_BUTTONS_FOLDER = "assets/sprites/buttons/";
 
-#define ACTION_BUTTON_DIM 100
-#define VESSEL_BUTTON_DIM 100
+#define ACTION_BUTTON_DIM 67
+#define VESSEL_BUTTON_DIM 67
 
 #define A_BUTTONS_COUNT 4
 #define V_BUTTONS_COUNT 6
 #define GAME_LABELS_COUNT 5
 
-#define ACTION_BUTTONS_X 1750
-#define VESSELS_BUTTON_Y 820
+#define ACTION_BUTTONS_X 1167
+#define VESSELS_BUTTON_Y 547
 
-#define LABEL_BOX_W 100
-#define LABEL_BOX_H 70
-#define LONG_LABEL_BOX_W 300
+#define LABEL_BOX_W 67
+#define LABEL_BOX_H 47
+#define LONG_LABEL_BOX_W 200
 
 #define NONE_SELECTED -1
 

@@ -92,8 +92,8 @@ void GameScene::setTurnSwitchImages() {
   turnSwitchImageBox->box(FL_NO_BOX);  // No borders
   turnSwitchImageBox->redraw();  // Marks as needs a draw()
 
-  inputSwitchPlayer = new Fl_Input(/*X*/ 1780, /*Y*/ 950, /*W*/ 120, /*H*/ 30
-      , /*Label*/ "Type OK to continue:");
+  inputSwitchPlayer = new Fl_Input(/*X*/ 1187, /*Y*/ 633, /*W*/ 80, /*H*/ 20
+    , /*Label*/ "Type OK to continue:");
   inputSwitchPlayer->when(FL_WHEN_ENTER_KEY_ALWAYS); // Respond to Enter key
   inputSwitchPlayer->labelcolor(FL_WHITE);
   inputSwitchPlayer->labelfont(FL_COURIER_BOLD);
@@ -107,34 +107,34 @@ void GameScene::setTurnSwitchImages() {
 }
 
 void GameScene::setActionButtons() {
-  buyButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 220
-      , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
-      , GAME_BUTTONS_FOLDER + "buyRune.png", EMPTY_TEXT, GAME_BACKGROUND);
+  buyButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 147
+    , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
+    , GAME_BUTTONS_FOLDER + "buyRune.png", EMPTY_TEXT, GAME_BACKGROUND);
   setActionButtonCallBack(buyButton, BUY);
 
-  attackButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 385
-      , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
-      , GAME_BUTTONS_FOLDER + "attackRune.png", EMPTY_TEXT, GAME_BACKGROUND);
+  attackButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 257
+    , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
+    , GAME_BUTTONS_FOLDER + "attackRune.png", EMPTY_TEXT, GAME_BACKGROUND);
   setActionButtonCallBack(attackButton, ATTACK);
 
-  moveButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 540
-      , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
-      , GAME_BUTTONS_FOLDER + "moveRune.png", EMPTY_TEXT, GAME_BACKGROUND);
+  moveButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 360
+    , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
+    , GAME_BUTTONS_FOLDER + "moveRune.png", EMPTY_TEXT, GAME_BACKGROUND);
   setActionButtonCallBack(moveButton, MOVE);
 
-  upgradeButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 700
-      , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
-      , GAME_BUTTONS_FOLDER + "upgradeRune.png", EMPTY_TEXT, GAME_BACKGROUND);
+  upgradeButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 467
+    , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
+    , GAME_BUTTONS_FOLDER + "upgradeRune.png", EMPTY_TEXT, GAME_BACKGROUND);
   setActionButtonCallBack(upgradeButton, UPGRADE);
 
-  flagButton = new CustomIconButton(/*X*/ 20, /*Y*/ 555
-      , 50, 50
-      , GAME_BUTTONS_FOLDER + "flag.png", "Flag", GAME_BACKGROUND);
+  flagButton = new CustomIconButton(/*X*/ 13, /*Y*/ 370
+    , 33, 33
+    , GAME_BUTTONS_FOLDER + "flag.png", "Flag", GAME_BACKGROUND);
   setActionButtonCallBack(flagButton, FLAG);
 
-  unflagButton = new CustomIconButton(/*X*/ 20, /*Y*/ 645
-      , 50, 50
-      , GAME_BUTTONS_FOLDER + "unflag.png", "Unflag", GAME_BACKGROUND);
+  unflagButton = new CustomIconButton(/*X*/ 13, /*Y*/ 430
+    , 33, 33
+    , GAME_BUTTONS_FOLDER + "unflag.png", "Unflag", GAME_BACKGROUND);
   setActionButtonCallBack(unflagButton, UNFLAG);
 }
 
@@ -152,32 +152,32 @@ void GameScene::setActionButtonCallBack(CustomIconButton* button, int actionID) 
 }
 
 void GameScene::setVesselButtons() {
-  hashsetButton = new CustomIconButton(/*X*/ 1190, VESSELS_BUTTON_Y + 10
+  hashsetButton = new CustomIconButton(/*X*/ 793, VESSELS_BUTTON_Y + 7
     , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM
     , VESSELS_RIGHT_FOLDER + "Set.png", EMPTY_TEXT, VESSELS_BACKGROUND);
   setVesselButtonCallBack(hashsetButton, SET);
 
-  redBlackButton = new CustomIconButton(/*X*/ 980, VESSELS_BUTTON_Y
+  redBlackButton = new CustomIconButton(/*X*/ 653, VESSELS_BUTTON_Y
     , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM
     , VESSELS_RIGHT_FOLDER + "RedBlackTree.png", EMPTY_TEXT, VESSELS_BACKGROUND);
   setVesselButtonCallBack(redBlackButton, RB_TREE);
 
-  bTreeButton = new CustomIconButton(/*X*/ 765, VESSELS_BUTTON_Y
+  bTreeButton = new CustomIconButton(/*X*/ 510, VESSELS_BUTTON_Y
     , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM
     , VESSELS_RIGHT_FOLDER + "BTree.png", EMPTY_TEXT, VESSELS_BACKGROUND);
   setVesselButtonCallBack(bTreeButton, B_TREE);
 
-  binarySearchButton = new CustomIconButton(/*X*/ 550, VESSELS_BUTTON_Y
+  binarySearchButton = new CustomIconButton(/*X*/ 367, VESSELS_BUTTON_Y
     , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM
     , VESSELS_RIGHT_FOLDER + "BinarySearch.png", EMPTY_TEXT, VESSELS_BACKGROUND);
   setVesselButtonCallBack(binarySearchButton, BINARY_SEARCH);
 
-  splayButton = new CustomIconButton(/*X*/ 355, VESSELS_BUTTON_Y
+  splayButton = new CustomIconButton(/*X*/ 237, VESSELS_BUTTON_Y
     , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM
     , VESSELS_RIGHT_FOLDER + "SplayTree.png", EMPTY_TEXT, VESSELS_BACKGROUND);
   setVesselButtonCallBack(splayButton, SPLAY_TREE);
 
-  linearSearchButton = new CustomIconButton(/*X*/ 155, VESSELS_BUTTON_Y
+  linearSearchButton = new CustomIconButton(/*X*/ 103, VESSELS_BUTTON_Y
     , VESSEL_BUTTON_DIM, VESSEL_BUTTON_DIM
     , VESSELS_RIGHT_FOLDER + "LinearSearch.png", EMPTY_TEXT, VESSELS_BACKGROUND);
   setVesselButtonCallBack(linearSearchButton, LINEAR_SEARCH);
@@ -191,16 +191,16 @@ void GameScene::setVesselButtonCallBack(CustomIconButton* button, int data) {
 }
 
 void GameScene::setLabels() {
-  vesselsWeight = new GameInfoText(/*X*/ 380, /*Y*/ 47, LABEL_BOX_W
-      , LABEL_BOX_H, "", FL_WHITE);
-  currentPlayerLabel = new GameInfoText(/*X*/ 1400, /*Y*/ 47, LONG_LABEL_BOX_W
-      , LABEL_BOX_H, "", FL_WHITE);
-  actionsLabel = new GameInfoText(/*X*/ 1745, /*Y*/ 160, LABEL_BOX_W
-      , LABEL_BOX_H, "", FL_WHITE);
-  drachmas = new GameInfoText(/*X*/ 1582, /*Y*/ 790, LABEL_BOX_W
-      , LABEL_BOX_H, "", FL_BLACK);
-  ambrosiaPoints = new GameInfoText(/*X*/ 1572, /*Y*/ 867, LABEL_BOX_W
-      , LABEL_BOX_H, "", FL_BLACK);
+  vesselsWeight = new GameInfoText(/*X*/ 253, /*Y*/ 31, LABEL_BOX_W
+    , LABEL_BOX_H, "", FL_WHITE);
+  currentPlayerLabel = new GameInfoText(/*X*/ 933, /*Y*/ 31, LONG_LABEL_BOX_W
+    , LABEL_BOX_H, "", FL_WHITE);
+  actionsLabel = new GameInfoText(/*X*/ 1163, /*Y*/ 107, LABEL_BOX_W
+    , LABEL_BOX_H, "", FL_WHITE);
+  drachmas = new GameInfoText(/*X*/ 1055, /*Y*/ 527, LABEL_BOX_W
+    , LABEL_BOX_H, "", FL_BLACK);
+  ambrosiaPoints = new GameInfoText(/*X*/ 1048, /*Y*/ 578, LABEL_BOX_W
+    , LABEL_BOX_H, "", FL_BLACK);
 }
 
 void GameScene::setVesselImages() {
@@ -214,7 +214,7 @@ void GameScene::setVesselImages() {
 }
 
 void GameScene::setExitButton() {
-  this->exitButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 855
+  this->exitButton = new CustomIconButton(ACTION_BUTTONS_X, /*Y*/ 570
     , ACTION_BUTTON_DIM, ACTION_BUTTON_DIM
     , GAME_BUTTONS_FOLDER + "exitRune.png", EMPTY_TEXT, GAME_BACKGROUND);
   this->exitButton->set_click_callback([this]() {
